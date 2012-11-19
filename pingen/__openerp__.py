@@ -37,13 +37,20 @@ What is pingen.com
 Pingen.com is a paid online service.
 It send uploaded documents by letter post.
 
-Integration
------------
+Scope of the integration
+------------------------
 
 One can decide, per document / attachment, if it should be pushed
 to pingen.com. The documents are pushed asynchronously.
 
- """,
+Dependencies
+------------
+
+ * Require the Python library `requests <http://docs.python-requests.org/>`_
+ * The PDF files sent to pingen.com have to respect some `formatting rules
+   <https://stage-app.pingen.com/resources/pingen_requirements_v1_en.pdf>`_.
+
+""",
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
