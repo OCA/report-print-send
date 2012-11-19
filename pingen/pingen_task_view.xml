@@ -8,8 +8,9 @@
       <field name="type">tree</field>
       <field name="arch" type="xml">
         <tree string="Pingen Task">
-          <field name="config"/>
-          <field name="state"/>
+          <field name="send"/>
+          <field name="speed"/>
+          <field name="color"/>
         </tree>
       </field>
     </record>
@@ -20,8 +21,11 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <form string="Pingen Task">
-          <field name="config"/>
+          <field name="send"/>
+          <field name="speed"/>
+          <field name="color"/>
           <field name="state"/>
+          <button name="push_to_pingen" states="pending" string="Push to pingen.com" icon="terp-camera_test"/>
         </form>
       </field>
     </record>
