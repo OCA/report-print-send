@@ -28,6 +28,14 @@ from requests.packages.urllib3.filepost import encode_multipart_formdata
 
 _logger = logging.getLogger(__name__)
 
+POST_SENDING_STATUS = {
+    100: 'Ready/Pending',
+    101: 'Processing',
+    102: 'Waiting for confirmation',
+    200: 'Sent',
+    300: 'Some error occured and object wasn\'t sent',
+    400: 'Sending cancelled',
+}
 
 class PingenException(RuntimeError):
     """There was an ambiguous exception that occurred while handling your
@@ -40,7 +48,6 @@ class ConnectionError(PingenException):
 
 class APIError(PingenException):
     """An Error occured with the pingen API"""
-
 
 
 class Pingen(object):
@@ -90,7 +97,9 @@ class Pingen(object):
         response = method(complete_url, **kwargs)
 
         if not response.ok:
-            raise ConnectionError(response.error)
+            raise ConnectionError(
+                "%s: %s" % (response.json['errorcode'],
+                            response.json['errormessage']))
 
         if response.json['error']:
             raise APIError(
@@ -166,4 +175,25 @@ class Pingen(object):
                 data={'data': json.dumps(data)})
 
         return response.json['id']
+
+    def post_infos(self, post_id):
+        """ Return the information of a post
+
+        :param int post_id: id of the document to send
+        :return: dict of infos of the post
+        """
+        response = self._send(
+                requests.get,
+                'post/get',
+                params={'id': post_id})
+
+        return response.json['item']
+
+    @staticmethod
+    def is_posted(post_infos):
+        """ return True if the post has been sent
+
+        :param dict post_infos: post infos returned by `post_infos`
+        """
+        return post_infos['status'] == 200
 
