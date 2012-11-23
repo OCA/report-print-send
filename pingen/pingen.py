@@ -22,6 +22,9 @@
 import requests
 import logging
 import urlparse
+import json
+
+from requests.packages.urllib3.filepost import encode_multipart_formdata
 
 _logger = logging.getLogger(__name__)
 
@@ -95,10 +98,11 @@ class Pingen(object):
 
         return response
 
-    def push_document(self, document, send=None, speed=None, color=None):
+    def push_document(self, filename, filestream, send=None, speed=None, color=None):
         """ Upload a document to pingen.com and eventually ask to send it
 
-        :param tuple document: (filename, file stream) to push
+        :param str filename: name of the file to push
+        :param StringIO filestream: file to push
         :param boolean send: if True, the document will be sent by pingen.com
         :param int/str speed: sending speed of the document if it is send
                                 1 = Priority, 2 = Economy
@@ -108,24 +112,37 @@ class Pingen(object):
                  2. post_id on pingen.com if it has been sent or None
                  3. dict of the created item on pingen (details)
         """
-        document = {'file': document}
         data = {
             'send': send,
             'speed': speed,
             'color': color,
             }
+
+        # we cannot use the `files` param alongside
+        # with the `datas`param when data is a
+        # JSON-encoded data. We have to construct
+        # the entire body and send it to `data`
+        # https://github.com/kennethreitz/requests/issues/950
+        formdata = {
+            'file': (filename, filestream.read()),
+            'data': json.dumps(data),
+            }
+
+        multipart, content_type = encode_multipart_formdata(formdata)
+
         response = self._send(
                 requests.post,
                 'document/upload',
-                data=data,
-                files=document)
+                headers={'Content-Type': content_type},
+                data=multipart)
 
-        json = response.json
+        rjson = response.json
 
-        document_id = json['id']
-        # confusing name but send_id is the posted id
-        posted_id = json.get('send', {}).get('send_id')
-        item = json['item']
+        document_id = rjson['id']
+        if rjson.get('send'):
+            # confusing name but send_id is the posted id
+            posted_id = rjson['send'][0]['send_id']
+        item = rjson['item']
 
         return document_id, posted_id, item
 

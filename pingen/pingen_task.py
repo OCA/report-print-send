@@ -91,10 +91,14 @@ class pingen_task(orm.Model):
         success = False
         # parameterize
         pingen = Pingen(TOKEN, staging=True)
-        doc = (task.datas_fname, StringIO(decoded_document))
+        doc = (task.datas_fname, )
         try:
             doc_id, post_id, __ = pingen.push_document(
-                doc, task.pingen_send, task.pingen_speed, task.pingen_color)
+                task.datas_fname,
+                StringIO(decoded_document),
+                task.pingen_send,
+                task.pingen_speed,
+                task.pingen_color)
         except ConnectionError as e:
             # we can continue and it will be retried the next time
             _logger.exception('Connection Error when pushing Pingen Task %s to %s.' %
