@@ -19,6 +19,9 @@
 #
 ##############################################################################
 
+import requests
+import base64
+
 from openerp.osv import osv, orm, fields
 from openerp.tools.translate import _
 
@@ -32,6 +35,19 @@ class ir_attachment(orm.Model):
         'pingen_task_ids': fields.one2many(
             'pingen.task', 'attachment_id',
             string="Pingen Task", readonly=True),
+        'pingen_send': fields.boolean(
+            'Send',
+            help="Defines if a document is merely uploaded or also sent"),
+        'pingen_speed': fields.selection(
+            [('1', 'Priority'), ('2', 'Economy')],
+            'Speed',
+            help="Defines the sending speed if the document is automatically sent"),
+        'pingen_color': fields.selection( [('0', 'B/W'), ('1', 'Color')], 'Type of print'),
+    }
+
+    _defaults = {
+        'pingen_send': True,
+        'pingen_speed': '2',
     }
 
     def _prepare_pingen_task_vals(self, cr, uid, attachment, context=None):
@@ -87,4 +103,21 @@ class ir_attachment(orm.Model):
             for attachment_id in ids:
                 self._handle_pingen_task(cr, uid, attachment_id, context=context)
         return res
+
+    def _decoded_content(self, cr, uid, attachment, context=None):
+        """ Returns the decoded content of an attachment (stored or url)
+
+        Returns None if the type is 'url' and the url is not reachable.
+        """
+        decoded_document = None
+        if attachment.type == 'binary':
+            decoded_document = base64.decodestring(attachment.datas)
+        elif attachment.type == 'url':
+            response = requests.get(attachment.url)
+            if response.ok:
+                decoded_document = requests.content
+        else:
+            raise Exception(
+                'The type of attachment %s is not handled' % attachment.type)
+        return decoded_document
 

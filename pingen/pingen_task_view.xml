@@ -8,9 +8,12 @@
       <field name="type">tree</field>
       <field name="arch" type="xml">
         <tree string="Pingen Task">
-          <field name="send"/>
-          <field name="speed"/>
-          <field name="color"/>
+          <field name="name"/>
+          <field name="datas_fname"/>
+          <field name="pingen_send"/>
+          <field name="pingen_speed"/>
+          <field name="pingen_color"/>
+          <field name="state"/>
         </tree>
       </field>
     </record>
@@ -21,11 +24,65 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <form string="Pingen Task">
-          <field name="send"/>
-          <field name="speed"/>
-          <field name="color"/>
-          <field name="state"/>
-          <button name="push_to_pingen" states="pending" string="Push to pingen.com" icon="terp-camera_test"/>
+          <group colspan="4" col="6">
+            <field name="name" readonly="True"/>
+            <field name="type" readonly="True"/>
+            <field name="company_id" readonly="True" groups="base.group_multi_company" widget="selection"/>
+          </group>
+          <notebook colspan="4">
+            <page string="Pingen.com">
+              <separator string="Options" colspan="4"/>
+              <newline />
+              <group col="2" colspan="2">
+                <field name="pingen_send"/>
+                <field name="pingen_speed" attrs="{'required': [('pingen_send', '=', True)]}"/>
+                <field name="pingen_color"/>
+              </group>
+
+              <separator string="Dates" colspan="4"/>
+              <newline />
+              <group col="2" colspan="2">
+                <field name="date"/>
+                <field name="push_date"/>
+              </group>
+
+              <separator string="Errors" colspan="4"/>
+              <newline />
+              <group col="2" colspan="2">
+                <field nolabel="1" name="last_error_message"/>
+              </group>
+
+              <separator string="Actions" colspan="4"/>
+              <newline />
+
+              <group col="2" colspan="2">
+                <button name="push_to_pingen" type="object"
+                  states="pending,error,need_fix"
+                  string="Push to pingen.com" icon="terp-camera_test"/>
+              </group>
+            </page>
+            <page string="Attachment">
+              <group col="4" colspan="4">
+                <separator string="Data" colspan="4"/>
+                <newline />
+                <group col="2" colspan="4" attrs="{'invisible':[('type','=','url')]}">
+                  <field name="datas" filename="datas_fname" readonly="True"/>
+                  <field name="datas_fname" select="1" readonly="True"/>
+                </group>
+                <group col="2" colspan="4" attrs="{'invisible':[('type','=','binary')]}">
+                  <field name="url" widget="url" readonly="True"/>
+                </group>
+              </group>
+              <group col="2" colspan="4">
+                <separator string="Attached To" colspan="2"/>
+                <field name="attachment_id"/>
+              </group>
+            </page>
+          </notebook>
+
+          <field name="state" widget="statusbar"
+            statusbar_visible="pending,pushed,sent"
+            statusbar_colors='{"error":"red","need_fix":"red","canceled":"grey","pushed":"blue","sent":"green"}'/>
         </form>
       </field>
     </record>
