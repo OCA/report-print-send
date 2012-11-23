@@ -49,6 +49,8 @@ Dependencies
  * Require the Python library `requests <http://docs.python-requests.org/>`_
  * The PDF files sent to pingen.com have to respect some `formatting rules
    <https://stage-app.pingen.com/resources/pingen_requirements_v1_en.pdf>`_.
+ * The address must be in a format accepted by pingen.com: the last line
+   is the country.
 
 """,
  'website': 'http://www.camptocamp.com',
