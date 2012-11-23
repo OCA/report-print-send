@@ -19,17 +19,16 @@
 #
 ##############################################################################
 
-import requests
-import urlparse
-import base64
 import logging
+import datetime
 
 from cStringIO import StringIO
 
 from openerp.osv import orm, fields
+from openerp import tools
+from .pingen import Pingen, APIError, ConnectionError
 
 # TODO should be configurable
-BASE_URL = 'https://stage-api.pingen.com'
 TOKEN = '6bc041af6f02854461ef31c2121ef853'
 
 _logger = logging.getLogger(__name__)
@@ -48,28 +47,24 @@ class pingen_task(orm.Model):
 
     _columns = {
         'attachment_id': fields.many2one(
-            'ir.attachment', 'Document', required=True, ondelete='cascade'),
+            'ir.attachment', 'Document', required=True, readonly=True, ondelete='cascade'),
         'state': fields.selection(
             [('pending', 'Pending'),
              ('pushed', 'Pushed'),
+             ('sent', 'Sent'),
              ('error', 'Error'),
+             ('need_fix', 'Needs a correction'),
              ('canceled', 'Canceled')],
             string='State', readonly=True, required=True),
-        'config': fields.text('Configuration (tmp)'),
         'date': fields.datetime('Creation Date'),
-        'push_date': fields.datetime('Pushed Date'),
-        'send': fields.boolean(
-            'Send',
-            help="Defines if a document is merely uploaed or also sent"),
-        'speed': fields.selection(
-            [(1, 'Priority'), (2, 'Economy')],
-            'Speed',
-            help="Defines the sending speed if the document is automatically sent"),
-        'color': fields.selection( [(0, 'B/W'), (1, 'Color')], 'Type of print'),
-        'last_error_code': fields.integer('Error Code', readonly=True),
+        'push_date': fields.datetime('Push Date'),
         'last_error_message': fields.text('Error Message', readonly=True),
-        'pingen_id': fields.integer('Pingen ID'),
-
+        'pingen_id': fields.integer(
+            'Pingen ID',
+            help="ID of the document in the Pingen Documents"),
+        'post_id': fields.integer(
+            'Pingen Post ID',
+            help="ID of the document in the Pingen Sendcenter"),
     }
 
     _defaults = {
@@ -87,70 +82,47 @@ class pingen_task(orm.Model):
 
 
         """
-        success = False
-        push_url = urlparse.urljoin(BASE_URL, 'document/upload')
-        auth = {'token': TOKEN}
-
-        config = {
-            'send': False,
-            'speed': 2,
-            'color': 1,
-            }
-
+        attachment_obj = self.pool.get('ir.attachment')
         task = self.browse(cr, uid, task_id, context=context)
 
-        if task.type == 'binary':
-            decoded_document = base64.decodestring(task.datas)
-        else:
-            url_resp = requests.get(task.url)
-            if url_resp.status_code != 200:
-                task.write({'last_error_code': False,
-                            'last_error_message': "%s" % req.error,
-                            'state': 'error'},
-                           context=context)
-                return False
-            decoded_document = requests.content
+        decoded_document = attachment_obj._decoded_content(
+                cr, uid, task.attachment_id, context=context)
 
-        document = {'file': (task.datas_fname, StringIO(decoded_document))}
+        success = False
+        # parameterize
+        pingen = Pingen(TOKEN, staging=True)
+        doc = (task.datas_fname, StringIO(decoded_document))
         try:
-            # TODO extract
-            req = requests.post(
-                    push_url,
-                    params=auth,
-                    data=config,
-                    files=document,
-                    # verify = False required for staging environment
-                    verify=False)
-            req.raise_for_status()
-        except (requests.HTTPError,
-                requests.Timeout,
-                requests.ConnectionError) as e:
-            msg = ('%s Message: %s. \n'
-                    'It occured when pushing the Pingen Task %s to pingen.com. \n'
-                    'It will be retried later.' % (e.__doc__, e, task.id))
-            _logger.error(msg)
+            doc_id, post_id, __ = pingen.push_document(
+                doc, task.pingen_send, task.pingen_speed, task.pingen_color)
+        except ConnectionError as e:
+            # we can continue and it will be retried the next time
+            _logger.exception('Connection Error when pushing Pingen Task %s to %s.' %
+                    (task.id, pingen.url))
             task.write(
-                    {'last_error_code': False,
-                     'last_error_message': msg,
+                    {'last_error_message': e,
                      'state': 'error'},
                     context=context)
-        else:
-            response = req.json
-            if response['error']:
-                task.write(
-                        {'last_error_code': response['errorcode'],
-                         'last_error_message': 'Error from pingen.com: %s' % response['errormessage'],
-                         'state': 'error'},
-                        context=context)
-            else:
-                task.write(
-                    {'last_error_code': False,
-                     'last_error_message': False,
-                     'state': 'pushed',
-                     'pingen_id': response['id'],},
+
+        except APIError as e:
+            _logger.warning('API Error when pushing Pingen Task %s to %s.' %
+                    (task.id, pingen.url))
+            task.write(
+                    {'last_error_message': e,
+                     'state': 'need_fix'},
                     context=context)
-                _logger.info('Pingen Task %s pushed to pingen.com.' % task.id)
-                success = True
+        else:
+            success = True
+
+            now = datetime.datetime.now().strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT)
+            task.write(
+                {'last_error_message': False,
+                 'state': 'pushed',
+                 'push_date': now,
+                 'pingen_id': doc_id,
+                 'post_id': post_id},
+                context=context)
+            _logger.info('Pingen Task %s pushed to %s' % (task.id, pingen.url))
 
         return success
 
@@ -162,11 +134,4 @@ class pingen_task(orm.Model):
         for task_id in ids:
             self._push_to_pingen(cr, uid, task_id, context=context)
         return True
-
-
-        # r = requests.get(push_url, params=auth, verify=False)
-
-
-        # TODO: resolve = put in pending or put in pushed
-
 
