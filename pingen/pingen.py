@@ -155,10 +155,15 @@ class Pingen(object):
         :param int/str color: type of print, 0 = B/W, 1 = Color
         :return: id of the post on pingen.com
         """
+        data = {
+            'speed': speed,
+            'color': color,
+            }
         response = self._send(
                 requests.post,
                 'document/send',
-                params={'id': document_id})
+                params={'id': document_id},
+                data={'data': json.dumps(data)})
 
         return response.json['id']
 
