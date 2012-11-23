@@ -20,4 +20,6 @@
 ##############################################################################
 
 import ir_attachment
+import pingen
 import pingen_task
+
