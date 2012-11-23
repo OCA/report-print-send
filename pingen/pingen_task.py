@@ -20,17 +20,17 @@
 ##############################################################################
 
 import logging
-import datetime
 
 from cStringIO import StringIO
 
 from openerp.osv import osv, orm, fields
 from openerp import tools
 from openerp.tools.translate import _
-from .pingen import Pingen, APIError, ConnectionError
+from .pingen import Pingen, APIError, ConnectionError, POST_SENDING_STATUS
 
 # TODO should be configurable
 TOKEN = '6bc041af6f02854461ef31c2121ef853'
+STAGING = True
 
 _logger = logging.getLogger(__name__)
 
@@ -58,15 +58,28 @@ class pingen_task(orm.Model):
              ('pingen_error', 'Pingen Error'),
              ('canceled', 'Canceled')],
             string='State', readonly=True, required=True),
-        'date': fields.datetime('Creation Date'),
-        'push_date': fields.datetime('Push Date'),
+        'date': fields.datetime('Creation Date', readonly=True),
+        'push_date': fields.datetime('Push Date', readonly=True),
+
+        # for `error` and `pingen_error` states when we push
         'last_error_message': fields.text('Error Message', readonly=True),
+
+        # pingen IDs
         'pingen_id': fields.integer(
-            'Pingen ID',
+            'Pingen ID', readonly=True,
             help="ID of the document in the Pingen Documents"),
         'post_id': fields.integer(
-            'Pingen Post ID',
+            'Pingen Post ID', readonly=True,
             help="ID of the document in the Pingen Sendcenter"),
+
+        # sendcenter infos
+        'post_status': fields.char('Post Status', size=128, readonly=True),
+        'parsed_address': fields.text('Parsed Address', readonly=True),
+        'cost': fields.float('Cost', readonly=True),
+        'currency_id': fields.many2one('res.currency', 'Currency', readonly=True),
+        'country_id': fields.many2one('res.country', 'Country', readonly=True),
+        'send_date': fields.datetime('Date of sending', readonly=True),
+        'pages': fields.integer('Pages', readonly=True),
     }
 
     _defaults = {
@@ -79,6 +92,12 @@ class pingen_task(orm.Model):
          'Only one Pingen task is allowed per attachment.'),
     ]
 
+    def _pingen(self, cr, uid, ids, context=None):
+        """ Return a Pingen instance to work on """
+        assert not ids, "ids is there by convention, should not be used"
+        # TODO parameterize
+        return Pingen(TOKEN, staging=STAGING)
+
     def _push_to_pingen(self, cr, uid, task, context=None):
         """ Push a document to pingen.com """
         attachment_obj = self.pool.get('ir.attachment')
@@ -88,31 +107,32 @@ class pingen_task(orm.Model):
 
         pingen = self._pingen(cr, uid, [], context=context)
         try:
-            doc_id, post_id, __ = pingen.push_document(
+            doc_id, post_id, infos = pingen.push_document(
                 task.datas_fname,
                 StringIO(decoded_document),
                 task.pingen_send,
                 task.pingen_speed,
                 task.pingen_color)
         except ConnectionError as e:
-            _logger.exception('Connection Error when pushing Pingen Task %s to %s.' %
+            _logger.exception(
+                    'Connection Error when pushing Pingen Task %s to %s.' %
                     (task.id, pingen.url))
             raise
 
         except APIError as e:
-            _logger.error('API Error when pushing Pingen Task %s to %s.' %
+            _logger.error(
+                    'API Error when pushing Pingen Task %s to %s.' %
                     (task.id, pingen.url))
             raise
 
-        now = datetime.datetime.now().strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT)
         task.write(
             {'last_error_message': False,
              'state': 'sendcenter' if post_id else 'pushed',
-             'push_date': now,
+             'push_date': infos['date'],
              'pingen_id': doc_id,
              'post_id': post_id},
             context=context)
-        _logger.info('Pingen Task %s pushed to %s' % (task.id, pingen.url))
+        _logger.info('Pingen Task %s: pushed to %s' % (task.id, pingen.url))
 
     def push_to_pingen(self, cr, uid, ids, context=None):
         """ Push a document to pingen.com
@@ -137,26 +157,29 @@ class pingen_task(orm.Model):
                       '\n%s') % (task.name, e))
         return True
 
-    def _push_to_pingen_with_logs(self, cr, uid, ids, context=None):
+    def _push_and_send_to_pingen_silent(self, cr, uid, ids, context=None):
         """ Push a document to pingen.com
 
         Instead of raising, store the error in the pingen.document
         """
+        if not ids:
+            ids = self.search(
+                cr, uid,
+                # do not retry pingen_error, they should be treated manually
+                [('state', 'in', ['pending', 'pushed', 'error'])],
+                context=context)
         for task in self.browse(cr, uid, ids, context=context):
             try:
-                self._push_to_pingen(cr, uid, task, context=context)
+                if not task.pingen_id:
+                    self._push_to_pingen(cr, uid, task, context=context)
+                if not task.post_id and task.pingen_send:
+                    self._ask_pingen_send(cr, uid, task, context=context)
             except ConnectionError as e:
                 task.write({'last_error_message': e, 'state': 'error'}, context=context)
             except APIError as e:
                 task.write({'last_error_message': e, 'state': 'pingen_error'}, context=context)
-        return True
 
-    def _pingen(self, cr, uid, ids, context=None):
-        """
-        """
-        assert not ids, "ids is there by convention, should not be used"
-        # TODO parameterize
-        return Pingen(TOKEN, staging=True)
+        return True
 
     def _ask_pingen_send(self, cr, uid, task, context=None):
         """ For a document already pushed to pingen, ask to send it.
@@ -186,7 +209,7 @@ class pingen_task(orm.Model):
              'state': 'sendcenter',
              'post_id': post_id},
             context=context)
-        _logger.info('Pingen Task %s asked for sending to %s' % (task.id, pingen.url))
+        _logger.info('Pingen Task %s: asked for sending to %s' % (task.id, pingen.url))
 
         return True
 
@@ -208,6 +231,87 @@ class pingen_task(orm.Model):
                 raise osv.except_osv(
                     _('Pingen Error'),
                     _('Error when asking Pingen to send the document %s: '
+                      '\n%s') % (task.name, e))
+        return True
+
+    def _update_post_infos(self, cr, uid, task, context=None):
+        """ Update the informations from pingen of a document in the Sendcenter
+        """
+        if not task.post_id:
+            return
+
+        pingen = self._pingen(cr, uid, [], context=context)
+        try:
+            post_infos = pingen.post_infos(task.post_id)
+        except ConnectionError as e:
+            _logger.exception('Connection Error when asking for sending Pingen Task %s to %s.' %
+                    (task.id, pingen.url))
+            raise
+        except APIError as e:
+            _logger.exception('API Error when asking for sending Pingen Task %s to %s.' %
+                    (task.id, pingen.url))
+            raise
+
+        currency_ids = self.pool.get('res.currency').search(
+                cr, uid, [('name', '=', post_infos['currency'])], context=context)
+        country_ids = self.pool.get('res.country').search(
+                cr, uid, [('code', '=', post_infos['country'])], context=context)
+        vals = {
+            'post_status': POST_SENDING_STATUS[post_infos['status']],
+            'cost': post_infos['cost'],
+            'currency_id': currency_ids[0] if currency_ids else False,
+            'parsed_address': post_infos['address'],
+            'country_id': country_ids[0] if country_ids else False,
+            'send_date': post_infos['date'],
+            'pages': post_infos['pages'],
+            }
+        if pingen.is_posted(post_infos):
+            vals['state'] = 'sent'
+
+        task.write(vals, context=context)
+        _logger.info('Pingen Task %s: status updated' % task.id)
+
+    def _update_post_infos_silent(self, cr, uid, ids, context=None):
+        """ Update the informations from pingen of a document in the Sendcenter
+
+        Do not raise errors, only skip the update of the record.
+        """
+        if not ids:
+            ids = self.search(
+                    cr, uid,
+                    [('state', '=', 'sendcenter')],
+                    context=context)
+
+        for task in self.browse(cr, uid, ids, context=context):
+            try:
+                self._update_post_infos(cr, uid, task, context=context)
+            except (ConnectionError, APIError):
+                # Intended silented exception, we can consider that it's not
+                # important if the update not worked, that's
+                # only informative, and it will be retried the next time
+                # In any case, the error has been by _update_post_infos
+                pass
+        return True
+
+    def update_post_infos(self, cr, uid, ids, context=None):
+        """ Update the informations from pingen of a document in the Sendcenter
+
+        Wrapper method for multiple ids (when triggered from button for
+        instance) for public interface.
+        """
+        for task in self.browse(cr, uid, ids, context=context):
+            try:
+                self._update_post_infos(cr, uid, task, context=context)
+            except ConnectionError as e:
+                raise osv.except_osv(
+                    _('Pingen Connection Error'),
+                    _('Connection Error when updating the status of Document %s'
+                      ' from Pingen') % task.name)
+
+            except APIError as e:
+                raise osv.except_osv(
+                    _('Pingen Error'),
+                    _('Error when updating the status of Document %s from Pingen: '
                       '\n%s') % (task.name, e))
         return True
 
