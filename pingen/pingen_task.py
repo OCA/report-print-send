@@ -24,8 +24,9 @@ import datetime
 
 from cStringIO import StringIO
 
-from openerp.osv import orm, fields
+from openerp.osv import osv, orm, fields
 from openerp import tools
+from openerp.tools.translate import _
 from .pingen import Pingen, APIError, ConnectionError
 
 # TODO should be configurable
@@ -51,9 +52,10 @@ class pingen_task(orm.Model):
         'state': fields.selection(
             [('pending', 'Pending'),
              ('pushed', 'Pushed'),
+             ('sendcenter', 'In Sendcenter'),
              ('sent', 'Sent'),
-             ('error', 'Error'),
-             ('need_fix', 'Needs a correction'),
+             ('error', 'Connection Error'),
+             ('pingen_error', 'Pingen Error'),
              ('canceled', 'Canceled')],
             string='State', readonly=True, required=True),
         'date': fields.datetime('Creation Date'),
@@ -77,21 +79,14 @@ class pingen_task(orm.Model):
          'Only one Pingen task is allowed per attachment.'),
     ]
 
-    def _push_to_pingen(self, cr, uid, task_id, context=None):
-        """ Push a document to pingen.com
-
-
-        """
+    def _push_to_pingen(self, cr, uid, task, context=None):
+        """ Push a document to pingen.com """
         attachment_obj = self.pool.get('ir.attachment')
-        task = self.browse(cr, uid, task_id, context=context)
 
         decoded_document = attachment_obj._decoded_content(
                 cr, uid, task.attachment_id, context=context)
 
-        success = False
-        # parameterize
-        pingen = Pingen(TOKEN, staging=True)
-        doc = (task.datas_fname, )
+        pingen = self._pingen(cr, uid, [], context=context)
         try:
             doc_id, post_id, __ = pingen.push_document(
                 task.datas_fname,
@@ -100,42 +95,119 @@ class pingen_task(orm.Model):
                 task.pingen_speed,
                 task.pingen_color)
         except ConnectionError as e:
-            # we can continue and it will be retried the next time
             _logger.exception('Connection Error when pushing Pingen Task %s to %s.' %
                     (task.id, pingen.url))
-            task.write(
-                    {'last_error_message': e,
-                     'state': 'error'},
-                    context=context)
+            raise
 
         except APIError as e:
-            _logger.warning('API Error when pushing Pingen Task %s to %s.' %
+            _logger.error('API Error when pushing Pingen Task %s to %s.' %
                     (task.id, pingen.url))
-            task.write(
-                    {'last_error_message': e,
-                     'state': 'need_fix'},
-                    context=context)
-        else:
-            success = True
+            raise
 
-            now = datetime.datetime.now().strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT)
-            task.write(
-                {'last_error_message': False,
-                 'state': 'pushed',
-                 'push_date': now,
-                 'pingen_id': doc_id,
-                 'post_id': post_id},
-                context=context)
-            _logger.info('Pingen Task %s pushed to %s' % (task.id, pingen.url))
-
-        return success
+        now = datetime.datetime.now().strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT)
+        task.write(
+            {'last_error_message': False,
+             'state': 'sendcenter' if post_id else 'pushed',
+             'push_date': now,
+             'pingen_id': doc_id,
+             'post_id': post_id},
+            context=context)
+        _logger.info('Pingen Task %s pushed to %s' % (task.id, pingen.url))
 
     def push_to_pingen(self, cr, uid, ids, context=None):
         """ Push a document to pingen.com
 
-        Wrapper method for multiple ids (when triggered from button)
+        Convert errors to osv.except_osv to be handled by the client.
+
+        Wrapper method for multiple ids (when triggered from button for
+        instance) for public interface.
         """
-        for task_id in ids:
-            self._push_to_pingen(cr, uid, task_id, context=context)
+        for task in self.browse(cr, uid, ids, context=context):
+            try:
+                self._push_to_pingen(cr, uid, task, context=context)
+            except ConnectionError as e:
+                raise osv.except_osv(
+                    _('Pingen Connection Error'),
+                    _('Connection Error when asking for sending the document %s to Pingen') % task.name)
+
+            except APIError as e:
+                raise osv.except_osv(
+                    _('Pingen Error'),
+                    _('Error when asking Pingen to send the document %s: '
+                      '\n%s') % (task.name, e))
+        return True
+
+    def _push_to_pingen_with_logs(self, cr, uid, ids, context=None):
+        """ Push a document to pingen.com
+
+        Instead of raising, store the error in the pingen.document
+        """
+        for task in self.browse(cr, uid, ids, context=context):
+            try:
+                self._push_to_pingen(cr, uid, task, context=context)
+            except ConnectionError as e:
+                task.write({'last_error_message': e, 'state': 'error'}, context=context)
+            except APIError as e:
+                task.write({'last_error_message': e, 'state': 'pingen_error'}, context=context)
+        return True
+
+    def _pingen(self, cr, uid, ids, context=None):
+        """
+        """
+        assert not ids, "ids is there by convention, should not be used"
+        # TODO parameterize
+        return Pingen(TOKEN, staging=True)
+
+    def _ask_pingen_send(self, cr, uid, task, context=None):
+        """ For a document already pushed to pingen, ask to send it.
+        """
+        # sending has been explicitely asked so we change the option
+        # for consistency
+        if not task.pingen_send:
+            task.write({'pingen_send': True}, context=context)
+
+        pingen = self._pingen(cr, uid, [], context=context)
+        try:
+            post_id = pingen.send_document(
+                task.pingen_id,
+                task.pingen_speed,
+                task.pingen_color)
+        except ConnectionError as e:
+            _logger.exception('Connection Error when asking for sending Pingen Task %s to %s.' %
+                    (task.id, pingen.url))
+            raise
+        except APIError as e:
+            _logger.exception('API Error when asking for sending Pingen Task %s to %s.' %
+                    (task.id, pingen.url))
+            raise
+
+        task.write(
+            {'last_error_message': False,
+             'state': 'sendcenter',
+             'post_id': post_id},
+            context=context)
+        _logger.info('Pingen Task %s asked for sending to %s' % (task.id, pingen.url))
+
+        return True
+
+    def ask_pingen_send(self, cr, uid, ids, context=None):
+        """ For a document already pushed to pingen, ask to send it.
+
+        Wrapper method for multiple ids (when triggered from button for
+        instance) for public interface.
+        """
+        for task in self.browse(cr, uid, ids, context=context):
+            try:
+                self._ask_pingen_send(cr, uid, task, context=context)
+            except ConnectionError as e:
+                raise osv.except_osv(
+                    _('Pingen Connection Error'),
+                    _('Connection Error when asking for sending the document %s to Pingen') % task.name)
+
+            except APIError as e:
+                raise osv.except_osv(
+                    _('Pingen Error'),
+                    _('Error when asking Pingen to send the document %s: '
+                      '\n%s') % (task.name, e))
         return True
 
