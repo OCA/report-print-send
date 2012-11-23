@@ -34,9 +34,9 @@
               <separator string="Options" colspan="4"/>
               <newline />
               <group col="2" colspan="2">
-                <field name="pingen_send"/>
-                <field name="pingen_speed" attrs="{'required': [('pingen_send', '=', True)]}"/>
-                <field name="pingen_color"/>
+                <field name="pingen_send" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"/>
+                <field name="pingen_speed" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])], 'required': [('pingen_send', '=', True)]}"/>
+                <field name="pingen_color" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"/>
               </group>
 
               <separator string="Dates" colspan="4"/>
@@ -57,8 +57,11 @@
 
               <group col="2" colspan="2">
                 <button name="push_to_pingen" type="object"
-                  states="pending,error,need_fix"
+                  states="pending,error,pingen_error"
                   string="Push to pingen.com" icon="terp-camera_test"/>
+                <button name="ask_pingen_send" type="object"
+                  states="pushed"
+                  string="Ask pingen.com to send the document" icon="terp-camera_test"/>
               </group>
             </page>
             <page string="Attachment">
@@ -82,7 +85,7 @@
 
           <field name="state" widget="statusbar"
             statusbar_visible="pending,pushed,sent"
-            statusbar_colors='{"error":"red","need_fix":"red","canceled":"grey","pushed":"blue","sent":"green"}'/>
+            statusbar_colors='{"error":"red","pingen_error":"red","canceled":"grey","pushed":"blue","sent":"green"}'/>
         </form>
       </field>
     </record>
