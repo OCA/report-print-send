@@ -42,7 +42,6 @@
               <separator string="Dates" colspan="4"/>
               <newline />
               <group col="2" colspan="2">
-                <field name="date"/>
                 <field name="push_date"/>
               </group>
 
@@ -75,14 +74,17 @@
               <newline />
               <group col="2" colspan="2">
                 <button name="push_to_pingen" type="object"
-                  states="pending,error,pingen_error"
-                  string="Push to pingen.com" icon="terp-camera_test"/>
+                  states="pending"
+                  string="Push to pingen.com" icon="terp-stage"/>
                 <button name="ask_pingen_send" type="object"
                   states="pushed"
-                  string="Ask pingen.com to send the document" icon="terp-camera_test"/>
+                  string="Ask pingen.com to send the document" icon="gtk-print"/>
+                <button name="resolve_error" type="object"
+                  states="error,pingen_error"
+                  string="Errors resolved" icon="gtk-redo"/>
                 <button name="update_post_infos" type="object"
                   states="sendcenter"
-                  string="Update the letter's informations" icon="terp-camera_test"/>
+                  string="Update the letter's informations" icon="gtk-refresh"/>
               </group>
             </page>
             <page string="Attachment">
@@ -117,15 +119,27 @@
       <field name="type">search</field>
       <field name="arch" type="xml">
         <search string="Pingen Document">
-          <filter icon="terp-stage"
+          <filter icon="terp-project"
             string="Pending"
             domain="[('state','=','pending')]"/>
-          <filter icon="terp-stock_align_left_24"
+          <filter icon="terp-stage"
             string="Pushed"
             domain="[('state','=','pushed')]"/>
-          <filter icon="terp-stock_align_left_24"
+          <filter icon="gtk-print"
+            string="In Sendcenter"
+            domain="[('state','=','sendcenter')]"/>
+          <filter icon="kanban-apply"
+            string="Sent"
+            domain="[('state','=','sent')]"/>
+          <filter icon="kanban-stop"
             string="Error"
             domain="[('state','=','error')]"/>
+          <filter icon="STOCK_NO"
+            string="Pingen Error"
+            domain="[('state','=','pingen_error')]"/>
+          <filter icon="terp-dialog-close"
+            string="Canceled"
+            domain="[('state','=','canceled')]"/>
           <separator orientation="vertical"/>
           <field name="attachment_id" />
         </search>
