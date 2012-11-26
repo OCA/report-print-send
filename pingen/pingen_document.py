@@ -25,7 +25,6 @@ from cStringIO import StringIO
 
 from contextlib import closing
 from openerp.osv import osv, orm, fields
-from openerp import tools
 from openerp.tools.translate import _
 from openerp import pooler
 from .pingen import APIError, ConnectionError, POST_SENDING_STATUS
@@ -91,16 +90,24 @@ class pingen_document(orm.Model):
          'Only one Pingen document is allowed per attachment.'),
     ]
 
-    def _push_to_pingen(self, cr, uid, document, context=None):
-        """ Push a document to pingen.com """
+    def _get_pingen_session(self, cr, uid, context=None):
+        """ Returns a pingen session for a user"""
+        company = self.pool.get('res.users').browse(
+                cr, uid, uid, context=context).company_id
+        return self.pool.get('res.company')._pingen(cr, uid, company, context=context)
+
+    def _push_to_pingen(self, cr, uid, document, pingen=None, context=None):
+        """ Push a document to pingen.com
+
+        :param Pingen pingen: optional pingen object to, reuse session
+        """
         attachment_obj = self.pool.get('ir.attachment')
 
         decoded_document = attachment_obj._decoded_content(
                 cr, uid, document.attachment_id, context=context)
 
-        company = self.pool.get('res.users').browse(
-                cr, uid, uid, context=context).company_id
-        pingen = self.pool.get('res.company')._pingen(cr, uid, company, context=context)
+        if pingen is None:
+            pingen = self._get_pingen_session(cr, uid, context=context)
         try:
             doc_id, post_id, infos = pingen.push_document(
                 document.datas_fname,
@@ -145,27 +152,29 @@ class pingen_document(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
-        for document in self.browse(cr, uid, ids, context=context):
-            try:
-                self._push_to_pingen(cr, uid, document, context=context)
-            except ConnectionError as e:
-                raise osv.except_osv(
-                    _('Pingen Connection Error'),
-                    _('Connection Error when asking for sending the document %s to Pingen') % document.name)
+        with self._get_pingen_session(cr, uid, context=context) as session:
+            for document in self.browse(cr, uid, ids, context=context):
+                try:
+                    self._push_to_pingen(
+                        cr, uid, document, pingen=session, context=context)
+                except ConnectionError as e:
+                    raise osv.except_osv(
+                        _('Pingen Connection Error'),
+                        _('Connection Error when asking for sending the document %s to Pingen') % document.name)
 
-            except APIError as e:
-                raise osv.except_osv(
-                    _('Pingen Error'),
-                    _('Error when asking Pingen to send the document %s: '
-                      '\n%s') % (document.name, e))
+                except APIError as e:
+                    raise osv.except_osv(
+                        _('Pingen Error'),
+                        _('Error when asking Pingen to send the document %s: '
+                          '\n%s') % (document.name, e))
 
-            except:
-                _logger.exception(
-                       'Unexcepted Error when updating the status of pingen.document %s: ' %
-                       document.id)
-                raise osv.except_osv(
-                    _('Error'),
-                    _('Unexcepted Error when updating the status of Document %s') % document.name)
+                except:
+                    _logger.exception(
+                           'Unexcepted Error when updating the status of pingen.document %s: ' %
+                           document.id)
+                    raise osv.except_osv(
+                        _('Error'),
+                        _('Unexcepted Error when updating the status of Document %s') % document.name)
         return True
 
     def _push_and_send_to_pingen_cron(self, cr, uid, ids, context=None):
@@ -186,28 +195,35 @@ class pingen_document(orm.Model):
                 context=context)
 
         with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr:
-            for document in self.browse(loc_cr, uid, ids, context=context):
+            with self._get_pingen_session(cr, uid, context=context) as session:
+                for document in self.browse(loc_cr, uid, ids, context=context):
 
-                if document.state == 'error':
-                    self._resolve_error(loc_cr, uid, document, context=context)
-                    document.refresh()
+                    if document.state == 'error':
+                        self._resolve_error(loc_cr, uid, document, context=context)
+                        document.refresh()
 
-                try:
-                    if document.state == 'pending':
-                        self._push_to_pingen(loc_cr, uid, document, context=context)
+                    try:
+                        if document.state == 'pending':
+                            self._push_to_pingen(
+                                loc_cr, uid, document, pingen=session, context=context)
 
-                    elif document.state == 'pushed':
-                        self._ask_pingen_send(loc_cr, uid, document, context=context)
-                except ConnectionError as e:
-                    document.write({'last_error_message': e, 'state': 'error'}, context=context)
-                except APIError as e:
-                    document.write({'last_error_message': e, 'state': 'pingen_error'}, context=context)
-                except:
-                    _logger.error('Unexcepted error in pingen cron')
-                    loc_cr.rollback()
-                    raise
+                        elif document.state == 'pushed':
+                            self._ask_pingen_send(
+                                loc_cr, uid, document, pingen=session, context=context)
+                    except ConnectionError as e:
+                        document.write({'last_error_message': e,
+                                        'state': 'error'},
+                                       context=context)
+                    except APIError as e:
+                        document.write({'last_error_message': e,
+                                        'state': 'pingen_error'},
+                                       context=context)
+                    except:
+                        _logger.error('Unexcepted error in pingen cron')
+                        loc_cr.rollback()
+                        raise
 
-                loc_cr.commit()
+                    loc_cr.commit()
 
         return True
 
@@ -227,17 +243,16 @@ class pingen_document(orm.Model):
             self._resolve_error(cr, uid, document, context=context)
         return True
 
-    def _ask_pingen_send(self, cr, uid, document, context=None):
+    def _ask_pingen_send(self, cr, uid, document, pingen, context=None):
         """ For a document already pushed to pingen, ask to send it.
+
+        :param Pingen pingen: pingen object to reuse
         """
         # sending has been explicitely asked so we change the option
         # for consistency
         if not document.pingen_send:
             document.write({'pingen_send': True}, context=context)
 
-        company = self.pool.get('res.users').browse(
-                cr, uid, uid, context=context).company_id
-        pingen = self.pool.get('res.company')._pingen(cr, uid, company, context=context)
         try:
             post_id = pingen.send_document(
                 document.pingen_id,
@@ -267,39 +282,39 @@ class pingen_document(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
-        for document in self.browse(cr, uid, ids, context=context):
-            try:
-                self._ask_pingen_send(cr, uid, document, context=context)
-            except ConnectionError as e:
-                raise osv.except_osv(
-                    _('Pingen Connection Error'),
-                    _('Connection Error when asking for '
-                      'sending the document %s to Pingen') % document.name)
+        with self._get_pingen_session(cr, uid, context=context) as session:
+            for document in self.browse(cr, uid, ids, context=context):
+                try:
+                    self._ask_pingen_send(cr, uid, document, pingen=session, context=context)
+                except ConnectionError as e:
+                    raise osv.except_osv(
+                        _('Pingen Connection Error'),
+                        _('Connection Error when asking for '
+                          'sending the document %s to Pingen') % document.name)
 
-            except APIError as e:
-                raise osv.except_osv(
-                    _('Pingen Error'),
-                    _('Error when asking Pingen to send the document %s: '
-                      '\n%s') % (document.name, e))
+                except APIError as e:
+                    raise osv.except_osv(
+                        _('Pingen Error'),
+                        _('Error when asking Pingen to send the document %s: '
+                          '\n%s') % (document.name, e))
 
-            except:
-                _logger.exception(
-                       'Unexcepted Error when updating the status of pingen.document %s: ' %
-                       document.id)
-                raise osv.except_osv(
-                    _('Error'),
-                    _('Unexcepted Error when updating the status of Document %s') % document.name)
+                except:
+                    _logger.exception(
+                           'Unexcepted Error when updating the status of pingen.document %s: ' %
+                           document.id)
+                    raise osv.except_osv(
+                        _('Error'),
+                        _('Unexcepted Error when updating the status of Document %s') % document.name)
         return True
 
-    def _update_post_infos(self, cr, uid, document, context=None):
+    def _update_post_infos(self, cr, uid, document, pingen, context=None):
         """ Update the informations from pingen of a document in the Sendcenter
+
+        :param Pingen pingen: pingen object to reuse
         """
         if not document.post_id:
             return
 
-        company = self.pool.get('res.users').browse(
-                cr, uid, uid, context=context).company_id
-        pingen = self.pool.get('res.company')._pingen(cr, uid, company, context=context)
         try:
             post_infos = pingen.post_infos(document.post_id)
         except ConnectionError as e:
@@ -350,19 +365,21 @@ class pingen_document(orm.Model):
                     context=context)
 
         with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr:
-            for document in self.browse(loc_cr, uid, ids, context=context):
-                try:
-                    self._update_post_infos(loc_cr, uid, document, context=context)
-                except (ConnectionError, APIError):
-                    # will be retried the next time
-                    # In any case, the error has been logged by _update_post_infos
-                    loc_cr.rollback()
-                except:
-                    _logger.error('Unexcepted error in pingen cron')
-                    loc_cr.rollback()
-                    raise
+            with self._get_pingen_session(cr, uid, context=context) as session:
+                for document in self.browse(loc_cr, uid, ids, context=context):
+                    try:
+                        self._update_post_infos(
+                            loc_cr, uid, document, pingen=session, context=context)
+                    except (ConnectionError, APIError):
+                        # will be retried the next time
+                        # In any case, the error has been logged by _update_post_infos
+                        loc_cr.rollback()
+                    except:
+                        _logger.error('Unexcepted error in pingen cron')
+                        loc_cr.rollback()
+                        raise
 
-                loc_cr.commit()
+                    loc_cr.commit()
         return True
 
     def update_post_infos(self, cr, uid, ids, context=None):
@@ -371,27 +388,29 @@ class pingen_document(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
-        for document in self.browse(cr, uid, ids, context=context):
-            try:
-                self._update_post_infos(cr, uid, document, context=context)
-            except ConnectionError as e:
-                raise osv.except_osv(
-                    _('Pingen Connection Error'),
-                    _('Connection Error when updating the status of Document %s'
-                      ' from Pingen') % document.name)
+        with self._get_pingen_session(cr, uid, context=context) as session:
+            for document in self.browse(cr, uid, ids, context=context):
+                try:
+                    self._update_post_infos(
+                        cr, uid, document, pingen=session, context=context)
+                except ConnectionError as e:
+                    raise osv.except_osv(
+                        _('Pingen Connection Error'),
+                        _('Connection Error when updating the status of Document %s'
+                          ' from Pingen') % document.name)
 
-            except APIError as e:
-                raise osv.except_osv(
-                    _('Pingen Error'),
-                    _('Error when updating the status of Document %s from Pingen: '
-                      '\n%s') % (document.name, e))
+                except APIError as e:
+                    raise osv.except_osv(
+                        _('Pingen Error'),
+                        _('Error when updating the status of Document %s from Pingen: '
+                          '\n%s') % (document.name, e))
 
-            except:
-                _logger.exception(
-                       'Unexcepted Error when updating the status of pingen.document %s: ' %
-                       document.id)
-                raise osv.except_osv(
-                    _('Error'),
-                    _('Unexcepted Error when updating the status of Document %s') % document.name)
+                except:
+                    _logger.exception(
+                           'Unexcepted Error when updating the status of pingen.document %s: ' %
+                           document.id)
+                    raise osv.except_osv(
+                        _('Error'),
+                        _('Unexcepted Error when updating the status of Document %s') % document.name)
         return True
 

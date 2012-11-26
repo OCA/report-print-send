@@ -56,7 +56,8 @@ class Pingen(object):
 
     def __init__(self, token, staging=True):
         self._token = token
-        self.staging = True
+        self.staging = staging
+        self._session = None
         super(Pingen, self).__init__()
 
     @property
@@ -64,6 +65,32 @@ class Pingen(object):
         if self.staging:
             return 'https://stage-api.pingen.com'
         return 'https://api.pingen.com'
+
+    @property
+    def session(self):
+        """ Build a requests session """
+        if self._session is not None:
+            return self._session
+        self._session = requests.Session(
+            params={'token': self._token},
+            # with safe_mode, requests catch errors and
+            # returns a blank response with an error
+            config={'safe_mode': True},
+            # verify = False required for staging environment
+            # because the SSL certificate is wrong
+            verify=not self.staging)
+        return self._session
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        self.close()
+
+    def close(self):
+        """Dispose of any internal state. """
+        if self._session:
+            self._session.close()
 
     def _send(self, method, endpoint, **kwargs):
         """ Send a request to the pingen API using requests
@@ -77,23 +104,6 @@ class Pingen(object):
         """
         complete_url = urlparse.urljoin(self.url, endpoint)
 
-        auth_param = {'token': self._token}
-        if 'params' in kwargs:
-            kwargs['params'].update(auth_param)
-        else:
-            kwargs['params'] = auth_param
-
-        # with safe_mode, requests catch errors and
-        # returns a blank response with an error
-        config = {'safe_mode': True}
-        if 'config' in kwargs:
-            kwargs['config'].update(config)
-        else:
-            kwargs['config'] = config
-
-        # verify = False required for staging environment
-        # because the SSL certificate is wrong
-        kwargs['verify'] = not self.staging
         response = method(complete_url, **kwargs)
 
         if not response.ok:
@@ -140,7 +150,7 @@ class Pingen(object):
         multipart, content_type = encode_multipart_formdata(formdata)
 
         response = self._send(
-                requests.post,
+                self.session.post,
                 'document/upload',
                 headers={'Content-Type': content_type},
                 data=multipart)
@@ -169,7 +179,7 @@ class Pingen(object):
             'color': color,
             }
         response = self._send(
-                requests.post,
+                self.session.post,
                 'document/send',
                 params={'id': document_id},
                 data={'data': json.dumps(data)})
@@ -183,7 +193,7 @@ class Pingen(object):
         :return: dict of infos of the post
         """
         response = self._send(
-                requests.get,
+                self.session.get,
                 'post/get',
                 params={'id': post_id})
 
