@@ -19,15 +19,16 @@
 #
 ##############################################################################
 
-{'name' : 'pingen.com integration',
- 'version' : '1.0',
- 'author' : 'Camptocamp',
- 'maintainer': 'Camptocamp',
- 'license': 'AGPL-3',
- 'category': 'category',
- 'complexity': 'easy',
- 'depends' : [],
- 'description': """
+{
+    'name' : 'pingen.com integration',
+    'version' : '1.0',
+    'author' : 'Camptocamp',
+    'maintainer': 'Camptocamp',
+    'license': 'AGPL-3',
+    'category': 'Reporting',
+    'complexity': 'easy',
+    'depends' : [],
+    'description': """
 Integration with pingen.com
 ===========================
 
@@ -100,15 +101,16 @@ Dependencies
    is the country in English or German.
 
 """,
- 'website': 'http://www.camptocamp.com',
- 'data': [
-     'ir_attachment_view.xml',
-     'pingen_document_view.xml',
-     'pingen_data.xml',
-     'res_company_view.xml',
-     'security/ir.model.access.csv',
-     ],
- 'tests': [],
- 'installable': True,
- 'auto_install': False,
+    'website': 'http://www.camptocamp.com',
+    'data': [
+        'ir_attachment_view.xml',
+        'pingen_document_view.xml',
+        'pingen_data.xml',
+        'res_company_view.xml',
+        'security/ir.model.access.csv',
+        ],
+    'tests': [],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
 }
