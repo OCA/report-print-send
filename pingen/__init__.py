@@ -22,4 +22,5 @@
 import ir_attachment
 import pingen
 import pingen_document
+import res_company
 
