@@ -21,10 +21,10 @@
 
     <act_window
       context="{'search_default_attachment_id': [active_id], 'default_attachment_id': active_id}"
-      id="act_attachment_to_pingen_task"
-      name="Pingen Task"
+      id="act_attachment_to_pingen_document"
+      name="Pingen Document"
       groups=""
-      res_model="pingen.task"
+      res_model="pingen.document"
       src_model="ir.attachment"/>
 
   </data>
