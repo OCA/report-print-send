@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="0">
+
+    <menuitem action="pingen.action_pingen_document"
+      id="menu_pingen_document_document"
+      parent="document.menu_document_doc"/>
+
+  </data>
+</openerp>
