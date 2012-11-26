@@ -57,7 +57,7 @@ Dependencies
  'init_xml': [],
  'update_xml': [
      'ir_attachment_view.xml',
-     'pingen_task_view.xml',
+     'pingen_document_view.xml',
      ],
  'demo_xml': [],
  'tests': [],
