@@ -35,20 +35,22 @@ STAGING = True
 _logger = logging.getLogger(__name__)
 
 
-class pingen_task(orm.Model):
-    """ A pingen task is the state of the synchronization of
+class pingen_document(orm.Model):
+    """ A pingen document is the state of the synchronization of
     an attachment with pingen.com
 
     It stores the configuration and the current state of the synchronization.
     It also serves as a queue of documents to push to pingen.com
     """
 
-    _name = 'pingen.task'
+    _name = 'pingen.document'
     _inherits = {'ir.attachment': 'attachment_id'}
 
     _columns = {
         'attachment_id': fields.many2one(
-            'ir.attachment', 'Document', required=True, readonly=True, ondelete='cascade'),
+            'ir.attachment', 'Document',
+            required=True, readonly=True,
+            ondelete='cascade'),
         'state': fields.selection(
             [('pending', 'Pending'),
              ('pushed', 'Pushed'),
@@ -87,9 +89,9 @@ class pingen_task(orm.Model):
     }
 
     _sql_constraints = [
-        ('pingen_task_attachment_uniq',
+        ('pingen_document_attachment_uniq',
          'unique (attachment_id)',
-         'Only one Pingen task is allowed per attachment.'),
+         'Only one Pingen document is allowed per attachment.'),
     ]
 
     def _pingen(self, cr, uid, ids, context=None):
@@ -98,41 +100,41 @@ class pingen_task(orm.Model):
         # TODO parameterize
         return Pingen(TOKEN, staging=STAGING)
 
-    def _push_to_pingen(self, cr, uid, task, context=None):
+    def _push_to_pingen(self, cr, uid, document, context=None):
         """ Push a document to pingen.com """
         attachment_obj = self.pool.get('ir.attachment')
 
         decoded_document = attachment_obj._decoded_content(
-                cr, uid, task.attachment_id, context=context)
+                cr, uid, document.attachment_id, context=context)
 
         pingen = self._pingen(cr, uid, [], context=context)
         try:
             doc_id, post_id, infos = pingen.push_document(
-                task.datas_fname,
+                document.datas_fname,
                 StringIO(decoded_document),
-                task.pingen_send,
-                task.pingen_speed,
-                task.pingen_color)
+                document.pingen_send,
+                document.pingen_speed,
+                document.pingen_color)
         except ConnectionError as e:
             _logger.exception(
-                    'Connection Error when pushing Pingen Task %s to %s.' %
-                    (task.id, pingen.url))
+                    'Connection Error when pushing Pingen Document %s to %s.' %
+                    (document.id, pingen.url))
             raise
 
         except APIError as e:
             _logger.error(
-                    'API Error when pushing Pingen Task %s to %s.' %
-                    (task.id, pingen.url))
+                    'API Error when pushing Pingen Document %s to %s.' %
+                    (document.id, pingen.url))
             raise
 
-        task.write(
+        document.write(
             {'last_error_message': False,
              'state': 'sendcenter' if post_id else 'pushed',
              'push_date': infos['date'],
              'pingen_id': doc_id,
              'post_id': post_id},
             context=context)
-        _logger.info('Pingen Task %s: pushed to %s' % (task.id, pingen.url))
+        _logger.info('Pingen Document %s: pushed to %s' % (document.id, pingen.url))
 
     def push_to_pingen(self, cr, uid, ids, context=None):
         """ Push a document to pingen.com
@@ -142,19 +144,19 @@ class pingen_task(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
-        for task in self.browse(cr, uid, ids, context=context):
+        for document in self.browse(cr, uid, ids, context=context):
             try:
-                self._push_to_pingen(cr, uid, task, context=context)
+                self._push_to_pingen(cr, uid, document, context=context)
             except ConnectionError as e:
                 raise osv.except_osv(
                     _('Pingen Connection Error'),
-                    _('Connection Error when asking for sending the document %s to Pingen') % task.name)
+                    _('Connection Error when asking for sending the document %s to Pingen') % document.name)
 
             except APIError as e:
                 raise osv.except_osv(
                     _('Pingen Error'),
                     _('Error when asking Pingen to send the document %s: '
-                      '\n%s') % (task.name, e))
+                      '\n%s') % (document.name, e))
         return True
 
     def _push_and_send_to_pingen_silent(self, cr, uid, ids, context=None):
@@ -168,48 +170,48 @@ class pingen_task(orm.Model):
                 # do not retry pingen_error, they should be treated manually
                 [('state', 'in', ['pending', 'pushed', 'error'])],
                 context=context)
-        for task in self.browse(cr, uid, ids, context=context):
+        for document in self.browse(cr, uid, ids, context=context):
             try:
-                if not task.pingen_id:
-                    self._push_to_pingen(cr, uid, task, context=context)
-                if not task.post_id and task.pingen_send:
-                    self._ask_pingen_send(cr, uid, task, context=context)
+                if not document.pingen_id:
+                    self._push_to_pingen(cr, uid, document, context=context)
+                if not document.post_id and document.pingen_send:
+                    self._ask_pingen_send(cr, uid, document, context=context)
             except ConnectionError as e:
-                task.write({'last_error_message': e, 'state': 'error'}, context=context)
+                document.write({'last_error_message': e, 'state': 'error'}, context=context)
             except APIError as e:
-                task.write({'last_error_message': e, 'state': 'pingen_error'}, context=context)
+                document.write({'last_error_message': e, 'state': 'pingen_error'}, context=context)
 
         return True
 
-    def _ask_pingen_send(self, cr, uid, task, context=None):
+    def _ask_pingen_send(self, cr, uid, document, context=None):
         """ For a document already pushed to pingen, ask to send it.
         """
         # sending has been explicitely asked so we change the option
         # for consistency
-        if not task.pingen_send:
-            task.write({'pingen_send': True}, context=context)
+        if not document.pingen_send:
+            document.write({'pingen_send': True}, context=context)
 
         pingen = self._pingen(cr, uid, [], context=context)
         try:
             post_id = pingen.send_document(
-                task.pingen_id,
-                task.pingen_speed,
-                task.pingen_color)
+                document.pingen_id,
+                document.pingen_speed,
+                document.pingen_color)
         except ConnectionError as e:
-            _logger.exception('Connection Error when asking for sending Pingen Task %s to %s.' %
-                    (task.id, pingen.url))
+            _logger.exception('Connection Error when asking for sending Pingen Document %s to %s.' %
+                    (document.id, pingen.url))
             raise
         except APIError as e:
-            _logger.exception('API Error when asking for sending Pingen Task %s to %s.' %
-                    (task.id, pingen.url))
+            _logger.exception('API Error when asking for sending Pingen Document %s to %s.' %
+                    (document.id, pingen.url))
             raise
 
-        task.write(
+        document.write(
             {'last_error_message': False,
              'state': 'sendcenter',
              'post_id': post_id},
             context=context)
-        _logger.info('Pingen Task %s: asked for sending to %s' % (task.id, pingen.url))
+        _logger.info('Pingen Document %s: asked for sending to %s' % (document.id, pingen.url))
 
         return True
 
@@ -219,37 +221,41 @@ class pingen_task(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
-        for task in self.browse(cr, uid, ids, context=context):
+        for document in self.browse(cr, uid, ids, context=context):
             try:
-                self._ask_pingen_send(cr, uid, task, context=context)
+                self._ask_pingen_send(cr, uid, document, context=context)
             except ConnectionError as e:
                 raise osv.except_osv(
                     _('Pingen Connection Error'),
-                    _('Connection Error when asking for sending the document %s to Pingen') % task.name)
+                    _('Connection Error when asking for '
+                      'sending the document %s to Pingen') % document.name)
 
             except APIError as e:
                 raise osv.except_osv(
                     _('Pingen Error'),
                     _('Error when asking Pingen to send the document %s: '
-                      '\n%s') % (task.name, e))
+                      '\n%s') % (document.name, e))
         return True
 
-    def _update_post_infos(self, cr, uid, task, context=None):
+    def _update_post_infos(self, cr, uid, document, context=None):
         """ Update the informations from pingen of a document in the Sendcenter
         """
-        if not task.post_id:
+        if not document.post_id:
             return
 
         pingen = self._pingen(cr, uid, [], context=context)
         try:
-            post_infos = pingen.post_infos(task.post_id)
+            post_infos = pingen.post_infos(document.post_id)
         except ConnectionError as e:
-            _logger.exception('Connection Error when asking for sending Pingen Task %s to %s.' %
-                    (task.id, pingen.url))
+            _logger.exception(
+                    'Connection Error when asking for '
+                    'sending Pingen Document %s to %s.' %
+                    (document.id, pingen.url))
             raise
         except APIError as e:
-            _logger.exception('API Error when asking for sending Pingen Task %s to %s.' %
-                    (task.id, pingen.url))
+            _logger.exception(
+                    'API Error when asking for sending Pingen Document %s to %s.' %
+                    (document.id, pingen.url))
             raise
 
         currency_ids = self.pool.get('res.currency').search(
@@ -268,8 +274,8 @@ class pingen_task(orm.Model):
         if pingen.is_posted(post_infos):
             vals['state'] = 'sent'
 
-        task.write(vals, context=context)
-        _logger.info('Pingen Task %s: status updated' % task.id)
+        document.write(vals, context=context)
+        _logger.info('Pingen Document %s: status updated' % document.id)
 
     def _update_post_infos_silent(self, cr, uid, ids, context=None):
         """ Update the informations from pingen of a document in the Sendcenter
@@ -282,9 +288,9 @@ class pingen_task(orm.Model):
                     [('state', '=', 'sendcenter')],
                     context=context)
 
-        for task in self.browse(cr, uid, ids, context=context):
+        for document in self.browse(cr, uid, ids, context=context):
             try:
-                self._update_post_infos(cr, uid, task, context=context)
+                self._update_post_infos(cr, uid, document, context=context)
             except (ConnectionError, APIError):
                 # Intended silented exception, we can consider that it's not
                 # important if the update not worked, that's
@@ -299,19 +305,19 @@ class pingen_task(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
-        for task in self.browse(cr, uid, ids, context=context):
+        for document in self.browse(cr, uid, ids, context=context):
             try:
-                self._update_post_infos(cr, uid, task, context=context)
+                self._update_post_infos(cr, uid, document, context=context)
             except ConnectionError as e:
                 raise osv.except_osv(
                     _('Pingen Connection Error'),
                     _('Connection Error when updating the status of Document %s'
-                      ' from Pingen') % task.name)
+                      ' from Pingen') % document.name)
 
             except APIError as e:
                 raise osv.except_osv(
                     _('Pingen Error'),
                     _('Error when updating the status of Document %s from Pingen: '
-                      '\n%s') % (task.name, e))
+                      '\n%s') % (document.name, e))
         return True
 

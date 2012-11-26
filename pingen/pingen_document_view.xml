@@ -2,12 +2,12 @@
 <openerp>
   <data noupdate="0">
 
-    <record id="view_pingen_task_tree" model="ir.ui.view">
-      <field name="name">pingen.task.tree</field>
-      <field name="model">pingen.task</field>
+    <record id="view_pingen_document_tree" model="ir.ui.view">
+      <field name="name">pingen.document.tree</field>
+      <field name="model">pingen.document</field>
       <field name="type">tree</field>
       <field name="arch" type="xml">
-        <tree string="Pingen Task">
+        <tree string="Pingen Document">
           <field name="name"/>
           <field name="datas_fname"/>
           <field name="pingen_send"/>
@@ -18,12 +18,12 @@
       </field>
     </record>
 
-    <record id="view_pingen_task_form" model="ir.ui.view">
-      <field name="name">pingen.task.form</field>
-      <field name="model">pingen.task</field>
+    <record id="view_pingen_document_form" model="ir.ui.view">
+      <field name="name">pingen.document.form</field>
+      <field name="model">pingen.document</field>
       <field name="type">form</field>
       <field name="arch" type="xml">
-        <form string="Pingen Task">
+        <form string="Pingen Document">
           <group colspan="4" col="6">
             <field name="name" readonly="True"/>
             <field name="type" readonly="True"/>
@@ -111,12 +111,12 @@
       </field>
     </record>
 
-    <record id="view_pingen_task_search" model="ir.ui.view">
-      <field name="name">pingen.task.search</field>
-      <field name="model">pingen.task</field>
+    <record id="view_pingen_document_search" model="ir.ui.view">
+      <field name="name">pingen.document.search</field>
+      <field name="model">pingen.document</field>
       <field name="type">search</field>
       <field name="arch" type="xml">
-        <search string="Pingen Task">
+        <search string="Pingen Document">
           <filter icon="terp-stage"
             string="Pending"
             domain="[('state','=','pending')]"/>
@@ -132,16 +132,16 @@
       </field>
     </record>
 
-    <record id="action_pingen_task" model="ir.actions.act_window">
-      <field name="name">Pingen Tasks</field>
+    <record id="action_pingen_document" model="ir.actions.act_window">
+      <field name="name">Pingen Documents</field>
       <field name="type">ir.actions.act_window</field>
-      <field name="res_model">pingen.task</field>
+      <field name="res_model">pingen.document</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
-      <field name="search_view_id" ref="view_pingen_task_search"/>
+      <field name="search_view_id" ref="view_pingen_document_search"/>
     </record>
 
-    <menuitem action="action_pingen_task" id="menu_pingen_task" parent="base.next_id_4"/>
+    <menuitem action="action_pingen_document" id="menu_pingen_document" parent="base.next_id_4"/>
 
   </data>
 </openerp>
