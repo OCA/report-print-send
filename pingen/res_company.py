@@ -19,8 +19,24 @@
 #
 ##############################################################################
 
-import ir_attachment
-import pingen
-import pingen_document
-import res_company
+from openerp.osv import orm, fields
+from openerp.osv.orm import browse_record
+from .pingen import Pingen
+
+class res_company(orm.Model):
+
+    _inherit = 'res.company'
+
+    _columns = {
+        'pingen_token': fields.char('Pingen Token', size=32),
+        'pingen_staging': fields.boolean('Pingen Staging')
+    }
+
+    def _pingen(self, cr, uid, company, context=None):
+        """ Return a Pingen instance to work on """
+        assert isinstance(company, (int, long, browse_record)), \
+            "one id or browse_record expected"
+        if not isinstance(company, browse_record):
+            company = self.browse(cr, uid, company_id, context=context)
+        return Pingen(company.pingen_token, staging=company.pingen_staging)
 

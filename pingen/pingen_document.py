@@ -23,14 +23,12 @@ import logging
 
 from cStringIO import StringIO
 
+from contextlib import closing
 from openerp.osv import osv, orm, fields
 from openerp import tools
 from openerp.tools.translate import _
-from .pingen import Pingen, APIError, ConnectionError, POST_SENDING_STATUS
-
-# TODO should be configurable
-TOKEN = '6bc041af6f02854461ef31c2121ef853'
-STAGING = True
+from openerp import pooler
+from .pingen import APIError, ConnectionError, POST_SENDING_STATUS
 
 _logger = logging.getLogger(__name__)
 
@@ -60,7 +58,6 @@ class pingen_document(orm.Model):
              ('pingen_error', 'Pingen Error'),
              ('canceled', 'Canceled')],
             string='State', readonly=True, required=True),
-        'date': fields.datetime('Creation Date', readonly=True),
         'push_date': fields.datetime('Push Date', readonly=True),
 
         # for `error` and `pingen_error` states when we push
@@ -94,12 +91,6 @@ class pingen_document(orm.Model):
          'Only one Pingen document is allowed per attachment.'),
     ]
 
-    def _pingen(self, cr, uid, ids, context=None):
-        """ Return a Pingen instance to work on """
-        assert not ids, "ids is there by convention, should not be used"
-        # TODO parameterize
-        return Pingen(TOKEN, staging=STAGING)
-
     def _push_to_pingen(self, cr, uid, document, context=None):
         """ Push a document to pingen.com """
         attachment_obj = self.pool.get('ir.attachment')
@@ -107,7 +98,9 @@ class pingen_document(orm.Model):
         decoded_document = attachment_obj._decoded_content(
                 cr, uid, document.attachment_id, context=context)
 
-        pingen = self._pingen(cr, uid, [], context=context)
+        company = self.pool.get('res.users').browse(
+                cr, uid, uid, context=context).company_id
+        pingen = self.pool.get('res.company')._pingen(cr, uid, company, context=context)
         try:
             doc_id, post_id, infos = pingen.push_document(
                 document.datas_fname,
@@ -127,9 +120,17 @@ class pingen_document(orm.Model):
                     (document.id, pingen.url))
             raise
 
+        error = False
+        state = 'pushed'
+        if post_id:
+            state = 'sendcenter'
+        elif infos['requirement_failure']:
+            state = 'pingen_error'
+            error = _('The document does not meet the Pingen requirements.')
+
         document.write(
-            {'last_error_message': False,
-             'state': 'sendcenter' if post_id else 'pushed',
+            {'last_error_message': error,
+             'state': state,
              'push_date': infos['date'],
              'pingen_id': doc_id,
              'post_id': post_id},
@@ -157,10 +158,22 @@ class pingen_document(orm.Model):
                     _('Pingen Error'),
                     _('Error when asking Pingen to send the document %s: '
                       '\n%s') % (document.name, e))
+
+            except:
+                _logger.exception(
+                       'Unexcepted Error when updating the status of pingen.document %s: ' %
+                       document.id)
+                raise osv.except_osv(
+                    _('Error'),
+                    _('Unexcepted Error when updating the status of Document %s') % document.name)
         return True
 
-    def _push_and_send_to_pingen_silent(self, cr, uid, ids, context=None):
+    def _push_and_send_to_pingen_cron(self, cr, uid, ids, context=None):
         """ Push a document to pingen.com
+
+        Intended to be used in a cron.
+
+        Commit after each record
 
         Instead of raising, store the error in the pingen.document
         """
@@ -169,18 +182,49 @@ class pingen_document(orm.Model):
                 cr, uid,
                 # do not retry pingen_error, they should be treated manually
                 [('state', 'in', ['pending', 'pushed', 'error'])],
+                limit=100,
                 context=context)
-        for document in self.browse(cr, uid, ids, context=context):
-            try:
-                if not document.pingen_id:
-                    self._push_to_pingen(cr, uid, document, context=context)
-                if not document.post_id and document.pingen_send:
-                    self._ask_pingen_send(cr, uid, document, context=context)
-            except ConnectionError as e:
-                document.write({'last_error_message': e, 'state': 'error'}, context=context)
-            except APIError as e:
-                document.write({'last_error_message': e, 'state': 'pingen_error'}, context=context)
 
+        with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr:
+            for document in self.browse(loc_cr, uid, ids, context=context):
+
+                if document.state == 'error':
+                    self._resolve_error(loc_cr, uid, document, context=context)
+                    document.refresh()
+
+                try:
+                    if document.state == 'pending':
+                        self._push_to_pingen(loc_cr, uid, document, context=context)
+
+                    elif document.state == 'pushed':
+                        self._ask_pingen_send(loc_cr, uid, document, context=context)
+                except ConnectionError as e:
+                    document.write({'last_error_message': e, 'state': 'error'}, context=context)
+                except APIError as e:
+                    document.write({'last_error_message': e, 'state': 'pingen_error'}, context=context)
+                except:
+                    _logger.error('Unexcepted error in pingen cron')
+                    loc_cr.rollback()
+                    raise
+
+                loc_cr.commit()
+
+        return True
+
+    def _resolve_error(self, cr, uid, document, context=None):
+        """ A document as resolved, put in the correct state"""
+        if document.post_id:
+            state = 'sendcenter'
+        elif document.pingen_id:
+            state = 'pushed'
+        else:
+            state = 'pending'
+        document.write({'state': state}, context=context)
+
+    def resolve_error(self, cr, uid, ids, context=None):
+        """ A document as resolved, put in the correct state"""
+        for document in self.browse(cr, uid, ids, context=context):
+            self._resolve_error(cr, uid, document, context=context)
         return True
 
     def _ask_pingen_send(self, cr, uid, document, context=None):
@@ -191,7 +235,9 @@ class pingen_document(orm.Model):
         if not document.pingen_send:
             document.write({'pingen_send': True}, context=context)
 
-        pingen = self._pingen(cr, uid, [], context=context)
+        company = self.pool.get('res.users').browse(
+                cr, uid, uid, context=context).company_id
+        pingen = self.pool.get('res.company')._pingen(cr, uid, company, context=context)
         try:
             post_id = pingen.send_document(
                 document.pingen_id,
@@ -235,6 +281,14 @@ class pingen_document(orm.Model):
                     _('Pingen Error'),
                     _('Error when asking Pingen to send the document %s: '
                       '\n%s') % (document.name, e))
+
+            except:
+                _logger.exception(
+                       'Unexcepted Error when updating the status of pingen.document %s: ' %
+                       document.id)
+                raise osv.except_osv(
+                    _('Error'),
+                    _('Unexcepted Error when updating the status of Document %s') % document.name)
         return True
 
     def _update_post_infos(self, cr, uid, document, context=None):
@@ -243,7 +297,9 @@ class pingen_document(orm.Model):
         if not document.post_id:
             return
 
-        pingen = self._pingen(cr, uid, [], context=context)
+        company = self.pool.get('res.users').browse(
+                cr, uid, uid, context=context).company_id
+        pingen = self.pool.get('res.company')._pingen(cr, uid, company, context=context)
         try:
             post_infos = pingen.post_infos(document.post_id)
         except ConnectionError as e:
@@ -270,6 +326,7 @@ class pingen_document(orm.Model):
             'country_id': country_ids[0] if country_ids else False,
             'send_date': post_infos['date'],
             'pages': post_infos['pages'],
+            'last_error_message': False,
             }
         if pingen.is_posted(post_infos):
             vals['state'] = 'sent'
@@ -277,8 +334,12 @@ class pingen_document(orm.Model):
         document.write(vals, context=context)
         _logger.info('Pingen Document %s: status updated' % document.id)
 
-    def _update_post_infos_silent(self, cr, uid, ids, context=None):
+    def _update_post_infos_cron(self, cr, uid, ids, context=None):
         """ Update the informations from pingen of a document in the Sendcenter
+
+        Intended to be used in a cron.
+
+        Commit after each record
 
         Do not raise errors, only skip the update of the record.
         """
@@ -288,15 +349,20 @@ class pingen_document(orm.Model):
                     [('state', '=', 'sendcenter')],
                     context=context)
 
-        for document in self.browse(cr, uid, ids, context=context):
-            try:
-                self._update_post_infos(cr, uid, document, context=context)
-            except (ConnectionError, APIError):
-                # Intended silented exception, we can consider that it's not
-                # important if the update not worked, that's
-                # only informative, and it will be retried the next time
-                # In any case, the error has been by _update_post_infos
-                pass
+        with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr:
+            for document in self.browse(loc_cr, uid, ids, context=context):
+                try:
+                    self._update_post_infos(loc_cr, uid, document, context=context)
+                except (ConnectionError, APIError):
+                    # will be retried the next time
+                    # In any case, the error has been logged by _update_post_infos
+                    loc_cr.rollback()
+                except:
+                    _logger.error('Unexcepted error in pingen cron')
+                    loc_cr.rollback()
+                    raise
+
+                loc_cr.commit()
         return True
 
     def update_post_infos(self, cr, uid, ids, context=None):
@@ -319,5 +385,13 @@ class pingen_document(orm.Model):
                     _('Pingen Error'),
                     _('Error when updating the status of Document %s from Pingen: '
                       '\n%s') % (document.name, e))
+
+            except:
+                _logger.exception(
+                       'Unexcepted Error when updating the status of pingen.document %s: ' %
+                       document.id)
+                raise osv.except_osv(
+                    _('Error'),
+                    _('Unexcepted Error when updating the status of Document %s') % document.name)
         return True
 
