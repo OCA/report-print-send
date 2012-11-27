@@ -152,6 +152,7 @@ class pingen_document(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
+        assert len(ids) == 1, "Only 1 id is allowed"
         with self._get_pingen_session(cr, uid, context=context) as session:
             for document in self.browse(cr, uid, ids, context=context):
                 try:
@@ -282,6 +283,7 @@ class pingen_document(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
+        assert len(ids) == 1, "Only 1 id is allowed"
         with self._get_pingen_session(cr, uid, context=context) as session:
             for document in self.browse(cr, uid, ids, context=context):
                 try:
@@ -388,6 +390,7 @@ class pingen_document(orm.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
+        assert len(ids) == 1, "Only 1 id is allowed"
         with self._get_pingen_session(cr, uid, context=context) as session:
             for document in self.browse(cr, uid, ids, context=context):
                 try:
