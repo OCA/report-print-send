@@ -90,30 +90,34 @@ class printing_printer(osv.osv):
             5 : 'error'
         }
         
+        try:
         # Skip update to avoid the thread being created again
-        ctx = context.copy()
-        ctx['skip_update'] = True
-        ids = self.pool.get('printing.printer').search(cr, uid, [], context=ctx)
-        for printer in self.pool.get('printing.printer').browse(cr, uid, ids, context=ctx):
-            vals = {}
-            if server_error:
-                status = 'server-error'
-            elif printer.system_name in printers:
-                info = printers[printer.system_name]
-                status = mapping.get( info['printer-state'], 'unknown' )
-                vals = {
-                    'model': info.get('printer-make-and-model', False),
-                    'location': info.get('printer-location', False),
-                    'uri': info.get('device-uri', False),
-                }
-            else:
-                status = 'unavailable'
+            ctx = context.copy()
+            ctx['skip_update'] = True
+            ids = self.pool.get('printing.printer').search(cr, uid, [], context=ctx)
+            for printer in self.pool.get('printing.printer').browse(cr, uid, ids, context=ctx):
+                vals = {}
+                if server_error:
+                    status = 'server-error'
+                elif printer.system_name in printers:
+                    info = printers[printer.system_name]
+                    status = mapping.get( info['printer-state'], 'unknown' )
+                    vals = {
+                        'model': info.get('printer-make-and-model', False),
+                        'location': info.get('printer-location', False),
+                        'uri': info.get('device-uri', False),
+                    }
+                else:
+                    status = 'unavailable'
 
-            vals['status'] = status
-            self.pool.get('printing.printer').write(cr, uid, [printer.id], vals, context)
-
-        cr.commit()
-        cr.close()
+                vals['status'] = status
+                self.pool.get('printing.printer').write(cr, uid, [printer.id], vals, context)
+            cr.commit()
+        except:
+            cr.rollback()
+            raise
+        finally:
+            cr.close()
         self.lock.acquire()
         self.updating = False
         self.last_update = time.time()
@@ -337,23 +341,27 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
     def exp_report_get(self, db, uid, report_id):
 
         cr = pooler.get_db(db).cursor()
-        pool = pooler.get_pool(cr.dbname)
-        
-        # First of all load report defaults: name, action and printer
-        report_obj = pool.get('ir.actions.report.xml')
-        report = report_obj.search(cr,uid,[('report_name','=',self._reports[report_id]['report_name'])])
-        if report:
-            report = report_obj.browse(cr,uid,report[0])
-            name = report.name
-            data = report.behaviour()[report.id]
-            action = data['action']
-            printer = data['printer']
-            if action != 'client':
-                if (self._reports and self._reports.get(report_id, False) and self._reports[report_id].get('result', False)
-                    and self._reports[report_id].get('format', False)):
-                    report_obj.print_direct(cr, uid, base64.encodestring(self._reports[report_id]['result']),
-                        self._reports[report_id]['format'], printer)
-        cr.close()
+        try:
+            pool = pooler.get_pool(cr.dbname)
+            # First of all load report defaults: name, action and printer
+            report_obj = pool.get('ir.actions.report.xml')
+            report = report_obj.search(cr,uid,[('report_name','=',self._reports[report_id]['report_name'])])
+            if report:
+                report = report_obj.browse(cr,uid,report[0])
+                name = report.name
+                data = report.behaviour()[report.id]
+                action = data['action']
+                printer = data['printer']
+                if action != 'client':
+                    if (self._reports and self._reports.get(report_id, False) and self._reports[report_id].get('result', False)
+                        and self._reports[report_id].get('format', False)):
+                        report_obj.print_direct(cr, uid, base64.encodestring(self._reports[report_id]['result']),
+                            self._reports[report_id]['format'], printer)
+        except:
+            cr.rollback()
+            raise
+        finally:
+            cr.close()
 
         res = super(virtual_report_spool, self).exp_report_get(db, uid, report_id)
         return res
