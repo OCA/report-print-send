@@ -47,6 +47,7 @@ class ir_attachment(orm.Model):
 
     _defaults = {
         'pingen_send': True,
+        'pingen_color': '0',
         'pingen_speed': '2',
     }
 
