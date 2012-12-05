@@ -195,36 +195,36 @@ class pingen_document(orm.Model):
                 limit=100,
                 context=context)
 
-        with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr:
-            with self._get_pingen_session(cr, uid, context=context) as session:
-                for document in self.browse(loc_cr, uid, ids, context=context):
+        with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr, \
+                self._get_pingen_session(cr, uid, context=context) as session:
+            for document in self.browse(loc_cr, uid, ids, context=context):
 
-                    if document.state == 'error':
-                        self._resolve_error(loc_cr, uid, document, context=context)
-                        document.refresh()
+                if document.state == 'error':
+                    self._resolve_error(loc_cr, uid, document, context=context)
+                    document.refresh()
 
-                    try:
-                        if document.state == 'pending':
-                            self._push_to_pingen(
-                                loc_cr, uid, document, pingen=session, context=context)
+                try:
+                    if document.state == 'pending':
+                        self._push_to_pingen(
+                            loc_cr, uid, document, pingen=session, context=context)
 
-                        elif document.state == 'pushed':
-                            self._ask_pingen_send(
-                                loc_cr, uid, document, pingen=session, context=context)
-                    except ConnectionError as e:
-                        document.write({'last_error_message': e,
-                                        'state': 'error'},
-                                       context=context)
-                    except APIError as e:
-                        document.write({'last_error_message': e,
-                                        'state': 'pingen_error'},
-                                       context=context)
-                    except:
-                        _logger.error('Unexcepted error in pingen cron')
-                        loc_cr.rollback()
-                        raise
+                    elif document.state == 'pushed':
+                        self._ask_pingen_send(
+                            loc_cr, uid, document, pingen=session, context=context)
+                except ConnectionError as e:
+                    document.write({'last_error_message': e,
+                                    'state': 'error'},
+                                   context=context)
+                except APIError as e:
+                    document.write({'last_error_message': e,
+                                    'state': 'pingen_error'},
+                                   context=context)
+                except:
+                    _logger.error('Unexcepted error in pingen cron')
+                    loc_cr.rollback()
+                    raise
 
-                    loc_cr.commit()
+                loc_cr.commit()
 
         return True
 
@@ -366,22 +366,22 @@ class pingen_document(orm.Model):
                     [('state', '=', 'sendcenter')],
                     context=context)
 
-        with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr:
-            with self._get_pingen_session(cr, uid, context=context) as session:
-                for document in self.browse(loc_cr, uid, ids, context=context):
-                    try:
-                        self._update_post_infos(
-                            loc_cr, uid, document, pingen=session, context=context)
-                    except (ConnectionError, APIError):
-                        # will be retried the next time
-                        # In any case, the error has been logged by _update_post_infos
-                        loc_cr.rollback()
-                    except:
-                        _logger.error('Unexcepted error in pingen cron')
-                        loc_cr.rollback()
-                        raise
+        with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr, \
+                self._get_pingen_session(cr, uid, context=context) as session:
+            for document in self.browse(loc_cr, uid, ids, context=context):
+                try:
+                    self._update_post_infos(
+                        loc_cr, uid, document, pingen=session, context=context)
+                except (ConnectionError, APIError):
+                    # will be retried the next time
+                    # In any case, the error has been logged by _update_post_infos
+                    loc_cr.rollback()
+                except:
+                    _logger.error('Unexcepted error in pingen cron')
+                    loc_cr.rollback()
+                    raise
 
-                    loc_cr.commit()
+                loc_cr.commit()
         return True
 
     def update_post_infos(self, cr, uid, ids, context=None):
