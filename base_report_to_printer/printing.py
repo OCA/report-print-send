@@ -118,10 +118,9 @@ class printing_printer(osv.osv):
             raise
         finally:
             cr.close()
-        self.lock.acquire()
-        self.updating = False
-        self.last_update = time.time()
-        self.lock.release()
+        with self.lock:
+            self.updating = False
+            self.last_update = time.time()
 
 
     def start_printer_update(self, cr, uid, context):
