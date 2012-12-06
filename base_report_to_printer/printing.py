@@ -41,6 +41,7 @@ import pooler
 import tools
 from tools.translate import _
 from base_calendar import base_calendar
+import logging
 
 
 #
@@ -232,7 +233,6 @@ res_users()
 class report_xml(osv.osv):
 
     def print_direct(self, cr, uid, result, format, printer):
-        logger = netsvc.Logger()
         fd, file_name = mkstemp()
         try:
             os.write(fd, base64.decodestring(result))
@@ -249,7 +249,8 @@ class report_xml(osv.osv):
                 cmd = "lpr -l -P %s %s" % (printer_system_name,file_name)
             else:
                 cmd = "lpr -P %s %s" % (printer_system_name,file_name)
-            logger.notifyChannel("report", netsvc.LOG_INFO,"Printing job : '%s'" % cmd)
+            logger = logging.getLogger('base_report_to_printer')
+            logger.info("Printing job : '%s'" % cmd)
             os.system(cmd)
         return True
 
