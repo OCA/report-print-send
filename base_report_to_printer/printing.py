@@ -178,7 +178,7 @@ class printing_printer(osv.osv):
         printer_ids = self.search(cr, uid,[('default','=',True)])
         if printer_ids:
             return printer_ids[0]
-        return None
+        return False
 
 printing_printer()
 
