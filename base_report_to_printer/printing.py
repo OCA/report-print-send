@@ -249,6 +249,7 @@ class report_xml(osv.osv):
                 cmd = "lpr -P %s %s" % (printer_system_name,file_name)
             logger.notifyChannel("report", netsvc.LOG_INFO,"Printing job : '%s'" % cmd)
             os.system(cmd)
+        return True
 
     _inherit = 'ir.actions.report.xml'
     _columns = {
