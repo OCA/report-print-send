@@ -240,7 +240,7 @@ class report_xml(osv.osv):
             os.close(fd)
         printer_system_name = ''
         if printer:
-            if isinstance(printer, (str,unicode)):
+            if isinstance(printer, (basestring)):
                 printer_system_name = printer
             else:
                 printer_system_name = printer.system_name
