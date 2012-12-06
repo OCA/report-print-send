@@ -188,7 +188,7 @@ printing_printer()
 # Actions
 #
 
-def _available_action_types(self, cr, uid, context={}):
+def _available_action_types(self, cr, uid, context=None):
     return [
         ('server',_('Send to Printer')),
         ('client',_('Send to Client')),
@@ -213,7 +213,9 @@ class res_users(osv.osv):
     _name = "res.users"
     _inherit = "res.users"
 
-    def _user_available_action_types(self, cr, uid, context={}):
+    def _user_available_action_types(self, cr, uid, context=None):
+        if context is None:
+            context={}
         return [x for x in _available_action_types(self, cr, uid, context) if x[0] != 'user_default']
 
     _columns = {
@@ -266,7 +268,9 @@ class report_xml(osv.osv):
         'printing_action_ids': fields.one2many('printing.report.xml.action', 'report_id', 'Actions', help='This field allows configuring action and printer on a per user basis'),
     }
 
-    def behaviour(self, cr, uid, ids, context={}):
+    def behaviour(self, cr, uid, ids, context=None):
+        if context is None:
+            context={}
         result = {}
 
         # Set hardcoded default action
@@ -320,7 +324,9 @@ class report_xml_action(osv.osv):
         'printer_id': fields.many2one('printing.printer', 'Printer'),
     }
 
-    def behaviour(self, cr, uid, report_id, context={}):
+    def behaviour(self, cr, uid, report_id, context=None):
+        if context is None:
+            context={}
         result = {}
         ids = self.search(cr, uid, [('report_id','=',report_id),('user_id','=',uid)], context=context)
         if not ids:
