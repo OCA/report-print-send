@@ -152,6 +152,7 @@ class printing_printer(osv.osv):
                 self.lock.release()
                 if not updating:
                     break
+        return True
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         self.update(cr, uid, context)
