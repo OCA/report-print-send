@@ -39,7 +39,7 @@ What is pingen.com
 ------------------
 
 Pingen.com is a paid online service.
-It send uploaded documents by letter post.
+It sends uploaded documents by letter post.
 
 Scope of the integration
 ------------------------
@@ -70,7 +70,7 @@ You can tick a box to push the document to pingen.com.
 
 There is 3 additional options:
 
- * Send: the document will not be only uploaded, but will be also send
+ * Send: the document will not be only uploaded, but will be also be sent
  * Speed: priority or economy
  * Type of print: color or black and white
 
