@@ -20,14 +20,17 @@
 ##############################################################################
 
 {
-    'name' : 'pingen.com integration',
-    'version' : '1.0',
-    'author' : 'Camptocamp',
+    'name': 'pingen.com integration',
+    'version': '1.0',
+    'author': 'Camptocamp',
     'maintainer': 'Camptocamp',
     'license': 'AGPL-3',
     'category': 'Reporting',
     'complexity': 'easy',
-    'depends' : [],
+    'depends': [],
+    'external_dependencies': {
+        'python': ['requests'],
+        },
     'description': """
 Integration with pingen.com
 ===========================
