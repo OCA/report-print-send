@@ -85,7 +85,6 @@ class ir_attachment(orm.Model):
         else:
             if document:
                 if document.state == 'pushed':
-                    # TODO: cancel on pingen.com
                     raise osv.except_osv(
                         _('Error'),
                         _('The attachment %s is already pushed to pingen.com.') % \

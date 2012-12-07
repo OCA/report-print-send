@@ -91,7 +91,7 @@ class pingen_document(orm.Model):
     ]
 
     def _get_pingen_session(self, cr, uid, context=None):
-        """ Returns a pingen session for a user"""
+        """ Returns a pingen session for a user """
         company = self.pool.get('res.users').browse(
                 cr, uid, uid, context=context).company_id
         return self.pool.get('res.company')._pingen(cr, uid, company, context=context)
@@ -99,7 +99,7 @@ class pingen_document(orm.Model):
     def _push_to_pingen(self, cr, uid, document, pingen=None, context=None):
         """ Push a document to pingen.com
 
-        :param Pingen pingen: optional pingen object to, reuse session
+        :param Pingen pingen: optional pingen object to reuse session
         """
         attachment_obj = self.pool.get('ir.attachment')
 
@@ -224,12 +224,13 @@ class pingen_document(orm.Model):
                     loc_cr.rollback()
                     raise
 
-                loc_cr.commit()
+                else:
+                    loc_cr.commit()
 
         return True
 
     def _resolve_error(self, cr, uid, document, context=None):
-        """ A document as resolved, put in the correct state"""
+        """ A document as resolved, put in the correct state """
         if document.post_id:
             state = 'sendcenter'
         elif document.pingen_id:
@@ -239,7 +240,7 @@ class pingen_document(orm.Model):
         document.write({'state': state}, context=context)
 
     def resolve_error(self, cr, uid, ids, context=None):
-        """ A document as resolved, put in the correct state"""
+        """ A document as resolved, put in the correct state """
         for document in self.browse(cr, uid, ids, context=context):
             self._resolve_error(cr, uid, document, context=context)
         return True
@@ -380,8 +381,8 @@ class pingen_document(orm.Model):
                     _logger.error('Unexcepted error in pingen cron')
                     loc_cr.rollback()
                     raise
-
-                loc_cr.commit()
+                else:
+                    loc_cr.commit()
         return True
 
     def update_post_infos(self, cr, uid, ids, context=None):
