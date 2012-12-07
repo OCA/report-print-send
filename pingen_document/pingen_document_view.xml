@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="0">
+
+    <record id="view_document_file_form" model="ir.ui.view">
+      <field name="name">ir.attachment.document.pingen.view</field>
+      <field name="model">ir.attachment</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="document.view_document_file_form"/>
+      <field name="arch" type="xml">
+        <page string="Notes" position="before">
+          <page string="Pingen.com">
+            <field name="send_to_pingen"/>
+            <field name="pingen_send" attrs="{'required': [('send_to_pingen', '=', True)]}"/>
+            <field name="pingen_speed" attrs="{'required': [('pingen_send', '=', True)]}"/>
+            <field name="pingen_color" />
+          </page>
+        </page>
+      </field>
+    </record>
+
+    <menuitem action="pingen.action_pingen_document"
+      id="menu_pingen_document_document"
+      parent="document.menu_document_doc"/>
+
+  </data>
+</openerp>
