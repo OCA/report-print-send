@@ -37,6 +37,7 @@ POST_SENDING_STATUS = {
     400: 'Sending cancelled',
 }
 
+
 class PingenException(RuntimeError):
     """There was an ambiguous exception that occurred while handling your
     request."""
@@ -51,8 +52,7 @@ class APIError(PingenException):
 
 
 class Pingen(object):
-    """ Interface to pingen.com API
-    """
+    """ Interface to the pingen.com API """
 
     def __init__(self, token, staging=True):
         self._token = token
