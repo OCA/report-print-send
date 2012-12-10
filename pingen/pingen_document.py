@@ -26,8 +26,9 @@ from cStringIO import StringIO
 from contextlib import closing
 from openerp.osv import osv, orm, fields
 from openerp.tools.translate import _
-from openerp import pooler
-from .pingen import APIError, ConnectionError, POST_SENDING_STATUS
+from openerp import pooler, tools
+from .pingen import APIError, ConnectionError, POST_SENDING_STATUS, \
+        pingen_datetime_to_utc
 
 _logger = logging.getLogger(__name__)
 
@@ -135,10 +136,12 @@ class pingen_document(orm.Model):
             state = 'pingen_error'
             error = _('The document does not meet the Pingen requirements.')
 
+        push_date = pingen_datetime_to_utc(infos['date'])
+
         document.write(
             {'last_error_message': error,
              'state': state,
-             'push_date': infos['date'],
+             'push_date': push_date.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT),
              'pingen_id': doc_id,
              'post_id': post_id},
             context=context)
@@ -336,13 +339,16 @@ class pingen_document(orm.Model):
                 cr, uid, [('name', '=', post_infos['currency'])], context=context)
         country_ids = self.pool.get('res.country').search(
                 cr, uid, [('code', '=', post_infos['country'])], context=context)
+
+        send_date = pingen_datetime_to_utc(infos['date'])
+
         vals = {
             'post_status': POST_SENDING_STATUS[post_infos['status']],
             'cost': post_infos['cost'],
             'currency_id': currency_ids[0] if currency_ids else False,
             'parsed_address': post_infos['address'],
             'country_id': country_ids[0] if country_ids else False,
-            'send_date': post_infos['date'],
+            'send_date': send_date.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT),
             'pages': post_infos['pages'],
             'last_error_message': False,
             }
