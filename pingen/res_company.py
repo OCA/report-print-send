@@ -37,6 +37,6 @@ class res_company(orm.Model):
         assert isinstance(company, (int, long, browse_record)), \
             "one id or browse_record expected"
         if not isinstance(company, browse_record):
-            company = self.browse(cr, uid, company_id, context=context)
+            company = self.browse(cr, uid, company, context=context)
         return Pingen(company.pingen_token, staging=company.pingen_staging)
 
