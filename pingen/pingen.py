@@ -23,7 +23,9 @@ import requests
 import logging
 import urlparse
 import json
+import pytz
 
+from datetime import datetime
 from requests.packages.urllib3.filepost import encode_multipart_formdata
 
 _logger = logging.getLogger(__name__)
@@ -36,6 +38,23 @@ POST_SENDING_STATUS = {
     300: 'Some error occured and object wasn\'t sent',
     400: 'Sending cancelled',
 }
+
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'  # this is the format used by pingen API
+
+TZ = pytz.timezone('Europe/Zurich')  # this is the timezone of the pingen API
+
+
+def pingen_datetime_to_utc(dt):
+    """ Convert a date/time used by pingen.com to UTC timezone
+
+    :param dt: pingen date/time as string (as received from the API)
+               to convert to UTC
+    :return: datetime in the UTC timezone
+    """
+    utc = pytz.utc
+    dt = datetime.strptime(dt, DATETIME_FORMAT)
+    localized_dt = TZ.localize(dt, is_dst=True)
+    return localized_dt.astimezone(utc)
 
 
 class PingenException(RuntimeError):
