@@ -52,7 +52,7 @@ You can also define a default behaviour associated to the user, in order to esta
 
 After finishing the configuration, you will just have to click on printing button associated to the report (or launch the report by a wizard or whatever) and the system will automatically send the report to the previously set printer
 """,
-    'author': 'Agile Business Group & Domsense, Pegueroles SCP, NaN',
+    'author': ['Agile Business Group', 'Pegueroles SCP', 'NaN'],
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     "depends" : ['base', 'base_calendar'],
