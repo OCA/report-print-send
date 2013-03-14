@@ -36,6 +36,6 @@ Glue module between the `pingen` and the `document` modules.
         'pingen_document_view.xml',
         ],
     'tests': [],
-    'installable': True,
+    'installable': False,
     'auto_install': True,
 }
