@@ -65,5 +65,5 @@ After finishing the configuration, you will just have to click on printing butto
         ],
     "demo_xml" : [],
     "active": False,
-    "installable": True
+    "installable": False
 }
