@@ -25,45 +25,26 @@
     'name': "Report to printer",
     'version': '0.1',
     'category': 'Generic Modules/Base',
-    'description': """
-Extracted from printjob ( http://apps.openerp.com/addon/1727 ), this module allows to send reports to a printer attached to the server. Settings can be configured globaly, per user, per report and per user and report.
-
-Configuration
-=============
-
-.. image:: http://planet.domsense.com/wp-content/uploads/2011/09/printing-menu.png
-   :width: 400 px
-
-First of all, you have to load CUPS printers in OpenERP. You can use a wizard that retrieves them automatically. You just have to click on Update Printers from CUPS and printers will appear within the available printers list.
-
-In the next step you will configure the reports to send to the printers.
-
-.. image:: http://planet.domsense.com/wp-content/uploads/2011/09/reports.png
-   :width: 400 px
-
-Through the report form you can define the system’s behaviour while producing the report.
-
-.. image:: http://planet.domsense.com/wp-content/uploads/2011/09/report-configuration.png
-   :width: 400 px
-
-You can set a global behaviour, or differentiate it according to the user who’s printing. In the example, the global behaviour defines to send the report to client directly (Send to Client), therefore without sending it to the printer. But if user elbati is printing, the report will be sent to the selected printer (Send to Printer).
-
-You can also define a default behaviour associated to the user, in order to establish whether a certain user, when not differently set, wants to send the reports always to a specific printer or not.
-
-After finishing the configuration, you will just have to click on printing button associated to the report (or launch the report by a wizard or whatever) and the system will automatically send the report to the previously set printer
-""",
-    'author': ['Agile Business Group', 'Pegueroles SCP', 'NaN'],
+    'description': """This module allows users to send reports to a printer attached to the server. Settings can be configured globaly, per user, per report and per user and report.
+    Before you can use this module:
+	You must have lpr installed for this module to work as-is.
+	To install lpr on ubuntu enter this command at the CLI - sudo apt-get install cups-bsd
+	type  ls | lpr at the command prompt to confirm your server can print
+	
+	After installing enable the "Printing / Print Operator" option under access rights to give users the ability to view the print menu.
+	Then goto the user profile and set the users printing action and default printer.
+	""",
+    'author': 'Agile Business Group & Domsense, Pegueroles SCP, NaN',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     "depends" : ['base', 'base_calendar'],
-    "init_xml" : [],
-    "update_xml" : [
+    'data': [
         'printing_data.xml',
         'printing_view.xml',
         'wizard/update_printers.xml',
         'security/security.xml',
-        ],
-    "demo_xml" : [],
-    "active": False,
-    "installable": False
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
 }

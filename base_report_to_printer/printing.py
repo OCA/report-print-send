@@ -246,9 +246,11 @@ class report_xml(osv.osv):
                 printer_system_name = printer.system_name
             if format == 'raw':
                 # -l is the same as -o raw
-                cmd = "lpr -l -P %s %s" % (printer_system_name,file_name)
+				cmd = "lpr -l -P %s %s" % (printer_system_name,file_name)
+				#cmd = "lp -d %s %s" % (printer_system_name,file_name)
             else:
-                cmd = "lpr -P %s %s" % (printer_system_name,file_name)
+				cmd = "lpr -P %s %s" % (printer_system_name,file_name)
+                #cmd = "lp -d %s %s" % (printer_system_name,file_name)
             logger = logging.getLogger('base_report_to_printer')
             logger.info("Printing job : '%s'" % cmd)
             os.system(cmd)
@@ -365,6 +367,8 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                         and self._reports[report_id].get('format', False)):
                         report_obj.print_direct(cr, uid, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
+                        raise osv.except_osv(_('Printing...'), _('Document sent to printer %s') % (printer,))
+						
         except:
             cr.rollback()
             raise
