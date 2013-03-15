@@ -31,13 +31,7 @@
                         <field eval="1" name="perm_create"/>
                         <field name="group_id" ref="res_groups_printingprintoperator0"/>
                 </record>
-                <record id="menu_printing_printer_form" model="ir.ui.menu">
-                        <field eval="[(6,0,[ref('res_groups_printingprintoperator0')])]" name="groups_id"/>
-                        <field eval="&quot;&quot;&quot;Printers&quot;&quot;&quot;" name="name"/>
-                        <field eval="10" name="sequence"/>
-                        <field name="parent_id" ref="menu_printing_config"/>
-                        <field eval="&quot;&quot;&quot;STOCK_PRINT&quot;&quot;&quot;" name="icon"/>
-                </record>
+
         </data>
         <data>
                 <record id="ir_model_access_printingprinterall0" model="ir.model.access">
