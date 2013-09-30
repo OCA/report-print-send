@@ -69,7 +69,7 @@ class printing_printer(orm.Model):
         self.last_update = None
         self.updating = False
 
-    def update_printers_status(self, db_name, uid, context):
+    def update_printers_status(self, db_name, uid, context=None):
         db, pool = pooler.get_db_and_pool(db_name)
         cr = db.cursor()
 
@@ -86,12 +86,14 @@ class printing_printer(orm.Model):
             5 : 'error'
         }
 
+        if context is None:
+            context = {}
         try:
         # Skip update to avoid the thread being created again
             ctx = context.copy()
             ctx['skip_update'] = True
-            ids = self.pool.get('printing.printer').search(cr, uid, [], context=ctx)
-            for printer in self.pool.get('printing.printer').browse(cr, uid, ids, context=ctx):
+            ids = self.search(cr, uid, [], context=ctx)
+            for printer in self.browse(cr, uid, ids, context=ctx):
                 vals = {}
                 if server_error:
                     status = 'server-error'
@@ -107,7 +109,7 @@ class printing_printer(orm.Model):
                     status = 'unavailable'
 
                 vals['status'] = status
-                self.pool.get('printing.printer').write(cr, uid, [printer.id], vals, context)
+                self.write(cr, uid, [printer.id], vals, context)
             cr.commit()
         except:
             cr.rollback()
@@ -264,13 +266,13 @@ class report_xml(orm.Model):
         if context is None:
             context={}
         result = {}
-
+        printer_obj = self.pool.get('printing.printer')
         # Set hardcoded default action
         default_action = 'client'
         # Retrieve system wide printer
-        default_printer = self.pool.get('printing.printer').get_default(cr,uid,context)
+        default_printer = printer_obj.get_default(cr, uid, context=context)
         if default_printer:
-            default_printer = self.pool.get('printing.printer').browse(cr,uid,default_printer,context).system_name
+            default_printer = printer_obj.browse(cr, uid, default_printer, context=context).system_name
 
 
         # Retrieve user default values
