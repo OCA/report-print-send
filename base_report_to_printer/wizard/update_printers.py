@@ -26,12 +26,11 @@ import subprocess
 import cups
 
 import netsvc
-from osv import fields
-from osv import osv
+from openerp.osv import orm, fields
 from tools.translate import _
 
 
-class printing_printer_update_wizard(osv.osv_memory):
+class printing_printer_update_wizard(orm.TransientModel):
     _name = "printing.printer.update.wizard"
 
     _columns = {
@@ -71,6 +70,5 @@ class printing_printer_update_wizard(osv.osv_memory):
             'target': 'current',
             }
 
-printing_printer_update_wizard()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

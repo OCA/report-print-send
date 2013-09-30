@@ -35,8 +35,7 @@ from threading import Lock
 import netsvc
 import tools
 import time
-from osv import fields
-from osv import osv
+from openero.osv import orm, fields
 import pooler
 import tools
 from tools.translate import _
@@ -47,7 +46,7 @@ import logging
 #
 #  Printers
 #
-class printing_printer(osv.osv):
+class printing_printer(orm.Model):
     _name = "printing.printer"
     _description = "Printer"
 
@@ -182,9 +181,6 @@ class printing_printer(osv.osv):
             return printer_ids[0]
         return False
 
-printing_printer()
-
-
 
 #
 # Actions
@@ -197,7 +193,7 @@ def _available_action_types(self, cr, uid, context=None):
         ('user_default',_("Use user's defaults")),
         ]
 
-class printing_action(osv.osv):
+class printing_action(orm.Model):
     _name = 'printing.action'
     _description = 'Print Job Action'
 
@@ -205,13 +201,12 @@ class printing_action(osv.osv):
         'name': fields.char('Name', size=256, required=True),
         'type': fields.selection(_available_action_types, 'Type', required=True),
         }
-printing_action()
 
 #
 # Users
 #
 
-class res_users(osv.osv):
+class res_users(orm.Model):
     _name = "res.users"
     _inherit = "res.users"
 
@@ -225,13 +220,11 @@ class res_users(osv.osv):
         'printing_printer_id': fields.many2one('printing.printer', 'Default Printer'),
         }
 
-res_users()
-
 #
 # Reports
 #
 
-class report_xml(osv.osv):
+class report_xml(orm.Model):
 
     def print_direct(self, cr, uid, result, format, printer):
         fd, file_name = mkstemp()
@@ -316,9 +309,7 @@ class report_xml(osv.osv):
         return result
 
 
-report_xml()
-
-class report_xml_action(osv.osv):
+class report_xml_action(orm.Model):
     _name = 'printing.report.xml.action'
     _description = 'Report Printing Actions'
     _columns = {
@@ -368,7 +359,7 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                         and self._reports[report_id].get('format', False)):
                         report_obj.print_direct(cr, uid, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
-                        raise osv.except_osv(_('Printing...'), _('Document sent to printer %s') % (printer,))
+                        raise orm.except_orm(_('Printing...'), _('Document sent to printer %s') % (printer,))
 
         except:
             cr.rollback()
@@ -378,7 +369,5 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
 
         res = super(virtual_report_spool, self).exp_report_get(db, uid, report_id)
         return res
-
-virtual_report_spool()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
