@@ -39,10 +39,10 @@
     'license': 'AGPL-3',
     "depends" : ['base', 'base_calendar'],
     'data': [
+        'security/security.xml',
         'printing_data.xml',
         'printing_view.xml',
         'wizard/update_printers.xml',
-        'security/security.xml',
     ],
     'installable': True,
     'auto_install': False,
