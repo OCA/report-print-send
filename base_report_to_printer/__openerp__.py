@@ -27,13 +27,13 @@
     'category': 'Generic Modules/Base',
     'description': """This module allows users to send reports to a printer attached to the server. Settings can be configured globaly, per user, per report and per user and report.
     Before you can use this module:
-	You must have lpr installed for this module to work as-is.
-	To install lpr on ubuntu enter this command at the CLI - sudo apt-get install cups-bsd
-	type  ls | lpr at the command prompt to confirm your server can print
-	
-	After installing enable the "Printing / Print Operator" option under access rights to give users the ability to view the print menu.
-	Then goto the user profile and set the users printing action and default printer.
-	""",
+    You must have lpr installed for this module to work as-is.
+    To install lpr on ubuntu enter this command at the CLI - sudo apt-get install cups-bsd
+    type  ls | lpr at the command prompt to confirm your server can print
+
+    After installing enable the "Printing / Print Operator" option under access rights to give users the ability to view the print menu.
+    Then goto the user profile and set the users printing action and default printer.
+    """,
     'author': 'Agile Business Group & Domsense, Pegueroles SCP, NaN',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',

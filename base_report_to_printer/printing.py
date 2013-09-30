@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 #    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 #    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
@@ -34,10 +34,10 @@ from threading import Lock
 
 import netsvc
 import tools
-import time 
+import time
 from osv import fields
 from osv import osv
-import pooler 
+import pooler
 import tools
 from tools.translate import _
 from base_calendar import base_calendar
@@ -60,13 +60,14 @@ class printing_printer(osv.osv):
         'model': fields.char('Model', size=500, readonly=True),
         'location': fields.char('Location', size=500, readonly=True),
         'uri': fields.char('URI', size=500, readonly=True),
-    }
+        }
+
     _order = "name"
-    
+
     _defaults = {
         'default': lambda *a: False,
         'status': lambda *a: 'unknown',
-    }
+        }
 
     def __init__(self, pool, cr):
         super(printing_printer, self).__init__(pool, cr)
@@ -90,7 +91,7 @@ class printing_printer(osv.osv):
             4 : 'printing',
             5 : 'error'
         }
-        
+
         try:
         # Skip update to avoid the thread being created again
             ctx = context.copy()
@@ -174,7 +175,7 @@ class printing_printer(osv.osv):
         self.write(cr, uid, default_ids, {'default':False}, context)
         self.write(cr, uid, ids[0], {'default':True}, context)
         return True
-    
+
     def get_default(self,cr,uid,context):
         printer_ids = self.search(cr, uid,[('default','=',True)])
         if printer_ids:
@@ -194,7 +195,7 @@ def _available_action_types(self, cr, uid, context=None):
         ('server',_('Send to Printer')),
         ('client',_('Send to Client')),
         ('user_default',_("Use user's defaults")),
-    ]
+        ]
 
 class printing_action(osv.osv):
     _name = 'printing.action'
@@ -203,10 +204,10 @@ class printing_action(osv.osv):
     _columns = {
         'name': fields.char('Name', size=256, required=True),
         'type': fields.selection(_available_action_types, 'Type', required=True),
-    }
+        }
 printing_action()
 
-# 
+#
 # Users
 #
 
@@ -222,13 +223,13 @@ class res_users(osv.osv):
     _columns = {
         'printing_action': fields.selection(_user_available_action_types, 'Printing Action'),
         'printing_printer_id': fields.many2one('printing.printer', 'Default Printer'),
-    }
+        }
 
 res_users()
 
 #
 # Reports
-#    
+#
 
 class report_xml(osv.osv):
 
@@ -246,10 +247,10 @@ class report_xml(osv.osv):
                 printer_system_name = printer.system_name
             if format == 'raw':
                 # -l is the same as -o raw
-				cmd = "lpr -l -P %s %s" % (printer_system_name,file_name)
-				#cmd = "lp -d %s %s" % (printer_system_name,file_name)
+                cmd = "lpr -l -P %s %s" % (printer_system_name,file_name)
+                #cmd = "lp -d %s %s" % (printer_system_name,file_name)
             else:
-				cmd = "lpr -P %s %s" % (printer_system_name,file_name)
+                cmd = "lpr -P %s %s" % (printer_system_name,file_name)
                 #cmd = "lp -d %s %s" % (printer_system_name,file_name)
             logger = logging.getLogger('base_report_to_printer')
             logger.info("Printing job : '%s'" % cmd)
@@ -266,10 +267,10 @@ class report_xml(osv.osv):
             string='Action',
             view_load=True,
             method=True,
-        ),
+            ),
         'printing_printer_id': fields.many2one('printing.printer', 'Printer'),
         'printing_action_ids': fields.one2many('printing.report.xml.action', 'report_id', 'Actions', help='This field allows configuring action and printer on a per user basis'),
-    }
+        }
 
     def behaviour(self, cr, uid, ids, context=None):
         if context is None:
@@ -311,7 +312,7 @@ class report_xml(osv.osv):
             result[report.id] = {
                 'action': action,
                 'printer': printer,
-            }
+                }
         return result
 
 
@@ -325,7 +326,7 @@ class report_xml_action(osv.osv):
         'user_id': fields.many2one('res.users', 'User', required=True, ondelete='cascade'),
         'action': fields.selection(_available_action_types, 'Action', required=True),
         'printer_id': fields.many2one('printing.printer', 'Printer'),
-    }
+        }
 
     def behaviour(self, cr, uid, report_id, context=None):
         if context is None:
@@ -338,7 +339,7 @@ class report_xml_action(osv.osv):
         return {
             'action': action.action,
             'printer': action.printer_id.system_name,
-        }
+            }
 report_xml_action()
 
 class virtual_report_spool(base_calendar.virtual_report_spool):
@@ -368,7 +369,7 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                         report_obj.print_direct(cr, uid, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
                         raise osv.except_osv(_('Printing...'), _('Document sent to printer %s') % (printer,))
-						
+
         except:
             cr.rollback()
             raise
