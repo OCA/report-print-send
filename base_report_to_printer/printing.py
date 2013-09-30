@@ -223,7 +223,17 @@ class res_users(orm.Model):
 
 class report_xml(orm.Model):
 
-    def print_direct(self, cr, uid, result, format, printer):
+
+    def set_print_options(self, cr, uid, format, printer, context=None):
+        """
+        Hook to set print options
+        """
+        options = {}
+        if format == 'raw':
+            options['raw'] = True
+        return options
+
+    def print_direct(self, cr, uid, result, format, printer, context=None):
         fd, file_name = mkstemp()
         try:
             os.write(fd, base64.decodestring(result))
@@ -235,16 +245,13 @@ class report_xml(orm.Model):
                 printer_system_name = printer
             else:
                 printer_system_name = printer.system_name
-            if format == 'raw':
-                # -l is the same as -o raw
-                cmd = "lpr -l -P %s %s" % (printer_system_name,file_name)
-                #cmd = "lp -d %s %s" % (printer_system_name,file_name)
-            else:
-                cmd = "lpr -P %s %s" % (printer_system_name,file_name)
-                #cmd = "lp -d %s %s" % (printer_system_name,file_name)
+            connection = cups.Connection()
+
+            options = self.set_options(cr, uid, format, printer, context=context)
+
+            connection.printFile(printer_system_name, file_name, file_name, options={})
             logger = logging.getLogger('base_report_to_printer')
-            logger.info("Printing job : '%s'" % cmd)
-            os.system(cmd)
+            logger.info("Printing job : '%s'" % file_name)
         return True
 
     _inherit = 'ir.actions.report.xml'
