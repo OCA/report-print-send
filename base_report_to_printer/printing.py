@@ -33,7 +33,7 @@ from threading import Thread
 from threading import Lock
 
 from openerp import pooler
-from openero.osv import orm, fields
+from openerp.osv import orm, fields
 from openerp.tools.translate import _
 from openerp.addons.base_calendar import base_calendar
 
