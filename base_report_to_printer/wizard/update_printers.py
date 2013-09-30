@@ -21,13 +21,9 @@
 #
 ##############################################################################
 
-import time
-import subprocess
 import cups
 
-import netsvc
-from openerp.osv import orm, fields
-from tools.translate import _
+from openerp.osv import orm
 
 
 class printing_printer_update_wizard(orm.TransientModel):

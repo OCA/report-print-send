@@ -23,24 +23,19 @@
 ##############################################################################
 
 import os
+import time
 import base64
-import threading
 from tempfile import mkstemp
+import logging
 
 import cups
-import thread
 from threading import Thread
 from threading import Lock
 
-import netsvc
-import tools
-import time
+from openerp import pooler
 from openero.osv import orm, fields
-import pooler
-import tools
-from tools.translate import _
-from base_calendar import base_calendar
-import logging
+from openerp.tools.translate import _
+from openerp.addons.base_calendar import base_calendar
 
 
 #
