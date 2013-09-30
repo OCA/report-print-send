@@ -326,7 +326,6 @@ class report_xml_action(orm.Model):
             'action': action.action,
             'printer': action.printer_id.system_name,
             }
-report_xml_action()
 
 class virtual_report_spool(base_calendar.virtual_report_spool):
 
