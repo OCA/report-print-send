@@ -35,7 +35,7 @@ class printing_printer_update_wizard(osv.osv_memory):
     _name = "printing.printer.update.wizard"
 
     _columns = {
-    }
+        }
 
     def action_cancel(self, cr, uid, ids, context=None):
         return {}
@@ -51,7 +51,7 @@ class printing_printer_update_wizard(osv.osv_memory):
         ids = self.pool.get('printing.printer').search(cr, uid, [('system_name','in',printers.keys())], context=context)
         for printer in self.pool.get('printing.printer').browse(cr, uid, ids, context):
             del printers[printer.system_name]
-       
+
         for name in printers:
             printer = printers[name]
             self.pool.get('printing.printer').create(cr, uid, {
@@ -60,7 +60,7 @@ class printing_printer_update_wizard(osv.osv_memory):
                 'model': printer.get('printer-make-and-model', False),
                 'location': printer.get('printer-location', False),
                 'uri': printer.get('device-uri', False),
-            }, context)
+                }, context)
 
         return {
             'name': 'Printers',
@@ -69,7 +69,7 @@ class printing_printer_update_wizard(osv.osv_memory):
             'res_model': 'printing.printer',
             'type': 'ir.actions.act_window',
             'target': 'current',
-        }
+            }
 
 printing_printer_update_wizard()
 
