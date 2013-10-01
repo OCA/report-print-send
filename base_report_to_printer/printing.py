@@ -33,7 +33,7 @@ from threading import Thread
 from threading import Lock
 
 from openerp import pooler
-from openerp.osv import orm, fields
+from openerp.osv import osv, orm, fields
 from openerp.tools.translate import _
 from openerp.addons.base_calendar import base_calendar
 
@@ -250,7 +250,7 @@ class report_xml(orm.Model):
 
             options = self.set_print_options(cr, uid, report_id, format, context=context)
 
-            connection.printFile(printer_system_name, file_name, file_name, options={})
+            connection.printFile(printer_system_name, file_name, file_name, options=options)
             logger = logging.getLogger('base_report_to_printer')
             logger.info("Printing job : '%s'" % file_name)
         return True
@@ -364,7 +364,7 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                         and self._reports[report_id].get('format', False)):
                         report_obj.print_direct(cr, uid, report.id, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
-                        raise orm.except_orm(_('Printing...'), _('Document sent to printer %s') % (printer,))
+                        raise osv.except_osv(_('Printing...'), _('Document sent to printer %s') % (printer,))
 
         except:
             cr.rollback()
