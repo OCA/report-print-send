@@ -271,8 +271,6 @@ class report_xml(orm.Model):
         }
 
     def behaviour(self, cr, uid, ids, context=None):
-        if context is None:
-            context={}
         result = {}
         printer_obj = self.pool.get('printing.printer')
         printing_act_obj = self.pool.get('printing.report.xml.action')
