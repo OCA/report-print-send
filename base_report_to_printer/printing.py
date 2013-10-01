@@ -233,7 +233,7 @@ class report_xml(orm.Model):
             options['raw'] = True
         return options
 
-    def print_direct(self, cr, uid, report_id, result, printer, format, context=None):
+    def print_direct(self, cr, uid, report_id, result, format, printer, context=None):
         user_obj = self.pool.get('res.users')
         fd, file_name = mkstemp()
         try:
