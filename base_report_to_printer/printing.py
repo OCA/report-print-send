@@ -224,7 +224,7 @@ class res_users(orm.Model):
 class report_xml(orm.Model):
 
 
-    def set_print_options(self, cr, uid, format, printer, context=None):
+    def set_print_options(self, cr, uid, report_id, format, context=None):
         """
         Hook to set print options
         """
@@ -233,7 +233,8 @@ class report_xml(orm.Model):
             options['raw'] = True
         return options
 
-    def print_direct(self, cr, uid, result, format, printer, context=None):
+    def print_direct(self, cr, uid, report_id, result, printer, format, context=None):
+        user_obj = self.pool.get('res.users')
         fd, file_name = mkstemp()
         try:
             os.write(fd, base64.decodestring(result))
@@ -247,7 +248,7 @@ class report_xml(orm.Model):
                 printer_system_name = printer.system_name
             connection = cups.Connection()
 
-            options = self.set_options(cr, uid, format, printer, context=context)
+            options = self.set_options(cr, uid, report_id, printer, format, context=context)
 
             connection.printFile(printer_system_name, file_name, file_name, options={})
             logger = logging.getLogger('base_report_to_printer')
@@ -300,6 +301,7 @@ class report_xml(orm.Model):
                 printer = report.printing_printer_id
 
             # Retrieve report-user specific values
+            ## XXX search by report.id instead of giving report.id in behaviour
             user_action = self.pool.get('printing.report.xml.action').behaviour(cr, uid, report.id, context)
             if user_action and user_action['action'] != 'user_default':
                 action = user_action['action']
@@ -360,7 +362,7 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                 if action != 'client':
                     if (self._reports and self._reports.get(report_id, False) and self._reports[report_id].get('result', False)
                         and self._reports[report_id].get('format', False)):
-                        report_obj.print_direct(cr, uid, base64.encodestring(self._reports[report_id]['result']),
+                        report_obj.print_direct(cr, uid, report_id, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
                         raise orm.except_orm(_('Printing...'), _('Document sent to printer %s') % (printer,))
 
