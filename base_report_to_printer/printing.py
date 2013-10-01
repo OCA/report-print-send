@@ -299,7 +299,7 @@ class report_xml(orm.Model):
             if report.property_printing_action and report.property_printing_action.type != 'user_default':
                 action = report.property_printing_action.type
             if report.printing_printer_id:
-                printer = report.printing_printer_id
+                printer = report.printing_printer_id.system_name
 
             # Retrieve report-user specific values
             act_ids = printing_act_obj.search(cr, uid,
