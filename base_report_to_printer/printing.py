@@ -362,7 +362,7 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                 if action != 'client':
                     if (self._reports and self._reports.get(report_id, False) and self._reports[report_id].get('result', False)
                         and self._reports[report_id].get('format', False)):
-                        report_obj.print_direct(cr, uid, report_id, base64.encodestring(self._reports[report_id]['result']),
+                        report_obj.print_direct(cr, uid, report.id, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
                         raise orm.except_orm(_('Printing...'), _('Document sent to printer %s') % (printer,))
 
