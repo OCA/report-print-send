@@ -375,4 +375,6 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
         res = super(virtual_report_spool, self).exp_report_get(db, uid, report_id)
         return res
 
+virtual_report_spool()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
