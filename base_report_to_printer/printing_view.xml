@@ -7,7 +7,6 @@
     <record model="ir.ui.view" id="view_printing_printer_form">
       <field name="name">printing.printer.form</field>
       <field name="model">printing.printer</field>
-      <field name="type">form</field>
       <field name="arch" type="xml">
         <form string="Printers">
           <field name="name" select="1"/>
@@ -28,7 +27,6 @@
     <record model="ir.ui.view" id="view_printing_printer_tree">
       <field name="name">printing.printer.tree</field>
       <field name="model">printing.printer</field>
-      <field name="type">tree</field>
       <field name="arch" type="xml">
         <tree string="Printers" colors="green:status=='available'; orange:status=='printing'; red:1;">
           <field name="default"/>
@@ -56,7 +54,6 @@
     <record model="ir.ui.view" id="action_report_xml_form">
       <field name="name">ir.actions.report.xml.printing</field>
       <field name="model">ir.actions.report.xml</field>
-      <field name="type">form</field>
       <field name="inherit_id" ref="base.act_report_xml_view" />
       <field name="arch" type="xml">
         <page string="Security" position="after">
@@ -76,7 +73,6 @@
     <!-- res.users -->
     <record model="ir.ui.view" id="view_printing_users_form">
       <field name="name">res.users.form.printing</field>
-      <field name="type">form</field>
       <field name="model">res.users</field>
       <field name="inherit_id" ref="base.view_users_form" />
       <field name="arch" type="xml">
@@ -93,7 +89,6 @@
     <record model="ir.ui.view" id="printing_report_xml_action_form">
       <field name="name">printing.report.xml.action.form</field>
       <field name="model">printing.report.xml.action</field>
-      <field name="type">form</field>
       <field name="arch" type="xml">
         <form string="Report Printing Actions">
           <field name="user_id"/>
@@ -106,7 +101,6 @@
     <record model="ir.ui.view" id="printing_report_xml_action_tree">
       <field name="name">printing.report.xml.action.tree</field>
       <field name="model">printing.report.xml.action</field>
-      <field name="type">tree</field>
       <field name="arch" type="xml">
         <tree string="Report Printing Actions">
           <field name="user_id"/>
