@@ -248,7 +248,7 @@ class report_xml(orm.Model):
                 printer_system_name = printer.system_name
             connection = cups.Connection()
 
-            options = self.set_options(cr, uid, report_id, printer, format, context=context)
+            options = self.set_print_options(cr, uid, report_id, format, context=context)
 
             connection.printFile(printer_system_name, file_name, file_name, options={})
             logger = logging.getLogger('base_report_to_printer')
