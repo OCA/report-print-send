@@ -279,7 +279,7 @@ class report_xml(orm.Model):
         # Retrieve system wide printer
         default_printer = printer_obj.get_default(cr, uid, context=context)
         if default_printer:
-            default_printer = printer_obj.browse(cr, uid, default_printer, context=context).system_name
+            default_printer = printer_obj.browse(cr, uid, default_printer, context=context)
 
 
         # Retrieve user default values
@@ -287,7 +287,7 @@ class report_xml(orm.Model):
         if user.printing_action:
             default_action = user.printing_action
         if user.printing_printer_id:
-            default_printer = user.printing_printer_id.system_name
+            default_printer = user.printing_printer_id
 
         for report in self.browse(cr, uid, ids, context):
             action = default_action
@@ -297,7 +297,7 @@ class report_xml(orm.Model):
             if report.property_printing_action and report.property_printing_action.type != 'user_default':
                 action = report.property_printing_action.type
             if report.printing_printer_id:
-                printer = report.printing_printer_id.system_name
+                printer = report.printing_printer_id
 
             # Retrieve report-user specific values
             act_ids = printing_act_obj.search(cr, uid,
@@ -335,7 +335,7 @@ class report_xml_action(orm.Model):
         action = self.browse(cr, uid, act_id, context=context)
         return {
             'action': action.action,
-            'printer': action.printer_id.system_name,
+            'printer': action.printer_id,
             }
 
 class virtual_report_spool(base_calendar.virtual_report_spool):
