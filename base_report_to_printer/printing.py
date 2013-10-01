@@ -275,6 +275,7 @@ class report_xml(orm.Model):
             context={}
         result = {}
         printer_obj = self.pool.get('printing.printer')
+        printing_act_obj = self.pool.get('printing.report.xml.action')
         # Set hardcoded default action
         default_action = 'client'
         # Retrieve system wide printer
@@ -301,9 +302,12 @@ class report_xml(orm.Model):
                 printer = report.printing_printer_id
 
             # Retrieve report-user specific values
-            ## XXX search by report.id instead of giving report.id in behaviour
-            user_action = self.pool.get('printing.report.xml.action').behaviour(cr, uid, report.id, context)
-            if user_action and user_action['action'] != 'user_default':
+            act_ids = printing_act_obj.search(cr, uid,
+                    [('report_id', '=', report.id),
+                     ('user_id', '=', uid),
+                     ('action', '!=', 'user_default')], context=context)
+            if act_ids:
+                user_action = printing_act_obj.behaviour(cr, uid, act_ids[0], context)
                 action = user_action['action']
                 if user_action['printer']:
                     printer = user_action['printer']
@@ -325,14 +329,12 @@ class report_xml_action(orm.Model):
         'printer_id': fields.many2one('printing.printer', 'Printer'),
         }
 
-    def behaviour(self, cr, uid, report_id, context=None):
-        if context is None:
-            context={}
+
+    def behaviour(self, cr, uid, act_id, context=None):
         result = {}
-        ids = self.search(cr, uid, [('report_id','=',report_id),('user_id','=',uid)], context=context)
-        if not ids:
+        if not act_id:
             return False
-        action = self.browse(cr, uid, ids[0], context)
+        action = self.browse(cr, uid, act_id, context=context)
         return {
             'action': action.action,
             'printer': action.printer_id.system_name,
