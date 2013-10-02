@@ -33,7 +33,7 @@ from threading import Thread
 from threading import Lock
 
 from openerp import pooler
-from openerp.osv import osv, orm, fields
+from openerp.osv import orm, fields
 from openerp.tools.translate import _
 from openerp.addons.base_calendar import base_calendar
 
@@ -364,7 +364,10 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                         and self._reports[report_id].get('format', False)):
                         report_obj.print_direct(cr, uid, report.id, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
-                        raise osv.except_osv(_('Printing...'), _('Document sent to printer %s') % (printer,))
+                        # XXX "Warning" removed as it breaks the workflow
+                        # it would be interesting to have a dialog box to confirm if we really want to print
+                        # in this case it must be with a by pass parameter to allow massive impression
+                        #raise osv.except_osv(_('Printing...'), _('Document sent to printer %s') % (printer,))
 
         except:
             cr.rollback()
