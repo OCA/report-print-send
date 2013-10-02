@@ -22,9 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import printing
-from . import report_xml_action
-from . import report_service
-from . import users
-from . import ir_report
-from . import wizard
+from openerp.osv import orm, fields
+
+from printing import _available_action_types
+
+#
+# Users
+#
+class res_users(orm.Model):
+    _name = "res.users"
+    _inherit = "res.users"
+
+    def _user_available_action_types(self, cr, uid, context=None):
+        if context is None:
+            context={}
+        return [x for x in _available_action_types(self, cr, uid, context) if x[0] != 'user_default']
+
+    _columns = {
+        'printing_action': fields.selection(_user_available_action_types, 'Printing Action'),
+        'printing_printer_id': fields.many2one('printing.printer', 'Default Printer'),
+        }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
