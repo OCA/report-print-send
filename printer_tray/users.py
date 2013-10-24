@@ -20,11 +20,13 @@
 ##############################################################################
 from openerp.osv import orm, fields
 
+
 class ResUsers(orm.Model):
 
     _inherit = "res.users"
 
     _columns = {
-        'printer_tray_id': fields.many2one('printing.tray', 'Default Printer Paper Source',
+        'printer_tray_id': fields.many2one(
+            'printing.tray', 'Default Printer Paper Source',
             domain="[('printer_id', '=', printing_printer_id)]"),
         }

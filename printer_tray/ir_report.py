@@ -20,12 +20,14 @@
 ##############################################################################
 from openerp.osv import orm, fields
 
+
 class ReportXML(orm.Model):
 
     _inherit = 'ir.actions.report.xml'
 
     _columns = {
-        'printer_tray_id': fields.many2one('printing.tray', 'Paper Source',
+        'printer_tray_id': fields.many2one(
+            'printing.tray', 'Paper Source',
             domain="[('printer_id', '=', printing_printer_id)]"),
         }
 
@@ -46,7 +48,8 @@ class ReportXML(orm.Model):
             tray = report.printer_tray_id
 
         # Retrieve report-user specific values
-        act_ids = printing_act_obj.search(cr, uid,
+        act_ids = printing_act_obj.search(
+                cr, uid,
                 [('report_id', '=', report.id),
                  ('user_id', '=', uid),
                  ('action', '!=', 'user_default')], context=context)
@@ -58,4 +61,3 @@ class ReportXML(orm.Model):
         if tray:
             options['InputSlot'] = str(tray.system_name)
         return options
-

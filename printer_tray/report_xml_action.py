@@ -21,11 +21,13 @@
 
 from openerp.osv import orm, fields
 
+
 class ReportXMLAction(orm.Model):
     _inherit = 'printing.report.xml.action'
 
     _columns = {
-        'printer_tray_id': fields.many2one('printing.tray', 'Paper Source',
+        'printer_tray_id': fields.many2one(
+            'printing.tray', 'Paper Source',
             domain="[('printer_id', '=', printer_id)]"),
         }
 
@@ -34,6 +36,3 @@ class ReportXMLAction(orm.Model):
         action = self.browse(cr, uid, act_id, context=context)
         res['tray'] = action.printer_tray_id.system_name
         return res
-
-
-
