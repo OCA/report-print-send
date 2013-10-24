@@ -77,7 +77,6 @@ class Printer(orm.Model):
         db, pool = pooler.get_db_and_pool(db_name)
         cr = db.cursor()
         res = super(Printer, self).update_printers_status(db_name, uid, context=context)
-
         try:
             connection = cups.Connection()
             printers = connection.getPrinters()
@@ -86,6 +85,11 @@ class Printer(orm.Model):
             server_error = True
 
         printer_ids = self.search(cr, uid, [('system_name', 'in', printers.keys())], context=context)
+        if server_error:
+            vals = {'status': 'server_error'}
+            self.write(cr, uid, printer_ids, vals, context=context)
+            return res
+
         printer_list = self.browse(cr, uid, printer_ids, context=context)
 
         for printer in printer_list:
