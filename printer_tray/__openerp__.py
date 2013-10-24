@@ -18,8 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name' : 'Report to printer - Paper tray selection',
- 'version' : '1.0',
+{'name': 'Report to printer - Paper tray selection',
+ 'version': '1.0',
  'category': 'Printer',
  'description': """
 Report to printer - Paper tray selection
@@ -38,12 +38,12 @@ Report to printer - Paper tray selection
  This allows you to dedicate a specific paper source for exemple for prepinted
  paper such as payment slip.
  """,
- 'author' : 'Camptocamp',
+ 'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'website': 'http://www.camptocamp.com/',
- 'depends' : ['base_report_assembler',
-              'base_report_to_printer',
-              ],
+ 'depends': ['base_report_assembler',
+             'base_report_to_printer',
+             ],
  'data': [
      'users_view.xml',
      'ir_report_view.xml',
