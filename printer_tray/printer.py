@@ -24,13 +24,14 @@ from cups import PPD
 from openerp import pooler
 from openerp.osv import orm, fields
 
+
 class Printer(orm.Model):
 
     _inherit = 'printing.printer'
 
     _columns = {
-            'tray_ids': fields.one2many('printing.tray', 'printer_id', 'Paper Sources'),
-            }
+        'tray_ids': fields.one2many('printing.tray', 'printer_id', 'Paper Sources'),
+        }
 
     def _update_tray_option(self, db_name, uid, printer, context=None):
         """
@@ -45,25 +46,22 @@ class Printer(orm.Model):
             ppd_file_path = connection.getPPD3(printer.system_name)
         except:
             return
-
         if not ppd_file_path[2]:
             return
         ppd = PPD(ppd_file_path[2])
         option = ppd.findOption('InputSlot')
         if not option:
             return
-
         try:
             for tray_opt in option.choices:
                 if tray_opt['choice'] not in [t.system_name for t in printer.tray_ids]:
                     tray_vals = {
-                            'name': tray_opt['text'],
-                            'system_name': tray_opt['choice'],
-                            'printer_id': printer.id,
-                            }
+                        'name': tray_opt['text'],
+                        'system_name': tray_opt['choice'],
+                        'printer_id': printer.id,
+                        }
 
                     tray_obj.create(cr, uid, tray_vals, context=context)
-
             cr.commit()
         except:
             cr.rollback()
@@ -71,7 +69,6 @@ class Printer(orm.Model):
         finally:
             cr.close()
         return True
-
 
     def update_printers_status(self, db_name, uid, context=None):
         """
@@ -95,6 +92,4 @@ class Printer(orm.Model):
             # XXX we consider config of printer won't change
             if not printer.tray_ids:
                 self._update_tray_option(db_name, uid, printer, context=context)
-
         return res
-

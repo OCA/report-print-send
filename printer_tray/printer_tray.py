@@ -20,6 +20,7 @@
 ##############################################################################
 from openerp.osv import orm, fields
 
+
 class PrinterTray(orm.Model):
 
     _name = 'printing.tray'
