@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 #    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 #    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
+#    Copyright (C) 2013 Camptocamp (<http://www.camptocamp.com>)
 #    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -47,4 +48,7 @@
     'installable': True,
     'auto_install': False,
     'application': True,
+    'external_dependencies': {
+        'python': ['cups']
+        }
 }
