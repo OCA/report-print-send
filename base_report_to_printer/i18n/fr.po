@@ -18,199 +18,199 @@ msgstr ""
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Unavailable"
-msgstr ""
+msgstr "Non disponible"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
 msgid "This process will create all missing printers from the current CUPS server."
-msgstr ""
+msgstr "Cette opération va créer les imprimantes manquantes à partir du server CUPS courant."
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #. module: base_report_to_printer
 #: field:printing.printer,system_name:0
 msgid "System Name"
-msgstr ""
+msgstr "Nom sytème"
 
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
 msgid "Location"
-msgstr ""
+msgstr "Emplacement"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_printer_form
 #: view:printing.printer:0
 msgid "Printers"
-msgstr ""
+msgstr "Imprimantes"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Print"
-msgstr ""
+msgstr "Imprimer"
 
 #. module: base_report_to_printer
 #: field:res.users,printing_action:0
 msgid "Printing Action"
-msgstr ""
+msgstr "Activité d'impression"
 
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
 msgid "Model"
-msgstr ""
+msgstr "Modèle"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Available"
-msgstr ""
+msgstr "Disponible"
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_printer_id:0
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
 #: field:printing.report.xml.action,printer_id:0
 msgid "Printer"
-msgstr ""
+msgstr "Imprimante"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utilisateurs"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
 #: view:printing.report.xml.action:0
 msgid "Report Printing Actions"
-msgstr ""
+msgstr "Rapport d'activité d'impression"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Specific actions per user"
-msgstr ""
+msgstr "Action spécifique par utilisateur"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
 msgid "Print Job Action"
-msgstr ""
+msgstr "Action de Job d'impression"
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0
 msgid "Report"
-msgstr ""
+msgstr "Rapport"
 
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
 msgid "Show Printers"
-msgstr ""
+msgstr "Afficher les imprimantes"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #. module: base_report_to_printer
 #: field:printing.action,name:0
 #: field:printing.printer,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: base_report_to_printer
 #: view:printing.printer:0
 msgid "Set Default"
-msgstr ""
+msgstr "Définitir par défaut"
 
 #. module: base_report_to_printer
 #: field:printing.printer,default:0
 #: field:res.users,printing_printer_id:0
 msgid "Default Printer"
-msgstr ""
+msgstr "Imprimante par défaut"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/printing.py:186
 #, python-format
 msgid "Send to Client"
-msgstr ""
+msgstr "Envoyer au client"
 
 #. module: base_report_to_printer
 #: field:printing.printer,uri:0
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printer_update_wizard
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printer_update_wizard
 #: view:printing.printer.update.wizard:0
 msgid "Update Printers from CUPS"
-msgstr ""
+msgstr "Mettre à jour les imprimantes depuis CUPS"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/printing.py:185
 #, python-format
 msgid "Send to Printer"
-msgstr ""
+msgstr "Envoyer à l'imprimante"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_main
 #: selection:printing.printer,status:0
 msgid "Printing"
-msgstr ""
+msgstr "Impression en cours"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,property_printing_action:0
 #: field:printing.report.xml.action,action:0
 msgid "Action"
-msgstr ""
+msgstr "Action"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Security"
-msgstr ""
+msgstr "Sécurité"
 
 #. module: base_report_to_printer
 #: field:printing.printer,status_message:0
 msgid "Status Message"
-msgstr ""
+msgstr "Message de Statut"
 
 #. module: base_report_to_printer
 #: help:ir.actions.report.xml,printing_action_ids:0
 msgid "This field allows configuring action and printer on a per user basis"
-msgstr ""
+msgstr "Ce champs permet de configurer les action et les imprimante par utilisateur"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Server Error"
-msgstr ""
+msgstr "Erreur serveur"
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_action_ids:0
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.res_groups_printingprintoperator0
@@ -221,5 +221,5 @@ msgstr ""
 #: code:addons/base_report_to_printer/printing.py:187
 #, python-format
 msgid "Use user's defaults"
-msgstr ""
+msgstr "Utiliser la configuration par défaut de l'utilisateur"
 
