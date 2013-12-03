@@ -1,4 +1,0 @@
-Ferran Pegueroles <ferran@pegueroles.com>
-Albert Cervera i Areny <albert@nan-tic.com>
-Davide Corio <davide.corio@agilebg.com>
-Lorenzo Battistini <lorenzo.battistini@agilebg.com>
