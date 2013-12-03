@@ -44,6 +44,10 @@ After installing enable the "Printing / Print Operator" option under access
 rights to give users the ability to view the print menu.
 
 
+To show all available printers for your server, uses
+`Settings/Configuration/Printing/Update Printers from CUPS` wizard.
+
+
 Then goto the user profile and set the users printing action and default
 printer.
 
