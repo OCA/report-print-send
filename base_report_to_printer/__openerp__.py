@@ -32,6 +32,14 @@ Report to printer
 This module allows users to send reports to a printer attached to the server.
 
 
+It adds an optional behaviour on reports to send it directly to a printer.
+
+* `Send to Client` is the default behavious providing you a downloadable PDF
+* `Send to Printer` prints the report on selected printer
+
+Report behaviour is defined by settings.
+
+
 Settings can be configured:
 
 * globaly
