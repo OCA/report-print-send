@@ -44,7 +44,7 @@ class printing_printer_update_wizard(orm.TransientModel):
             return {}
 
         ids = self.pool.get('printing.printer').search(cr, uid, [('system_name','in',printers.keys())], context=context)
-        for printer in self.pool.get('printing.printer').browse(cr, uid, ids, context):
+        for printer in self.pool.get('printing.printer').browse(cr, uid, ids, context=context):
             del printers[printer.system_name]
 
         for name in printers:

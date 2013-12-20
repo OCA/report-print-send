@@ -106,7 +106,7 @@ class printing_printer(orm.Model):
                     status = 'unavailable'
 
                 vals['status'] = status
-                self.write(cr, uid, [printer.id], vals, context)
+                self.write(cr, uid, [printer.id], vals, context=context)
             cr.commit()
         except:
             cr.rollback()
