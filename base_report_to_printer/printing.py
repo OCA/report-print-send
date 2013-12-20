@@ -109,7 +109,7 @@ class printing_printer(orm.Model):
                     status = 'unavailable'
 
                 vals['status'] = status
-                self.write(cr, uid, [printer.id], vals, context)
+                self.write(cr, uid, [printer.id], vals, context=context)
             cr.commit()
         except:
             cr.rollback()
@@ -305,7 +305,7 @@ class report_xml(orm.Model):
                      ('user_id', '=', uid),
                      ('action', '!=', 'user_default')], context=context)
             if act_ids:
-                user_action = printing_act_obj.behaviour(cr, uid, act_ids[0], context)
+                user_action = printing_act_obj.behaviour(cr, uid, act_ids[0], context=context)
                 action = user_action['action']
                 if user_action['printer']:
                     printer = user_action['printer']
