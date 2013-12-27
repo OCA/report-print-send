@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 #    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 #    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
@@ -23,31 +23,25 @@
 ##############################################################################
 
 import os
+import time
 import base64
-import threading
 from tempfile import mkstemp
+import logging
 
 import cups
-import thread
 from threading import Thread
 from threading import Lock
 
-import netsvc
-import tools
-import time 
-from osv import fields
-from osv import osv
-import pooler 
-import tools
-from tools.translate import _
-from base_calendar import base_calendar
-import logging
+from openerp import pooler
+from openerp.osv import orm, fields
+from openerp.tools.translate import _
+from openerp.addons.base_calendar import base_calendar
 
 
 #
 #  Printers
 #
-class printing_printer(osv.osv):
+class printing_printer(orm.Model):
     _name = "printing.printer"
     _description = "Printer"
 
@@ -60,13 +54,14 @@ class printing_printer(osv.osv):
         'model': fields.char('Model', size=500, readonly=True),
         'location': fields.char('Location', size=500, readonly=True),
         'uri': fields.char('URI', size=500, readonly=True),
-    }
+        }
+
     _order = "name"
-    
+
     _defaults = {
         'default': lambda *a: False,
         'status': lambda *a: 'unknown',
-    }
+        }
 
     def __init__(self, pool, cr):
         super(printing_printer, self).__init__(pool, cr)
@@ -74,7 +69,7 @@ class printing_printer(osv.osv):
         self.last_update = None
         self.updating = False
 
-    def update_printers_status(self, db_name, uid, context):
+    def update_printers_status(self, db_name, uid, context=None):
         db, pool = pooler.get_db_and_pool(db_name)
         cr = db.cursor()
 
@@ -90,13 +85,15 @@ class printing_printer(osv.osv):
             4 : 'printing',
             5 : 'error'
         }
-        
+
+        if context is None:
+            context = {}
         try:
         # Skip update to avoid the thread being created again
             ctx = context.copy()
             ctx['skip_update'] = True
-            ids = self.pool.get('printing.printer').search(cr, uid, [], context=ctx)
-            for printer in self.pool.get('printing.printer').browse(cr, uid, ids, context=ctx):
+            ids = self.search(cr, uid, [], context=ctx)
+            for printer in self.browse(cr, uid, ids, context=ctx):
                 vals = {}
                 if server_error:
                     status = 'server-error'
@@ -112,7 +109,7 @@ class printing_printer(osv.osv):
                     status = 'unavailable'
 
                 vals['status'] = status
-                self.pool.get('printing.printer').write(cr, uid, [printer.id], vals, context)
+                self.write(cr, uid, [printer.id], vals, context=context)
             cr.commit()
         except:
             cr.rollback()
@@ -174,15 +171,12 @@ class printing_printer(osv.osv):
         self.write(cr, uid, default_ids, {'default':False}, context)
         self.write(cr, uid, ids[0], {'default':True}, context)
         return True
-    
+
     def get_default(self,cr,uid,context):
         printer_ids = self.search(cr, uid,[('default','=',True)])
         if printer_ids:
             return printer_ids[0]
         return False
-
-printing_printer()
-
 
 
 #
@@ -194,23 +188,22 @@ def _available_action_types(self, cr, uid, context=None):
         ('server',_('Send to Printer')),
         ('client',_('Send to Client')),
         ('user_default',_("Use user's defaults")),
-    ]
+        ]
 
-class printing_action(osv.osv):
+class printing_action(orm.Model):
     _name = 'printing.action'
     _description = 'Print Job Action'
 
     _columns = {
         'name': fields.char('Name', size=256, required=True),
         'type': fields.selection(_available_action_types, 'Type', required=True),
-    }
-printing_action()
+        }
 
-# 
+#
 # Users
 #
 
-class res_users(osv.osv):
+class res_users(orm.Model):
     _name = "res.users"
     _inherit = "res.users"
 
@@ -222,17 +215,26 @@ class res_users(osv.osv):
     _columns = {
         'printing_action': fields.selection(_user_available_action_types, 'Printing Action'),
         'printing_printer_id': fields.many2one('printing.printer', 'Default Printer'),
-    }
-
-res_users()
+        }
 
 #
 # Reports
-#    
+#
 
-class report_xml(osv.osv):
+class report_xml(orm.Model):
 
-    def print_direct(self, cr, uid, result, format, printer):
+
+    def set_print_options(self, cr, uid, report_id, format, context=None):
+        """
+        Hook to set print options
+        """
+        options = {}
+        if format == 'raw':
+            options['raw'] = True
+        return options
+
+    def print_direct(self, cr, uid, report_id, result, format, printer, context=None):
+        user_obj = self.pool.get('res.users')
         fd, file_name = mkstemp()
         try:
             os.write(fd, base64.decodestring(result))
@@ -244,14 +246,13 @@ class report_xml(osv.osv):
                 printer_system_name = printer
             else:
                 printer_system_name = printer.system_name
-            if format == 'raw':
-                # -l is the same as -o raw
-                cmd = "lpr -l -P %s %s" % (printer_system_name,file_name)
-            else:
-                cmd = "lpr -P %s %s" % (printer_system_name,file_name)
+            connection = cups.Connection()
+
+            options = self.set_print_options(cr, uid, report_id, format, context=context)
+
+            connection.printFile(printer_system_name, file_name, file_name, options=options)
             logger = logging.getLogger('base_report_to_printer')
-            logger.info("Printing job : '%s'" % cmd)
-            os.system(cmd)
+            logger.info("Printing job : '%s'" % file_name)
         return True
 
     _inherit = 'ir.actions.report.xml'
@@ -264,22 +265,21 @@ class report_xml(osv.osv):
             string='Action',
             view_load=True,
             method=True,
-        ),
+            ),
         'printing_printer_id': fields.many2one('printing.printer', 'Printer'),
         'printing_action_ids': fields.one2many('printing.report.xml.action', 'report_id', 'Actions', help='This field allows configuring action and printer on a per user basis'),
-    }
+        }
 
     def behaviour(self, cr, uid, ids, context=None):
-        if context is None:
-            context={}
         result = {}
-
+        printer_obj = self.pool.get('printing.printer')
+        printing_act_obj = self.pool.get('printing.report.xml.action')
         # Set hardcoded default action
         default_action = 'client'
         # Retrieve system wide printer
-        default_printer = self.pool.get('printing.printer').get_default(cr,uid,context)
+        default_printer = printer_obj.get_default(cr, uid, context=context)
         if default_printer:
-            default_printer = self.pool.get('printing.printer').browse(cr,uid,default_printer,context).system_name
+            default_printer = printer_obj.browse(cr, uid, default_printer, context=context)
 
 
         # Retrieve user default values
@@ -287,7 +287,7 @@ class report_xml(osv.osv):
         if user.printing_action:
             default_action = user.printing_action
         if user.printing_printer_id:
-            default_printer = user.printing_printer_id.system_name
+            default_printer = user.printing_printer_id
 
         for report in self.browse(cr, uid, ids, context):
             action = default_action
@@ -300,8 +300,12 @@ class report_xml(osv.osv):
                 printer = report.printing_printer_id
 
             # Retrieve report-user specific values
-            user_action = self.pool.get('printing.report.xml.action').behaviour(cr, uid, report.id, context)
-            if user_action and user_action['action'] != 'user_default':
+            act_ids = printing_act_obj.search(cr, uid,
+                    [('report_id', '=', report.id),
+                     ('user_id', '=', uid),
+                     ('action', '!=', 'user_default')], context=context)
+            if act_ids:
+                user_action = printing_act_obj.behaviour(cr, uid, act_ids[0], context=context)
                 action = user_action['action']
                 if user_action['printer']:
                     printer = user_action['printer']
@@ -309,13 +313,11 @@ class report_xml(osv.osv):
             result[report.id] = {
                 'action': action,
                 'printer': printer,
-            }
+                }
         return result
 
 
-report_xml()
-
-class report_xml_action(osv.osv):
+class report_xml_action(orm.Model):
     _name = 'printing.report.xml.action'
     _description = 'Report Printing Actions'
     _columns = {
@@ -323,21 +325,18 @@ class report_xml_action(osv.osv):
         'user_id': fields.many2one('res.users', 'User', required=True, ondelete='cascade'),
         'action': fields.selection(_available_action_types, 'Action', required=True),
         'printer_id': fields.many2one('printing.printer', 'Printer'),
-    }
+        }
 
-    def behaviour(self, cr, uid, report_id, context=None):
-        if context is None:
-            context={}
+
+    def behaviour(self, cr, uid, act_id, context=None):
         result = {}
-        ids = self.search(cr, uid, [('report_id','=',report_id),('user_id','=',uid)], context=context)
-        if not ids:
+        if not act_id:
             return False
-        action = self.browse(cr, uid, ids[0], context)
+        action = self.browse(cr, uid, act_id, context=context)
         return {
             'action': action.action,
-            'printer': action.printer_id.system_name,
-        }
-report_xml_action()
+            'printer': action.printer_id,
+            }
 
 class virtual_report_spool(base_calendar.virtual_report_spool):
 
@@ -363,8 +362,13 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                 if action != 'client':
                     if (self._reports and self._reports.get(report_id, False) and self._reports[report_id].get('result', False)
                         and self._reports[report_id].get('format', False)):
-                        report_obj.print_direct(cr, uid, base64.encodestring(self._reports[report_id]['result']),
+                        report_obj.print_direct(cr, uid, report.id, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
+                        # XXX "Warning" removed as it breaks the workflow
+                        # it would be interesting to have a dialog box to confirm if we really want to print
+                        # in this case it must be with a by pass parameter to allow massive impression
+                        #raise osv.except_osv(_('Printing...'), _('Document sent to printer %s') % (printer,))
+
         except:
             cr.rollback()
             raise
