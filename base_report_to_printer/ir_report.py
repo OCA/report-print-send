@@ -47,7 +47,6 @@ class report_xml(orm.Model):
         return options
 
     def print_direct(self, cr, uid, report_id, result, format, printer, context=None):
-        user_obj = self.pool.get('res.users')
         fd, file_name = mkstemp()
         try:
             os.write(fd, base64.decodestring(result))
@@ -94,9 +93,9 @@ class report_xml(orm.Model):
         if default_printer:
             default_printer = printer_obj.browse(cr, uid, default_printer, context=context)
 
-
         # Retrieve user default values
-        user = self.pool.get('res.users').browse(cr, uid, context)
+        user = self.pool.get('res.users').browse(
+            cr, uid, [uid], context=context)[0]
         if user.printing_action:
             default_action = user.printing_action
         if user.printing_printer_id:
