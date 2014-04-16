@@ -45,7 +45,7 @@ class printing_printer(orm.Model):
     _columns = {
         'name' : fields.char('Name',size=64,required=True,select="1"),
         'system_name': fields.char('System Name',size=64,required=True,select="1"),
-        'default':fields.boolean('Default Printer',required=True,readonly=True),
+        'default':fields.boolean('Default Printer', readonly=True),
         'status': fields.selection([('unavailable','Unavailable'),('printing','Printing'),('unknown','Unknown'),('available','Available'),('error','Error'),('server-error','Server Error')], 'Status', required=True, readonly=True),
         'status_message': fields.char('Status Message', size=500, readonly=True),
         'model': fields.char('Model', size=500, readonly=True),
