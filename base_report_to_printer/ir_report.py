@@ -84,8 +84,8 @@ class report_xml(orm.Model):
 
     def behaviour(self, cr, uid, ids, context=None):
         result = {}
-        printer_obj = self.pool.get('printing.printer')
-        printing_act_obj = self.pool.get('printing.report.xml.action')
+        printer_obj = self.pool['printing.printer']
+        printing_act_obj = self.pool['printing.report.xml.action']
         # Set hardcoded default action
         default_action = 'client'
         # Retrieve system wide printer
@@ -94,8 +94,7 @@ class report_xml(orm.Model):
             default_printer = printer_obj.browse(cr, uid, default_printer, context=context)
 
         # Retrieve user default values
-        user = self.pool.get('res.users').browse(
-            cr, uid, [uid], context=context)[0]
+        user = self.pool['res.users'].browse(cr, uid, uid, context=context)
         if user.printing_action:
             default_action = user.printing_action
         if user.printing_printer_id:
