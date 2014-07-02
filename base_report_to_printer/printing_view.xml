@@ -2,7 +2,7 @@
 <openerp>
   <data>
 
-    <menuitem name="Printing" id="menu_printing_main" parent="base.menu_config" groups="res_groups_printingprintoperator0"/>
+    <menuitem name="Printing" id="menu_printing_main" parent="base.menu_administration" groups="res_groups_printingprintoperator0"/>
 
     <record model="ir.ui.view" id="view_printing_printer_form">
       <field name="name">printing.printer.form</field>
@@ -76,12 +76,27 @@
       <field name="model">res.users</field>
       <field name="inherit_id" ref="base.view_users_form" />
       <field name="arch" type="xml">
-        <field name="lang" position="after">
-          <group>
+        <page string="Preferences">
+          <group name="printing">
             <field name="printing_action"/>
             <field name="printing_printer_id"/>
           </group>
-        </field>
+        </page>
+      </field>
+    </record>
+
+    <!-- "My Preferences -->
+    <record model="ir.ui.view" id="view_printing_users_prefs">
+      <field name="name">res.users.form.printing</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+      <field name="arch" type="xml">
+        <footer position="before">
+          <group string="Printing" name="printing">
+            <field name="printing_action"/>
+            <field name="printing_printer_id"/>
+          </group>
+        </footer>
       </field>
     </record>
 
@@ -91,10 +106,11 @@
       <field name="model">printing.report.xml.action</field>
       <field name="arch" type="xml">
         <form string="Report Printing Actions">
-          <field name="user_id"/>
-          <label string=""/>
-          <field name="action"/>
-          <field name="printer_id" select="1"/>
+          <group col="2">
+              <field name="user_id"/>
+              <field name="action"/>
+              <field name="printer_id" select="1"/>
+          </group>
         </form>
       </field>
     </record>
@@ -110,5 +126,9 @@
       </field>
     </record>
 
+    <!-- Add a shorcut to "Actions/Report" in the Printing menu -->
+    <menuitem id="menu_printing_reports"
+      parent="menu_printing_main"
+      action="base.ir_action_report_xml"/>
   </data>
 </openerp>
