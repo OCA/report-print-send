@@ -24,7 +24,7 @@
 ##############################################################################
 {
     'name': "Report to printer",
-    'version': '0.1',
+    'version': '0.1.1',
     'category': 'Generic Modules/Base',
     'description': """
 Report to printer
@@ -75,6 +75,7 @@ Contributors
 * Davide Corio <davide.corio@agilebg.com>
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Lionel Sausin <ls@numerigraphe.com>
 
     """,
     'author': 'Agile Business Group & Domsense, Pegueroles SCP, NaN',
