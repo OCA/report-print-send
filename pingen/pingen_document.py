@@ -28,7 +28,7 @@ from openerp.osv import osv, orm, fields
 from openerp.tools.translate import _
 from openerp import pooler, tools
 from .pingen import APIError, ConnectionError, POST_SENDING_STATUS, \
-        pingen_datetime_to_utc
+    pingen_datetime_to_utc
 
 _logger = logging.getLogger(__name__)
 
@@ -94,7 +94,7 @@ class pingen_document(orm.Model):
     def _get_pingen_session(self, cr, uid, context=None):
         """ Returns a pingen session for a user """
         company = self.pool.get('res.users').browse(
-                cr, uid, uid, context=context).company_id
+            cr, uid, uid, context=context).company_id
         return self.pool.get('res.company')._pingen(cr, uid, company, context=context)
 
     def _push_to_pingen(self, cr, uid, document, pingen=None, context=None):
@@ -105,7 +105,7 @@ class pingen_document(orm.Model):
         attachment_obj = self.pool.get('ir.attachment')
 
         decoded_document = attachment_obj._decoded_content(
-                cr, uid, document.attachment_id, context=context)
+            cr, uid, document.attachment_id, context=context)
 
         if pingen is None:
             pingen = self._get_pingen_session(cr, uid, context=context)
@@ -116,16 +116,16 @@ class pingen_document(orm.Model):
                 document.pingen_send,
                 document.pingen_speed,
                 document.pingen_color)
-        except ConnectionError as e:
+        except ConnectionError:
             _logger.exception(
-                    'Connection Error when pushing Pingen Document %s to %s.' %
-                    (document.id, pingen.url))
+                'Connection Error when pushing Pingen Document %s to %s.' %
+                (document.id, pingen.url))
             raise
 
-        except APIError as e:
+        except APIError:
             _logger.error(
-                    'API Error when pushing Pingen Document %s to %s.' %
-                    (document.id, pingen.url))
+                'API Error when pushing Pingen Document %s to %s.' %
+                (document.id, pingen.url))
             raise
 
         error = False
@@ -174,8 +174,8 @@ class pingen_document(orm.Model):
 
                 except:
                     _logger.exception(
-                           'Unexcepted Error when updating the status of pingen.document %s: ' %
-                           document.id)
+                        'Unexcepted Error when updating the status of pingen.document %s: ' %
+                        document.id)
                     raise osv.except_osv(
                         _('Error'),
                         _('Unexcepted Error when updating the status of Document %s') % document.name)
@@ -263,13 +263,13 @@ class pingen_document(orm.Model):
                 document.pingen_id,
                 document.pingen_speed,
                 document.pingen_color)
-        except ConnectionError as e:
+        except ConnectionError:
             _logger.exception('Connection Error when asking for sending Pingen Document %s to %s.' %
-                    (document.id, pingen.url))
+                              (document.id, pingen.url))
             raise
-        except APIError as e:
+        except APIError:
             _logger.exception('API Error when asking for sending Pingen Document %s to %s.' %
-                    (document.id, pingen.url))
+                              (document.id, pingen.url))
             raise
 
         document.write(
@@ -306,8 +306,8 @@ class pingen_document(orm.Model):
 
                 except:
                     _logger.exception(
-                           'Unexcepted Error when updating the status of pingen.document %s: ' %
-                           document.id)
+                        'Unexcepted Error when updating the status of pingen.document %s: ' %
+                        document.id)
                     raise osv.except_osv(
                         _('Error'),
                         _('Unexcepted Error when updating the status of Document %s') % document.name)
@@ -323,24 +323,24 @@ class pingen_document(orm.Model):
 
         try:
             post_infos = pingen.post_infos(document.post_id)
-        except ConnectionError as e:
+        except ConnectionError:
             _logger.exception(
-                    'Connection Error when asking for '
-                    'sending Pingen Document %s to %s.' %
-                    (document.id, pingen.url))
+                'Connection Error when asking for '
+                'sending Pingen Document %s to %s.' %
+                (document.id, pingen.url))
             raise
-        except APIError as e:
+        except APIError:
             _logger.exception(
-                    'API Error when asking for sending Pingen Document %s to %s.' %
-                    (document.id, pingen.url))
+                'API Error when asking for sending Pingen Document %s to %s.' %
+                (document.id, pingen.url))
             raise
 
         currency_ids = self.pool.get('res.currency').search(
-                cr, uid, [('name', '=', post_infos['currency'])], context=context)
+            cr, uid, [('name', '=', post_infos['currency'])], context=context)
         country_ids = self.pool.get('res.country').search(
-                cr, uid, [('code', '=', post_infos['country'])], context=context)
+            cr, uid, [('code', '=', post_infos['country'])], context=context)
 
-        send_date = pingen_datetime_to_utc(infos['date'])
+        send_date = pingen_datetime_to_utc(post_infos['date'])
 
         vals = {
             'post_status': POST_SENDING_STATUS[post_infos['status']],
@@ -369,9 +369,9 @@ class pingen_document(orm.Model):
         """
         if not ids:
             ids = self.search(
-                    cr, uid,
-                    [('state', '=', 'sendcenter')],
-                    context=context)
+                cr, uid,
+                [('state', '=', 'sendcenter')],
+                context=context)
 
         with closing(pooler.get_db(cr.dbname).cursor()) as loc_cr, \
                 self._get_pingen_session(cr, uid, context=context) as session:
@@ -417,10 +417,9 @@ class pingen_document(orm.Model):
 
                 except:
                     _logger.exception(
-                           'Unexcepted Error when updating the status of pingen.document %s: ' %
-                           document.id)
+                        'Unexcepted Error when updating the status of pingen.document %s: ' %
+                        document.id)
                     raise osv.except_osv(
                         _('Error'),
                         _('Unexcepted Error when updating the status of Document %s') % document.name)
         return True
-

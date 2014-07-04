@@ -30,12 +30,11 @@ import cups
 
 from openerp.osv import orm, fields
 
-#
-# Reports
-#
 
 class report_xml(orm.Model):
-
+    """
+    Reports
+    """
 
     def set_print_options(self, cr, uid, report_id, format, context=None):
         """
@@ -79,7 +78,10 @@ class report_xml(orm.Model):
             method=True,
             ),
         'printing_printer_id': fields.many2one('printing.printer', 'Printer'),
-        'printing_action_ids': fields.one2many('printing.report.xml.action', 'report_id', 'Actions', help='This field allows configuring action and printer on a per user basis'),
+        'printing_action_ids': fields.one2many(
+            'printing.report.xml.action', 'report_id', 'Actions',
+            help='This field allows configuring action and printer on a per '
+                 'user basis'),
         }
 
     def behaviour(self, cr, uid, ids, context=None):
@@ -105,16 +107,18 @@ class report_xml(orm.Model):
             printer = default_printer
 
             # Retrieve report default values
-            if report.property_printing_action and report.property_printing_action.type != 'user_default':
+            if (report.property_printing_action
+                    and report.property_printing_action.type != 'user_default'):
                 action = report.property_printing_action.type
             if report.printing_printer_id:
                 printer = report.printing_printer_id
 
             # Retrieve report-user specific values
-            act_ids = printing_act_obj.search(cr, uid,
-                    [('report_id', '=', report.id),
-                     ('user_id', '=', uid),
-                     ('action', '!=', 'user_default')], context=context)
+            act_ids = printing_act_obj.search(
+                cr, uid,
+                [('report_id', '=', report.id),
+                 ('user_id', '=', uid),
+                 ('action', '!=', 'user_default')], context=context)
             if act_ids:
                 user_action = printing_act_obj.behaviour(cr, uid, act_ids[0], context)
                 action = user_action['action']
