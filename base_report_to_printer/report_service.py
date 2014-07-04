@@ -56,7 +56,7 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                         report_obj.print_direct(
                             cr, uid, report.id, base64.encodestring(self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
-                        # XXX "Warning" removed as it breaks the workflow
+                        # FIXME "Warning" removed as it breaks the workflow
                         # it would be interesting to have a dialog box to confirm if we really want to print
                         # in this case it must be with a by pass parameter to allow massive impression
                         # raise osv.except_osv(
