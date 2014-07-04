@@ -23,6 +23,7 @@ from openerp.osv import orm, fields
 from openerp.osv.orm import browse_record
 from .pingen import Pingen
 
+
 class res_company(orm.Model):
 
     _inherit = 'res.company'
@@ -39,4 +40,3 @@ class res_company(orm.Model):
         if not isinstance(company, browse_record):
             company = self.browse(cr, uid, company, context=context)
         return Pingen(company.pingen_token, staging=company.pingen_staging)
-
