@@ -340,7 +340,7 @@ class pingen_document(orm.Model):
         country_ids = self.pool.get('res.country').search(
             cr, uid, [('code', '=', post_infos['country'])], context=context)
 
-        send_date = pingen_datetime_to_utc(infos['date'])
+        send_date = pingen_datetime_to_utc(post_infos['date'])
 
         vals = {
             'post_status': POST_SENDING_STATUS[post_infos['status']],
@@ -417,8 +417,8 @@ class pingen_document(orm.Model):
 
                 except:
                     _logger.exception(
-                       'Unexcepted Error when updating the status of pingen.document %s: ' %
-                       document.id)
+                        'Unexcepted Error when updating the status of pingen.document %s: ' %
+                        document.id)
                     raise osv.except_osv(
                         _('Error'),
                         _('Unexcepted Error when updating the status of Document %s') % document.name)
