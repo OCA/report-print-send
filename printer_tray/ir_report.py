@@ -49,10 +49,10 @@ class ReportXML(orm.Model):
 
         # Retrieve report-user specific values
         act_ids = printing_act_obj.search(
-                cr, uid,
-                [('report_id', '=', report.id),
-                 ('user_id', '=', uid),
-                 ('action', '!=', 'user_default')], context=context)
+            cr, uid,
+            [('report_id', '=', report.id),
+             ('user_id', '=', uid),
+             ('action', '!=', 'user_default')], context=context)
         if act_ids:
             user_action = printing_act_obj.browse(cr, uid, act_ids[0], context=context)
             if user_action.tray_id:
