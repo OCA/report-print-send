@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/OCA/report-print-send.svg?branch=6.1)](https://travis-ci.org/OCA/report-print-send)
-[![Coverage Status](https://img.shields.io/coveralls/OCA/report-print-send.svg)](https://coveralls.io/r/OCA/report-print-send?branch=6.1)
+[![Coverage Status](https://coveralls.io/repos/OCA/report-print-send/badge.png?branch=6.1)](https://coveralls.io/r/OCA/report-print-send?branch=6.1)
 
 Report - Printing and Sending
 =============================
