@@ -25,7 +25,6 @@ install:
  - git clone https://github.com/OCA/reporting-engine -b 8.0 $HOME/reporting-engine
 
 script:
-    - travis_run_flake8
     - travis_run_tests
 
 after_success:
