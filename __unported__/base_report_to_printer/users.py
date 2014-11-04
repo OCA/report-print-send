@@ -26,17 +26,19 @@ from openerp.osv import orm, fields
 
 from printing import _available_action_types
 
-#
-# Users
-#
+
 class res_users(orm.Model):
+    """
+    Users
+    """
     _name = "res.users"
     _inherit = "res.users"
 
     def _user_available_action_types(self, cr, uid, context=None):
         if context is None:
-            context={}
-        return [x for x in _available_action_types(self, cr, uid, context) if x[0] != 'user_default']
+            context = {}
+        return [x for x in _available_action_types(self, cr, uid, context)
+                if x[0] != 'user_default']
 
     _columns = {
         'printing_action': fields.selection(_user_available_action_types, 'Printing Action'),

@@ -20,14 +20,14 @@
 ##############################################################################
 
 {
-    'name' : 'pingen.com integration (document)',
-    'version' : '1.0',
-    'author' : 'Camptocamp',
+    'name': 'pingen.com integration (document)',
+    'version': '1.0',
+    'author': 'Camptocamp',
     'maintainer': 'Camptocamp',
     'license': 'AGPL-3',
     'category': 'Reporting',
     'complexity': 'easy',
-    'depends' : ['document', 'pingen'],
+    'depends': ['document', 'pingen'],
     'description': """
 Glue module between the `pingen` and the `document` modules.
 """,

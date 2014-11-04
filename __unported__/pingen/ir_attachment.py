@@ -42,7 +42,7 @@ class ir_attachment(orm.Model):
             [('1', 'Priority'), ('2', 'Economy')],
             'Speed',
             help="Defines the sending speed if the document is automatically sent"),
-        'pingen_color': fields.selection( [('0', 'B/W'), ('1', 'Color')], 'Type of print'),
+        'pingen_color': fields.selection([('0', 'B/W'), ('1', 'Color')], 'Type of print'),
     }
 
     _defaults = {
@@ -78,17 +78,17 @@ class ir_attachment(orm.Model):
                 document.write({'state': 'pending'}, context=context)
             else:
                 pingen_document_obj.create(
-                        cr, uid,
-                        self._prepare_pingen_document_vals(
-                            cr, uid, attachment, context=context),
-                        context=context)
+                    cr, uid,
+                    self._prepare_pingen_document_vals(
+                        cr, uid, attachment, context=context),
+                    context=context)
         else:
             if document:
                 if document.state == 'pushed':
                     raise osv.except_osv(
                         _('Error'),
-                        _('The attachment %s is already pushed to pingen.com.') % \
-                            attachment.name)
+                        _('The attachment %s is already pushed to pingen.com.') %
+                        attachment.name)
                 document.write({'state': 'canceled'}, context=context)
         return
 
@@ -121,4 +121,3 @@ class ir_attachment(orm.Model):
             raise Exception(
                 'The type of attachment %s is not handled' % attachment.type)
         return decoded_document
-

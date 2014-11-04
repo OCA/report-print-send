@@ -132,7 +132,7 @@ class Pingen(object):
 
         if response.json['error']:
             raise APIError(
-                    "%s: %s" % (response.json['errorcode'], response.json['errormessage']))
+                "%s: %s" % (response.json['errorcode'], response.json['errormessage']))
 
         return response
 
@@ -169,10 +169,10 @@ class Pingen(object):
         multipart, content_type = encode_multipart_formdata(formdata)
 
         response = self._send(
-                self.session.post,
-                'document/upload',
-                headers={'Content-Type': content_type},
-                data=multipart)
+            self.session.post,
+            'document/upload',
+            headers={'Content-Type': content_type},
+            data=multipart)
 
         rjson = response.json
 
@@ -198,10 +198,10 @@ class Pingen(object):
             'color': color,
             }
         response = self._send(
-                self.session.post,
-                'document/send',
-                params={'id': document_id},
-                data={'data': json.dumps(data)})
+            self.session.post,
+            'document/send',
+            params={'id': document_id},
+            data={'data': json.dumps(data)})
 
         return response.json['id']
 
@@ -212,9 +212,9 @@ class Pingen(object):
         :return: dict of infos of the post
         """
         response = self._send(
-                self.session.get,
-                'post/get',
-                params={'id': post_id})
+            self.session.get,
+            'post/get',
+            params={'id': post_id})
 
         return response.json['item']
 
@@ -225,4 +225,3 @@ class Pingen(object):
         :param dict post_infos: post infos returned by `post_infos`
         """
         return post_infos['status'] == 200
-

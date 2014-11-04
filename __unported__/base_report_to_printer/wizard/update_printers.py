@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 #    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
@@ -37,14 +37,16 @@ class printing_printer_update_wizard(orm.TransientModel):
 
     def action_ok(self, cr, uid, ids, context=None):
         # Update Printers
+        printer_obj = self.pool['printing.printer']
         try:
             connection = cups.Connection()
             printers = connection.getPrinters()
         except:
             return {}
 
-        ids = self.pool.get('printing.printer').search(cr, uid, [('system_name','in',printers.keys())], context=context)
-        for printer in self.pool.get('printing.printer').browse(cr, uid, ids, context=context):
+        ids = printer_obj.search(
+            cr, uid, [('system_name', 'in', printers.keys())], context=context)
+        for printer in printer_obj.browse(cr, uid, ids, context=context):
             del printers[printer.system_name]
 
         for name in printers:
