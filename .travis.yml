@@ -22,7 +22,7 @@ install:
  - pip install pycups==1.9.66
  - pip install PyPDF2==1.18
  - pip install requests
- - git clone https://github.com/OCA/reporting-engine -b 8.0 $HOME/reporting-engine
+ - git clone https://github.com/OCA/reporting-engine -b ${VERSION} $HOME/reporting-engine
 
 script:
     - travis_run_tests
