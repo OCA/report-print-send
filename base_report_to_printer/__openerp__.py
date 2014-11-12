@@ -24,7 +24,11 @@
 ##############################################################################
 {
     'name': "Report to printer",
+<<<<<<< HEAD
     'version': '0.1',
+=======
+    'version': '0.1.1',
+>>>>>>> Move base_report_to_printer to root from __unported__
     'category': 'Generic Modules/Base',
     'description': """
 Report to printer
@@ -75,12 +79,20 @@ Contributors
 * Davide Corio <davide.corio@agilebg.com>
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+<<<<<<< HEAD
+=======
+* Lionel Sausin <ls@numerigraphe.com>
+>>>>>>> Move base_report_to_printer to root from __unported__
 
     """,
     'author': 'Agile Business Group & Domsense, Pegueroles SCP, NaN',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
+<<<<<<< HEAD
     "depends" : ['base', 'base_calendar'],
+=======
+    "depends": ['base', 'base_calendar'],
+>>>>>>> Move base_report_to_printer to root from __unported__
     'data': [
         'security/security.xml',
         'printing_data.xml',
