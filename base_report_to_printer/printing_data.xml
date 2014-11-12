@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<openerp>
+  <data noupdate="1">
+    <!-- printing.action -->
+    <record model="printing.action" id="printing_action_1">
+      <field name="name">Send to Printer</field>
+      <field name="type">server</field>
+    </record>
+    <record model="printing.action" id="printing_action_2">
+      <field name="name">Send to Client</field>
+      <field name="type">client</field>
+    </record>
+    <!-- properties -->
+    <record forcecreate="True" id="property_printing_action" model="ir.property">
+      <field name="name">property_printing_action</field>
+      <field name="fields_id" search="[('model','=','ir.actions.report.xml'),('name','=','property_printing_action')]"/>
+      <field name="value" eval="'printing.action,'+str(printing_action_2)"/>
+    </record>
+
+    <record forcecreate="True" id="ir_cron_update_printers" model="ir.cron">
+      <field name="name">Update Printers Status</field>
+      <field eval="True" name="active"/>
+      <field name="user_id" ref="base.user_root"/>
+      <field name="interval_number">1</field>
+      <field name="interval_type">minutes</field>
+      <field name="numbercall">-1</field>
+      <field eval="False" name="doall"/>
+      <field eval="'printing.printer'" name="model"/>
+      <field eval="'update_printers_status'" name="function"/>
+      <field eval="'()'" name="args"/>
+    </record>
+
+  </data>
+</openerp>
