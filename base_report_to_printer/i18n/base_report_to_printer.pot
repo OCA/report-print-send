@@ -1,0 +1,272 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* base_report_to_printer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-05 14:48+0000\n"
+"PO-Revision-Date: 2014-11-17 12:50+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: base_report_to_printer
+#: field:ir.actions.report.xml,property_printing_action:0
+#: field:printing.report.xml.action,action:0
+msgid "Action"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:ir.actions.report.xml,printing_action_ids:0
+msgid "Actions"
+msgstr ""
+
+#. module: base_report_to_printer
+#: selection:printing.printer,status:0
+msgid "Available"
+msgstr ""
+
+#. module: base_report_to_printer
+#: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
+msgid "Cancel"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.action,create_uid:0 field:printing.printer,create_uid:0
+#: field:printing.printer.polling,create_uid:0
+#: field:printing.printer.update.wizard,create_uid:0
+#: field:printing.report.xml.action,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.action,create_date:0 field:printing.printer,create_date:0
+#: field:printing.printer.polling,create_date:0
+#: field:printing.printer.update.wizard,create_date:0
+#: field:printing.report.xml.action,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.printer,default:0
+msgid "Default"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:res.users,printing_printer_id:0
+msgid "Default Printer"
+msgstr ""
+
+#. module: base_report_to_printer
+#: selection:printing.printer,status:0
+msgid "Error"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.action,id:0 field:printing.printer,id:0
+#: field:printing.printer.polling,id:0
+#: field:printing.printer.update.wizard,id:0
+#: field:printing.report.xml.action,id:0
+msgid "ID"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.action,write_uid:0 field:printing.printer,write_uid:0
+#: field:printing.printer.polling,write_uid:0
+#: field:printing.printer.update.wizard,write_uid:0
+#: field:printing.report.xml.action,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.action,write_date:0 field:printing.printer,write_date:0
+#: field:printing.printer.polling,write_date:0
+#: field:printing.printer.update.wizard,write_date:0
+#: field:printing.report.xml.action,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.printer.polling,last_update:0
+msgid "Last update"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.printer,location:0
+msgid "Location"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.printer,model:0
+msgid "Model"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.action,name:0 field:printing.printer,name:0
+msgid "Name"
+msgstr ""
+
+#. module: base_report_to_printer
+#: view:res.users:base_report_to_printer.view_printing_users_form
+msgid "Preferences"
+msgstr ""
+
+#. module: base_report_to_printer
+#: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
+msgid "Print"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_action
+msgid "Print Job Action"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:ir.actions.report.xml,printing_printer_id:0
+#: model:ir.model,name:base_report_to_printer.model_printing_printer
+#: field:printing.report.xml.action,printer_id:0
+msgid "Printer"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.menu_printing_printer_form
+#: view:printing.printer:base_report_to_printer.view_printing_printer_form
+#: view:printing.printer:base_report_to_printer.view_printing_printer_search
+#: view:printing.printer:base_report_to_printer.view_printing_printer_tree
+msgid "Printers"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_printer_polling
+msgid "Printers Polling"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.menu_printing_main
+#: selection:printing.printer,status:0
+#: view:res.users:base_report_to_printer.view_printing_users_prefs
+msgid "Printing"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:res.groups,name:base_report_to_printer.res_groups_printingprintoperator0
+msgid "Printing / Print Operator"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:res.users,printing_action:0
+msgid "Printing action"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_report
+#: field:printing.report.xml.action,report_id:0
+msgid "Report"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
+#: view:printing.report.xml.action:base_report_to_printer.printing_report_xml_action_form
+#: view:printing.report.xml.action:base_report_to_printer.printing_report_xml_action_tree
+msgid "Report Printing Actions"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.menu_printing_reports
+msgid "Reports"
+msgstr ""
+
+#. module: base_report_to_printer
+#: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
+msgid "Security"
+msgstr ""
+
+#. module: base_report_to_printer
+#: selection:printing.printer,status:0
+msgid "Server Error"
+msgstr ""
+
+#. module: base_report_to_printer
+#: view:printing.printer:base_report_to_printer.view_printing_printer_form
+msgid "Set Default"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
+msgid "Show Printers"
+msgstr ""
+
+#. module: base_report_to_printer
+#: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
+msgid "Specific actions per user"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.printer,status:0
+msgid "Status"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.printer,status_message:0
+msgid "Status message"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.printer,system_name:0
+msgid "System name"
+msgstr ""
+
+#. module: base_report_to_printer
+#: help:ir.actions.report.xml,printing_action_ids:0
+msgid "This field allows configuring action and printer on a per user basis"
+msgstr ""
+
+#. module: base_report_to_printer
+#: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
+msgid ""
+"This process will create all the missing printers from the current CUPS "
+"server."
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.action,type:0
+msgid "Type"
+msgstr ""
+
+#. module: base_report_to_printer
+#: selection:printing.printer,status:0
+msgid "Unavailable"
+msgstr ""
+
+#. module: base_report_to_printer
+#: selection:printing.printer,status:0
+msgid "Unknown"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.action_printer_update_wizard
+#: model:ir.ui.menu,name:base_report_to_printer.menu_printer_update_wizard
+#: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
+msgid "Update Printers from CUPS"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.printer,uri:0
+msgid "URI"
+msgstr ""
+
+#. module: base_report_to_printer
+#: field:printing.report.xml.action,user_id:0
+msgid "User"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_res_users
+msgid "Users"
+msgstr ""
