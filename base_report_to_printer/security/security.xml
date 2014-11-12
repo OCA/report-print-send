@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<openerp>
+  <data noupdate="1">
+    <record id="res_groups_printingprintoperator0" model="res.groups">
+      <field name="name">Printing / Print Operator</field>
+    </record>
+    <record id="ir_model_access_printingprintergroup1" model="ir.model.access">
+      <field name="name">printing_printer group</field>
+      <field name="model_id" ref="model_printing_printer"/>
+      <field name="group_id" ref="res_groups_printingprintoperator0"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="1" name="perm_unlink"/>
+      <field eval="1" name="perm_write"/>
+      <field eval="1" name="perm_create"/>
+    </record>
+    <record id="ir_model_access_printing_action" model="ir.model.access">
+      <field name="name">printing_printer group</field>
+      <field name="model_id" ref="model_printing_action"/>
+      <field name="group_id" ref="res_groups_printingprintoperator0"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="1" name="perm_unlink"/>
+      <field eval="1" name="perm_write"/>
+      <field eval="1" name="perm_create"/>
+    </record>
+    <record id="ir_model_access_printingreportxmlaction" model="ir.model.access">
+      <field name="name">printing_printer group</field>
+      <field name="model_id" ref="model_printing_report_xml_action"/>
+      <field name="group_id" ref="res_groups_printingprintoperator0"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="1" name="perm_unlink"/>
+      <field eval="1" name="perm_write"/>
+      <field eval="1" name="perm_create"/>
+    </record>
+
+  </data>
+  <data>
+    <record id="ir_model_access_printingprinterall0" model="ir.model.access">
+      <field name="name">printing_printer all</field>
+      <field name="model_id" ref="model_printing_printer"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="0" name="perm_unlink"/>
+      <field eval="0" name="perm_write"/>
+      <field eval="0" name="perm_create"/>
+    </record>
+    <record id="ir_model_access_printing_action_all0" model="ir.model.access">
+      <field name="name">printing_action all</field>
+      <field name="model_id" ref="model_printing_action"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="0" name="perm_unlink"/>
+      <field eval="0" name="perm_write"/>
+      <field eval="0" name="perm_create"/>
+    </record>
+    <record id="ir_model_access_printing_report_xml_action_all0" model="ir.model.access">
+      <field name="name">printing_report_xml_action all</field>
+      <field name="model_id" ref="model_printing_report_xml_action"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="0" name="perm_unlink"/>
+      <field eval="0" name="perm_write"/>
+      <field eval="0" name="perm_create"/>
+    </record>
+  </data>
+</openerp>
