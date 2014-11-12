@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+
+    <menuitem name="Printing" id="menu_printing_main" parent="base.menu_administration" groups="res_groups_printingprintoperator0"/>
+
+    <record model="ir.ui.view" id="view_printing_printer_form">
+      <field name="name">printing.printer.form</field>
+      <field name="model">printing.printer</field>
+      <field name="arch" type="xml">
+        <form string="Printers">
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <label for="name"/>
+                <field name="name"/>
+              </h1>
+            </div>
+          <group>
+            <field name="system_name"/>
+          </group>
+          <group col="3" colspan="4">
+            <field name="default"/>
+            <button name="set_default" string="Set Default" type="object"/>
+          </group>
+          <group>
+            <field name="uri"/>
+            <field name="model"/>
+            <field name="location"/>
+            <field name="status"/>
+            <field name="status_message"/>
+          </group>
+        </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_printing_printer_tree">
+      <field name="name">printing.printer.tree</field>
+      <field name="model">printing.printer</field>
+      <field name="arch" type="xml">
+        <tree string="Printers" colors="green:status=='available'; orange:status=='printing'; red:1;">
+          <field name="default"/>
+          <field name="name"/>
+          <field name="system_name"/>
+          <field name="status"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_printing_printer_search">
+      <field name="name">printing.printer.search</field>
+      <field name="model">printing.printer</field>
+      <field name="arch" type="xml">
+        <search string="Printers">
+          <field name="name"/>
+          <field name="system_name"/>
+          <field name="location"/>
+          <field name="status"/>
+        </search>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_printing_printer_form">
+      <field name="name">Show Printers</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">printing.printer</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="auto_refresh">20</field>
+    </record>
+
+    <menuitem name="Printers"
+      id="menu_printing_printer_form"
+      parent="menu_printing_main"
+      action="action_printing_printer_form"/>
+
+    <record model="ir.ui.view" id="action_report_xml_form">
+      <field name="name">ir.actions.report.xml.printing</field>
+      <field name="model">ir.actions.report.xml</field>
+      <field name="inherit_id" ref="base.act_report_xml_view" />
+      <field name="arch" type="xml">
+        <page string="Security" position="after">
+          <page string="Print">
+            <group>
+              <field name="property_printing_action"/>
+              <field name="printing_printer_id"/>
+            </group>
+
+            <separator string="Specific actions per user"/>
+            <field name="printing_action_ids"/>
+          </page>
+        </page>
+      </field>
+    </record>
+
+    <!-- res.users -->
+    <record model="ir.ui.view" id="view_printing_users_form">
+      <field name="name">res.users.form.printing</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form" />
+      <field name="arch" type="xml">
+        <page string="Preferences">
+          <group name="printing">
+            <field name="printing_action"/>
+            <field name="printing_printer_id"/>
+          </group>
+        </page>
+      </field>
+    </record>
+
+    <!-- "My Preferences -->
+    <record model="ir.ui.view" id="view_printing_users_prefs">
+      <field name="name">res.users.form.printing</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+      <field name="arch" type="xml">
+        <footer position="before">
+          <group string="Printing" name="printing">
+            <field name="printing_action"/>
+            <field name="printing_printer_id"/>
+          </group>
+        </footer>
+      </field>
+    </record>
+
+    <!-- printing.report.xml.action -->
+    <record model="ir.ui.view" id="printing_report_xml_action_form">
+      <field name="name">printing.report.xml.action.form</field>
+      <field name="model">printing.report.xml.action</field>
+      <field name="arch" type="xml">
+        <form string="Report Printing Actions">
+          <group col="2">
+              <field name="user_id"/>
+              <field name="action"/>
+              <field name="printer_id" select="1"/>
+          </group>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="printing_report_xml_action_tree">
+      <field name="name">printing.report.xml.action.tree</field>
+      <field name="model">printing.report.xml.action</field>
+      <field name="arch" type="xml">
+        <tree string="Report Printing Actions">
+          <field name="user_id"/>
+          <field name="action" />
+          <field name="printer_id" />
+        </tree>
+      </field>
+    </record>
+
+    <!-- Add a shorcut to "Actions/Report" in the Printing menu -->
+    <menuitem id="menu_printing_reports"
+      parent="menu_printing_main"
+      action="base.ir_action_report_xml"/>
+  </data>
+</openerp>
