@@ -29,7 +29,8 @@
     'author': 'Agile Business Group & Domsense, Pegueroles SCP, NaN',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    "depends": ['base', 'base_calendar'],
+    "depends": ['base',
+                ],
     'data': [
         'security/security.xml',
         'printing_data.xml',
