@@ -151,10 +151,25 @@ class PrintingPrinter(models.Model):
         return _super.search(cr, user, args, offset=offset, limit=limit,
                              order=order, context=context, count=count)
 
+    @api.v7
+    def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
+        # https://github.com/odoo/odoo/issues/3644
+        # self.update(cr, user, context=context)
+        _super = super(PrintingPrinter, self)
+        return _super.read(cr, user, ids, fields=fields, context=context,
+                           load=load)
+
     @api.v8
     def read(self, fields=None, load='_classic_read'):
         self.update()
         return super(PrintingPrinter, self).read(fields=fields, load=load)
+
+    @api.v7
+    def browse(self, cr, uid, arg=None, context=None):
+        # https://github.com/odoo/odoo/issues/3644
+        # self.update(cr, uid, context=context)
+        _super = super(PrintingPrinter, self)
+        return _super.browse(cr, uid, arg=arg, context=context)
 
     @api.v8
     def browse(self, arg=None):
