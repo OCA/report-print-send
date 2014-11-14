@@ -155,23 +155,19 @@ class printing_printer(orm.Model):
         thread.start()
 
     def update(self, cr, uid, context=None):
-        if not context or context.get('skip_update'):
-            return
-        self.lock.acquire()
+        """Update printer status if current status is more than 10s old."""
+        # We won't acquire locks - we're only assigning from immutable data
+        if not context or 'skip_update' in context:
+            return True
         last_update = self.last_update
-        updating = self.updating
-        self.lock.release()
         now = time.time()
         # Only update printer status if current status is more than 10 seconds old.
         if not last_update or now - last_update > 10:
             self.start_printer_update(cr, uid, context)
             # Wait up to five seconds for printer status update
-            for x in range(0, 5):
+            for _dummy in range(0, 5):
                 time.sleep(1)
-                self.lock.acquire()
-                updating = self.updating
-                self.lock.release()
-                if not updating:
+                if not self.updating:
                     break
         return True
 
