@@ -5,8 +5,7 @@
 #    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 #    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
-#    Copyright (C) 2013 Camptocamp (<http://www.camptocamp.com>)
-#    All Rights Reserved
+#    Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -25,145 +24,118 @@
 import time
 
 import cups
+
 from threading import Thread
 from threading import Lock
 
-from openerp import pooler
-from openerp.osv import orm, fields
-from openerp.tools.translate import _
+from openerp import models, fields, api, sql_db
 
 
-class printing_printer(orm.Model):
+class PrintingPrinter(models.Model):
     """
     Printers
     """
-    _name = "printing.printer"
-    _description = "Printer"
 
-    _columns = {
-        'name': fields.char(
-            'Name',
-            size=64,
-            required=True,
-            select="1"),
-        'system_name': fields.char(
-            'System Name',
-            size=64,
-            required=True,
-            select="1"),
-        'default': fields.boolean(
-            'Default Printer',
-            readonly=True),
-        'status': fields.selection(
-            [('unavailable', 'Unavailable'),
-             ('printing', 'Printing'),
-             ('unknown', 'Unknown'),
-             ('available', 'Available'),
-             ('error', 'Error'),
-             ('server-error', 'Server Error')],
-            'Status', required=True, readonly=True),
-        'status_message': fields.char(
-            'Status Message',
-            size=500,
-            readonly=True),
-        'model': fields.char(
-            'Model',
-            size=500,
-            readonly=True),
-        'location': fields.char(
-            'Location',
-            size=500,
-            readonly=True),
-        'uri': fields.char(
-            'URI',
-            size=500,
-            readonly=True),
-        }
+    _name = 'printing.printer'
+    _description = 'Printer'
+    _order = 'name'
 
-    _order = "name"
-
-    _defaults = {
-        'default': lambda *a: False,
-        'status': lambda *a: 'unknown',
-        }
+    name = fields.Char(required=True, select=True)
+    system_name = fields.Char(required=True, select=True)
+    default = fields.Boolean(readonly=True)
+    status = fields.Selection([('unavailable', 'Unavailable'),
+                               ('printing', 'Printing'),
+                               ('unknown', 'Unknown'),
+                               ('available', 'Available'),
+                               ('error', 'Error'),
+                               ('server-error', 'Server Error')],
+                              required=True,
+                              readonly=True,
+                              default='unknown')
+    status_message = fields.Char(readonly=True)
+    model = fields.Char(readonly=True)
+    location = fields.Char(readonly=True)
+    uri = fields.Char(readonly=True)
 
     def __init__(self, pool, cr):
-        super(printing_printer, self).__init__(pool, cr)
+        super(PrintingPrinter, self).__init__(pool, cr)
         self.lock = Lock()
         self.last_update = None
         self.updating = False
 
-    def update_printers_status(self, db_name, uid, context=None):
-        db, pool = pooler.get_db_and_pool(db_name)
-        cr = db.cursor()
+    @api.model
+    def update_printers_status(self):
+        cr = sql_db.db_connect(self.env.cr.dbname).cursor()
+        uid, context = self.env.uid, self.env.context
+        with api.Environment.manage():
+            self.env = api.Environment(cr, uid, context)
+            try:
+                connection = cups.Connection()
+                printers = connection.getPrinters()
+                server_error = False
+            except:
+                server_error = True
 
-        try:
-            connection = cups.Connection()
-            printers = connection.getPrinters()
-            server_error = False
-        except:
-            server_error = True
+            mapping = {
+                3: 'available',
+                4: 'printing',
+                5: 'error'
+            }
 
-        mapping = {
-            3: 'available',
-            4: 'printing',
-            5: 'error'
-        }
+            try:
+                # Skip update to avoid the thread being created again
+                env = self.env.with_context(skip_update=True)
+                printer_recs = env.search([])
+                for printer in printer_recs:
+                    vals = {}
+                    if server_error:
+                        status = 'server-error'
+                    elif printer.system_name in printers:
+                        info = printers[printer.system_name]
+                        status = mapping.get(info['printer-state'], 'unknown')
+                        vals = {
+                            'model': info.get('printer-make-and-model', False),
+                            'location': info.get('printer-location', False),
+                            'uri': info.get('device-uri', False),
+                        }
+                    else:
+                        status = 'unavailable'
 
-        if context is None:
-            context = {}
-        try:
-        # Skip update to avoid the thread being created again
-            ctx = context.copy()
-            ctx['skip_update'] = True
-            ids = self.search(cr, uid, [], context=ctx)
-            for printer in self.browse(cr, uid, ids, context=ctx):
-                vals = {}
-                if server_error:
-                    status = 'server-error'
-                elif printer.system_name in printers:
-                    info = printers[printer.system_name]
-                    status = mapping.get(info['printer-state'], 'unknown')
-                    vals = {
-                        'model': info.get('printer-make-and-model', False),
-                        'location': info.get('printer-location', False),
-                        'uri': info.get('device-uri', False),
-                    }
-                else:
-                    status = 'unavailable'
+                    vals['status'] = status
+                    printer.write(vals)
+                self.env.cr.commit()
+            except:
+                self.env.cr.rollback()
+                raise
+            finally:
+                self.env.cr.close()
+            with self.lock:
+                self.updating = False
+                self.last_update = time.time()
 
-                vals['status'] = status
-                self.write(cr, uid, [printer.id], vals, context=context)
-            cr.commit()
-        except:
-            cr.rollback()
-            raise
-        finally:
-            cr.close()
-        with self.lock:
-            self.updating = False
-            self.last_update = time.time()
-
-    def start_printer_update(self, cr, uid, context):
+    @api.model
+    def start_printer_update(self):
         self.lock.acquire()
         if self.updating:
             self.lock.release()
             return
         self.updating = True
         self.lock.release()
-        thread = Thread(target=self.update_printers_status, args=(cr.dbname, uid, context.copy()))
+        thread = Thread(target=self.update_printers_status, args=())
         thread.start()
 
-    def update(self, cr, uid, context=None):
+    @api.model
+    def update(self):
         """Update printer status if current status is more than 10s old."""
         # We won't acquire locks - we're only assigning from immutable data
-        if not context or 'skip_update' in context:
+        if not self.env.context or 'skip_update' in self.env.context:
             return True
         last_update = self.last_update
         now = time.time()
-        # Only update printer status if current status is more than 10 seconds old.
+        # Only update printer status if current status is more than 10
+        # seconds old.
         if not last_update or now - last_update > 10:
-            self.start_printer_update(cr, uid, context)
+            self.start_printer_update()
             # Wait up to five seconds for printer status update
             for _dummy in range(0, 5):
                 time.sleep(1)
@@ -171,54 +143,53 @@ class printing_printer(orm.Model):
                     break
         return True
 
-    def search(self, cr, uid, args, offset=0, limit=None, order=None,
+    @api.returns('self')
+    def search(self, cr, user, args, offset=0, limit=None, order=None,
                context=None, count=False):
-        self.update(cr, uid, context)
-        return super(printing_printer, self
-                     ).search(cr, uid, args, offset,
-                              limit, order, context, count)
+        self.update()
+        _super = super(PrintingPrinter, self)
+        return _super.search(cr, user, args, offset=offset, limit=limit,
+                             order=order, context=context, count=count)
 
-    def read(self, cr, uid, ids, fields=None, context=None, load='_classic_read'):
-        self.update(cr, uid, context)
-        return super(printing_printer, self
-                     ).read(cr, uid, ids, fields, context, load)
+    @api.v8
+    def read(self, fields=None, load='_classic_read'):
+        self.update()
+        return super(PrintingPrinter, self).read(fields=fields, load=load)
 
-    def browse(self, cr, uid, ids, context=None):
-        self.update(cr, uid, context)
-        return super(printing_printer, self).browse(cr, uid, ids, context)
+    @api.v8
+    def browse(self, arg=None):
+        self.update()
+        return super(PrintingPrinter, self).browse(arg=arg)
 
-    def set_default(self, cr, uid, ids, context):
-        if not ids:
+    @api.multi
+    def set_default(self):
+        if not self:
             return
-        default_ids = self.search(cr, uid, [('default', '=', True)])
-        self.write(cr, uid, default_ids, {'default': False}, context)
-        self.write(cr, uid, ids[0], {'default': True}, context)
+        self.ensure_one()
+        default_printers = self.search([('default', '=', True)])
+        default_printers.write({'default': False})
+        self.write({'default': True})
         return True
 
-    def get_default(self, cr, uid, context):
-        printer_ids = self.search(cr, uid, [('default', '=', True)])
-        if printer_ids:
-            return printer_ids[0]
-        return False
-
+    @api.multi
+    def get_default(self):
+        return self.search([('default', '=', True)], limit=1)
 
 #
 # Actions
 #
 
-def _available_action_types(self, cr, uid, context=None):
-    return [
-        ('server', _('Send to Printer')),
-        ('client', _('Send to Client')),
-        ('user_default', _("Use user's defaults")),
-        ]
+
+def _available_action_types(self):
+    return [('server', 'Send to Printer'),
+            ('client', 'Send to Client'),
+            ('user_default', "Use user's defaults"),
+            ]
 
 
-class printing_action(orm.Model):
+class PrintingAction(models.Model):
     _name = 'printing.action'
     _description = 'Print Job Action'
 
-    _columns = {
-        'name': fields.char('Name', size=256, required=True),
-        'type': fields.selection(_available_action_types, 'Type', required=True),
-        }
+    name = fields.Char(required=True)
+    type = fields.Selection(_available_action_types, required=True)
