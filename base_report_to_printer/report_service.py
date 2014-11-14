@@ -31,7 +31,8 @@ from openerp.addons.base_calendar import base_calendar
 class virtual_report_spool(base_calendar.virtual_report_spool):
 
     def exp_report(self, db, uid, object, ids, datas=None, context=None):
-        res = super(virtual_report_spool, self).exp_report(db, uid, object, ids, datas, context)
+        res = super(virtual_report_spool, self).exp_report(
+            db, uid, object, ids, datas, context)
         self._reports[res]['report_name'] = object
         return res
 
@@ -54,7 +55,8 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
                             and self._reports[report_id].get('result', False)
                             and self._reports[report_id].get('format', False)):
                         report_obj.print_direct(
-                            cr, uid, report.id, base64.encodestring(self._reports[report_id]['result']),
+                            cr, uid, report.id, base64.encodestring(
+                                self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
                         # FIXME "Warning" removed as it breaks the workflow
                         # it would be interesting to have a dialog box to confirm if we really want to print
@@ -69,7 +71,8 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
         finally:
             cr.close()
 
-        res = super(virtual_report_spool, self).exp_report_get(db, uid, report_id)
+        res = super(virtual_report_spool, self).exp_report_get(
+            db, uid, report_id)
         return res
 
 virtual_report_spool()

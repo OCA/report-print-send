@@ -24,10 +24,11 @@
 ##############################################################################
 from openerp.osv import orm, fields
 
-from printing import _available_action_types
+from .printing import _available_action_types
 
 
 class res_users(orm.Model):
+
     """
     Users
     """
@@ -43,6 +44,6 @@ class res_users(orm.Model):
     _columns = {
         'printing_action': fields.selection(_user_available_action_types, 'Printing Action'),
         'printing_printer_id': fields.many2one('printing.printer', 'Default Printer'),
-        }
+    }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

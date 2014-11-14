@@ -93,5 +93,5 @@ Contributors
     'application': True,
     'external_dependencies': {
         'python': ['cups']
-        }
+    }
 }

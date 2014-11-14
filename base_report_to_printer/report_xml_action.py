@@ -24,7 +24,8 @@
 ##############################################################################
 from openerp.osv import orm, fields
 
-from printing import _available_action_types
+from .printing import _available_action_types
+
 
 class report_xml_action(orm.Model):
     _name = 'printing.report.xml.action'
@@ -34,17 +35,15 @@ class report_xml_action(orm.Model):
         'user_id': fields.many2one('res.users', 'User', required=True, ondelete='cascade'),
         'action': fields.selection(_available_action_types, 'Action', required=True),
         'printer_id': fields.many2one('printing.printer', 'Printer'),
-        }
-
+    }
 
     def behaviour(self, cr, uid, act_id, context=None):
-        result = {}
         if not act_id:
             return False
         action = self.browse(cr, uid, act_id, context=context)
         return {
             'action': action.action,
             'printer': action.printer_id,
-            }
+        }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
