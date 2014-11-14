@@ -22,29 +22,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
-from printing import _available_action_types
+from .printing import _available_action_types
 
-class report_xml_action(orm.Model):
+
+class ReportXmlAction(models.Model):
     _name = 'printing.report.xml.action'
     _description = 'Report Printing Actions'
-    _columns = {
-        'report_id': fields.many2one('ir.actions.report.xml', 'Report', required=True, ondelete='cascade'),
-        'user_id': fields.many2one('res.users', 'User', required=True, ondelete='cascade'),
-        'action': fields.selection(_available_action_types, 'Action', required=True),
-        'printer_id': fields.many2one('printing.printer', 'Printer'),
-        }
 
+    report_id = fields.Many2one(comodel_name='ir.actions.report.xml',
+                                string='Report',
+                                required=True,
+                                ondelete='cascade')
+    user_id = fields.Many2one(comodel_name='res.users',
+                              string='User',
+                              required=True,
+                              ondelete='cascade')
+    action = fields.Selection(_available_action_types,
+                              required=True)
+    printer_id = fields.Many2one(comodel_name='printing.printer',
+                                 string='Printer')
 
-    def behaviour(self, cr, uid, act_id, context=None):
-        result = {}
-        if not act_id:
-            return False
-        action = self.browse(cr, uid, act_id, context=context)
-        return {
-            'action': action.action,
-            'printer': action.printer_id,
-            }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    @api.multi
+    def behaviour(self):
+        if not self:
+            return {}
+        return {'action': self.action,
+                'printer': self.printer_id,
+                }
