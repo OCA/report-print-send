@@ -5,8 +5,7 @@
 #    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 #    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
-#    Copyright (C) 2013 Camptocamp (<http://www.camptocamp.com>)
-#    All Rights Reserved
+#    Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -22,30 +21,54 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import os
 import base64
-from tempfile import mkstemp
 import logging
+import os
+
+from tempfile import mkstemp
+
 import cups
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api
+
+_logger = logging.getLogger('base_report_to_printer')
 
 
-class report_xml(orm.Model):
+class ReportXml(models.Model):
     """
     Reports
     """
 
-    def set_print_options(self, cr, uid, report_id, format, context=None):
-        """
-        Hook to set print options
-        """
+    _inherit = 'ir.actions.report.xml'
+
+    property_printing_action = fields.Many2one(
+        comodel_name='printing.action',
+        string='Action',
+        company_dependent=True,
+    )
+    printing_printer_id = fields.Many2one(
+        comodel_name='printing.printer',
+        string='Printer'
+    )
+    printing_action_ids = fields.One2many(
+        comodel_name='printing.report.xml.action',
+        inverse_name='report_id',
+        string='Actions',
+        help='This field allows configuring action and printer on a per '
+             'user basis'
+    )
+
+    @api.multi
+    def set_print_options(self, format):
+        """ Hook to set print options """
         options = {}
         if format == 'raw':
             options['raw'] = True
         return options
 
-    def print_direct(self, cr, uid, report_id, result, format, printer, context=None):
+    @api.multi
+    def print_direct(self, result, format, printer):
+        self.ensure_one()
         fd, file_name = mkstemp()
         try:
             os.write(fd, base64.decodestring(result))
@@ -59,74 +82,56 @@ class report_xml(orm.Model):
                 printer_system_name = printer.system_name
             connection = cups.Connection()
 
-            options = self.set_print_options(cr, uid, report_id, format, context=context)
+            options = self.set_print_options(format)
 
-            connection.printFile(printer_system_name, file_name, file_name, options=options)
-            logger = logging.getLogger('base_report_to_printer')
-            logger.info("Printing job : '%s'" % file_name)
+            connection.printFile(printer_system_name,
+                                 file_name,
+                                 file_name,
+                                 options=options)
+            _logger.info("Printing job: '%s'" % file_name)
         return True
 
-    _inherit = 'ir.actions.report.xml'
-    _columns = {
-        'property_printing_action': fields.property(
-            #'ir.actions.report.xml',
-            'printing.action',
-            type='many2one',
-            relation='printing.action',
-            string='Action',
-            view_load=True,
-            method=True,
-            ),
-        'printing_printer_id': fields.many2one('printing.printer', 'Printer'),
-        'printing_action_ids': fields.one2many(
-            'printing.report.xml.action', 'report_id', 'Actions',
-            help='This field allows configuring action and printer on a per '
-                 'user basis'),
-        }
-
-    def behaviour(self, cr, uid, ids, context=None):
+    @api.multi
+    def behaviour(self):
         result = {}
-        printer_obj = self.pool['printing.printer']
-        printing_act_obj = self.pool['printing.report.xml.action']
+        printer_obj = self.env['printing.printer']
+        printing_act_obj = self.env['printing.report.xml.action']
         # Set hardcoded default action
         default_action = 'client'
         # Retrieve system wide printer
-        default_printer = printer_obj.get_default(cr, uid, context=context)
-        if default_printer:
-            default_printer = printer_obj.browse(cr, uid, default_printer, context=context)
+        default_printer = printer_obj.get_default()
 
         # Retrieve user default values
-        user = self.pool['res.users'].browse(cr, uid, uid, context=context)
+        user = self.env.user
         if user.printing_action:
             default_action = user.printing_action
         if user.printing_printer_id:
             default_printer = user.printing_printer_id
 
-        for report in self.browse(cr, uid, ids, context):
+        for report in self:
             action = default_action
             printer = default_printer
 
             # Retrieve report default values
-            if (report.property_printing_action
-                    and report.property_printing_action.type != 'user_default'):
-                action = report.property_printing_action.type
+            report_action = report.property_printing_action
+            if report_action and report_action.type != 'user_default':
+                action = report_action.type
             if report.printing_printer_id:
                 printer = report.printing_printer_id
 
             # Retrieve report-user specific values
-            act_ids = printing_act_obj.search(
-                cr, uid,
+            print_action = printing_act_obj.search(
                 [('report_id', '=', report.id),
-                 ('user_id', '=', uid),
-                 ('action', '!=', 'user_default')], context=context)
-            if act_ids:
-                user_action = printing_act_obj.behaviour(cr, uid, act_ids[0], context)
+                 ('user_id', '=', self.env.uid),
+                 ('action', '!=', 'user_default')],
+                limit=1)
+            if print_action:
+                user_action = print_action.behaviour()
                 action = user_action['action']
                 if user_action['printer']:
                     printer = user_action['printer']
 
-            result[report.id] = {
-                'action': action,
-                'printer': printer,
-                }
+            result[report.id] = {'action': action,
+                                 'printer': printer,
+                                 }
         return result
