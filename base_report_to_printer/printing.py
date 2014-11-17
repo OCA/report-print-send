@@ -224,7 +224,7 @@ class PrintingPrinter(models.Model):
     uri = fields.Char(string='URI', readonly=True)
 
     @api.multi
-    def print_options(self, format):
+    def print_options(self, report, format):
         """ Hook to set print options """
         options = {}
         if format == 'raw':
@@ -232,7 +232,7 @@ class PrintingPrinter(models.Model):
         return options
 
     @api.multi
-    def print_document(self, content, format):
+    def print_document(self, report, content, format):
         """ Print a file
 
         Format could be pdf, qweb-pdf, raw, ...
@@ -246,7 +246,7 @@ class PrintingPrinter(models.Model):
             os.close(fd)
         connection = cups.Connection()
 
-        options = self.print_options(format)
+        options = self.print_options(report, format)
 
         connection.printFile(self.system_name,
                              file_name,

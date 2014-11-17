@@ -35,5 +35,5 @@ class Report(models.Model):
         action = data['action']
         printer = data['printer']
         if action != 'client' and result:
-            printer.print_document(result, report.report_type)
+            printer.print_document(report, result, report.report_type)
         return result
