@@ -47,3 +47,4 @@ Contributors
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Lionel Sausin <ls@numerigraphe.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
