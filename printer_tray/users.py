@@ -18,15 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
+from openerp import models, fields
 
 
-class ResUsers(orm.Model):
+class ResUsers(models.Model):
 
     _inherit = "res.users"
 
-    _columns = {
-        'printer_tray_id': fields.many2one(
-            'printing.tray', 'Default Printer Paper Source',
-            domain="[('printer_id', '=', printing_printer_id)]"),
-        }
+    printer_tray_id = fields.Many2one(
+        comodel_name='printing.tray',
+        string='Default Printer Paper Source',
+        domain="[('printer_id', '=', printing_printer_id)]",
+    )
