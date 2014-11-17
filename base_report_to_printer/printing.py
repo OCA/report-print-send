@@ -22,9 +22,11 @@
 #
 ##############################################################################
 import logging
+import os
 
 from contextlib import contextmanager
 from datetime import datetime
+from tempfile import mkstemp
 from threading import Thread
 
 import cups
@@ -220,6 +222,37 @@ class PrintingPrinter(models.Model):
     model = fields.Char(readonly=True)
     location = fields.Char(readonly=True)
     uri = fields.Char(readonly=True)
+
+    def print_options(self, format):
+        """ Hook to set print options """
+        options = {}
+        if format == 'raw':
+            options['raw'] = True
+        return options
+
+    @api.multi
+    def print_document(self, content, format):
+        """ Print a file
+
+        Format could be pdf, qweb-pdf, raw, ...
+
+        """
+        self.ensure_one()
+        fd, file_name = mkstemp()
+        try:
+            os.write(fd, content)
+        finally:
+            os.close(fd)
+        connection = cups.Connection()
+
+        options = self.print_options(format)
+
+        connection.printFile(self.system_name,
+                             file_name,
+                             file_name,
+                             options=options)
+        _logger.info("Printing job: '%s'" % file_name)
+        return True
 
     @api.model
     def start_printer_update(self):
