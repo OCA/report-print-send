@@ -24,8 +24,7 @@
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'website': 'http://www.camptocamp.com/',
- 'depends': ['base_report_assembler',
-             'base_report_to_printer',
+ 'depends': ['base_report_to_printer',
              ],
  'data': [
      'users_view.xml',
