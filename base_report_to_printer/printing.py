@@ -21,14 +21,178 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
+import logging
+
+from contextlib import contextmanager
+from datetime import datetime
+from threading import Thread
 
 import cups
-
-from threading import Thread
-from threading import Lock
+import psycopg2
 
 from openerp import models, fields, api, sql_db
+
+_logger = logging.getLogger(__name__)
+
+POLL_INTERVAL = 10  # seconds
+
+
+class PrintingPrinterPolling(models.Model):
+    """ Keep the last update time of printers update.
+
+    This table will contain only 1 row, with the last time we checked
+    the list of printers from cups.
+
+    The table is locked before an update so 2 processes won't be able
+    to do the update at the same time.
+    """
+    _name = 'printing.printer.polling'
+    _description = 'Printers Polling'
+
+    last_update = fields.Datetime()
+
+    @api.model
+    def find_unique_record(self):
+        polling = self.search([], limit=1)
+        return polling
+
+    @api.model
+    def find_or_create_unique_record(self):
+        polling = self.find_unique_record()
+        if polling:
+            return polling
+        cr = self.env.cr
+        try:
+            # Will be released at the end of the transaction.  Locks the
+            # full table for insert/update because we must have only 1
+            # record in this table, so we prevent 2 processes to create
+            # each one one line at the same time.
+            cr.execute("LOCK TABLE %s IN SHARE ROW EXCLUSIVE MODE NOWAIT" %
+                       self._table, log_exceptions=False)
+        except psycopg2.OperationalError as err:
+            # the lock could not be acquired, already running
+            if err.pgcode == '55P03':
+                _logger.debug('Another process/thread is already '
+                              'creating the polling record.')
+                return self.browse()
+            else:
+                raise
+        return self.create({'last_update': False})
+
+    @api.multi
+    def lock(self):
+        """ Lock the polling record
+
+        Lock the record in the database so we can prevent concurrent
+        processes to update at the same time.
+
+        The lock is released either on commit or rollback of the
+        transaction.
+
+        Returns if the record has been locked or not.
+        """
+        self.ensure_one()
+        cr = self.env.cr
+        sql = ("SELECT id FROM %s WHERE id = %%s FOR UPDATE NOWAIT" %
+               self._table)
+        try:
+            cr.execute(sql, (self.id, ), log_exceptions=False)
+        except psycopg2.OperationalError as err:
+            # the lock could not be acquired, already running
+            if err.pgcode == '55P03':
+                _logger.debug('Another process/thread is already '
+                              'updating the printers list.')
+                return False
+            if err.pgcode == '40001':
+                _logger.debug('could not serialize access due to '
+                              'concurrent update')
+                return False
+            else:
+                raise
+        return True
+
+    @contextmanager
+    @api.model
+    def start_update(self):
+        locked = False
+        polling = self.find_or_create_unique_record()
+        if polling:
+            if polling.lock():
+                locked = True
+        yield locked
+        if locked:
+            polling.write({'last_update': fields.Datetime.now()})
+
+    @api.model
+    def need_update(self):
+        polling = self.find_unique_record()
+        if not polling:
+            return True
+        last_update = polling.last_update
+        if last_update:
+            last_update = fields.Datetime.from_string(last_update)
+        now = datetime.now()
+        # Only update printer status if current status is more than 10
+        # seconds old.
+        if not last_update or (now - last_update).seconds >= POLL_INTERVAL:
+            return True
+        return False
+
+    @api.model
+    def update_printers_status(self):
+        cr = sql_db.db_connect(self.env.cr.dbname).cursor()
+        uid, context = self.env.uid, self.env.context
+        with api.Environment.manage():
+            try:
+                self.env = api.Environment(cr, uid, context)
+                printer_obj = self.env['printing.printer']
+                printer_obj = printer_obj.with_context(skip_update=True)
+                with self.start_update() as locked:
+                    if not locked:
+                        return  # could not obtain lock
+                    try:
+                        connection = cups.Connection()
+                        printers = connection.getPrinters()
+                        server_error = False
+                    except:
+                        server_error = True
+
+                    mapping = {
+                        3: 'available',
+                        4: 'printing',
+                        5: 'error'
+                    }
+
+                    # Skip update to avoid the thread being created again
+                    printer_recs = printer_obj.search([])
+                    for printer in printer_recs:
+                        vals = {}
+                        if server_error:
+                            status = 'server-error'
+                        elif printer.system_name in printers:
+                            info = printers[printer.system_name]
+                            status = mapping.get(info['printer-state'],
+                                                 'unknown')
+                            vals = {
+                                'model': info.get('printer-make-and-model',
+                                                  False),
+                                'location': info.get('printer-location',
+                                                     False),
+                                'uri': info.get('device-uri',
+                                                False),
+                            }
+                        else:
+                            status = 'unavailable'
+
+                        vals['status'] = status
+                        printer.write(vals)
+
+                self.env.cr.commit()
+            except:
+                self.env.cr.rollback()
+                raise
+            finally:
+                self.env.cr.close()
 
 
 class PrintingPrinter(models.Model):
@@ -57,71 +221,10 @@ class PrintingPrinter(models.Model):
     location = fields.Char(readonly=True)
     uri = fields.Char(readonly=True)
 
-    def __init__(self, pool, cr):
-        super(PrintingPrinter, self).__init__(pool, cr)
-        self.lock = Lock()
-        self.last_update = None
-        self.updating = False
-
-    @api.model
-    def update_printers_status(self):
-        cr = sql_db.db_connect(self.env.cr.dbname).cursor()
-        uid, context = self.env.uid, self.env.context
-        with api.Environment.manage():
-            self.env = api.Environment(cr, uid, context)
-            try:
-                connection = cups.Connection()
-                printers = connection.getPrinters()
-                server_error = False
-            except:
-                server_error = True
-
-            mapping = {
-                3: 'available',
-                4: 'printing',
-                5: 'error'
-            }
-
-            try:
-                # Skip update to avoid the thread being created again
-                env = self.env.with_context(skip_update=True)
-                printer_recs = env.search([])
-                for printer in printer_recs:
-                    vals = {}
-                    if server_error:
-                        status = 'server-error'
-                    elif printer.system_name in printers:
-                        info = printers[printer.system_name]
-                        status = mapping.get(info['printer-state'], 'unknown')
-                        vals = {
-                            'model': info.get('printer-make-and-model', False),
-                            'location': info.get('printer-location', False),
-                            'uri': info.get('device-uri', False),
-                        }
-                    else:
-                        status = 'unavailable'
-
-                    vals['status'] = status
-                    printer.write(vals)
-                self.env.cr.commit()
-            except:
-                self.env.cr.rollback()
-                raise
-            finally:
-                self.env.cr.close()
-            with self.lock:
-                self.updating = False
-                self.last_update = time.time()
-
     @api.model
     def start_printer_update(self):
-        self.lock.acquire()
-        if self.updating:
-            self.lock.release()
-            return
-        self.updating = True
-        self.lock.release()
-        thread = Thread(target=self.update_printers_status, args=())
+        polling_obj = self.env['printing.printer.polling']
+        thread = Thread(target=polling_obj.update_printers_status, args=())
         thread.start()
 
     @api.model
@@ -130,29 +233,24 @@ class PrintingPrinter(models.Model):
         # We won't acquire locks - we're only assigning from immutable data
         if not self.env.context or 'skip_update' in self.env.context:
             return True
-        last_update = self.last_update
-        now = time.time()
-        # Only update printer status if current status is more than 10
-        # seconds old.
-        if not last_update or now - last_update > 10:
+        polling_obj = self.env['printing.printer.polling']
+
+        if polling_obj.need_update():
             self.start_printer_update()
-            # Wait up to five seconds for printer status update
-            for _dummy in range(0, 5):
-                time.sleep(1)
-                if not self.updating:
-                    break
+
         return True
 
-    @api.returns('self')
-    def search(self, cr, user, args, offset=0, limit=None, order=None,
-               context=None, count=False):
-        self.update()
-        _super = super(PrintingPrinter, self)
-        return _super.search(cr, user, args, offset=offset, limit=limit,
-                             order=order, context=context, count=count)
+    # @api.returns('self')
+    # def search(self, cr, user, args, offset=0, limit=None, order=None,
+    #            context=None, count=False):
+    #     self.update()
+    #     _super = super(PrintingPrinter, self)
+    #     return _super.search(cr, user, args, offset=offset, limit=limit,
+    #                          order=order, context=context, count=count)
 
     @api.v7
-    def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
+    def read(self, cr, user, ids, fields=None, context=None,
+             load='_classic_read'):
         # https://github.com/odoo/odoo/issues/3644
         # self.update(cr, user, context=context)
         _super = super(PrintingPrinter, self)
