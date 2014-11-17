@@ -20,7 +20,6 @@
 ##############################################################################
 import cups
 
-from openerp import pooler
 from openerp import models, fields, api
 
 
