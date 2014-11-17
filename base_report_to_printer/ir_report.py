@@ -21,13 +21,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import base64
 import logging
-import os
-
-from tempfile import mkstemp
-
-import cups
 
 from openerp import models, fields, api
 
@@ -57,39 +51,6 @@ class ReportXml(models.Model):
         help='This field allows configuring action and printer on a per '
              'user basis'
     )
-
-    @api.multi
-    def set_print_options(self, format):
-        """ Hook to set print options """
-        options = {}
-        if format == 'raw':
-            options['raw'] = True
-        return options
-
-    @api.multi
-    def print_direct(self, result, format, printer):
-        self.ensure_one()
-        fd, file_name = mkstemp()
-        try:
-            os.write(fd, base64.decodestring(result))
-        finally:
-            os.close(fd)
-        printer_system_name = ''
-        if printer:
-            if isinstance(printer, (basestring)):
-                printer_system_name = printer
-            else:
-                printer_system_name = printer.system_name
-            connection = cups.Connection()
-
-            options = self.set_print_options(format)
-
-            connection.printFile(printer_system_name,
-                                 file_name,
-                                 file_name,
-                                 options=options)
-            _logger.info("Printing job: '%s'" % file_name)
-        return True
 
     @api.multi
     def behaviour(self):

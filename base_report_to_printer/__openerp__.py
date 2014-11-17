@@ -30,6 +30,7 @@
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     "depends": ['base',
+                'report',
                 ],
     'data': [
         'security/security.xml',
