@@ -18,16 +18,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
+from openerp import models, fields
 
 
-class PrinterTray(orm.Model):
+class PrinterTray(models.Model):
 
     _name = 'printing.tray'
     _description = 'Printer Tray'
 
-    _columns = {
-        'name': fields.char('Name', size=64, required=True),
-        'system_name': fields.char('System Name', size=64, required=True),
-        'printer_id': fields.many2one('printing.printer', 'Printer', required=True),
-        }
+    name = fields.Char(required=True)
+    system_name = fields.Char(required=True)
+    printer_id = fields.Many2one(
+        comodel_name='printing.printer',
+        string='Printer',
+        required=True,
+        ondelete='cascade',
+    )
