@@ -223,6 +223,7 @@ class PrintingPrinter(models.Model):
     location = fields.Char(readonly=True)
     uri = fields.Char(string='URI', readonly=True)
 
+    @api.multi
     def print_options(self, format):
         """ Hook to set print options """
         options = {}
