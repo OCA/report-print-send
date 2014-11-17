@@ -37,7 +37,7 @@ from openerp.tools import ormcache
 
 _logger = logging.getLogger(__name__)
 
-POLL_INTERVAL = 10  # seconds
+POLL_INTERVAL = 15  # seconds
 
 
 class PrintingPrinterPolling(models.Model):
