@@ -19,7 +19,6 @@
 #
 ##############################################################################
 import cups
-from cups import PPD
 
 from openerp import pooler
 from openerp import models, fields, api
@@ -32,70 +31,39 @@ class Printer(models.Model):
                                inverse_name='printer_id',
                                string='Paper Sources')
 
-    def _update_tray_option(self, db_name, uid, printer, context=None):
-        """
-        Create missing tray for a printer
-        """
-        db, pool = pooler.get_db_and_pool(db_name)
-        cr = db.cursor()
-        tray_obj = pool.get('printing.tray')
-        # get printers options from a PPD file
-        try:
-            connection = cups.Connection()
-            ppd_file_path = connection.getPPD3(printer.system_name)
-        except:
-            return
+    @api.multi
+    def _prepare_update_from_cups(self, cups_connection, cups_printer):
+        vals = super(Printer, self)._prepare_update_from_cups(cups_connection,
+                                                              cups_printer)
+
+        ppd_file_path = cups_connection.getPPD3(self.system_name)
         if not ppd_file_path[2]:
-            return
-        ppd = PPD(ppd_file_path[2])
+            return vals
+
+        ppd = cups.PPD(ppd_file_path[2])
         option = ppd.findOption('InputSlot')
         if not option:
-            return
-        try:
-            for tray_opt in option.choices:
-                if tray_opt['choice'] not in [t.system_name for t in printer.tray_ids]:
-                    tray_vals = {
-                        'name': tray_opt['text'],
-                        'system_name': tray_opt['choice'],
-                        'printer_id': printer.id,
-                        }
+            return vals
 
-                    tray_obj.create(cr, uid, tray_vals, context=context)
-            cr.commit()
-        except:
-            cr.rollback()
-            raise
-        finally:
-            cr.close()
-        return True
+        vals_trays = []
 
-    def update_printers_status(self, db_name, uid, context=None):
-        """
-        Add creation of tray if no tray are defined
-        """
-        db, pool = pooler.get_db_and_pool(db_name)
-        cr = db.cursor()
-        res = super(Printer, self).update_printers_status(db_name, uid, context=context)
-        try:
-            connection = cups.Connection()
-            printers = connection.getPrinters()
-            server_error = False
-        except:
-            server_error = True
+        tray_names = set(tray.system_name for tray in self.tray_ids)
+        for tray_option in option.choices:
+            if tray_option['choice'] not in tray_names:
+                tray_vals = {
+                    'name': tray_option['text'],
+                    'system_name': tray_option['choice'],
+                }
+                vals_trays.append((0, 0, tray_vals))
 
-        printer_ids = self.search(cr, uid, [('system_name', 'in', printers.keys())], context=context)
-        if server_error:
-            vals = {'status': 'server_error'}
-            self.write(cr, uid, printer_ids, vals, context=context)
-            return res
+        cups_trays = set(tray_option['choice'] for tray_option
+                         in option.choices)
+        for tray in self.tray_ids:
+            if tray.system_name not in cups_trays:
+                vals_trays.append((2, tray.id))
 
-        printer_list = self.browse(cr, uid, printer_ids, context=context)
-
-        for printer in printer_list:
-            # XXX we consider config of printer won't change
-            if not printer.tray_ids:
-                self._update_tray_option(db_name, uid, printer, context=context)
-        return res
+        vals['tray_ids'] = vals_trays
+        return vals
 
     @api.multi
     def print_options(self, report, format):
