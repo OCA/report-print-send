@@ -49,7 +49,7 @@ Report to printer - Paper tray selection
      'ir_report_view.xml',
      ],
  'test': [],
- 'installable': False,
+ 'installable': True,
  'auto_install': False,
  'application': True,
  }
