@@ -22,16 +22,15 @@ import cups
 from cups import PPD
 
 from openerp import pooler
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
 
-class Printer(orm.Model):
-
+class Printer(models.Model):
     _inherit = 'printing.printer'
 
-    _columns = {
-        'tray_ids': fields.one2many('printing.tray', 'printer_id', 'Paper Sources'),
-        }
+    tray_ids = fields.One2many(comodel_name='printing.tray',
+                               inverse_name='printer_id',
+                               string='Paper Sources')
 
     def _update_tray_option(self, db_name, uid, printer, context=None):
         """
@@ -98,32 +97,27 @@ class Printer(orm.Model):
                 self._update_tray_option(db_name, uid, printer, context=context)
         return res
 
-    def print_options(self, cr, uid, report_id, format, context=None):
-        """
-        Hook to define Tray
-        """
-        printing_act_obj = self.pool.get('printing.report.xml.action')
-        options = super(ReportXML, self).set_print_options(cr, uid, report_id, format, context=context)
+    @api.multi
+    def print_options(self, report, format):
+        """ Hook to define Tray """
+        printing_act_obj = self.env['printing.report.xml.action']
+        options = super(Printer, self).print_options(report, format)
 
         # Retrieve user default values
-        user = self.pool.get('res.users').browse(cr, uid, context)
+        user = self.env.user
         tray = user.printer_tray_id
-        report = self.browse(cr, uid, report_id, context=context)
 
         # Retrieve report default values
         if report.printer_tray_id:
             tray = report.printer_tray_id
 
         # Retrieve report-user specific values
-        act_ids = printing_act_obj.search(
-            cr, uid,
-            [('report_id', '=', report.id),
-             ('user_id', '=', uid),
-             ('action', '!=', 'user_default')], context=context)
-        if act_ids:
-            user_action = printing_act_obj.browse(cr, uid, act_ids[0], context=context)
-            if user_action.tray_id:
-                tray = user_action.tray_id
+        action = printing_act_obj.search([('report_id', '=', report.id),
+                                          ('user_id', '=', self.env.uid),
+                                          ('action', '!=', 'user_default')],
+                                         limit=1)
+        if action and action.tray_id:
+            tray = action.tray_id
 
         if tray:
             options['InputSlot'] = str(tray.system_name)
