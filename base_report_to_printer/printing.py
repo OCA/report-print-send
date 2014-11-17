@@ -33,6 +33,7 @@ import cups
 import psycopg2
 
 from openerp import models, fields, api, sql_db
+from openerp.tools import ormcache
 
 _logger = logging.getLogger(__name__)
 
@@ -125,18 +126,45 @@ class PrintingPrinterPolling(models.Model):
         if locked:
             polling.write({'last_update': fields.Datetime.now()})
 
-    @api.model
-    def need_update(self):
+    @ormcache()
+    def _last_update_cached(self):
+        """ Get the last update's datetime, the returned value is cached """
         polling = self.find_unique_record()
         if not polling:
-            return True
+            return False
         last_update = polling.last_update
         if last_update:
             last_update = fields.Datetime.from_string(last_update)
+        return last_update
+
+    @api.model
+    def last_update_cached(self):
+        """ Returns the last update datetime from a cache
+
+        The check if the list of printers needs to be refreshed is
+        called very often (each time a browse is done on ``res.users``),
+        so we avoid to hit the database on every updates by keeping the
+        last value in cache.
+        The cache has no expiration so we manually clear it when the
+        poll interval (defaulted to 10 seconds) is reached.
+        """
+        last_update = self._last_update_cached()
+        now = datetime.now()
+        if last_update and (now - last_update).seconds >= POLL_INTERVAL:
+            # Invalidates last_update_cached and read a fresh value
+            # from the database
+            self.clear_caches()
+            return self._last_update_cached()
+        return last_update
+
+    @api.model
+    def need_update(self):
+        last_update = self.last_update_cached()
         now = datetime.now()
         # Only update printer status if current status is more than 10
         # seconds old.
         if not last_update or (now - last_update).seconds >= POLL_INTERVAL:
+            self.clear_caches()  # invalidates last_update_cached
             return True
         return False
 
