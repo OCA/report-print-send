@@ -148,7 +148,6 @@ class PrintingPrinterPolling(models.Model):
             try:
                 self.env = api.Environment(cr, uid, context)
                 printer_obj = self.env['printing.printer']
-                printer_obj = printer_obj.with_context(skip_update=True)
                 with self.start_update() as locked:
                     if not locked:
                         return  # could not obtain lock
@@ -264,27 +263,25 @@ class PrintingPrinter(models.Model):
     @api.model
     def update(self):
         """Update printer status if current status is more than 10s old."""
-        # We won't acquire locks - we're only assigning from immutable data
-        if not self.env.context or 'skip_update' in self.env.context:
-            return True
         polling_obj = self.env['printing.printer.polling']
-
         if polling_obj.need_update():
             self.start_printer_update()
-
         return True
 
     @api.v7
     def browse(self, cr, uid, arg=None, context=None):
-        # https://github.com/odoo/odoo/issues/3644
-        # self.update(cr, uid, context=context)
         _super = super(PrintingPrinter, self)
-        return _super.browse(cr, uid, arg=arg, context=context)
+        recs = _super.browse(cr, uid, arg=arg, context=context)
+        if not recs._context.get('skip_update'):
+            recs.with_context(skip_update=True).update()
+        return recs
 
     @api.v8
     def browse(self, arg=None):
-        self.update()
-        return super(PrintingPrinter, self).browse(arg=arg)
+        recs = super(PrintingPrinter, self).browse(arg=arg)
+        if not recs._context.get('skip_update'):
+            recs.with_context(skip_update=True).update()
+        return recs
 
     @api.multi
     def set_default(self):
