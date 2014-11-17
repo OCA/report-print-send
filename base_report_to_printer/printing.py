@@ -221,7 +221,7 @@ class PrintingPrinter(models.Model):
     status_message = fields.Char(readonly=True)
     model = fields.Char(readonly=True)
     location = fields.Char(readonly=True)
-    uri = fields.Char(readonly=True)
+    uri = fields.Char(string='URI', readonly=True)
 
     def print_options(self, format):
         """ Hook to set print options """
