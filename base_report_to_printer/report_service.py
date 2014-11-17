@@ -62,7 +62,8 @@ def exp_report_get(db, uid, report_id):
                 if (self_reports and self_reports.get(report_id)
                         and self_reports[report_id].get('result')
                         and self_reports[report_id].get('format')):
-                    printer.print_document(self_reports[report_id]['result'],
+                    printer.print_document(report,
+                                           self_reports[report_id]['result'],
                                            self_reports[report_id]['format'])
                     # FIXME "Warning" removed as it breaks the workflow
                     # it would be interesting to have a dialog box to
