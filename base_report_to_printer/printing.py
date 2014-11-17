@@ -179,42 +179,23 @@ class PrintingPrinterPolling(models.Model):
                 with self.start_update() as locked:
                     if not locked:
                         return  # could not obtain lock
+
+                    printer_recs = printer_obj.search([])
+
                     try:
                         connection = cups.Connection()
                         printers = connection.getPrinters()
-                        server_error = False
                     except:
-                        server_error = True
-
-                    mapping = {
-                        3: 'available',
-                        4: 'printing',
-                        5: 'error'
-                    }
-
-                    # Skip update to avoid the thread being created again
-                    printer_recs = printer_obj.search([])
-                    for printer in printer_recs:
-                        vals = {}
-                        if server_error:
-                            status = 'server-error'
-                        elif printer.system_name in printers:
-                            info = printers[printer.system_name]
-                            status = mapping.get(info['printer-state'],
-                                                 'unknown')
-                            vals = {
-                                'model': info.get('printer-make-and-model',
-                                                  False),
-                                'location': info.get('printer-location',
-                                                     False),
-                                'uri': info.get('device-uri',
-                                                False),
-                            }
-                        else:
-                            status = 'unavailable'
-
-                        vals['status'] = status
-                        printer.write(vals)
+                        printer_recs.write({'status': 'server-error'})
+                    else:
+                        for printer in printer_recs:
+                            cups_printer = printers.get(printer.system_name)
+                            if cups_printer:
+                                printer.update_from_cups(connection,
+                                                         cups_printer)
+                            else:
+                                # not in cups list
+                                printer.status = 'unavailable'
 
                 self.env.cr.commit()
             except:
@@ -249,6 +230,33 @@ class PrintingPrinter(models.Model):
     model = fields.Char(readonly=True)
     location = fields.Char(readonly=True)
     uri = fields.Char(string='URI', readonly=True)
+
+    @api.multi
+    def _prepare_update_from_cups(self, cups_connection, cups_printer):
+        mapping = {
+            3: 'available',
+            4: 'printing',
+            5: 'error'
+        }
+        vals = {
+            'model': cups_printer.get('printer-make-and-model', False),
+            'location': cups_printer.get('printer-location', False),
+            'uri': cups_printer.get('device-uri', False),
+            'status': mapping.get(cups_printer['printer-state'], 'unknown'),
+        }
+        return vals
+
+    @api.multi
+    def update_from_cups(self, cups_connection, cups_printer):
+        """ Update a printer from the information returned by cups.
+
+        :param cups_connection: connection to CUPS, may be used when the
+                                method is overriden (e.g. in printer_tray)
+        :param cups_printer: dict of information returned by CUPS for the
+                             current printer
+        """
+        vals = self._prepare_update_from_cups(cups_connection, cups_printer)
+        self.write(vals)
 
     @api.multi
     def print_options(self, report, format):
