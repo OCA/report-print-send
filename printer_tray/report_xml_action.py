@@ -19,20 +19,21 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
 
-class ReportXMLAction(orm.Model):
+class ReportXMLAction(models.Model):
     _inherit = 'printing.report.xml.action'
 
-    _columns = {
-        'printer_tray_id': fields.many2one(
-            'printing.tray', 'Paper Source',
-            domain="[('printer_id', '=', printer_id)]"),
-        }
+    printer_tray_id = fields.Many2one(
+        comodel_name='printing.tray',
+        string='Paper Source',
+        domain="[('printer_id', '=', printer_id)]",
+    )
 
-    def behaviour(self, cr, uid, act_id, context=None):
-        res = super(ReportXMLAction, self).behaviour(cr, uid, act_id, context=context)
-        action = self.browse(cr, uid, act_id, context=context)
-        res['tray'] = action.printer_tray_id.system_name
+    @api.multi
+    def behaviour(self):
+        self.ensure_one()
+        res = super(ReportXMLAction, self).behaviour()
+        res['tray'] = self.printer_tray_id.system_name
         return res
