@@ -83,7 +83,7 @@ class Printer(models.Model):
                                           ('user_id', '=', self.env.uid),
                                           ('action', '!=', 'user_default')],
                                          limit=1)
-        if action and action.tray_id:
+        if action and action.printer_tray_id:
             tray = action.tray_id
 
         if tray:
