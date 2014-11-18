@@ -29,6 +29,7 @@
  'data': [
      'users_view.xml',
      'ir_report_view.xml',
+     'printer_view.xml',
      ],
  'test': [],
  'installable': True,
