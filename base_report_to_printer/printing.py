@@ -60,6 +60,11 @@ class PrintingPrinterPolling(models.Model):
         return polling
 
     @api.model
+    @ormcache()
+    def table_exists(self):
+        return self._model._table_exist(self.env.cr)
+
+    @api.model
     def find_or_create_unique_record(self):
         polling = self.find_unique_record()
         if polling:
@@ -300,6 +305,11 @@ class PrintingPrinter(models.Model):
     def update(self):
         """Update printer status if current status is more than 10s old."""
         polling_obj = self.env['printing.printer.polling']
+        if not polling_obj.table_exists():
+            # On the installation of the module, this method could be
+            # called before the 'printing.printer.polling' table exists
+            # (but the model already is in memory)
+            return
         if polling_obj.need_update():
             self.start_printer_update()
         return True
