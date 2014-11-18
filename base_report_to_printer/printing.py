@@ -64,6 +64,10 @@ class PrintingPrinterPolling(models.Model):
     def table_exists(self):
         return self._model._table_exist(self.env.cr)
 
+    def _create_table(self, cr):
+        super(PrintingPrinterPolling, self)._create_table(cr)
+        self.clear_caches()
+
     @api.model
     def find_or_create_unique_record(self):
         polling = self.find_unique_record()
