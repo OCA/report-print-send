@@ -22,3 +22,4 @@ from . import ir_report
 from . import printer_tray
 from . import printer
 from . import users
+from . import report_xml_action
