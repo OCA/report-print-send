@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
+#    Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 #    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 #    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
-#    All Rights Reserved
+#    Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -20,4 +21,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import update_printers
+{
+    'name': "Report to printer",
+    'version': '0.1.1',
+    'category': 'Generic Modules/Base',
+    'author': 'Agile Business Group & Domsense, Pegueroles SCP, NaN',
+    'website': 'http://www.agilebg.com',
+    'license': 'AGPL-3',
+    "depends": ['base',
+                'report',
+                ],
+    'data': [
+        'security/security.xml',
+        'printing_data.xml',
+        'printing_view.xml',
+        'wizard/update_printers.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+    'external_dependencies': {
+        'python': ['cups']
+        }
+}

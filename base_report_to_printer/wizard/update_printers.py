@@ -4,7 +4,7 @@
 #    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 #    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
-#    All Rights Reserved
+#    Copyright (C) 2014 Camptocamp SA (<http://www.camptocamp.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -23,41 +23,38 @@
 
 import cups
 
-from openerp.osv import orm
+from openerp import models, api
 
 
-class printing_printer_update_wizard(orm.TransientModel):
-    _name = "printing.printer.update.wizard"
+class PrintingPrinterUpdateWizard(models.TransientModel):
+    _name = 'printing.printer.update.wizard'
 
-    _columns = {
-        }
-
-    def action_cancel(self, cr, uid, ids, context=None):
-        return {}
-
-    def action_ok(self, cr, uid, ids, context=None):
+    @api.multi
+    def action_ok(self):
+        self.ensure_one()
         # Update Printers
-        printer_obj = self.pool['printing.printer']
+        printer_obj = self.env['printing.printer']
         try:
             connection = cups.Connection()
             printers = connection.getPrinters()
         except:
             return {}
 
-        ids = printer_obj.search(
-            cr, uid, [('system_name', 'in', printers.keys())], context=context)
-        for printer in printer_obj.browse(cr, uid, ids, context=context):
+        printer_recs = printer_obj.search(
+            [('system_name', 'in', printers.keys())]
+        )
+        for printer in printer_recs:
             del printers[printer.system_name]
 
-        for name in printers:
-            printer = printers[name]
-            self.pool.get('printing.printer').create(cr, uid, {
+        for name, printer in printers.iteritems():
+            values = {
                 'name': printer['printer-info'],
                 'system_name': name,
                 'model': printer.get('printer-make-and-model', False),
                 'location': printer.get('printer-location', False),
                 'uri': printer.get('device-uri', False),
-                }, context)
+            }
+            self.env['printing.printer'].create(values)
 
         return {
             'name': 'Printers',
@@ -66,7 +63,4 @@ class printing_printer_update_wizard(orm.TransientModel):
             'res_model': 'printing.printer',
             'type': 'ir.actions.act_window',
             'target': 'current',
-            }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        }

@@ -9,17 +9,28 @@
       <field name="model">printing.printer</field>
       <field name="arch" type="xml">
         <form string="Printers">
-          <field name="name" select="1"/>
-          <field name="system_name" select="1"/>
-          <group col="3" colspan="2">
-            <field name="default" select="1"/>
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <label for="name"/>
+                <field name="name"/>
+              </h1>
+            </div>
+          <group>
+            <field name="system_name"/>
+          </group>
+          <group col="3" colspan="4">
+            <field name="default"/>
             <button name="set_default" string="Set Default" type="object"/>
           </group>
-          <field name="uri" select="2"/>
-          <field name="model" select="2"/>
-          <field name="location" select="2"/>
-          <field name="status" select="1"/>
-          <field name="status_message" select="2"/>
+          <group>
+            <field name="uri"/>
+            <field name="model"/>
+            <field name="location"/>
+            <field name="status"/>
+            <field name="status_message"/>
+          </group>
+        </sheet>
         </form>
       </field>
     </record>
@@ -34,6 +45,19 @@
           <field name="system_name"/>
           <field name="status"/>
         </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_printing_printer_search">
+      <field name="name">printing.printer.search</field>
+      <field name="model">printing.printer</field>
+      <field name="arch" type="xml">
+        <search string="Printers">
+          <field name="name"/>
+          <field name="system_name"/>
+          <field name="location"/>
+          <field name="status"/>
+        </search>
       </field>
     </record>
 
