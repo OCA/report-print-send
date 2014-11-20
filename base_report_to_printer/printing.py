@@ -101,8 +101,10 @@ class PrintingPrinter(models.Model):
         :param cups_printer: dict of information returned by CUPS for the
                              current printer
         """
+        self.ensure_one()
         vals = self._prepare_update_from_cups(cups_connection, cups_printer)
-        self.write(vals)
+        if any(self[name] != value for name, value in vals.iteritems()):
+            self.write(vals)
 
     @api.multi
     def print_options(self, report, format):
