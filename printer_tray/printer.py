@@ -19,6 +19,8 @@
 #
 ##############################################################################
 import cups
+import errno
+import os
 
 from openerp import models, fields, api
 
@@ -35,12 +37,19 @@ class Printer(models.Model):
         vals = super(Printer, self)._prepare_update_from_cups(cups_connection,
                                                               cups_printer)
 
-        ppd_file_path = cups_connection.getPPD3(self.system_name)
-        if not ppd_file_path[2]:
+        ppd_info = cups_connection.getPPD3(self.system_name)
+        ppd_path = ppd_info[2]
+        if not ppd_path:
             return vals
 
-        ppd = cups.PPD(ppd_file_path[2])
+        ppd = cups.PPD(ppd_path)
         option = ppd.findOption('InputSlot')
+        try:
+            os.unlink(ppd_path)
+        except OSError as err:
+            if err.errno == errno.ENOENT:
+                pass
+            raise
         if not option:
             return vals
 
