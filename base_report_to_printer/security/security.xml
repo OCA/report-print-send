@@ -42,5 +42,21 @@
       <field eval="0" name="perm_write"/>
       <field eval="0" name="perm_create"/>
     </record>
+    <record id="ir_model_access_printing_action_all0" model="ir.model.access">
+      <field name="name">printing_action all</field>
+      <field name="model_id" ref="model_printing_action"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="0" name="perm_unlink"/>
+      <field eval="0" name="perm_write"/>
+      <field eval="0" name="perm_create"/>
+    </record>
+    <record id="ir_model_access_printing_report_xml_action_all0" model="ir.model.access">
+      <field name="name">printing_report_xml_action all</field>
+      <field name="model_id" ref="model_printing_report_xml_action"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="0" name="perm_unlink"/>
+      <field eval="0" name="perm_write"/>
+      <field eval="0" name="perm_create"/>
+    </record>
   </data>
 </openerp>
