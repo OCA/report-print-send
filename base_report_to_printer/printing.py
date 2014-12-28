@@ -111,7 +111,7 @@ class PrintingPrinter(models.Model):
         """ Hook to set print options """
         options = {}
         if format == 'raw':
-            options['raw'] = True
+            options['raw'] = 'True'
         return options
 
     @api.multi
