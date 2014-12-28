@@ -3,6 +3,7 @@
   <data noupdate="1">
     <record id="res_groups_printingprintoperator0" model="res.groups">
       <field name="name">Printing / Print Operator</field>
+      <field name="users" eval="[(4, ref('base.user_root'))]"/>
     </record>
     <record id="ir_model_access_printingprintergroup1" model="ir.model.access">
       <field name="name">printing_printer group</field>

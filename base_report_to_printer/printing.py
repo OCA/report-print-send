@@ -23,14 +23,15 @@
 ##############################################################################
 import logging
 import os
-
 from tempfile import mkstemp
-
 import cups
-
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning
+from openerp.tools.config import config
 
 _logger = logging.getLogger(__name__)
+CUPS_HOST = config.get('cups_host', 'localhost')
+CUPS_PORT = int(config.get('cups_port', 631))  # config.get returns a string
 
 
 class PrintingPrinter(models.Model):
@@ -63,7 +64,7 @@ class PrintingPrinter(models.Model):
     def update_printers_status(self):
         printer_recs = self.search([])
         try:
-            connection = cups.Connection()
+            connection = cups.Connection(CUPS_HOST, CUPS_PORT)
             printers = connection.getPrinters()
         except:
             printer_recs.write({'status': 'server-error'})
@@ -111,7 +112,7 @@ class PrintingPrinter(models.Model):
         """ Hook to set print options """
         options = {}
         if format == 'raw':
-            options['raw'] = True
+            options['raw'] = 'True'
         return options
 
     @api.multi
@@ -127,15 +128,30 @@ class PrintingPrinter(models.Model):
             os.write(fd, content)
         finally:
             os.close(fd)
-        connection = cups.Connection()
+
+        try:
+            _logger.debug(
+                'Starting to connect to CUPS on %s:%s'
+                % (CUPS_HOST, CUPS_PORT))
+            connection = cups.Connection(CUPS_HOST, CUPS_PORT)
+            _logger.debug('Connection to CUPS successfull')
+        except:
+            raise Warning(
+                _("Failed to connect to the CUPS server on %s:%s. "
+                    "Check that the CUPS server is running and that "
+                    "you can reach it from the Odoo server.")
+                % (CUPS_HOST, CUPS_PORT))
 
         options = self.print_options(report, format)
 
+        _logger.debug(
+            'Sending job to CUPS printer %s on %s'
+            % (self.system_name, CUPS_HOST))
         connection.printFile(self.system_name,
                              file_name,
                              file_name,
                              options=options)
-        _logger.info("Printing job: '%s'" % file_name)
+        _logger.info("Printing job: '%s' on %s" % (file_name, CUPS_HOST))
         return True
 
     @api.multi
