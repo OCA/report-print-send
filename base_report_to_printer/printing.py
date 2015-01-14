@@ -144,12 +144,14 @@ class PrintingPrinter(models.Model):
 
         options = self.print_options(report, format)
 
-        _logger.debug('Sending job to CUPS printer %s' % self.system_name)
+        _logger.debug(
+            'Sending job to CUPS printer %s on %s'
+            % (self.system_name, CUPS_HOST))
         connection.printFile(self.system_name,
                              file_name,
                              file_name,
                              options=options)
-        _logger.info("Printing job: '%s'" % file_name)
+        _logger.info("Printing job: '%s' on %s" % (file_name, CUPS_HOST))
         return True
 
     @api.multi
