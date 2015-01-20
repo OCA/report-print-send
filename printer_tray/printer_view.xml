@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="0">
+    <record model="ir.ui.view" id="view_printing_printer_form">
+      <field name="name">printing.printer.form</field>
+      <field name="model">printing.printer</field>
+      <field name="inherit_id" ref="base_report_to_printer.view_printing_printer_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet/group[3]" position="after">
+          <group string="Trays">
+            <field name="tray_ids" nolabel="1">
+              <form>
+                <group>
+                  <field name="name"/>
+                  <field name="system_name"/>
+                </group>
+              </form>
+            </field>
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</openerp>

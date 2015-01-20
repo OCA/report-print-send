@@ -18,16 +18,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
+
+from openerp import models, fields, api
 
 
-class PrinterTray(orm.Model):
+class ReportXMLAction(models.Model):
+    _inherit = 'printing.report.xml.action'
 
-    _name = 'printing.tray'
-    _description = 'Printer Tray'
+    printer_tray_id = fields.Many2one(
+        comodel_name='printing.tray',
+        string='Paper Source',
+        domain="[('printer_id', '=', printer_id)]",
+    )
 
-    _columns = {
-        'name': fields.char('Name', size=64, required=True),
-        'system_name': fields.char('System Name', size=64, required=True),
-        'printer_id': fields.many2one('printing.printer', 'Printer', required=True),
-        }
+    @api.multi
+    def behaviour(self):
+        self.ensure_one()
+        res = super(ReportXMLAction, self).behaviour()
+        res['tray'] = self.printer_tray_id.system_name
+        return res
+
+    @api.onchange('printer_id')
+    def onchange_printer_id(self):
+        """ Reset the tray when the printer is changed """
+        self.printer_tray_id = False

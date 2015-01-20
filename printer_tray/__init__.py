@@ -18,21 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.osv import orm, fields
-
-
-class ReportXMLAction(orm.Model):
-    _inherit = 'printing.report.xml.action'
-
-    _columns = {
-        'printer_tray_id': fields.many2one(
-            'printing.tray', 'Paper Source',
-            domain="[('printer_id', '=', printer_id)]"),
-        }
-
-    def behaviour(self, cr, uid, act_id, context=None):
-        res = super(ReportXMLAction, self).behaviour(cr, uid, act_id, context=context)
-        action = self.browse(cr, uid, act_id, context=context)
-        res['tray'] = action.printer_tray_id.system_name
-        return res
+from . import ir_report
+from . import printer_tray
+from . import printer
+from . import users
+from . import report_xml_action

@@ -18,7 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import ir_report
-from . import printer_tray
-from . import printer
-from . import users
+from openerp import models, fields
+
+
+class PrinterTray(models.Model):
+
+    _name = 'printing.tray'
+    _description = 'Printer Tray'
+
+    name = fields.Char(required=True)
+    system_name = fields.Char(required=True, readonly=True)
+    printer_id = fields.Many2one(
+        comodel_name='printing.printer',
+        string='Printer',
+        required=True,
+        readonly=True,
+        ondelete='cascade',
+    )
