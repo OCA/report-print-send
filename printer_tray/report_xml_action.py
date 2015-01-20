@@ -37,3 +37,8 @@ class ReportXMLAction(models.Model):
         res = super(ReportXMLAction, self).behaviour()
         res['tray'] = self.printer_tray_id.system_name
         return res
+
+    @api.onchange('printer_id')
+    def onchange_printer_id(self):
+        """ Reset the tray when the printer is changed """
+        self.printer_tray_id = False

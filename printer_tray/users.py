@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class ResUsers(models.Model):
@@ -30,3 +30,8 @@ class ResUsers(models.Model):
         string='Default Printer Paper Source',
         domain="[('printer_id', '=', printing_printer_id)]",
     )
+
+    @api.onchange('printing_printer_id')
+    def onchange_printing_printer_id(self):
+        """ Reset the tray when the printer is changed """
+        self.printer_tray_id = False
