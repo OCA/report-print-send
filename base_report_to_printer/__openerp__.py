@@ -35,6 +35,7 @@
         'security/security.xml',
         'printing_data.xml',
         'printing_view.xml',
+        'base_report_to_printer.xml',
         'wizard/update_printers.xml',
     ],
     'installable': True,
