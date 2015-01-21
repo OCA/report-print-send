@@ -52,6 +52,23 @@ class ReportXml(models.Model):
              'user basis'
     )
 
+    @api.model
+    def print_action_for_report_name(self, report_name):
+        """ Returns if the action is a direct print or pdf
+
+        Called from js
+        """
+        report_obj = self.env['report']
+        report = report_obj._get_report_from_name(report_name)
+        if not report:
+            return {}
+        result = report.behaviour()[report.id]
+        serializable_result = {
+            'action': result['action'],
+            'printer_name': result['printer'].name,
+        }
+        return serializable_result
+
     @api.multi
     def behaviour(self):
         result = {}
