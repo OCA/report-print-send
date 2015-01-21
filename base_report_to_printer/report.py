@@ -25,15 +25,30 @@ from openerp import models
 class Report(models.Model):
     _inherit = 'report'
 
+    def print_document(self, cr, uid, ids, report_name, html=None,
+                       data=None, context=None):
+        """ Print a document, do not return the document file """
+        document = super(Report, self).get_pdf(cr, uid, ids, report_name,
+                                               html=html, data=data,
+                                               context=context)
+        report = self._get_report_from_name(cr, uid, report_name)
+        behaviour = report.behaviour()[report.id]
+        printer = behaviour['printer']
+        return printer.print_document(report, document, report.report_type)
+
     def get_pdf(self, cr, uid, ids, report_name, html=None,
                 data=None, context=None):
-        result = super(Report, self).get_pdf(cr, uid, ids, report_name,
-                                             html=html, data=data,
-                                             context=context)
+        """ Generate a PDF and returns it.
+
+        If the action configured on the report is server, it prints the
+        generated document as well.
+        """
+        document = super(Report, self).get_pdf(cr, uid, ids, report_name,
+                                               html=html, data=data,
+                                               context=context)
         report = self._get_report_from_name(cr, uid, report_name)
-        data = report.behaviour()[report.id]
-        action = data['action']
-        printer = data['printer']
-        if action != 'client' and result:
-            printer.print_document(report, result, report.report_type)
-        return result
+        behaviour = report.behaviour()[report.id]
+        if behaviour['action'] == 'server' and document:
+            printer = behaviour['printer']
+            printer.print_document(report, document, report.report_type)
+        return document

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-05 14:48+0000\n"
+"POT-Creation-Date: 2015-01-21 14:44+0000\n"
 "PO-Revision-Date: 2014-02-25 15:06+0000\n"
 "Last-Translator: Guewen Baconnier @ Camptocamp <Unknown>\n"
 "Language-Team: \n"
@@ -39,8 +39,13 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #. module: base_report_to_printer
+#: code:addons/base_report_to_printer/wizard/update_printers.py:50
+#, python-format
+msgid "Could not get the list of printers from the CUPS server (%s:%s)"
+msgstr "Impossible d'obtenir la liste des imprimantes depuis le serveur CUPS (%s:%s)"
+
+#. module: base_report_to_printer
 #: field:printing.action,create_uid:0 field:printing.printer,create_uid:0
-#: field:printing.printer.polling,create_uid:0
 #: field:printing.printer.update.wizard,create_uid:0
 #: field:printing.report.xml.action,create_uid:0
 msgid "Created by"
@@ -48,7 +53,6 @@ msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.action,create_date:0 field:printing.printer,create_date:0
-#: field:printing.printer.polling,create_date:0
 #: field:printing.printer.update.wizard,create_date:0
 #: field:printing.report.xml.action,create_date:0
 msgid "Created on"
@@ -65,13 +69,35 @@ msgid "Default Printer"
 msgstr "Imprimante par défaut"
 
 #. module: base_report_to_printer
+#. openerp-web
+#: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:27
+#, python-format
+msgid "Document sent to the printer "
+msgstr "Document envoyé à l'imprimante "
+
+#. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
 msgstr "Erreur"
 
 #. module: base_report_to_printer
+#. openerp-web
+#: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:30
+#, python-format
+msgid "Error when sending the document to the printer "
+msgstr "Erreur lors de l'envoi du document à l'imprimante "
+
+#. module: base_report_to_printer
+#: code:addons/base_report_to_printer/printing.py:140
+#, python-format
+msgid ""
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
+msgstr "La connexion au serveur CUPS %s:%s a échoué. Veuillez contrôler que le "
+"serveur soit démarré et qu'il soit atteignable depuis le serveur Odoo. "
+
+#. module: base_report_to_printer
 #: field:printing.action,id:0 field:printing.printer,id:0
-#: field:printing.printer.polling,id:0
 #: field:printing.printer.update.wizard,id:0
 #: field:printing.report.xml.action,id:0
 msgid "ID"
@@ -79,7 +105,6 @@ msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.action,write_uid:0 field:printing.printer,write_uid:0
-#: field:printing.printer.polling,write_uid:0
 #: field:printing.printer.update.wizard,write_uid:0
 #: field:printing.report.xml.action,write_uid:0
 msgid "Last Updated by"
@@ -87,15 +112,9 @@ msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.action,write_date:0 field:printing.printer,write_date:0
-#: field:printing.printer.polling,write_date:0
 #: field:printing.printer.update.wizard,write_date:0
 #: field:printing.report.xml.action,write_date:0
 msgid "Last Updated on"
-msgstr ""
-
-#. module: base_report_to_printer
-#: field:printing.printer.polling,last_update:0
-msgid "Last update"
 msgstr ""
 
 #. module: base_report_to_printer
@@ -112,6 +131,12 @@ msgstr "Modèle"
 #: field:printing.action,name:0 field:printing.printer,name:0
 msgid "Name"
 msgstr "Nom"
+
+#. module: base_report_to_printer
+#: code:addons/base_report_to_printer/ir_report.py:114
+#, python-format
+msgid "No printer configured to print this report."
+msgstr "Pas d'imprimante configurée pour imprimer ce rapport."
 
 #. module: base_report_to_printer
 #: view:res.users:base_report_to_printer.view_printing_users_form
@@ -144,11 +169,6 @@ msgid "Printers"
 msgstr "Imprimantes"
 
 #. module: base_report_to_printer
-#: model:ir.model,name:base_report_to_printer.model_printing_printer_polling
-msgid "Printers Polling"
-msgstr "Recherche d'imprimantes"
-
-#. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_main
 #: selection:printing.printer,status:0
 #: view:res.users:base_report_to_printer.view_printing_users_prefs
@@ -166,8 +186,12 @@ msgid "Printing action"
 msgstr "Action d'impression"
 
 #. module: base_report_to_printer
+#. openerp-web
+#: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:26
+#: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:29
 #: model:ir.model,name:base_report_to_printer.model_report
 #: field:printing.report.xml.action,report_id:0
+#, python-format
 msgid "Report"
 msgstr "Rapport"
 
@@ -232,8 +256,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
 msgid ""
-"This process will create all the missing printers from the current CUPS "
-"server."
+"This process will create all missing printers from the current CUPS server."
 msgstr ""
 "Cette opération va créer les imprimantes manquantes à partir du serveur CUPS "
 "courant."
@@ -242,6 +265,11 @@ msgstr ""
 #: field:printing.action,type:0
 msgid "Type"
 msgstr "Type"
+
+#. module: base_report_to_printer
+#: field:printing.printer,uri:0
+msgid "URI"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -261,11 +289,6 @@ msgid "Update Printers from CUPS"
 msgstr "Mettre à jour les imprimantes depuis CUPS"
 
 #. module: base_report_to_printer
-#: field:printing.printer,uri:0
-msgid "URI"
-msgstr ""
-
-#. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
 msgstr "Utilisateur"
@@ -274,3 +297,8 @@ msgstr "Utilisateur"
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
 msgstr "Utilisateurs"
+
+#. module: base_report_to_printer
+#: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
+msgid "or"
+msgstr "ou"
