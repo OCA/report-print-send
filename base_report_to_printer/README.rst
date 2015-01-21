@@ -5,7 +5,7 @@ This module allows users to send reports to a printer attached to the server.
 
 It adds an optional behaviour on reports to send it directly to a printer.
 
-* `Send to Client` is the default behavious providing you a downloadable PDF
+* `Send to Client` is the default behaviour providing you a downloadable PDF
 * `Send to Printer` prints the report on selected printer
 
 Report behaviour is defined by settings.
@@ -23,13 +23,18 @@ After installing enable the "Printing / Print Operator" option under access
 rights to give users the ability to view the print menu.
 
 
-To show all available printers for your server, uses
+To show all available printers for your server, use the
 `Settings/Configuration/Printing/Update Printers from CUPS` wizard.
 
 
-Then goto the user profile and set the users printing action and default
+Then go to the user profile and set the users printing action and default
 printer.
 
+Caveat
+------
+
+The notification when a report is sent to a printer will not be
+displayed for the deprecated report types (RML, Webkit, ...).
 
 Dependencies
 ------------
