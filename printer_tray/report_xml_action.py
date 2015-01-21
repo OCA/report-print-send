@@ -32,9 +32,11 @@ class ReportXMLAction(models.Model):
     )
 
     @api.multi
-    def behaviour(self):
+    def behaviour(self, raise_if_no_printer=True):
         self.ensure_one()
-        res = super(ReportXMLAction, self).behaviour()
+        res = super(ReportXMLAction, self).behaviour(
+            raise_if_no_printer=raise_if_no_printer
+        )
         res['tray'] = self.printer_tray_id.system_name
         return res
 
