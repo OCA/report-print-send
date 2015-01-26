@@ -23,7 +23,7 @@
 ##############################################################################
 import logging
 
-from openerp import models, fields, api, exceptions, _
+from openerp import models, fields, api
 
 _logger = logging.getLogger('base_report_to_printer')
 
@@ -62,7 +62,7 @@ class ReportXml(models.Model):
         report = report_obj._get_report_from_name(report_name)
         if not report:
             return {}
-        result = report.behaviour(raise_if_no_printer=False)[report.id]
+        result = report.behaviour()[report.id]
         serializable_result = {
             'action': result['action'],
             'printer_name': result['printer'].name,
@@ -70,7 +70,7 @@ class ReportXml(models.Model):
         return serializable_result
 
     @api.multi
-    def behaviour(self, raise_if_no_printer=True):
+    def behaviour(self):
         result = {}
         printer_obj = self.env['printing.printer']
         printing_act_obj = self.env['printing.report.xml.action']
@@ -109,10 +109,6 @@ class ReportXml(models.Model):
                 if user_action['printer']:
                     printer = user_action['printer']
 
-            if not printer and raise_if_no_printer:
-                raise exceptions.Warning(
-                    _('No printer configured to print this report.')
-                )
             result[report.id] = {'action': action,
                                  'printer': printer,
                                  }
