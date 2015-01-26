@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models
+from openerp import models, exceptions, _
 
 
 class Report(models.Model):
@@ -34,6 +34,10 @@ class Report(models.Model):
         report = self._get_report_from_name(cr, uid, report_name)
         behaviour = report.behaviour()[report.id]
         printer = behaviour['printer']
+        if not printer:
+            raise exceptions.Warning(
+                _('No printer configured to print this report.')
+            )
         return printer.print_document(report, document, report.report_type)
 
     def get_pdf(self, cr, uid, ids, report_name, html=None,
@@ -48,7 +52,7 @@ class Report(models.Model):
                                                context=context)
         report = self._get_report_from_name(cr, uid, report_name)
         behaviour = report.behaviour()[report.id]
-        if behaviour['action'] == 'server' and document:
-            printer = behaviour['printer']
+        printer = behaviour['printer']
+        if behaviour['action'] == 'server' and printer and document:
             printer.print_document(report, document, report.report_type)
         return document
