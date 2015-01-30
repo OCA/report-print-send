@@ -30,11 +30,11 @@ class Report(models.Model):
         """Predicate that decide if report can be sent to printer
 
         If you want to prevent `get_pdf` to send report you can set
-        the `must_skip_sent_to_printer` key to True in the context
+        the `must_skip_send_to_printer` key to True in the context
         """
         if context is None:
             context = self.pool['res.users'].context_get(cr, uid)
-        if context.get('must_skip_sent_to_printer'):
+        if context.get('must_skip_send_to_printer'):
             return False
         if behaviour['action'] == 'server' and printer and document:
             return True
@@ -46,7 +46,7 @@ class Report(models.Model):
         if context is None:
             context = self.pool['res.users'].context_get(cr, uid)
         local_context = dict(context)
-        local_context['must_skip_sent_to_printer'] = True
+        local_context['must_skip_send_to_printer'] = True
         document = self.get_pdf(cr, uid, ids, report_name,
                                 html=html, data=data, context=local_context)
         report = self._get_report_from_name(cr, uid, report_name)
