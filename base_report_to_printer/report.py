@@ -65,8 +65,6 @@ class Report(models.Model):
         If the action configured on the report is server, it prints the
         generated document as well.
         """
-        if context is None:
-            context = self.pool['res.users'].context_get(cr, uid)
         document = super(Report, self).get_pdf(cr, uid, ids, report_name,
                                                html=html, data=data,
                                                context=context)
@@ -78,5 +76,4 @@ class Report(models.Model):
                                                 context=context)
         if can_send_report:
             printer.print_document(report, document, report.report_type)
-            context['must_skip_sent_to_printer'] = True
         return document
