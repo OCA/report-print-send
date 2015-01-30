@@ -30,7 +30,7 @@ class Report(models.Model):
         """ Print a document, do not return the document file """
         if context is None:
             context = self.pool['res.users'].context_get(cr, uid)
-        local_context = dict(context)
+        local_context = context.copy()
         local_context['must_skip_send_to_printer'] = True
         document = self.get_pdf(cr, uid, ids, report_name,
                                 html=html, data=data, context=local_context)
