@@ -25,28 +25,13 @@ from openerp import models, exceptions, _
 class Report(models.Model):
     _inherit = 'report'
 
-    def _can_send_report(self, cr, uid, ids, behaviour, printer, document,
-                         context=None):
-        """Predicate that decide if report can be sent to printer
-
-        If you want to prevent `get_pdf` to send report you can set
-        the `must_skip_sent_to_printer` key to True in the context
-        """
-        if context is None:
-            context = self.pool['res.users'].context_get(cr, uid)
-        if context.get('must_skip_sent_to_printer'):
-            return False
-        if behaviour['action'] == 'server' and printer and document:
-            return True
-        return False
-
     def print_document(self, cr, uid, ids, report_name, html=None,
                        data=None, context=None):
         """ Print a document, do not return the document file """
         if context is None:
             context = self.pool['res.users'].context_get(cr, uid)
-        local_context = dict(context)
-        local_context['must_skip_sent_to_printer'] = True
+        local_context = context.copy()
+        local_context['must_skip_send_to_printer'] = True
         document = self.get_pdf(cr, uid, ids, report_name,
                                 html=html, data=data, context=local_context)
         report = self._get_report_from_name(cr, uid, report_name)
@@ -58,6 +43,21 @@ class Report(models.Model):
             )
         return printer.print_document(report, document, report.report_type)
 
+    def _can_print_report(self, cr, uid, ids, behaviour, printer, document,
+                          context=None):
+        """Predicate that decide if report can be sent to printer
+
+        If you want to prevent `get_pdf` to send report you can set
+        the `must_skip_send_to_printer` key to True in the context
+        """
+        if context is None:
+            context = self.pool['res.users'].context_get(cr, uid)
+        if context.get('must_skip_send_to_printer'):
+            return False
+        if behaviour['action'] == 'server' and printer and document:
+            return True
+        return False
+
     def get_pdf(self, cr, uid, ids, report_name, html=None,
                 data=None, context=None):
         """ Generate a PDF and returns it.
@@ -65,18 +65,15 @@ class Report(models.Model):
         If the action configured on the report is server, it prints the
         generated document as well.
         """
-        if context is None:
-            context = self.pool['res.users'].context_get(cr, uid)
         document = super(Report, self).get_pdf(cr, uid, ids, report_name,
                                                html=html, data=data,
                                                context=context)
         report = self._get_report_from_name(cr, uid, report_name)
         behaviour = report.behaviour()[report.id]
         printer = behaviour['printer']
-        can_send_report = self._can_send_report(cr, uid, ids,
-                                                behaviour, printer, document,
-                                                context=context)
-        if can_send_report:
+        can_print_report = self._can_print_report(cr, uid, ids,
+                                                  behaviour, printer, document,
+                                                  context=context)
+        if can_print_report:
             printer.print_document(report, document, report.report_type)
-            context['must_skip_sent_to_printer'] = True
         return document
