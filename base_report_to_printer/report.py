@@ -50,9 +50,7 @@ class Report(models.Model):
         If you want to prevent `get_pdf` to send report you can set
         the `must_skip_send_to_printer` key to True in the context
         """
-        if context is None:
-            context = self.pool['res.users'].context_get(cr, uid)
-        if context.get('must_skip_send_to_printer'):
+        if context is not None and context.get('must_skip_send_to_printer'):
             return False
         if behaviour['action'] == 'server' and printer and document:
             return True
