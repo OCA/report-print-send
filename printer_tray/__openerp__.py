@@ -24,6 +24,7 @@
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'website': 'http://www.camptocamp.com/',
+ 'license': 'AGPL-3',
  'depends': ['base_report_to_printer',
              ],
  'data': [
