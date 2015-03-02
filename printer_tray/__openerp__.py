@@ -38,7 +38,7 @@ Report to printer - Paper tray selection
  This allows you to dedicate a specific paper source for exemple for prepinted
  paper such as payment slip.
  """,
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'website': 'http://www.camptocamp.com/',
  'depends': ['base_report_assembler',
