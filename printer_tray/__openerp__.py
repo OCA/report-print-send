@@ -21,7 +21,7 @@
 {'name': 'Report to printer - Paper tray selection',
  'version': '1.0',
  'category': 'Printer',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'website': 'http://www.camptocamp.com/',
  'license': 'AGPL-3',
