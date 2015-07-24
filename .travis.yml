@@ -1,8 +1,13 @@
+sudo: false
+cache: pip
+
 addons:
   apt:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
+      - cups
+      - libcups2-dev
 
 language: python
 python:
@@ -11,23 +16,17 @@ python:
 virtualenv:
   system_site_packages: true
 
-before_install:
- - sudo apt-get update
- - sudo apt-get install libcups2-dev cups
-
 install:
  - git clone https://github.com/OCA/maintainer-quality-tools.git $HOME/maintainer-quality-tools
  - export PATH=$HOME/maintainer-quality-tools/travis:$PATH
- - travis_install_nightly 7.0
- - pip install coveralls flake8
+ - travis_install_nightly
  - pip install pycups==1.9.66
  - pip install PyPDF2==1.18
  - pip install requests
- - git clone https://github.com/OCA/reporting-engine -b 7.0 $HOME/reporting-engine
+ - git clone https://github.com/OCA/reporting-engine -b ${VERSION} $HOME/reporting-engine
 
 script:
-    - travis_run_flake8
-    - travis_run_tests 7.0 $HOME/reporting-engine
+    - travis_run_tests
 
 after_success:
   coveralls
