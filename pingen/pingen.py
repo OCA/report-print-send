@@ -58,19 +58,23 @@ def pingen_datetime_to_utc(dt):
 
 
 class PingenException(RuntimeError):
+
     """There was an ambiguous exception that occurred while handling your
     request."""
 
 
 class ConnectionError(PingenException):
+
     """An Error occured with the pingen API"""
 
 
 class APIError(PingenException):
+
     """An Error occured with the pingen API"""
 
 
 class Pingen(object):
+
     """ Interface to the pingen.com API """
 
     def __init__(self, token, staging=True):
@@ -154,7 +158,7 @@ class Pingen(object):
             'send': send,
             'speed': speed,
             'color': color,
-            }
+        }
 
         # we cannot use the `files` param alongside
         # with the `datas`param when data is a
@@ -164,7 +168,7 @@ class Pingen(object):
         formdata = {
             'file': (filename, filestream.read()),
             'data': json.dumps(data),
-            }
+        }
 
         multipart, content_type = encode_multipart_formdata(formdata)
 
@@ -196,7 +200,7 @@ class Pingen(object):
         data = {
             'speed': speed,
             'color': color,
-            }
+        }
         response = self._send(
             self.session.post,
             'document/send',

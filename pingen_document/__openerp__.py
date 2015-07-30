@@ -34,7 +34,7 @@ Glue module between the `pingen` and the `document` modules.
     'website': 'http://www.camptocamp.com',
     'data': [
         'pingen_document_view.xml',
-        ],
+    ],
     'tests': [],
     'installable': False,
     'auto_install': True,

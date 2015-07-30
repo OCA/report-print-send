@@ -32,6 +32,7 @@ from openerp.osv import orm, fields
 
 
 class report_xml(orm.Model):
+
     """
     Reports
     """
@@ -59,9 +60,11 @@ class report_xml(orm.Model):
                 printer_system_name = printer.system_name
             connection = cups.Connection()
 
-            options = self.set_print_options(cr, uid, report_id, format, context=context)
+            options = self.set_print_options(
+                cr, uid, report_id, format, context=context)
 
-            connection.printFile(printer_system_name, file_name, file_name, options=options)
+            connection.printFile(
+                printer_system_name, file_name, file_name, options=options)
             logger = logging.getLogger('base_report_to_printer')
             logger.info("Printing job : '%s'" % file_name)
         return True
@@ -76,13 +79,13 @@ class report_xml(orm.Model):
             string='Action',
             view_load=True,
             method=True,
-            ),
+        ),
         'printing_printer_id': fields.many2one('printing.printer', 'Printer'),
         'printing_action_ids': fields.one2many(
             'printing.report.xml.action', 'report_id', 'Actions',
             help='This field allows configuring action and printer on a per '
                  'user basis'),
-        }
+    }
 
     def behaviour(self, cr, uid, ids, context=None):
         result = {}
@@ -93,7 +96,8 @@ class report_xml(orm.Model):
         # Retrieve system wide printer
         default_printer = printer_obj.get_default(cr, uid, context=context)
         if default_printer:
-            default_printer = printer_obj.browse(cr, uid, default_printer, context=context)
+            default_printer = printer_obj.browse(
+                cr, uid, default_printer, context=context)
 
         # Retrieve user default values
         user = self.pool['res.users'].browse(cr, uid, uid, context=context)
@@ -120,7 +124,8 @@ class report_xml(orm.Model):
                  ('user_id', '=', uid),
                  ('action', '!=', 'user_default')], context=context)
             if act_ids:
-                user_action = printing_act_obj.behaviour(cr, uid, act_ids[0], context)
+                user_action = printing_act_obj.behaviour(
+                    cr, uid, act_ids[0], context)
                 action = user_action['action']
                 if user_action['printer']:
                     printer = user_action['printer']
@@ -128,5 +133,5 @@ class report_xml(orm.Model):
             result[report.id] = {
                 'action': action,
                 'printer': printer,
-                }
+            }
         return result
