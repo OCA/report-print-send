@@ -46,9 +46,10 @@ class Report(models.Model):
 
     @api.v8
     def print_document(self, records, report_name, html=None, data=None):
-        return self._model.print_document(self._cr, self._uid,
-                                   records.ids, report_name,
-                                   html=html, data=data, context=self._context)
+        return self._model.print_document(
+            self._cr, self._uid,
+            records.ids, report_name,
+            html=html, data=data, context=self._context)
 
     def _can_print_report(self, cr, uid, ids, behaviour, printer, document,
                           context=None):
