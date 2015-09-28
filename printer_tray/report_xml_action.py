@@ -29,10 +29,11 @@ class ReportXMLAction(orm.Model):
         'printer_tray_id': fields.many2one(
             'printing.tray', 'Paper Source',
             domain="[('printer_id', '=', printer_id)]"),
-        }
+    }
 
     def behaviour(self, cr, uid, act_id, context=None):
-        res = super(ReportXMLAction, self).behaviour(cr, uid, act_id, context=context)
+        res = super(ReportXMLAction, self).behaviour(cr, uid, act_id,
+                                                     context=context)
         action = self.browse(cr, uid, act_id, context=context)
         res['tray'] = action.printer_tray_id.system_name
         return res

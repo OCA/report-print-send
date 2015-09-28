@@ -41,8 +41,10 @@ class ir_attachment(orm.Model):
         'pingen_speed': fields.selection(
             [('1', 'Priority'), ('2', 'Economy')],
             'Speed',
-            help="Defines the sending speed if the document is automatically sent"),
-        'pingen_color': fields.selection([('0', 'B/W'), ('1', 'Color')], 'Type of print'),
+            help="Defines the sending speed if the document is "
+                 "automatically sent"),
+        'pingen_color': fields.selection([('0', 'B/W'), ('1', 'Color')],
+                                         'Type of print'),
     }
 
     _defaults = {
@@ -56,14 +58,15 @@ class ir_attachment(orm.Model):
                 'config': 'created from attachment'}
 
     def _handle_pingen_document(self, cr, uid, attachment_id, context=None):
-        """ Reponsible of the related ``pingen.document`` when the ``send_to_pingen``
-        field is modified.
+        """ Reponsible of the related ``pingen.document``
+        when the ``send_to_pingen`` field is modified.
 
         Only one pingen document can be created per attachment.
 
         When ``send_to_pingen`` is activated:
           * Create a ``pingen.document`` if it does not already exist
-          * Put the related ``pingen.document`` to ``pending`` if it already exist
+          * Put the related ``pingen.document`` to ``pending`` if
+              it already exist
         When it is deactivated:
           * Do nothing if no related ``pingen.document`` exists
           * Or cancel it
@@ -72,7 +75,8 @@ class ir_attachment(orm.Model):
         """
         pingen_document_obj = self.pool.get('pingen.document')
         attachment = self.browse(cr, uid, attachment_id, context=context)
-        document = attachment.pingen_document_ids[0] if attachment.pingen_document_ids else None
+        document = attachment.pingen_document_ids[
+            0] if attachment.pingen_document_ids else None
         if attachment.send_to_pingen:
             if document:
                 document.write({'state': 'pending'}, context=context)
@@ -87,22 +91,26 @@ class ir_attachment(orm.Model):
                 if document.state == 'pushed':
                     raise osv.except_osv(
                         _('Error'),
-                        _('The attachment %s is already pushed to pingen.com.') %
-                        attachment.name)
+                        _('The attachment %s is already pushed to '
+                          'pingen.com.') % attachment.name)
                 document.write({'state': 'canceled'}, context=context)
         return
 
     def create(self, cr, uid, vals, context=None):
-        attachment_id = super(ir_attachment, self).create(cr, uid, vals, context=context)
+        attachment_id = super(ir_attachment, self).create(
+            cr, uid, vals, context=context)
         if 'send_to_pingen' in vals:
-            self._handle_pingen_document(cr, uid, attachment_id, context=context)
+            self._handle_pingen_document(
+                cr, uid, attachment_id, context=context)
         return attachment_id
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(ir_attachment, self).write(cr, uid, ids, vals, context=context)
+        res = super(ir_attachment, self).write(
+            cr, uid, ids, vals, context=context)
         if 'send_to_pingen' in vals:
             for attachment_id in ids:
-                self._handle_pingen_document(cr, uid, attachment_id, context=context)
+                self._handle_pingen_document(
+                    cr, uid, attachment_id, context=context)
         return res
 
     def _decoded_content(self, cr, uid, attachment, context=None):

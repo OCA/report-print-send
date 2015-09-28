@@ -30,7 +30,7 @@
     'depends': [],
     'external_dependencies': {
         'python': ['requests'],
-        },
+    },
     'description': """
 Integration with pingen.com
 ===========================
@@ -91,8 +91,8 @@ you will need to manually handle the case, either from the pingen.com backend,
 or by changing the document on OpenERP and resolving the error on the Pingen
 Document.
 
-When a connection error occurs, the action will be retried on the next scheduler
-run.
+When a connection error occurs, the action will be retried on the next
+scheduler run.
 
 Dependencies
 ------------
@@ -111,7 +111,7 @@ Dependencies
         'pingen_data.xml',
         'res_company_view.xml',
         'security/ir.model.access.csv',
-        ],
+    ],
     'tests': [],
     'installable': False,
     'auto_install': False,

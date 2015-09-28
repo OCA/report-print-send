@@ -29,9 +29,6 @@ from openerp.osv import orm
 class printing_printer_update_wizard(orm.TransientModel):
     _name = "printing.printer.update.wizard"
 
-    _columns = {
-        }
-
     def action_cancel(self, cr, uid, ids, context=None):
         return {}
 
@@ -57,7 +54,7 @@ class printing_printer_update_wizard(orm.TransientModel):
                 'model': printer.get('printer-make-and-model', False),
                 'location': printer.get('printer-location', False),
                 'uri': printer.get('device-uri', False),
-                }, context)
+            }, context)
 
         return {
             'name': 'Printers',
@@ -66,7 +63,4 @@ class printing_printer_update_wizard(orm.TransientModel):
             'res_model': 'printing.printer',
             'type': 'ir.actions.act_window',
             'target': 'current',
-            }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        }

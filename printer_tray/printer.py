@@ -30,8 +30,9 @@ class Printer(orm.Model):
     _inherit = 'printing.printer'
 
     _columns = {
-        'tray_ids': fields.one2many('printing.tray', 'printer_id', 'Paper Sources'),
-        }
+        'tray_ids': fields.one2many('printing.tray', 'printer_id',
+                                    'Paper Sources'),
+    }
 
     def _update_tray_option(self, db_name, uid, printer, context=None):
         """
@@ -54,12 +55,13 @@ class Printer(orm.Model):
             return
         try:
             for tray_opt in option.choices:
-                if tray_opt['choice'] not in [t.system_name for t in printer.tray_ids]:
+                if tray_opt['choice'] not in [
+                        t.system_name for t in printer.tray_ids]:
                     tray_vals = {
                         'name': tray_opt['text'],
                         'system_name': tray_opt['choice'],
                         'printer_id': printer.id,
-                        }
+                    }
 
                     tray_obj.create(cr, uid, tray_vals, context=context)
             cr.commit()
@@ -76,7 +78,8 @@ class Printer(orm.Model):
         """
         db, pool = pooler.get_db_and_pool(db_name)
         cr = db.cursor()
-        res = super(Printer, self).update_printers_status(db_name, uid, context=context)
+        res = super(Printer, self).update_printers_status(db_name, uid,
+                                                          context=context)
         try:
             connection = cups.Connection()
             printers = connection.getPrinters()
@@ -84,7 +87,9 @@ class Printer(orm.Model):
         except:
             server_error = True
 
-        printer_ids = self.search(cr, uid, [('system_name', 'in', printers.keys())], context=context)
+        printer_ids = self.search(cr, uid,
+                                  [('system_name', 'in', printers.keys())],
+                                  context=context)
         if server_error:
             vals = {'status': 'server_error'}
             self.write(cr, uid, printer_ids, vals, context=context)
@@ -95,5 +100,6 @@ class Printer(orm.Model):
         for printer in printer_list:
             # XXX we consider config of printer won't change
             if not printer.tray_ids:
-                self._update_tray_option(db_name, uid, printer, context=context)
+                self._update_tray_option(db_name, uid, printer,
+                                         context=context)
         return res

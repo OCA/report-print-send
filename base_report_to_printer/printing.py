@@ -34,6 +34,7 @@ from openerp.tools.translate import _
 
 
 class printing_printer(orm.Model):
+
     """
     Printers
     """
@@ -78,14 +79,14 @@ class printing_printer(orm.Model):
             'URI',
             size=500,
             readonly=True),
-        }
+    }
 
     _order = "name"
 
     _defaults = {
         'default': lambda *a: False,
         'status': lambda *a: 'unknown',
-        }
+    }
 
     def __init__(self, pool, cr):
         super(printing_printer, self).__init__(pool, cr)
@@ -113,7 +114,7 @@ class printing_printer(orm.Model):
         if context is None:
             context = {}
         try:
-        # Skip update to avoid the thread being created again
+            # Skip update to avoid the thread being created again
             ctx = context.copy()
             ctx['skip_update'] = True
             ids = self.search(cr, uid, [], context=ctx)
@@ -151,7 +152,8 @@ class printing_printer(orm.Model):
             return
         self.updating = True
         self.lock.release()
-        thread = Thread(target=self.update_printers_status, args=(cr.dbname, uid, context.copy()))
+        thread = Thread(target=self.update_printers_status,
+                        args=(cr.dbname, uid, context.copy()))
         thread.start()
 
     def update(self, cr, uid, context=None):
@@ -161,7 +163,8 @@ class printing_printer(orm.Model):
             return True
         last_update = self.last_update
         now = time.time()
-        # Only update printer status if current status is more than 10 seconds old.
+        # Only update printer status if current status is more than
+        # 10 seconds old.
         if not last_update or now - last_update > 10:
             self.start_printer_update(cr, uid, context)
             # Wait up to five seconds for printer status update
@@ -178,7 +181,8 @@ class printing_printer(orm.Model):
                      ).search(cr, uid, args, offset,
                               limit, order, context, count)
 
-    def read(self, cr, uid, ids, fields=None, context=None, load='_classic_read'):
+    def read(self, cr, uid, ids, fields=None, context=None,
+             load='_classic_read'):
         self.update(cr, uid, context)
         return super(printing_printer, self
                      ).read(cr, uid, ids, fields, context, load)
@@ -211,7 +215,7 @@ def _available_action_types(self, cr, uid, context=None):
         ('server', _('Send to Printer')),
         ('client', _('Send to Client')),
         ('user_default', _("Use user's defaults")),
-        ]
+    ]
 
 
 class printing_action(orm.Model):
@@ -220,5 +224,6 @@ class printing_action(orm.Model):
 
     _columns = {
         'name': fields.char('Name', size=256, required=True),
-        'type': fields.selection(_available_action_types, 'Type', required=True),
-        }
+        'type': fields.selection(_available_action_types, 'Type',
+                                 required=True),
+    }

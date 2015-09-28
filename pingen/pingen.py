@@ -58,19 +58,23 @@ def pingen_datetime_to_utc(dt):
 
 
 class PingenException(RuntimeError):
+
     """There was an ambiguous exception that occurred while handling your
     request."""
 
 
 class ConnectionError(PingenException):
+
     """An Error occured with the pingen API"""
 
 
 class APIError(PingenException):
+
     """An Error occured with the pingen API"""
 
 
 class Pingen(object):
+
     """ Interface to the pingen.com API """
 
     def __init__(self, token, staging=True):
@@ -132,11 +136,13 @@ class Pingen(object):
 
         if response.json['error']:
             raise APIError(
-                "%s: %s" % (response.json['errorcode'], response.json['errormessage']))
+                "%s: %s" % (response.json['errorcode'],
+                            response.json['errormessage']))
 
         return response
 
-    def push_document(self, filename, filestream, send=None, speed=None, color=None):
+    def push_document(self, filename, filestream, send=None, speed=None,
+                      color=None):
         """ Upload a document to pingen.com and eventually ask to send it
 
         :param str filename: name of the file to push
@@ -154,7 +160,7 @@ class Pingen(object):
             'send': send,
             'speed': speed,
             'color': color,
-            }
+        }
 
         # we cannot use the `files` param alongside
         # with the `datas`param when data is a
@@ -164,7 +170,7 @@ class Pingen(object):
         formdata = {
             'file': (filename, filestream.read()),
             'data': json.dumps(data),
-            }
+        }
 
         multipart, content_type = encode_multipart_formdata(formdata)
 
@@ -196,7 +202,7 @@ class Pingen(object):
         data = {
             'speed': speed,
             'color': color,
-            }
+        }
         response = self._send(
             self.session.post,
             'document/send',
