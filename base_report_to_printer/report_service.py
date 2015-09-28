@@ -31,7 +31,8 @@ from openerp.addons.base_calendar import base_calendar
 class virtual_report_spool(base_calendar.virtual_report_spool):
 
     def exp_report(self, db, uid, object, ids, datas=None, context=None):
-        res = super(virtual_report_spool, self).exp_report(db, uid, object, ids, datas, context)
+        res = super(virtual_report_spool, self).exp_report(
+            db, uid, object, ids, datas, context)
         self._reports[res]['report_name'] = object
         return res
 
@@ -43,22 +44,27 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
             # First of all load report defaults: name, action and printer
             report_obj = pool.get('ir.actions.report.xml')
             report = report_obj.search(
-                cr, uid, [('report_name', '=', self._reports[report_id]['report_name'])])
+                cr, uid, [('report_name', '=',
+                           self._reports[report_id]['report_name'])])
             if report:
                 report = report_obj.browse(cr, uid, report[0])
                 data = report.behaviour()[report.id]
                 action = data['action']
                 printer = data['printer']
                 if action != 'client':
-                    if (self._reports and self._reports.get(report_id, False)
-                            and self._reports[report_id].get('result', False)
-                            and self._reports[report_id].get('format', False)):
+                    if (self._reports and
+                        self._reports.get(report_id, False) and
+                        self._reports[report_id].get('result', False) and
+                            self._reports[report_id].get('format', False)):
                         report_obj.print_direct(
-                            cr, uid, report.id, base64.encodestring(self._reports[report_id]['result']),
+                            cr, uid, report.id, base64.encodestring(
+                                self._reports[report_id]['result']),
                             self._reports[report_id]['format'], printer)
                         # FIXME "Warning" removed as it breaks the workflow
-                        # it would be interesting to have a dialog box to confirm if we really want to print
-                        # in this case it must be with a by pass parameter to allow massive impression
+                        # it would be interesting to have a dialog box to
+                        # confirm if we really want to print
+                        # in this case it must be with a by pass parameter to
+                        # allow massive impression
                         # raise osv.except_osv(
                         #     _('Printing...'),
                         #     _('Document sent to printer %s') % (printer,))
@@ -69,9 +75,8 @@ class virtual_report_spool(base_calendar.virtual_report_spool):
         finally:
             cr.close()
 
-        res = super(virtual_report_spool, self).exp_report_get(db, uid, report_id)
+        res = super(virtual_report_spool, self).exp_report_get(db, uid,
+                                                               report_id)
         return res
 
 virtual_report_spool()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

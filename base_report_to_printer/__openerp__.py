@@ -78,7 +78,8 @@ Contributors
 * Lionel Sausin <ls@numerigraphe.com>
 
     """,
-    'author': "Agile Business Group & Domsense, Pegueroles SCP, NaN,Odoo Community Association (OCA)",
+    'author': "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
+              "Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     "depends": ['base', 'base_calendar'],
@@ -93,5 +94,5 @@ Contributors
     'application': True,
     'external_dependencies': {
         'python': ['cups']
-        }
+    }
 }
