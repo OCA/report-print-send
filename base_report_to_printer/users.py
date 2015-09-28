@@ -24,7 +24,8 @@
 ##############################################################################
 from openerp.osv import orm, fields
 
-from printing import _available_action_types
+from openerp.addons.base_report_to_printer.printing import \
+    _available_action_types
 
 
 class res_users(orm.Model):
