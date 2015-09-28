@@ -29,5 +29,6 @@ class PrinterTray(orm.Model):
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'system_name': fields.char('System Name', size=64, required=True),
-        'printer_id': fields.many2one('printing.printer', 'Printer', required=True),
-        }
+        'printer_id': fields.many2one('printing.printer', 'Printer',
+                                      required=True),
+    }

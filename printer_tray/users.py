@@ -29,4 +29,4 @@ class ResUsers(orm.Model):
         'printer_tray_id': fields.many2one(
             'printing.tray', 'Default Printer Paper Source',
             domain="[('printer_id', '=', printing_printer_id)]"),
-        }
+    }

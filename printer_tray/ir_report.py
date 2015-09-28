@@ -29,14 +29,15 @@ class ReportXML(orm.Model):
         'printer_tray_id': fields.many2one(
             'printing.tray', 'Paper Source',
             domain="[('printer_id', '=', printing_printer_id)]"),
-        }
+    }
 
     def set_print_options(self, cr, uid, report_id, format, context=None):
         """
         Hook to define Tray
         """
         printing_act_obj = self.pool.get('printing.report.xml.action')
-        options = super(ReportXML, self).set_print_options(cr, uid, report_id, format, context=context)
+        options = super(ReportXML, self).set_print_options(
+            cr, uid, report_id, format, context=context)
 
         # Retrieve user default values
         user = self.pool.get('res.users').browse(cr, uid, context)
@@ -54,7 +55,8 @@ class ReportXML(orm.Model):
              ('user_id', '=', uid),
              ('action', '!=', 'user_default')], context=context)
         if act_ids:
-            user_action = printing_act_obj.browse(cr, uid, act_ids[0], context=context)
+            user_action = printing_act_obj.browse(
+                cr, uid, act_ids[0], context=context)
             if user_action.tray_id:
                 tray = user_action.tray_id
 
