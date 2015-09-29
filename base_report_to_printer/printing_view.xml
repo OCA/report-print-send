@@ -107,7 +107,8 @@
       <field name="arch" type="xml">
         <form string="Report Printing Actions">
           <group col="2">
-              <field name="user_id"/>
+              <field name="company_id" groups="base.group_multi_company" attrs="{'required':[('user_id', '=', False)]}"/>
+              <field name="user_id" attrs="{'required':[('company_id', '=', False)]}"/>
               <field name="action"/>
               <field name="printer_id" select="1"/>
           </group>
@@ -119,6 +120,7 @@
       <field name="model">printing.report.xml.action</field>
       <field name="arch" type="xml">
         <tree string="Report Printing Actions">
+          <field name="company_id" groups="base.group_multi_company"/>
           <field name="user_id"/>
           <field name="action" />
           <field name="printer_id" />

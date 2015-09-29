@@ -34,8 +34,9 @@ class report_xml_action(orm.Model):
     _columns = {
         'report_id': fields.many2one('ir.actions.report.xml', 'Report',
                                      required=True, ondelete='cascade'),
-        'user_id': fields.many2one('res.users', 'User', required=True,
-                                   ondelete='cascade'),
+        'user_id': fields.many2one('res.users', 'User', ondelete='cascade'),
+        'company_id': fields.many2one('res.company', 'Company',
+                                      ondelete='cascade'),
         'action': fields.selection(_available_action_types, 'Action',
                                    required=True),
         'printer_id': fields.many2one('printing.printer', 'Printer'),

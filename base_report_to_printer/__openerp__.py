@@ -46,6 +46,8 @@ Settings can be configured:
 * per user
 * per report
 * per user and report
+* per company and report
+* per user/company and report
 
 
 After installing enable the "Printing / Print Operator" option under access
