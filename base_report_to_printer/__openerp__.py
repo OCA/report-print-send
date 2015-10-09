@@ -23,7 +23,7 @@
 ##############################################################################
 {
     'name': "Report to printer",
-    'version': '0.1.1',
+    'version': '8.0.0.1.1',
     'category': 'Generic Modules/Base',
     'author': "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
               "Odoo Community Association (OCA)",
@@ -39,7 +39,7 @@
         'base_report_to_printer.xml',
         'wizard/update_printers.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': True,
     'external_dependencies': {
