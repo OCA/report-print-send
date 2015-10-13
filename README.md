@@ -23,7 +23,7 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[pingen](__unported__/pingen/) | 1.0 (unported) | pingen.com integration
-[pingen_document](__unported__/pingen_document/) | 1.0 (unported) | pingen.com integration (document)
+[pingen](pingen/) | 1.0 (unported) | pingen.com integration
+[pingen_document](pingen_document/) | 1.0 (unported) | pingen.com integration (document)
 
 [//]: # (end addons)
