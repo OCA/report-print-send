@@ -1,0 +1,396 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* pingen
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-26 10:55+0000\n"
+"PO-Revision-Date: 2014-02-25 15:09+0000\n"
+"Last-Translator: Yannick Vaucher @ Camptocamp <Unknown>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-05-06 07:28+0000\n"
+"X-Generator: Launchpad (build 16996)\n"
+
+#. module: pingen
+#: code:addons/pingen/pingen_document.py:177
+#: code:addons/pingen/pingen_document.py:307
+#: code:addons/pingen/pingen_document.py:414
+#, python-format
+msgid "Unexcepted Error when updating the status of Document %s"
+msgstr "Erreur inattendue lors de la mise à jour du document %s"
+
+#. module: pingen
+#: field:pingen.document,push_date:0
+msgid "Push Date"
+msgstr "Date d'ajout"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Errors"
+msgstr "Erreurs"
+
+#. module: pingen
+#: field:pingen.document,pingen_id:0
+msgid "Pingen ID"
+msgstr "ID Pingen"
+
+#. module: pingen
+#: constraint:res.company:0
+msgid "Error! You can not create recursive companies."
+msgstr "Error! You can not create recursive companies."
+
+#. module: pingen
+#: field:ir.attachment,pingen_send:0
+msgid "Send"
+msgstr "Envoyer"
+
+#. module: pingen
+#: code:addons/pingen/pingen_document.py:399
+#, python-format
+msgid "Connection Error when updating the status of Document %s from Pingen"
+msgstr ""
+"Erreur de connexion lors de la mise à jour de l'état du document %s depuis "
+"Pingen"
+
+#. module: pingen
+#: field:pingen.document,state:0
+msgid "State"
+msgstr "État"
+
+#. module: pingen
+#: field:ir.attachment,pingen_color:0
+msgid "Type of print"
+msgstr "Type d'impression"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Attachment"
+msgstr "Attachement"
+
+#. module: pingen
+#: code:addons/pingen/pingen_document.py:405
+#, python-format
+msgid ""
+"Error when updating the status of Document %s from Pingen: \n"
+"%s"
+msgstr ""
+"Erreur lors de la mise à jour de l'état du document %s depuis Pingen: \n"
+"%s"
+
+#. module: pingen
+#: model:ir.actions.act_window,name:pingen.act_attachment_to_pingen_document
+#: field:ir.attachment,pingen_document_ids:0
+#: view:pingen.document:0
+msgid "Pingen Document"
+msgstr "Document Pingen"
+
+#. module: pingen
+#: field:pingen.document,attachment_id:0
+msgid "Document"
+msgstr "Document"
+
+#. module: pingen
+#: help:ir.attachment,pingen_send:0
+msgid "Defines if a document is merely uploaded or also sent"
+msgstr "Définit si un fichier est juste ajouté ou également envoyé"
+
+#. module: pingen
+#: view:pingen.document:0
+#: selection:pingen.document,state:0
+msgid "Pending"
+msgstr "En attente"
+
+#. module: pingen
+#: selection:ir.attachment,pingen_speed:0
+msgid "Economy"
+msgstr "Économique"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Errors resolved"
+msgstr "Erreurs résolues"
+
+#. module: pingen
+#: sql_constraint:pingen.document:0
+msgid "Only one Pingen document is allowed per attachment."
+msgstr "Uniquement un document Pingen est autorisé par attachement."
+
+#. module: pingen
+#: code:addons/pingen/pingen_document.py:168
+#: code:addons/pingen/pingen_document.py:298
+#, python-format
+msgid ""
+"Error when asking Pingen to send the document %s: \n"
+"%s"
+msgstr ""
+"Erreurs lors de l'envoi du document par Pingen %s: \n"
+"%s"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Update the letter's informations"
+msgstr "Mettre à jour les informations de la lettre"
+
+#. module: pingen
+#: view:pingen.document:0
+#: selection:pingen.document,state:0
+msgid "Canceled"
+msgstr "Annulé"
+
+#. module: pingen
+#: selection:pingen.document,state:0
+msgid "Connection Error"
+msgstr "Erreur de connexion"
+
+#. module: pingen
+#: model:ir.actions.act_window,name:pingen.action_pingen_document
+#: model:ir.ui.menu,name:pingen.menu_pingen_document
+msgid "Pingen Documents"
+msgstr "Documents Pingen"
+
+#. module: pingen
+#: field:pingen.document,last_error_message:0
+msgid "Error Message"
+msgstr "Message d'erreur"
+
+#. module: pingen
+#: selection:ir.attachment,pingen_color:0
+msgid "B/W"
+msgstr "N/B"
+
+#. module: pingen
+#: field:res.company,pingen_staging:0
+msgid "Pingen Staging"
+msgstr "Staging Pingen"
+
+#. module: pingen
+#: model:ir.model,name:pingen.model_ir_attachment
+msgid "ir.attachment"
+msgstr "ir.attachment"
+
+#. module: pingen
+#: view:pingen.document:0
+#: selection:pingen.document,state:0
+msgid "In Sendcenter"
+msgstr "Dans le Sendcenter"
+
+#. module: pingen
+#: view:pingen.document:0
+#: selection:pingen.document,state:0
+msgid "Sent"
+msgstr "Envoyé"
+
+#. module: pingen
+#: field:pingen.document,post_status:0
+msgid "Post Status"
+msgstr "État de la lettre"
+
+#. module: pingen
+#: code:addons/pingen/pingen_document.py:163
+#: code:addons/pingen/pingen_document.py:292
+#, python-format
+msgid "Connection Error when asking for sending the document %s to Pingen"
+msgstr "Erreur de connexion avec Pingen lors de l'envoi de %s"
+
+#. module: pingen
+#: view:res.company:0
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Data"
+msgstr "Données"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Options"
+msgstr "Options"
+
+#. module: pingen
+#: field:res.company,pingen_token:0
+msgid "Pingen Token"
+msgstr "Token Pingen"
+
+#. module: pingen
+#: field:ir.attachment,send_to_pingen:0
+msgid "Send to Pingen.com"
+msgstr "Ajouter sur Pingen.com"
+
+#. module: pingen
+#: model:ir.model,name:pingen.model_pingen_document
+msgid "pingen.document"
+msgstr "pingen.document"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Dates"
+msgstr "Dates"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Sendcenter"
+msgstr "Sendcenter"
+
+#. module: pingen
+#: sql_constraint:res.company:0
+msgid "The company name must be unique !"
+msgstr "The company name must be unique !"
+
+#. module: pingen
+#: field:pingen.document,parsed_address:0
+msgid "Parsed Address"
+msgstr "Adresse analysée"
+
+#. module: pingen
+#: view:ir.attachment:0
+#: view:pingen.document:0
+#: view:res.company:0
+msgid "Pingen.com"
+msgstr "Pingen.com"
+
+#. module: pingen
+#: field:pingen.document,country_id:0
+msgid "Country"
+msgstr "Pays"
+
+#. module: pingen
+#: view:ir.attachment:0
+msgid "Notes"
+msgstr "Notes"
+
+#. module: pingen
+#: view:pingen.document:0
+#: selection:pingen.document,state:0
+msgid "Pushed"
+msgstr "Ajouté"
+
+#. module: pingen
+#: model:ir.model,name:pingen.model_res_company
+msgid "Companies"
+msgstr "Compagnies"
+
+#. module: pingen
+#: code:addons/pingen/ir_attachment.py:90
+#, python-format
+msgid "The attachment %s is already pushed to pingen.com."
+msgstr "L'attachement %s est déjà envoyé sur pingen.com."
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Attached To"
+msgstr "Attaché à"
+
+#. module: pingen
+#: code:addons/pingen/pingen_document.py:136
+#, python-format
+msgid "The document does not meet the Pingen requirements."
+msgstr "Le document ne remplit pas les exigences de Pingen"
+
+#. module: pingen
+#: code:addons/pingen/ir_attachment.py:89
+#: code:addons/pingen/pingen_document.py:176
+#: code:addons/pingen/pingen_document.py:306
+#: code:addons/pingen/pingen_document.py:413
+#: view:pingen.document:0
+#, python-format
+msgid "Error"
+msgstr "Erreur"
+
+#. module: pingen
+#: code:addons/pingen/pingen_document.py:162
+#: code:addons/pingen/pingen_document.py:291
+#: code:addons/pingen/pingen_document.py:398
+#, python-format
+msgid "Pingen Connection Error"
+msgstr "Erreur de connexion avec Pingen"
+
+#. module: pingen
+#: field:pingen.document,send_date:0
+msgid "Date of sending"
+msgstr "Date d'envoi"
+
+#. module: pingen
+#: selection:ir.attachment,pingen_speed:0
+msgid "Priority"
+msgstr "Priorité"
+
+#. module: pingen
+#: selection:ir.attachment,pingen_color:0
+msgid "Color"
+msgstr "Color"
+
+#. module: pingen
+#: model:ir.model,name:pingen.model_pingen_task
+msgid "pingen.task"
+msgstr "pingen.task"
+
+#. module: pingen
+#: help:pingen.document,pingen_id:0
+msgid "ID of the document in the Pingen Documents"
+msgstr "ID du document sur Pingen"
+
+#. module: pingen
+#: code:addons/pingen/pingen_document.py:167
+#: code:addons/pingen/pingen_document.py:297
+#: code:addons/pingen/pingen_document.py:404
+#: view:pingen.document:0
+#: selection:pingen.document,state:0
+#, python-format
+msgid "Pingen Error"
+msgstr "Erreur Pingen"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Actions"
+msgstr "Actions"
+
+#. module: pingen
+#: field:pingen.document,pages:0
+msgid "Pages"
+msgstr "Pages"
+
+#. module: pingen
+#: field:pingen.document,currency_id:0
+msgid "Currency"
+msgstr "Devise"
+
+#. module: pingen
+#: field:pingen.document,cost:0
+msgid "Cost"
+msgstr "Coût"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Push to pingen.com"
+msgstr "Ajouter sur pingen.com"
+
+#. module: pingen
+#: view:pingen.document:0
+msgid "Ask pingen.com to send the document"
+msgstr "Demander à pingen.com d'envoyer le document"
+
+#. module: pingen
+#: help:pingen.document,post_id:0
+msgid "ID of the document in the Pingen Sendcenter"
+msgstr "ID du document dans le Sendcenter Pingen"
+
+#. module: pingen
+#: field:ir.attachment,pingen_speed:0
+msgid "Speed"
+msgstr "Vitesse"
+
+#. module: pingen
+#: field:pingen.document,post_id:0
+msgid "Pingen Post ID"
+msgstr "ID de lettre Pingen"
+
+#. module: pingen
+#: help:ir.attachment,pingen_speed:0
+msgid "Defines the sending speed if the document is automatically sent"
+msgstr "Définit la vitesse d'envoi si le document est automatiquement envoyé"
