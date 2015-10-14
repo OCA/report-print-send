@@ -39,7 +39,7 @@
         'base_report_to_printer.xml',
         'wizard/update_printers.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': True,
     'external_dependencies': {
