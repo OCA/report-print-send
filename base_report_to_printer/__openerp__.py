@@ -23,7 +23,7 @@
 ##############################################################################
 {
     'name': "Report to printer",
-    'version': '8.0.0.1.1',
+    'version': '8.0.0.1.2',
     'category': 'Generic Modules/Base',
     'author': "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
               "Odoo Community Association (OCA)",
