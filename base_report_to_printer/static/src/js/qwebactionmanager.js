@@ -14,6 +14,10 @@ openerp.base_report_to_printer = function(instance) {
                     .then(function(print_action){
                         if (print_action && print_action['action'] === 'server') {
                             instance.web.unblockUI();
+                            // active_ids should never exist alone without active_model
+                            if ('active_ids' in action.context && !('active_model' in action.context)) {
+                              action.context['active_model'] = 'pos.order';
+                            }
                             new instance.web.Model('report')
                                 .call('print_document',
                                       [action.context.active_ids,
