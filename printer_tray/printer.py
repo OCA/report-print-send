@@ -92,8 +92,8 @@ class Printer(models.Model):
                                           ('user_id', '=', self.env.uid),
                                           ('action', '!=', 'user_default')],
                                          limit=1)
-        if action and action.printer_tray_id:
-            tray = action.tray_id
+        if printer_tray_id:
+            tray = action.printer_tray_id
 
         if tray:
             options['InputSlot'] = str(tray.system_name)
