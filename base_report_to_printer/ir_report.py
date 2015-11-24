@@ -85,8 +85,30 @@ class report_xml(orm.Model):
         'printing_action_ids': fields.one2many(
             'printing.report.xml.action', 'report_id', 'Actions',
             help='This field allows configuring action and printer on a per '
-                 'user basis'),
+                 'user / company basis'),
     }
+
+    def _get_company_id(self, cr, uid, context=None):
+        """
+        As it may happend that OpenERP force the uid to 1 to bypass rule (in
+        function field), we may sometimes use the company of user
+        id 1 instead of the good one. Because we found the real uid and
+        company_id in the context in that case, I return this one. It also
+        allow other module to give the proper company_id in the context.
+
+        If force_company is in context, use it in prioriy.
+
+        If company_id not in context, take the one from uid.
+        """
+        if context is None:
+            context = {}
+        res = context.get('force_company') or context.get('company_id')
+        if not res:
+            user_obj = self.pool['res.users']
+            res = user_obj.read(cr, uid, uid,
+                                ['company_id'],
+                                context=context)['company_id'][0]
+        return res
 
     def behaviour(self, cr, uid, ids, context=None):
         result = {}
@@ -99,6 +121,8 @@ class report_xml(orm.Model):
         if default_printer:
             default_printer = printer_obj.browse(cr, uid, default_printer,
                                                  context=context)
+
+        company_id = self._get_company_id(cr, uid, context)
 
         # Retrieve user default values
         user = self.pool['res.users'].browse(cr, uid, uid, context=context)
@@ -118,12 +142,28 @@ class report_xml(orm.Model):
             if report.printing_printer_id:
                 printer = report.printing_printer_id
 
+            # Retrieve report-company specific values
+            act_ids = printing_act_obj.search(
+                cr, uid,
+                [('report_id', '=', report.id),
+                 ('user_id', '=', False),
+                 ('company_id', '=', company_id),
+                 ('action', '!=', 'user_default')], context=context)
+            if act_ids:
+                company_action = printing_act_obj.behaviour(
+                    cr, uid, act_ids[0], context)
+                action = company_action['action']
+                if company_action['printer']:
+                    printer = company_action['printer']
+
             # Retrieve report-user specific values
             act_ids = printing_act_obj.search(
                 cr, uid,
                 [('report_id', '=', report.id),
                  ('user_id', '=', uid),
-                 ('action', '!=', 'user_default')], context=context)
+                 ('action', '!=', 'user_default'),
+                 '|', ('company_id', '=', company_id),
+                 ('company_id', '=', False)], context=context)
             if act_ids:
                 user_action = printing_act_obj.behaviour(cr, uid, act_ids[0],
                                                          context)
