@@ -24,7 +24,7 @@ from openerp.osv.orm import browse_record
 from .pingen import Pingen
 
 
-class res_company(orm.Model):
+class ResCompany(orm.Model):
 
     _inherit = 'res.company'
 

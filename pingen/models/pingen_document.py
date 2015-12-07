@@ -33,7 +33,7 @@ from .pingen import APIError, ConnectionError, POST_SENDING_STATUS, \
 _logger = logging.getLogger(__name__)
 
 
-class pingen_document(orm.Model):
+class PingenDocument(orm.Model):
     """ A pingen document is the state of the synchronization of
     an attachment with pingen.com
 
@@ -145,7 +145,8 @@ class pingen_document(orm.Model):
              'pingen_id': doc_id,
              'post_id': post_id},
             context=context)
-        _logger.info('Pingen Document %s: pushed to %s' % (document.id, pingen.url))
+        _logger.info('Pingen Document %s: pushed to %s' %
+                     (document.id, pingen.url))
 
     def push_to_pingen(self, cr, uid, ids, context=None):
         """ Push a document to pingen.com
@@ -277,7 +278,8 @@ class pingen_document(orm.Model):
              'state': 'sendcenter',
              'post_id': post_id},
             context=context)
-        _logger.info('Pingen Document %s: asked for sending to %s' % (document.id, pingen.url))
+        _logger.info('Pingen Document %s: asked for sending to %s' %
+                     (document.id, pingen.url))
 
         return True
 
@@ -291,7 +293,8 @@ class pingen_document(orm.Model):
         with self._get_pingen_session(cr, uid, context=context) as session:
             for document in self.browse(cr, uid, ids, context=context):
                 try:
-                    self._ask_pingen_send(cr, uid, document, pingen=session, context=context)
+                    self._ask_pingen_send(
+                        cr, uid, document, pingen=session, context=context)
                 except ConnectionError as e:
                     raise osv.except_osv(
                         _('Pingen Connection Error'),
@@ -351,7 +354,7 @@ class pingen_document(orm.Model):
             'send_date': send_date.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT),
             'pages': post_infos['pages'],
             'last_error_message': False,
-            }
+        }
         if pingen.is_posted(post_infos):
             vals['state'] = 'sent'
 
@@ -381,7 +384,8 @@ class pingen_document(orm.Model):
                         loc_cr, uid, document, pingen=session, context=context)
                 except (ConnectionError, APIError):
                     # will be retried the next time
-                    # In any case, the error has been logged by _update_post_infos
+                    # In any case, the error has been logged by
+                    # _update_post_infos
                     loc_cr.rollback()
                 except:
                     _logger.error('Unexcepted error in pingen cron')

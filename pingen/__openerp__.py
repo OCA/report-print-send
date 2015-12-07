@@ -31,7 +31,7 @@
     'depends': [],
     'external_dependencies': {
         'python': ['requests'],
-        },
+    },
     'description': """
 Integration with pingen.com
 ===========================
@@ -112,7 +112,7 @@ Dependencies
         'data/pingen_data.xml',
         'views/res_company_view.xml',
         'security/ir.model.access.csv',
-        ],
+    ],
     'tests': [],
     'installable': True,
     'auto_install': False,

@@ -154,7 +154,7 @@ class Pingen(object):
             'send': send,
             'speed': speed,
             'color': color,
-            }
+        }
 
         # we cannot use the `files` param alongside
         # with the `datas`param when data is a
@@ -164,7 +164,7 @@ class Pingen(object):
         formdata = {
             'file': (filename, filestream.read()),
             'data': json.dumps(data),
-            }
+        }
 
         multipart, content_type = encode_multipart_formdata(formdata)
 
@@ -196,7 +196,7 @@ class Pingen(object):
         data = {
             'speed': speed,
             'color': color,
-            }
+        }
         response = self._send(
             self.session.post,
             'document/send',

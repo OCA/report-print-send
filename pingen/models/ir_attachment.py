@@ -26,7 +26,7 @@ from openerp.osv import osv, orm, fields
 from openerp.tools.translate import _
 
 
-class ir_attachment(orm.Model):
+class IrAttachment(orm.Model):
 
     _inherit = 'ir.attachment'
 
@@ -72,7 +72,8 @@ class ir_attachment(orm.Model):
         """
         pingen_document_obj = self.pool.get('pingen.document')
         attachment = self.browse(cr, uid, attachment_id, context=context)
-        document = attachment.pingen_document_ids[0] if attachment.pingen_document_ids else None
+        document = attachment.pingen_document_ids[
+            0] if attachment.pingen_document_ids else None
         if attachment.send_to_pingen:
             if document:
                 document.write({'state': 'pending'}, context=context)
@@ -93,16 +94,20 @@ class ir_attachment(orm.Model):
         return
 
     def create(self, cr, uid, vals, context=None):
-        attachment_id = super(ir_attachment, self).create(cr, uid, vals, context=context)
+        attachment_id = super(IrAttachment, self).create(
+            cr, uid, vals, context=context)
         if 'send_to_pingen' in vals:
-            self._handle_pingen_document(cr, uid, attachment_id, context=context)
+            self._handle_pingen_document(
+                cr, uid, attachment_id, context=context)
         return attachment_id
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(ir_attachment, self).write(cr, uid, ids, vals, context=context)
+        res = super(IrAttachment, self).write(
+            cr, uid, ids, vals, context=context)
         if 'send_to_pingen' in vals:
             for attachment_id in ids:
-                self._handle_pingen_document(cr, uid, attachment_id, context=context)
+                self._handle_pingen_document(
+                    cr, uid, attachment_id, context=context)
         return res
 
     def _decoded_content(self, cr, uid, attachment, context=None):
