@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Guewen Baconnier
 #    Copyright 2012 Camptocamp SA
+#    Copyright 2015 Philipp Hug
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,4 +19,7 @@
 #
 ##############################################################################
 
-import models
+import ir_attachment
+import pingen
+import pingen_document
+import res_company

@@ -8,14 +8,14 @@
       <field name="type">form</field>
       <field name="inherit_id" ref="base.view_attachment_form"/>
       <field name="arch" type="xml">
-        <page string="Notes" position="before">
-          <page string="Pingen.com">
+        <group name="description_group" position="before">
+          <group string="Pingen.com">
             <field name="send_to_pingen"/>
             <field name="pingen_send" attrs="{'required': [('send_to_pingen', '=', True)]}"/>
             <field name="pingen_speed" attrs="{'required': [('pingen_send', '=', True)]}"/>
             <field name="pingen_color" />
-          </page>
-        </page>
+          </group>
+        </group>
       </field>
     </record>
 

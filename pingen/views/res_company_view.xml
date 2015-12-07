@@ -8,7 +8,7 @@
       <field name="type">form</field>
       <field name="inherit_id" ref="base.view_company_form"/>
       <field name="arch" type="xml">
-        <page string="Configuration" position="inside">
+        <page name="configuration" position="inside">
           <separator string="Pingen.com" colspan="4"/>
           <field name="pingen_token" groups="base.group_system"/>
           <field name="pingen_staging" groups="base.group_system"/>

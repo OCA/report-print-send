@@ -3,6 +3,7 @@
 #
 #    Author: Guewen Baconnier
 #    Copyright 2012 Camptocamp SA
+#    Copyright 2014 Philipp Hug
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,7 +22,7 @@
 
 {
     'name': 'pingen.com integration',
-    'version': '1.0',
+    'version': '9.0.1.0.0',
     'author': "Camptocamp,Odoo Community Association (OCA)",
     'maintainer': 'Camptocamp',
     'license': 'AGPL-3',
@@ -106,14 +107,14 @@ Dependencies
 """,
     'website': 'http://www.camptocamp.com',
     'data': [
-        'ir_attachment_view.xml',
-        'pingen_document_view.xml',
-        'pingen_data.xml',
-        'res_company_view.xml',
+        'views/ir_attachment_view.xml',
+        'views/pingen_document_view.xml',
+        'data/pingen_data.xml',
+        'views/res_company_view.xml',
         'security/ir.model.access.csv',
         ],
     'tests': [],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': True,
 }
