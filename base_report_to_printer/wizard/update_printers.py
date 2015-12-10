@@ -21,13 +21,18 @@
 #
 ##############################################################################
 
-import cups
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    import cups
+except ImportError:
+    _logger.debug('Cannot `import cups`.')
+
 from openerp.exceptions import Warning
 from openerp import models, api, _
 from openerp.tools.config import config
-import logging
 
-_logger = logging.getLogger(__name__)
 CUPS_HOST = config.get('cups_host', 'localhost')
 CUPS_PORT = int(config.get('cups_port', 631))
 
