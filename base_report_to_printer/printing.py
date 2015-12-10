@@ -22,14 +22,20 @@
 #
 ##############################################################################
 import logging
+_logger = logging.getLogger(__name__)
+
 import os
 from tempfile import mkstemp
-import cups
+
+try:
+    import cups
+except ImportError:
+    _logger.debug('Cannot `import cups`.')
+
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 from openerp.tools.config import config
 
-_logger = logging.getLogger(__name__)
 CUPS_HOST = config.get('cups_host', 'localhost')
 CUPS_PORT = int(config.get('cups_port', 631))  # config.get returns a string
 
