@@ -25,12 +25,20 @@
 import time
 
 import cups
+import os
 from threading import Thread
 from threading import Lock
+from tempfile import mkstemp
+import logging
 
 from openerp import pooler
 from openerp.osv import orm, fields
 from openerp.tools.translate import _
+from openerp.tools.config import config
+
+_logger = logging.getLogger(__name__)
+CUPS_HOST = config.get('cups_host', 'localhost')
+CUPS_PORT = int(config.get('cups_port', 631))  # config.get returns a string
 
 
 class printing_printer(orm.Model):
@@ -99,7 +107,7 @@ class printing_printer(orm.Model):
         cr = db.cursor()
 
         try:
-            connection = cups.Connection()
+            connection = cups.Connection(CUPS_HOST, CUPS_PORT)
             printers = connection.getPrinters()
             server_error = False
         except:
@@ -190,6 +198,58 @@ class printing_printer(orm.Model):
     def browse(self, cr, uid, ids, context=None):
         self.update(cr, uid, context)
         return super(printing_printer, self).browse(cr, uid, ids, context)
+
+    def print_options(
+            self, cr, uid, ids, report, format, copies=1, context=None):
+        """ Hook to set print options """
+        options = {}
+        if format == 'raw':
+            options['raw'] = 'True'
+        if copies > 1:
+            options['copies'] = str(copies)
+        return options
+
+    def print_document(
+            self, cr, uid, ids, report, content, format, copies=1,
+            context=None):
+        """ Print a file
+
+        Format could be pdf, qweb-pdf, raw, ...
+
+        """
+        assert len(ids) == 1, 'Only 1 ID allowed'
+        printer = self.browse(cr, uid, ids[0], context=context)
+        fd, file_name = mkstemp()
+        try:
+            os.write(fd, content)
+        finally:
+            os.close(fd)
+
+        try:
+            _logger.debug(
+                'Starting to connect to CUPS on %s:%s'
+                % (CUPS_HOST, CUPS_PORT))
+            connection = cups.Connection(CUPS_HOST, CUPS_PORT)
+            _logger.debug('Connection to CUPS successfull')
+        except:
+            raise Warning(
+                _("Failed to connect to the CUPS server on %s:%s. "
+                    "Check that the CUPS server is running and that "
+                    "you can reach it from the Odoo server.")
+                % (CUPS_HOST, CUPS_PORT))
+
+        options = self.print_options(
+            cr, uid, ids, report, format, copies, context=context)
+
+        _logger.debug(
+            'Sending job to CUPS printer %s on %s'
+            % (printer.system_name, CUPS_HOST))
+        connection.printFile(printer.system_name,
+                             file_name,
+                             file_name,
+                             options=options)
+        _logger.info("Printing job: '%s' on %s" % (file_name, CUPS_HOST))
+        return True
 
     def set_default(self, cr, uid, ids, context):
         if not ids:

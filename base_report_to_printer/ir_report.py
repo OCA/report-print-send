@@ -29,6 +29,10 @@ import logging
 import cups
 
 from openerp.osv import orm, fields
+from openerp.tools.config import config
+
+CUPS_HOST = config.get('cups_host', 'localhost')
+CUPS_PORT = int(config.get('cups_port', 631))  # config.get returns a string
 
 
 class report_xml(orm.Model):
@@ -59,7 +63,7 @@ class report_xml(orm.Model):
                 printer_system_name = printer
             else:
                 printer_system_name = printer.system_name
-            connection = cups.Connection()
+            connection = cups.Connection(CUPS_HOST, CUPS_PORT)
 
             options = self.set_print_options(cr, uid, report_id, format,
                                              context=context)

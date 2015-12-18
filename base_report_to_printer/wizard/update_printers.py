@@ -24,6 +24,10 @@
 import cups
 
 from openerp.osv import orm
+from openerp.tools.config import config
+
+CUPS_HOST = config.get('cups_host', 'localhost')
+CUPS_PORT = int(config.get('cups_port', 631))  # config.get returns a string
 
 
 class printing_printer_update_wizard(orm.TransientModel):
@@ -36,7 +40,7 @@ class printing_printer_update_wizard(orm.TransientModel):
         # Update Printers
         printer_obj = self.pool['printing.printer']
         try:
-            connection = cups.Connection()
+            connection = cups.Connection(CUPS_HOST, CUPS_PORT)
             printers = connection.getPrinters()
         except:
             return {}
