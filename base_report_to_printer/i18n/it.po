@@ -3,13 +3,14 @@
 # * base_report_to_printer
 # 
 # Translators:
+# Paolo Valier, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: report-print-send (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-28 11:33+0000\n"
-"PO-Revision-Date: 2015-09-28 11:33+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2015-10-12 21:04+0000\n"
+"PO-Revision-Date: 2016-03-14 16:31+0000\n"
+"Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-report-print-send-7-0/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:res.users:0
 msgid "Preferences"
-msgstr ""
+msgstr "Preferenze"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
@@ -41,7 +42,7 @@ msgstr "Nome di sistema"
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
 msgid "Location"
-msgstr "Locazione"
+msgstr "Posizione"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_printer_form
@@ -52,7 +53,7 @@ msgstr "Stampanti"
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Print"
-msgstr ""
+msgstr "Stampa"
 
 #. module: base_report_to_printer
 #: field:res.users,printing_action:0
@@ -67,7 +68,7 @@ msgstr "Tipo"
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
 msgid "Model"
-msgstr "Model"
+msgstr "Modello"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -89,7 +90,7 @@ msgstr "Stampante"
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utenti"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
@@ -100,7 +101,7 @@ msgstr "Azioni di stampa report"
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Specific actions per user"
-msgstr ""
+msgstr "Azioni specifiche per utente"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
@@ -125,7 +126,7 @@ msgstr "Stato"
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
 msgid "Show Printers"
-msgstr ""
+msgstr "Mostra Stampanti"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
@@ -161,7 +162,7 @@ msgstr "URI"
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_reports
 msgid "Reports"
-msgstr ""
+msgstr "Report"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer_update_wizard
@@ -185,7 +186,7 @@ msgstr "Invia alla stampante"
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_main
 #: selection:printing.printer,status:0 view:res.users:0
 msgid "Printing"
-msgstr "Stampa"
+msgstr "In stampa"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -231,7 +232,7 @@ msgstr "Annulla"
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.res_groups_printingprintoperator0
 msgid "Printing / Print Operator"
-msgstr ""
+msgstr "In stampa / Operatore di stampa"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/printing.py:217
