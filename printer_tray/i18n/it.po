@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: report-print-send (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-12 21:04+0000\n"
-"PO-Revision-Date: 2016-03-14 16:33+0000\n"
+"PO-Revision-Date: 2016-05-01 08:54+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-report-print-send-7-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgstr "Utenti"
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr ""
+msgstr "ir.actions.report.xml"
 
 #. module: printer_tray
 #: field:ir.actions.report.xml,printer_tray_id:0
