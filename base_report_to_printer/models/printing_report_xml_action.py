@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
+# Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
+# Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
+# Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
+# Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from openerp import models, fields, api
+
+from .printing_action import _available_action_types
+
+
+class PrintingReportXmlAction(models.Model):
+    _name = 'printing.report.xml.action'
+    _description = 'Printing Report Printing Actions'
+
+    report_id = fields.Many2one(comodel_name='ir.actions.report.xml',
+                                string='Report',
+                                required=True,
+                                ondelete='cascade')
+    user_id = fields.Many2one(comodel_name='res.users',
+                              string='User',
+                              required=True,
+                              ondelete='cascade')
+    action = fields.Selection(
+        lambda s: _available_action_types(s),
+        required=True,
+    )
+    printer_id = fields.Many2one(comodel_name='printing.printer',
+                                 string='Printer')
+
+    @api.multi
+    def behaviour(self):
+        if not self:
+            return {}
+        return {'action': self.action,
+                'printer': self.printer_id,
+                }
