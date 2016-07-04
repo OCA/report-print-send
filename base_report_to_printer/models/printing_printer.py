@@ -1,43 +1,30 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
-#    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
-#    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
-#    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
-#    Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
+# Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
+# Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
+# Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
+# Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 import logging
-_logger = logging.getLogger(__name__)
 
 import os
 from tempfile import mkstemp
-
-try:
-    import cups
-except ImportError:
-    _logger.debug('Cannot `import cups`.')
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 from openerp.tools.config import config
 
+try:
+    import cups
+except ImportError:
+    _logger = logging.getLogger(__name__)
+    _logger.debug('Cannot `import cups`.')
+
+
 CUPS_HOST = config.get('cups_host', 'localhost')
 CUPS_PORT = int(config.get('cups_port', 631))  # config.get returns a string
+_logger = logging.getLogger(__name__)
 
 
 class PrintingPrinter(models.Model):
@@ -46,7 +33,7 @@ class PrintingPrinter(models.Model):
     """
 
     _name = 'printing.printer'
-    _description = 'Printer'
+    _description = 'Printing Printers'
     _order = 'name'
 
     name = fields.Char(required=True, select=True)
@@ -175,22 +162,3 @@ class PrintingPrinter(models.Model):
     @api.multi
     def get_default(self):
         return self.search([('default', '=', True)], limit=1)
-
-#
-# Actions
-#
-
-
-def _available_action_types(self):
-    return [('server', 'Send to Printer'),
-            ('client', 'Send to Client'),
-            ('user_default', "Use user's defaults"),
-            ]
-
-
-class PrintingAction(models.Model):
-    _name = 'printing.action'
-    _description = 'Print Job Action'
-
-    name = fields.Char(required=True)
-    type = fields.Selection(_available_action_types, required=True)
