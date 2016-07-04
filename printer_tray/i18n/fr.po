@@ -78,7 +78,7 @@ msgid "System name"
 msgstr "Nom système"
 
 #. module: printer_tray
-#: view:printing.printer:printer_tray.view_printing_printer_form
+#: view:printing.printer:printer_tray.printing_printer_view_form
 msgid "Trays"
 msgstr "Bacs d'impression"
 
