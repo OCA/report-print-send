@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Launchpad (build 16996)\n"
 
 #. module: base_report_to_printer
-#: field:ir.actions.report.xml,property_printing_action:0
+#: field:ir.actions.report.xml,property_printing_action_id:0
 #: field:printing.report.xml.action,action:0
 msgid "Action"
 msgstr "Action"
@@ -70,7 +70,7 @@ msgstr "Imprimante par défaut"
 
 #. module: base_report_to_printer
 #. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:27
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:27
 #, python-format
 msgid "Document sent to the printer "
 msgstr "Document envoyé à l'imprimante "
@@ -82,7 +82,7 @@ msgstr "Erreur"
 
 #. module: base_report_to_printer
 #. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:30
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:30
 #, python-format
 msgid "Error when sending the document to the printer "
 msgstr "Erreur lors de l'envoi du document à l'imprimante "
@@ -139,12 +139,12 @@ msgid "No printer configured to print this report."
 msgstr "Pas d'imprimante configurée pour imprimer ce rapport."
 
 #. module: base_report_to_printer
-#: view:res.users:base_report_to_printer.view_printing_users_form
+#: view:res.users:base_report_to_printer.view_users_form
 msgid "Preferences"
 msgstr "Préférences"
 
 #. module: base_report_to_printer
-#: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
+#: view:ir.actions.report.xml:base_report_to_printer.act_report_xml_view
 msgid "Print"
 msgstr "Imprimer"
 
@@ -161,22 +161,22 @@ msgid "Printer"
 msgstr "Imprimante"
 
 #. module: base_report_to_printer
-#: model:ir.ui.menu,name:base_report_to_printer.menu_printing_printer_form
-#: view:printing.printer:base_report_to_printer.view_printing_printer_form
-#: view:printing.printer:base_report_to_printer.view_printing_printer_search
-#: view:printing.printer:base_report_to_printer.view_printing_printer_tree
+#: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
+#: view:printing.printer:base_report_to_printer.printing_printer_view_form
+#: view:printing.printer:base_report_to_printer.printing_printer_view_search
+#: view:printing.printer:base_report_to_printer.printing_printer_view_tree
 msgid "Printers"
 msgstr "Imprimantes"
 
 #. module: base_report_to_printer
-#: model:ir.ui.menu,name:base_report_to_printer.menu_printing_main
+#: model:ir.ui.menu,name:base_report_to_printer.printing_menu
 #: selection:printing.printer,status:0
-#: view:res.users:base_report_to_printer.view_printing_users_prefs
+#: view:res.users:base_report_to_printer.view_users_form_simple_modif
 msgid "Printing"
 msgstr "Impression en cours"
 
 #. module: base_report_to_printer
-#: model:res.groups,name:base_report_to_printer.res_groups_printingprintoperator0
+#: model:res.groups,name:base_report_to_printer.printing_group_manager
 msgid "Printing / Print Operator"
 msgstr "Opérateur d'impression"
 
@@ -187,8 +187,8 @@ msgstr "Action d'impression"
 
 #. module: base_report_to_printer
 #. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:26
-#: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:29
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:26
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:29
 #: model:ir.model,name:base_report_to_printer.model_report
 #: field:printing.report.xml.action,report_id:0
 #, python-format
@@ -196,19 +196,19 @@ msgid "Report"
 msgstr "Rapport"
 
 #. module: base_report_to_printer
-#: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
-#: view:printing.report.xml.action:base_report_to_printer.printing_report_xml_action_form
-#: view:printing.report.xml.action:base_report_to_printer.printing_report_xml_action_tree
+#: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action_view_form
+#: view:printing.report.xml.action:base_report_to_printer.printing_report_xml_action_view_form
+#: view:printing.report.xml.action:base_report_to_printer.printing_report_xml_action_view_tree
 msgid "Report Printing Actions"
 msgstr "Actions d'impression de rapports"
 
 #. module: base_report_to_printer
-#: model:ir.ui.menu,name:base_report_to_printer.menu_printing_reports
+#: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
 msgstr "Rapport"
 
 #. module: base_report_to_printer
-#: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
+#: view:ir.actions.report.xml:base_report_to_printer.act_report_xml_view
 msgid "Security"
 msgstr "Sécurité"
 
@@ -218,17 +218,17 @@ msgid "Server Error"
 msgstr "Erreur serveur"
 
 #. module: base_report_to_printer
-#: view:printing.printer:base_report_to_printer.view_printing_printer_form
+#: view:printing.printer:base_report_to_printer.printing_printer_view_form
 msgid "Set Default"
 msgstr "Définir par défaut"
 
 #. module: base_report_to_printer
-#: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
+#: model:ir.actions.act_window,name:base_report_to_printer.printing_printer_action
 msgid "Show Printers"
 msgstr "Afficher les imprimantes"
 
 #. module: base_report_to_printer
-#: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
+#: view:ir.actions.report.xml:base_report_to_printer.act_report_xml_view
 msgid "Specific actions per user"
 msgstr "Action spécifique par utilisateur"
 
