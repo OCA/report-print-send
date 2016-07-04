@@ -1,26 +1,10 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
-#    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
-#    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
-#    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
-#    Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
+# Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
+# Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
+# Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
+# Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import openerp
 
@@ -61,9 +45,11 @@ def exp_report_get(db, uid, report_id):
                 action = data['action']
                 printer = data['printer']
                 if action != 'client':
-                    if (self_reports and self_reports.get(report_id)
-                            and self_reports[report_id].get('result')
-                            and self_reports[report_id].get('format')):
+                    if all(self_reports,
+                           self_reports.get(report_id),
+                           self_reports[report_id].get('result'),
+                           self_reports[report_id].get('format')
+                           ):
                         printer.print_document(report,
                                                self_reports
                                                [report_id]['result'],
