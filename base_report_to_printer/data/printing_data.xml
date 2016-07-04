@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
   <data noupdate="1">
     <!-- printing.action -->
     <record model="printing.action" id="printing_action_1">
@@ -11,9 +11,9 @@
       <field name="type">client</field>
     </record>
     <!-- properties -->
-    <record forcecreate="True" id="property_printing_action" model="ir.property">
-      <field name="name">property_printing_action</field>
-      <field name="fields_id" search="[('model','=','ir.actions.report.xml'),('name','=','property_printing_action')]"/>
+    <record forcecreate="True" id="property_printing_action_id" model="ir.property">
+      <field name="name">property_printing_action_id</field>
+      <field name="fields_id" search="[('model','=','ir.actions.report.xml'),('name','=','property_printing_action_id')]"/>
       <field name="value" eval="'printing.action,'+str(printing_action_2)"/>
     </record>
 
@@ -31,4 +31,4 @@
     </record>
 
   </data>
-</openerp>
+</odoo>
