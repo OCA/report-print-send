@@ -1,48 +1,33 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
-#    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
-#    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
-#    Copyright (C) 2014 Camptocamp SA (<http://www.camptocamp.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
+# Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
+# Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
+# Copyright (C) 2014 Camptocamp (<http://www.camptocamp.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-_logger = logging.getLogger(__name__)
+
+from openerp.exceptions import UserError
+from openerp import models, api, _
+
+from ..models.printing_printer import CUPS_HOST, CUPS_PORT
 
 try:
     import cups
 except ImportError:
+    _logger = logging.getLogger(__name__)
     _logger.debug('Cannot `import cups`.')
 
-from openerp.exceptions import Warning
-from openerp import models, api, _
-from openerp.tools.config import config
 
-CUPS_HOST = config.get('cups_host', 'localhost')
-CUPS_PORT = int(config.get('cups_port', 631))
+_logger = logging.getLogger(__name__)
 
 
 class PrintingPrinterUpdateWizard(models.TransientModel):
     _name = 'printing.printer.update.wizard'
+    _description = 'Printing Printer Update Wizard'
 
-    @api.multi
+    @api.model
     def action_ok(self):
-        self.ensure_one()
         # Update Printers
         printer_obj = self.env['printing.printer']
         try:
@@ -51,7 +36,7 @@ class PrintingPrinterUpdateWizard(models.TransientModel):
             printers = connection.getPrinters()
             _logger.info('Printers found: %s' % ','.join(printers.keys()))
         except:
-            raise Warning(
+            raise UserError(
                 _('Could not get the list of printers from the CUPS server '
                     '(%s:%s)') % (CUPS_HOST, CUPS_PORT))
 
@@ -71,7 +56,7 @@ class PrintingPrinterUpdateWizard(models.TransientModel):
                 'location': printer.get('printer-location', False),
                 'uri': printer.get('device-uri', False),
             }
-            self.env['printing.printer'].create(values)
+            printer_obj.create(values)
             _logger.info(
                 'Created new printer %s with URI %s'
                 % (values['name'], values['uri']))
