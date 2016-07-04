@@ -1,48 +1,33 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
-#    Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
-#    Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
-#    Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
-#    Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
+# Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
+# Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
+# Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
+# Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 {
     'name': "Report to printer",
-    'version': '8.0.0.1.2',
+    'version': '9.0.1.0.0',
     'category': 'Generic Modules/Base',
     'author': "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
-              "Odoo Community Association (OCA)",
+              " LasLabs, Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    "depends": ['base',
-                'report',
-                ],
+    "depends": ['report'],
     'data': [
+        'data/printing_data.xml',
         'security/security.xml',
-        'printing_data.xml',
-        'printing_view.xml',
-        'base_report_to_printer.xml',
-        'wizard/update_printers.xml',
+        'views/assets.xml',
+        'views/printing_printer_view.xml',
+        'views/printing_report_view.xml',
+        'views/res_users_view.xml',
+        'views/ir_actions_report_xml_view.xml',
+        'wizards/printing_printer_update_wizard_view.xml',
     ],
-    'installable': False,
-    'auto_install': False,
+    'installable': True,
     'application': True,
     'external_dependencies': {
-        'python': ['cups']
-        }
+        'python': ['cups'],
+    },
 }
