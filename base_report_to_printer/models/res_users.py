@@ -21,7 +21,11 @@ class ResUsers(models.Model):
                                           string='Default Printer')
 
     @api.model
+    def _available_action_types(self):
+        return _available_action_types(self)
+
+    @api.model
     def _user_available_action_types(self):
         return [(code, string) for code, string
-                in _available_action_types(self)
+                in self._available_action_types()
                 if code != 'user_default']
