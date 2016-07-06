@@ -26,9 +26,8 @@ class PrintingPrinterUpdateWizard(models.TransientModel):
     _name = 'printing.printer.update.wizard'
     _description = 'Printing Printer Update Wizard'
 
-    @api.multi
+    @api.model
     def action_ok(self):
-        self.ensure_one()
         # Update Printers
         printer_obj = self.env['printing.printer']
         try:
@@ -57,7 +56,7 @@ class PrintingPrinterUpdateWizard(models.TransientModel):
                 'location': printer.get('printer-location', False),
                 'uri': printer.get('device-uri', False),
             }
-            self.env['printing.printer'].create(values)
+            printer_obj.create(values)
             _logger.info(
                 'Created new printer %s with URI %s'
                 % (values['name'], values['uri']))
