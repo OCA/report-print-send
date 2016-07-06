@@ -12,7 +12,7 @@ import os
 from tempfile import mkstemp
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 from openerp.tools.config import config
 
 try:
@@ -54,8 +54,10 @@ class PrintingPrinter(models.Model):
     uri = fields.Char(string='URI', readonly=True)
 
     @api.model
-    def update_printers_status(self):
-        printer_recs = self.search([])
+    def update_printers_status(self, domain=None):
+        if domain is None:
+            domain = []
+        printer_recs = self.search(domain)
         try:
             connection = cups.Connection(CUPS_HOST, CUPS_PORT)
             printers = connection.getPrinters()
@@ -131,7 +133,7 @@ class PrintingPrinter(models.Model):
             connection = cups.Connection(CUPS_HOST, CUPS_PORT)
             _logger.debug('Connection to CUPS successfull')
         except:
-            raise Warning(
+            raise UserError(
                 _("Failed to connect to the CUPS server on %s:%s. "
                     "Check that the CUPS server is running and that "
                     "you can reach it from the Odoo server.")
