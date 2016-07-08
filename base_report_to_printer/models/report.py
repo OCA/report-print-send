@@ -8,41 +8,37 @@ from openerp import models, exceptions, _, api
 class Report(models.Model):
     _inherit = 'report'
 
-    @api.v7
-    def print_document(self, cr, uid, ids, report_name, html=None,
-                       data=None, context=None):
+    @api.multi
+    def print_document(self, report_name, html=None, data=None):
         """ Print a document, do not return the document file """
+        res = []
+        context = self.env.context
         if context is None:
-            context = self.pool['res.users'].context_get(cr, uid)
+            context = self.env['res.users'].context_get()
         local_context = context.copy()
         local_context['must_skip_send_to_printer'] = True
-        document = self.get_pdf(cr, uid, ids, report_name,
-                                html=html, data=data, context=local_context)
-        report = self._get_report_from_name(cr, uid, report_name)
-        behaviour = report.behaviour()[report.id]
-        printer = behaviour['printer']
-        if not printer:
-            raise exceptions.Warning(
-                _('No printer configured to print this report.')
+        for rec_id in self.with_context(local_context):
+            document = rec_id.get_pdf(report_name, html=html, data=data)
+            report = self._get_report_from_name(report_name)
+            behaviour = report.behaviour()[report.id]
+            printer = behaviour['printer']
+            if not printer:
+                raise exceptions.Warning(
+                    _('No printer configured to print this report.')
+                )
+            res.append(
+                printer.print_document(report, document, report.report_type)
             )
-        return printer.with_context(context).print_document(
-            report, document, report.report_type)
+        return all(res)
 
-    @api.v8
-    def print_document(self, records, report_name, html=None, data=None):
-        return self._model.print_document(
-            self._cr, self._uid,
-            records.ids, report_name,
-            html=html, data=data, context=self._context)
-
-    def _can_print_report(self, cr, uid, ids, behaviour, printer, document,
-                          context=None):
+    @api.multi
+    def _can_print_report(self, behaviour, printer, document):
         """Predicate that decide if report can be sent to printer
 
         If you want to prevent `get_pdf` to send report you can set
         the `must_skip_send_to_printer` key to True in the context
         """
-        if context is not None and context.get('must_skip_send_to_printer'):
+        if self.env.context.get('must_skip_send_to_printer'):
             return False
         if behaviour['action'] == 'server' and printer and document:
             return True

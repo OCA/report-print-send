@@ -33,7 +33,7 @@ class PrintingPrinter(models.Model):
     """
 
     _name = 'printing.printer'
-    _description = 'Printing Printers'
+    _description = 'Printer'
     _order = 'name'
 
     name = fields.Char(required=True, select=True)
