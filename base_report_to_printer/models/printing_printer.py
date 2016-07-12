@@ -15,16 +15,18 @@ from openerp import models, fields, api, _
 from openerp.exceptions import UserError
 from openerp.tools.config import config
 
+
+_logger = logging.getLogger(__name__)
+
+
 try:
     import cups
 except ImportError:
-    _logger = logging.getLogger(__name__)
     _logger.debug('Cannot `import cups`.')
 
 
 CUPS_HOST = config.get('cups_host', 'localhost')
 CUPS_PORT = int(config.get('cups_port', 631))  # config.get returns a string
-_logger = logging.getLogger(__name__)
 
 
 class PrintingPrinter(models.Model):
