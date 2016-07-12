@@ -61,9 +61,9 @@ def exp_report_get(db, uid, report_id):
                 action = data['action']
                 printer = data['printer']
                 if action != 'client':
-                    if (self_reports and self_reports.get(report_id)
-                            and self_reports[report_id].get('result')
-                            and self_reports[report_id].get('format')):
+                    if (self_reports and self_reports.get(report_id) and
+                            self_reports[report_id].get('result') and
+                            self_reports[report_id].get('format')):
                         printer.print_document(report,
                                                self_reports
                                                [report_id]['result'],
