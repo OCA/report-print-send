@@ -7,7 +7,7 @@
 
 import logging
 
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 from openerp import models, api, _
 
 from ..models.printing_printer import CUPS_HOST, CUPS_PORT
@@ -36,7 +36,7 @@ class PrintingPrinterUpdateWizard(models.TransientModel):
             printers = connection.getPrinters()
             _logger.info('Printers found: %s' % ','.join(printers.keys()))
         except:
-            raise Warning(
+            raise UserError(
                 _('Could not get the list of printers from the CUPS server '
                     '(%s:%s)') % (CUPS_HOST, CUPS_PORT))
 
