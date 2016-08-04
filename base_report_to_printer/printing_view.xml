@@ -2,7 +2,7 @@
 <openerp>
   <data>
 
-    <menuitem name="Printing" id="menu_printing_main" parent="base.menu_administration" groups="res_groups_printingprintoperator0"/>
+    <menuitem name="Printing" id="menu_printing_main" parent="base.menu_custom" groups="res_groups_printingprintoperator0"/>
 
     <record model="ir.ui.view" id="view_printing_printer_form">
       <field name="name">printing.printer.form</field>
