@@ -80,7 +80,7 @@
       <field name="model">ir.actions.report.xml</field>
       <field name="inherit_id" ref="base.act_report_xml_view" />
       <field name="arch" type="xml">
-        <page string="Security" position="after">
+        <page position="after">
           <page string="Print">
             <group>
               <field name="property_printing_action"/>
