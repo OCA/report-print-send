@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-12 10:08+0000\n"
-"PO-Revision-Date: 2016-07-12 10:08+0000\n"
+"POT-Creation-Date: 2016-08-15 21:56+0000\n"
+"PO-Revision-Date: 2016-08-15 21:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
@@ -50,14 +50,14 @@ msgstr ""
 #: field:printing.printer.update.wizard,create_uid:0
 #: field:printing.report.xml.action,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: base_report_to_printer
 #: field:printing.action,create_date:0 field:printing.printer,create_date:0
 #: field:printing.printer.update.wizard,create_date:0
 #: field:printing.report.xml.action,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: base_report_to_printer
 #: field:printing.printer,default:0
@@ -74,7 +74,7 @@ msgstr "Stampante di default"
 #: field:printing.printer.update.wizard,display_name:0
 #: field:printing.report.xml.action,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nome da visualizzare"
 
 #. module: base_report_to_printer
 #. openerp-web
@@ -108,7 +108,7 @@ msgstr ""
 #: field:printing.printer.update.wizard,id:0
 #: field:printing.report.xml.action,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: base_report_to_printer
 #: field:printing.action,__last_update:0
@@ -116,21 +116,21 @@ msgstr ""
 #: field:printing.printer.update.wizard,__last_update:0
 #: field:printing.report.xml.action,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: base_report_to_printer
 #: field:printing.action,write_uid:0 field:printing.printer,write_uid:0
 #: field:printing.printer.update.wizard,write_uid:0
 #: field:printing.report.xml.action,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: base_report_to_printer
 #: field:printing.action,write_date:0 field:printing.printer,write_date:0
 #: field:printing.printer.update.wizard,write_date:0
 #: field:printing.report.xml.action,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
