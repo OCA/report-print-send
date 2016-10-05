@@ -25,7 +25,7 @@
         'views/ir_actions_report_xml_view.xml',
         'wizards/printing_printer_update_wizard_view.xml',
     ],
-    'installable': True,
+    'installable': False,
     'application': True,
     'external_dependencies': {
         'python': ['cups'],
