@@ -4,6 +4,7 @@
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
@@ -11,22 +12,10 @@ import logging
 import os
 from tempfile import mkstemp
 
-from openerp import models, fields, api, _
-from openerp.exceptions import UserError
-from openerp.tools.config import config
+from openerp import models, fields, api
 
 
 _logger = logging.getLogger(__name__)
-
-
-try:
-    import cups
-except ImportError:
-    _logger.debug('Cannot `import cups`.')
-
-
-CUPS_HOST = config.get('cups_host', 'localhost')
-CUPS_PORT = int(config.get('cups_port', 631))  # config.get returns a string
 
 
 class PrintingPrinter(models.Model):
@@ -39,6 +28,12 @@ class PrintingPrinter(models.Model):
     _order = 'name'
 
     name = fields.Char(required=True, index=True)
+    server_id = fields.Many2one(
+        comodel_name='printing.server', string='Server', required=True,
+        help='Server used to access this printer.')
+    job_ids = fields.One2many(
+        comodel_name='printing.job', inverse_name='printer_id', string='Jobs',
+        help='Jobs printed on this printer.')
     system_name = fields.Char(required=True, index=True)
     default = fields.Boolean(readonly=True)
     status = fields.Selection([('unavailable', 'Unavailable'),
@@ -57,23 +52,13 @@ class PrintingPrinter(models.Model):
 
     @api.model
     def update_printers_status(self, domain=None):
+        _logger.warning(
+            'Deprecated : "printing.printer".update_printers_status has been '
+            'replaced by "printing.server".update_printers')
         if domain is None:
             domain = []
         printer_recs = self.search(domain)
-        try:
-            connection = cups.Connection(CUPS_HOST, CUPS_PORT)
-            printers = connection.getPrinters()
-        except:
-            printer_recs.write({'status': 'server-error'})
-        else:
-            for printer in printer_recs:
-                cups_printer = printers.get(printer.system_name)
-                if cups_printer:
-                    printer.update_from_cups(connection, cups_printer)
-                else:
-                    # not in cups list
-                    printer.status = 'unavailable'
-        return True
+        return printer_recs.mapped('server_id').update_printers()
 
     @api.multi
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
@@ -83,10 +68,13 @@ class PrintingPrinter(models.Model):
             5: 'error'
         }
         vals = {
+            'name': cups_printer['printer-info'],
             'model': cups_printer.get('printer-make-and-model', False),
             'location': cups_printer.get('printer-location', False),
             'uri': cups_printer.get('device-uri', False),
-            'status': mapping.get(cups_printer['printer-state'], 'unknown'),
+            'status': mapping.get(cups_printer.get(
+                'printer-state'), 'unknown'),
+            'status_message': cups_printer.get('printer-state-message', ''),
         }
         return vals
 
@@ -99,10 +87,11 @@ class PrintingPrinter(models.Model):
         :param cups_printer: dict of information returned by CUPS for the
                              current printer
         """
+        _logger.warning(
+            'Deprecated : "printing.printer".update_from_cups has been '
+            'replaced by "printing.server".update_printers')
         self.ensure_one()
-        vals = self._prepare_update_from_cups(cups_connection, cups_printer)
-        if any(self[name] != value for name, value in vals.iteritems()):
-            self.write(vals)
+        return self.server_id.update_printers()
 
     @api.multi
     def print_options(self, report, format, copies=1):
@@ -128,29 +117,20 @@ class PrintingPrinter(models.Model):
         finally:
             os.close(fd)
 
-        try:
-            _logger.debug(
-                'Starting to connect to CUPS on %s:%s'
-                % (CUPS_HOST, CUPS_PORT))
-            connection = cups.Connection(CUPS_HOST, CUPS_PORT)
-            _logger.debug('Connection to CUPS successfull')
-        except:
-            raise UserError(
-                _("Failed to connect to the CUPS server on %s:%s. "
-                    "Check that the CUPS server is running and that "
-                    "you can reach it from the Odoo server.")
-                % (CUPS_HOST, CUPS_PORT))
-
+        connection = self.server_id._open_connection(raise_on_error=True)
         options = self.print_options(report, format, copies)
 
         _logger.debug(
             'Sending job to CUPS printer %s on %s'
-            % (self.system_name, CUPS_HOST))
+            % (self.system_name, self.server_id.address))
         connection.printFile(self.system_name,
                              file_name,
                              file_name,
                              options=options)
-        _logger.info("Printing job: '%s' on %s" % (file_name, CUPS_HOST))
+        _logger.info("Printing job: '%s' on %s" % (
+            file_name,
+            self.server_id.address,
+        ))
         return True
 
     @api.multi

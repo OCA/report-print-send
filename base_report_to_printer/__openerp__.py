@@ -20,6 +20,8 @@
         'security/security.xml',
         'views/assets.xml',
         'views/printing_printer_view.xml',
+        'views/printing_server.xml',
+        'views/printing_job.xml',
         'views/printing_report_view.xml',
         'views/res_users_view.xml',
         'views/ir_actions_report_xml_view.xml',

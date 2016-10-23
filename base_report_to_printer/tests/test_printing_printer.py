@@ -8,12 +8,9 @@ import mock
 from openerp.exceptions import UserError
 from openerp.tests.common import TransactionCase
 
-from openerp.addons.base_report_to_printer.models.printing_printer import (
-    CUPS_HOST,
-    CUPS_PORT,
-)
 
 model = 'openerp.addons.base_report_to_printer.models.printing_printer'
+server_model = 'openerp.addons.base_report_to_printer.models.printing_server'
 
 
 class TestPrintingPrinter(TransactionCase):
@@ -21,8 +18,11 @@ class TestPrintingPrinter(TransactionCase):
     def setUp(self):
         super(TestPrintingPrinter, self).setUp()
         self.Model = self.env['printing.printer']
+        self.ServerModel = self.env['printing.server']
+        self.server = self.env['printing.server'].create({})
         self.printer_vals = {
             'name': 'Printer',
+            'server_id': self.server.id,
             'system_name': 'Sys Name',
             'default': True,
             'status': 'unknown',
@@ -35,7 +35,7 @@ class TestPrintingPrinter(TransactionCase):
     def new_record(self):
         return self.Model.create(self.printer_vals)
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers_status_error(self, cups):
         """ It should catch any exception from CUPS and update status """
         cups.Connection.side_effect = Exception
@@ -45,39 +45,37 @@ class TestPrintingPrinter(TransactionCase):
             'server-error', rec_id.status,
         )
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers_status_inits_cups(self, cups):
         """ It should init CUPS connection """
         self.new_record()
         self.Model.update_printers_status()
         cups.Connection.assert_called_once_with(
-            CUPS_HOST, CUPS_PORT,
+            host=self.server.address, port=self.server.port,
         )
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers_status_gets_all_printers(self, cups):
         """ It should get all printers from CUPS server """
         self.new_record()
         self.Model.update_printers_status()
         cups.Connection().getPrinters.assert_called_once_with()
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers_status_gets_printer(self, cups):
         """ It should get printer from CUPS by system_name """
-        rec_id = self.new_record()
+        self.new_record()
         self.Model.update_printers_status()
-        cups.Connection().getPrinters().get.assert_called_once_with(
-            rec_id.system_name,
-        )
+        cups.Connection().getPrinters.assert_called_once_with()
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers_status_search(self, cups):
         """ It should search all when no domain """
         with mock.patch.object(self.Model, 'search') as search:
             self.Model.update_printers_status()
             search.assert_called_once_with([])
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers_status_search_domain(self, cups):
         """ It should use specific domain for search """
         with mock.patch.object(self.Model, 'search') as search:
@@ -85,19 +83,14 @@ class TestPrintingPrinter(TransactionCase):
             self.Model.update_printers_status(expect)
             search.assert_called_once_with(expect)
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers_status_update_printer(self, cups):
         """ It should update from CUPS when printer identified """
-        with mock.patch.object(self.Model, 'search') as search:
-            printer_mk = mock.MagicMock()
-            search.return_value = [printer_mk]
-            self.Model.update_printers_status()
-            printer_mk.update_from_cups.assert_called_once_with(
-                cups.Connection(),
-                cups.Connection().getPrinters().get(),
-            )
+        printer = self.new_record()
+        printer.update_from_cups(None, None)
+        cups.Connection().getPrinters.assert_called_once_with()
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers_status_update_unavailable(self, cups):
         """ It should update status when printer is unavailable """
         rec_id = self.new_record()
@@ -120,7 +113,7 @@ class TestPrintingPrinter(TransactionCase):
             'copies': '2',
         })
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_print_report(self, cups):
         """ It should print a report through CUPS """
         fd, file_name = tempfile.mkstemp()
@@ -134,7 +127,7 @@ class TestPrintingPrinter(TransactionCase):
                 file_name,
                 options={})
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_print_report_error(self, cups):
         """ It should print a report through CUPS """
         cups.Connection.side_effect = Exception
