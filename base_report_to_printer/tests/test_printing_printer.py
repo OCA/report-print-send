@@ -2,15 +2,16 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import tempfile
 import mock
 
+from openerp.exceptions import UserError
 from openerp.tests.common import TransactionCase
 
 from openerp.addons.base_report_to_printer.models.printing_printer import (
     CUPS_HOST,
     CUPS_PORT,
 )
-
 
 model = 'openerp.addons.base_report_to_printer.models.printing_printer'
 
@@ -105,3 +106,54 @@ class TestPrintingPrinter(TransactionCase):
         self.assertEqual(
             'unavailable', rec_id.status,
         )
+
+    def test_printing_options(self):
+        """ It should generate the right options dictionnary """
+        self.assertEquals(self.Model.print_options('report', 'raw'), {
+            'raw': 'True',
+        })
+        self.assertEquals(self.Model.print_options('report', 'pdf', 2), {
+            'copies': '2',
+        })
+        self.assertEquals(self.Model.print_options('report', 'raw', 2), {
+            'raw': 'True',
+            'copies': '2',
+        })
+
+    @mock.patch('%s.cups' % model)
+    def test_print_report(self, cups):
+        """ It should print a report through CUPS """
+        fd, file_name = tempfile.mkstemp()
+        with mock.patch('%s.mkstemp' % model) as mkstemp:
+            mkstemp.return_value = fd, file_name
+            printer = self.new_record()
+            printer.print_document('report_name', 'content to print', 'pdf')
+            cups.Connection().printFile.assert_called_once_with(
+                printer.system_name,
+                file_name,
+                file_name,
+                options={})
+
+    @mock.patch('%s.cups' % model)
+    def test_print_report_error(self, cups):
+        """ It should print a report through CUPS """
+        cups.Connection.side_effect = Exception
+        fd, file_name = tempfile.mkstemp()
+        with mock.patch('%s.mkstemp' % model) as mkstemp:
+            mkstemp.return_value = fd, file_name
+            printer = self.new_record()
+            with self.assertRaises(UserError):
+                printer.print_document(
+                    'report_name', 'content to print', 'pdf')
+
+    def test_set_default(self):
+        """ It should set a single record as default """
+        printer = self.new_record()
+        self.assertTrue(printer.default)
+        other_printer = self.new_record()
+        other_printer.set_default()
+        self.assertFalse(printer.default)
+        self.assertTrue(other_printer.default)
+        # Check that calling the method on an empty recordset does nothing
+        self.Model.set_default()
+        self.assertEquals(other_printer, self.Model.get_default())
