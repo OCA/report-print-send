@@ -146,3 +146,42 @@ class PrintingPrinter(models.Model):
     @api.multi
     def get_default(self):
         return self.search([('default', '=', True)], limit=1)
+
+    @api.multi
+    def action_cancel_all_jobs(self):
+        self.ensure_one()
+        return self.cancel_all_jobs()
+
+    @api.multi
+    def cancel_all_jobs(self, purge_jobs=False):
+        for printer in self:
+            connection = printer.server_id._open_connection()
+            connection.cancelAllJobs(
+                name=printer.system_name, purge_jobs=purge_jobs)
+
+        # Update jobs' states into Odoo
+        self.mapped('server_id').update_jobs(which='completed')
+
+        return True
+
+    @api.multi
+    def enable(self):
+        for printer in self:
+            connection = printer.server_id._open_connection()
+            connection.enablePrinter(printer.system_name)
+
+        # Update printers' stats into Odoo
+        self.mapped('server_id').update_printers()
+
+        return True
+
+    @api.multi
+    def disable(self):
+        for printer in self:
+            connection = printer.server_id._open_connection()
+            connection.disablePrinter(printer.system_name)
+
+        # Update printers' stats into Odoo
+        self.mapped('server_id').update_printers()
+
+        return True

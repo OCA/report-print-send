@@ -150,3 +150,39 @@ class TestPrintingPrinter(TransactionCase):
         # Check that calling the method on an empty recordset does nothing
         self.Model.set_default()
         self.assertEquals(other_printer, self.Model.get_default())
+
+    @mock.patch('%s.cups' % server_model)
+    def test_cancel_all_jobs(self, cups):
+        """ It should cancel all jobs """
+        printer = self.new_record()
+        printer.action_cancel_all_jobs()
+        cups.Connection().cancelAllJobs.assert_called_once_with(
+            name=printer.system_name,
+            purge_jobs=False,
+        )
+
+    @mock.patch('%s.cups' % server_model)
+    def test_cancel_and_purge_all_jobs(self, cups):
+        """ It should cancel all jobs """
+        printer = self.new_record()
+        printer.cancel_all_jobs(purge_jobs=True)
+        cups.Connection().cancelAllJobs.assert_called_once_with(
+            name=printer.system_name,
+            purge_jobs=True,
+        )
+
+    @mock.patch('%s.cups' % server_model)
+    def test_enable_printer(self, cups):
+        """ It should enable the printer """
+        printer = self.new_record()
+        printer.enable()
+        cups.Connection().enablePrinter.assert_called_once_with(
+            printer.system_name)
+
+    @mock.patch('%s.cups' % server_model)
+    def test_disable_printer(self, cups):
+        """ It should disable the printer """
+        printer = self.new_record()
+        printer.disable()
+        cups.Connection().disablePrinter.assert_called_once_with(
+            printer.system_name)
