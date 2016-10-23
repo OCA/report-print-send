@@ -139,6 +139,27 @@ class TestPrintingPrinter(TransactionCase):
                 printer.print_document(
                     'report_name', 'content to print', 'pdf')
 
+    @mock.patch('%s.cups' % server_model)
+    def test_print_file(self, cups):
+        """ It should print a file through CUPS """
+        file_name = 'file_name'
+        printer = self.new_record()
+        printer.print_file(file_name, 'pdf')
+        cups.Connection().printFile.assert_called_once_with(
+            printer.system_name,
+            file_name,
+            file_name,
+            options={})
+
+    @mock.patch('%s.cups' % server_model)
+    def test_print_file_error(self, cups):
+        """ It should print a file through CUPS """
+        cups.Connection.side_effect = Exception
+        file_name = 'file_name'
+        printer = self.new_record()
+        with self.assertRaises(UserError):
+            printer.print_file(file_name)
+
     def test_set_default(self):
         """ It should set a single record as default """
         printer = self.new_record()

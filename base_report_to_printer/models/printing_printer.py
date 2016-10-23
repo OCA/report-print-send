@@ -94,7 +94,7 @@ class PrintingPrinter(models.Model):
         return self.server_id.update_printers()
 
     @api.multi
-    def print_options(self, report, format, copies=1):
+    def print_options(self, report=None, format=None, copies=1):
         """ Hook to set print options """
         options = {}
         if format == 'raw':
@@ -117,8 +117,16 @@ class PrintingPrinter(models.Model):
         finally:
             os.close(fd)
 
+        return self.print_file(file_name, report=report, copies=copies)
+
+    @api.multi
+    def print_file(self, file_name, report=None, copies=1):
+        """ Print a file """
+        self.ensure_one()
+
         connection = self.server_id._open_connection(raise_on_error=True)
-        options = self.print_options(report, format, copies)
+        options = self.print_options(
+            report=report, format=format, copies=copies)
 
         _logger.debug(
             'Sending job to CUPS printer %s on %s'
