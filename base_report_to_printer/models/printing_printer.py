@@ -38,8 +38,8 @@ class PrintingPrinter(models.Model):
     _description = 'Printer'
     _order = 'name'
 
-    name = fields.Char(required=True, select=True)
-    system_name = fields.Char(required=True, select=True)
+    name = fields.Char(required=True, index=True)
+    system_name = fields.Char(required=True, index=True)
     default = fields.Boolean(readonly=True)
     status = fields.Selection([('unavailable', 'Unavailable'),
                                ('printing', 'Printing'),
