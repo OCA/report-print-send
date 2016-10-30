@@ -70,7 +70,6 @@
     <field name="res_model">printing.printer</field>
     <field name="view_type">form</field>
     <field name="view_mode">tree,form</field>
-    <field name="auto_refresh">20</field>
   </record>
 
   <menuitem name="Printers"
