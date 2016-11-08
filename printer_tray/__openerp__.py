@@ -34,7 +34,9 @@
      'report_xml_action_view.xml',
      'security/ir.model.access.csv',
      ],
- 'test': [],
+ 'external_dependencies': {
+     'python': ['cups'],
+ },
  'installable': True,
  'auto_install': False,
  'application': True,

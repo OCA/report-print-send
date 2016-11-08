@@ -18,11 +18,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import cups
+
 import errno
+import logging
 import os
 
 from openerp import models, fields, api
+
+_logger = logging.getLogger(__name__)
+
+try:
+    import cups
+except ImportError:
+    _logger.debug('Cannot `import cups`.')
 
 
 class Printer(models.Model):
