@@ -18,15 +18,15 @@
   </record>
 
   <record forcecreate="True" id="ir_cron_update_printers" model="ir.cron">
-    <field name="name">Update Printers Status</field>
+    <field name="name">Update Printers Jobs</field>
     <field eval="True" name="active"/>
     <field name="user_id" ref="base.user_root"/>
     <field name="interval_number">1</field>
     <field name="interval_type">minutes</field>
     <field name="numbercall">-1</field>
     <field eval="False" name="doall"/>
-    <field eval="'printing.printer'" name="model"/>
-    <field eval="'update_printers_status'" name="function"/>
+    <field eval="'printing.server'" name="model"/>
+    <field eval="'action_update_jobs'" name="function"/>
     <field eval="'()'" name="args"/>
   </record>
 

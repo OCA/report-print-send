@@ -23,6 +23,6 @@
       <field name="view_mode">form</field>
       <field name="target">new</field>
     </record>
-    <menuitem action="action_printer_update_wizard" id="menu_printer_update_wizard" parent="printing_menu"/>
+    <menuitem action="action_printer_update_wizard" sequence="40" id="menu_printer_update_wizard" parent="printing_menu"/>
   </data>
 </openerp>

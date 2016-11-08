@@ -14,9 +14,6 @@ class TestIrActionsReportXml(TransactionCase):
         self.Model = self.env['ir.actions.report.xml']
         self.vals = {}
 
-    def new_record(self):
-        return self.Model.create(self.vals)
-
     def test_print_action_for_report_name_gets_report(self):
         """ It should get report by name """
         with mock.patch.object(self.Model, 'env') as mk:
