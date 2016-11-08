@@ -7,7 +7,8 @@ import tempfile
 from openerp.tests.common import TransactionCase
 
 
-model = 'openerp.addons.base_report_to_printer.printing'
+model = 'openerp.addons.base_report_to_printer.models.printing_printer'
+server_model = 'openerp.addons.base_report_to_printer.models.printing_server'
 
 ppd_header = '*PPD-Adobe: "4.3"'
 ppd_input_slot_header = """
@@ -36,8 +37,11 @@ class TestPrintingPrinter(TransactionCase):
     def setUp(self):
         super(TestPrintingPrinter, self).setUp()
         self.Model = self.env['printing.printer']
+        self.ServerModel = self.env['printing.server']
+        self.server = self.env['printing.server'].create({})
         self.printer = self.env['printing.printer'].create({
             'name': 'Printer',
+            'server_id': self.server.id,
             'system_name': 'Sys Name',
             'default': True,
             'status': 'unknown',
@@ -152,7 +156,7 @@ class TestPrintingPrinter(TransactionCase):
             'InputSlot': 'Action tray',
         })
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_update_printers(self, cups):
         """
         Check that the update_printers method calls _prepare_update_from_cups
@@ -162,10 +166,10 @@ class TestPrintingPrinter(TransactionCase):
         with mock.patch.object(
             self.Model, '_prepare_update_from_cups'
         ) as prepare_update_from_cups:
-            self.Model.update_printers_status()
+            self.ServerModel.update_printers()
             prepare_update_from_cups.assert_called_once()
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups_no_ppd(self, cups):
         """
         Check that the tray_ids field has no value when no PPD is available
@@ -178,7 +182,7 @@ class TestPrintingPrinter(TransactionCase):
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertFalse('tray_ids' in vals)
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups_empty_ppd(self, cups):
         """
         Check that the tray_ids field has no value when the PPD file has
@@ -196,7 +200,7 @@ class TestPrintingPrinter(TransactionCase):
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertFalse('tray_ids' in vals)
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups(self, cups):
         """
         Check the return value when adding a single tray
@@ -212,7 +216,7 @@ class TestPrintingPrinter(TransactionCase):
             'system_name': 'Auto',
         })])
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups_with_multiple_trays(self, cups):
         """
         Check the return value when adding multiple trays at once
@@ -233,7 +237,7 @@ class TestPrintingPrinter(TransactionCase):
             'system_name': 'Tray1',
         })])
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups_already_known_trays(self, cups):
         """
         Check that calling the method twice doesn't create the trays multiple
@@ -255,7 +259,7 @@ class TestPrintingPrinter(TransactionCase):
             'system_name': 'Auto',
         })])
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups_unknown_trays(self, cups):
         """
         Check that trays which are not in the PPD file are removed from Odoo

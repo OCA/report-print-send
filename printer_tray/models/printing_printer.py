@@ -1,23 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Yannick Vaucher
-#    Copyright 2013 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import errno
 import logging
@@ -33,7 +16,7 @@ except ImportError:
     _logger.debug('Cannot `import cups`.')
 
 
-class Printer(models.Model):
+class PrintingPrinter(models.Model):
     _inherit = 'printing.printer'
 
     tray_ids = fields.One2many(comodel_name='printing.tray',
@@ -42,10 +25,12 @@ class Printer(models.Model):
 
     @api.multi
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
-        vals = super(Printer, self)._prepare_update_from_cups(cups_connection,
-                                                              cups_printer)
+        vals = super(PrintingPrinter, self)._prepare_update_from_cups(
+            cups_connection, cups_printer)
 
-        ppd_info = cups_connection.getPPD3(self.system_name)
+        printer_uri = cups_printer['printer-uri-supported']
+        printer_system_name = printer_uri[printer_uri.rfind('/') + 1:]
+        ppd_info = cups_connection.getPPD3(printer_system_name)
         ppd_path = ppd_info[2]
         if not ppd_path:
             return vals
@@ -85,7 +70,7 @@ class Printer(models.Model):
     def print_options(self, report, format, copies=1):
         """ Hook to define Tray """
         printing_act_obj = self.env['printing.report.xml.action']
-        options = super(Printer, self).print_options(report, format)
+        options = super(PrintingPrinter, self).print_options(report, format)
 
         # Retrieve user default values
         user = self.env.user
