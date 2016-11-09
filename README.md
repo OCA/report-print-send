@@ -18,7 +18,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 9.0.1.0.0 | Report to printer
+[base_report_to_printer](base_report_to_printer/) | 9.0.2.0.0 | Report to printer
 
 Unported addons
 ---------------
