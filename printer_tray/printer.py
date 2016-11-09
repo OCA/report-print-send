@@ -22,7 +22,7 @@ import cups
 import errno
 import os
 
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 class Printer(models.Model):
@@ -74,7 +74,7 @@ class Printer(models.Model):
         return vals
 
     @api.multi
-    def print_options(self, report, format):
+    def print_options(self, report, format, copies=1):
         """ Hook to define Tray """
         printing_act_obj = self.env['printing.report.xml.action']
         options = super(Printer, self).print_options(report, format)

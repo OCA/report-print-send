@@ -4,10 +4,10 @@
 
 import mock
 
-from openerp.tests.common import TransactionCase
-from openerp.exceptions import UserError
+from odoo.tests.common import TransactionCase
+from odoo.exceptions import UserError
 
-from openerp.addons.base_report_to_printer.models.printing_printer import (
+from odoo.addons.base_report_to_printer.models.printing_printer import (
     CUPS_HOST,
     CUPS_PORT,
 )

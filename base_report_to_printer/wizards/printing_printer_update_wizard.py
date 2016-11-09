@@ -7,8 +7,8 @@
 
 import logging
 
-from openerp.exceptions import UserError
-from openerp import models, api, _
+from odoo.exceptions import UserError
+from odoo import models, api, _
 
 from ..models.printing_printer import CUPS_HOST, CUPS_PORT
 
@@ -26,7 +26,7 @@ class PrintingPrinterUpdateWizard(models.TransientModel):
     _name = 'printing.printer.update.wizard'
     _description = 'Printing Printer Update Wizard'
 
-    @api.model
+    @api.multi
     def action_ok(self):
         # Update Printers
         printer_obj = self.env['printing.printer']
