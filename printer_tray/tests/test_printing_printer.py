@@ -2,13 +2,14 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import errno
 import mock
 import tempfile
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
-model = 'openerp.addons.base_report_to_printer.models.printing_printer'
-server_model = 'openerp.addons.base_report_to_printer.models.printing_server'
+model = 'odoo.addons.base_report_to_printer.models.printing_printer'
+server_model = 'odoo.addons.base_report_to_printer.models.printing_server'
 
 ppd_header = '*PPD-Adobe: "4.3"'
 ppd_input_slot_header = """
@@ -204,6 +205,47 @@ class TestPrintingPrinter(TransactionCase):
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertFalse('tray_ids' in vals)
+
+    @mock.patch('%s.cups' % server_model)
+    @mock.patch('os.unlink')
+    def test_prepare_update_from_cups_unlink_error(self, os_unlink, cups):
+        """
+        When OSError other than ENOENT is encountered, the exception is raised
+        """
+        # Break os.unlink
+        os_unlink.side_effect = OSError(errno.EIO, 'Error')
+
+        self.mock_cups_ppd(cups)
+
+        connection = cups.Connection()
+        cups_printer = connection.getPrinters()
+
+        with self.assertRaises(OSError):
+            self.printer._prepare_update_from_cups(connection, cups_printer)
+
+    @mock.patch('%s.cups' % server_model)
+    @mock.patch('os.unlink')
+    def test_prepare_update_from_cups_unlink_error_enoent(
+            self, os_unlink, cups):
+        """
+        When a ENOENT error is encountered, the file has already been unlinked
+
+        This is not an issue, as we were trying to delete the file.
+        The update can continue.
+        """
+        # Break os.unlink
+        os_unlink.side_effect = OSError(errno.ENOENT, 'Error')
+
+        self.mock_cups_ppd(cups)
+
+        connection = cups.Connection()
+        cups_printer = connection.getPrinters()
+
+        vals = self.printer._prepare_update_from_cups(connection, cups_printer)
+        self.assertEqual(vals['tray_ids'], [(0, 0, {
+            'name': 'Auto (Default)',
+            'system_name': 'Auto',
+        })])
 
     @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups(self, cups):
