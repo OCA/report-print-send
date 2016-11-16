@@ -4,7 +4,7 @@
 
 {
     'name': 'Report to printer - Paper tray selection',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Printer',
     'author': "Camptocamp, Odoo Community Association (OCA)",
     'maintainer': 'Camptocamp',

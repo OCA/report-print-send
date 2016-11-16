@@ -2,10 +2,10 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
-model = 'openerp.addons.base_report_to_printer.models.printing_server'
+model = 'odoo.addons.base_report_to_printer.models.printing_server'
 
 
 class TestPrintingTray(TransactionCase):

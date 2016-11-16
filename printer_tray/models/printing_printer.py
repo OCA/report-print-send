@@ -6,7 +6,7 @@ import errno
 import logging
 import os
 
-from openerp import models, fields, api
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -40,30 +40,33 @@ class PrintingPrinter(models.Model):
         try:
             os.unlink(ppd_path)
         except OSError as err:
-            if err.errno == errno.ENOENT:
-                pass
-            raise
+            # ENOENT means No such file or directory
+            # The file has already been deleted, we can continue the update
+            if err.errno != errno.ENOENT:
+                raise
         if not option:
             return vals
 
-        vals_trays = []
+        vals['tray_ids'] = []
+        cups_trays = {
+            tray_option['choice']: tray_option['text']
+            for tray_option in option.choices
+        }
 
-        tray_names = set(tray.system_name for tray in self.tray_ids)
-        for tray_option in option.choices:
-            if tray_option['choice'] not in tray_names:
-                tray_vals = {
-                    'name': tray_option['text'],
-                    'system_name': tray_option['choice'],
-                }
-                vals_trays.append((0, 0, tray_vals))
+        # Add new trays
+        vals['tray_ids'].extend([
+            (0, 0, {'name': text, 'system_name': choice})
+            for choice, text in cups_trays.items()
+            if choice not in self.tray_ids.mapped('system_name')
+        ])
 
-        cups_trays = set(tray_option['choice'] for tray_option
-                         in option.choices)
-        for tray in self.tray_ids:
-            if tray.system_name not in cups_trays:
-                vals_trays.append((2, tray.id))
+        # Remove deleted trays
+        vals['tray_ids'].extend([
+            (2, tray.id)
+            for tray in self.tray_ids.filtered(
+                lambda record: record.system_name not in cups_trays.keys())
+        ])
 
-        vals['tray_ids'] = vals_trays
         return vals
 
     @api.multi
@@ -72,13 +75,13 @@ class PrintingPrinter(models.Model):
         printing_act_obj = self.env['printing.report.xml.action']
         options = super(PrintingPrinter, self).print_options(report, format)
 
-        # Retrieve user default values
-        tray = self.env.user.printer_tray_id
-
         if report is not None:
             # Retrieve report default values
             if report.printer_tray_id:
                 tray = report.printer_tray_id
+            else:
+                # Retrieve user default values
+                tray = self.env.user.printer_tray_id
 
             # Retrieve report-user specific values
             action = printing_act_obj.search([
