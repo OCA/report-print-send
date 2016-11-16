@@ -4,7 +4,7 @@
 
 import logging
 from datetime import datetime
-from openerp import models, fields, api, exceptions, _
+from odoo import models, fields, api, exceptions, _
 
 _logger = logging.getLogger(__name__)
 
@@ -200,7 +200,7 @@ class PrintingServer(models.Model):
                                 'time-at-completed', 0))),
                 }
 
-                # Search for the printer in OpenERP
+                # Search for the printer in Odoo
                 printer_uri = job_data['printer-uri']
                 printer_system_name = printer_uri[printer_uri.rfind('/') + 1:]
                 printer = printer_obj.search([

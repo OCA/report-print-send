@@ -12,7 +12,7 @@ import logging
 import os
 from tempfile import mkstemp
 
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 _logger = logging.getLogger(__name__)
@@ -36,29 +36,22 @@ class PrintingPrinter(models.Model):
         help='Jobs printed on this printer.')
     system_name = fields.Char(required=True, index=True)
     default = fields.Boolean(readonly=True)
-    status = fields.Selection([('unavailable', 'Unavailable'),
-                               ('printing', 'Printing'),
-                               ('unknown', 'Unknown'),
-                               ('available', 'Available'),
-                               ('error', 'Error'),
-                               ('server-error', 'Server Error')],
-                              required=True,
-                              readonly=True,
-                              default='unknown')
+    status = fields.Selection(
+        selection=[
+            ('unavailable', 'Unavailable'),
+            ('printing', 'Printing'),
+            ('unknown', 'Unknown'),
+            ('available', 'Available'),
+            ('error', 'Error'),
+            ('server-error', 'Server Error'),
+        ],
+        required=True,
+        readonly=True,
+        default='unknown')
     status_message = fields.Char(readonly=True)
     model = fields.Char(readonly=True)
     location = fields.Char(readonly=True)
     uri = fields.Char(string='URI', readonly=True)
-
-    @api.model
-    def update_printers_status(self, domain=None):
-        _logger.warning(
-            'Deprecated : "printing.printer".update_printers_status has been '
-            'replaced by "printing.server".update_printers')
-        if domain is None:
-            domain = []
-        printer_recs = self.search(domain)
-        return printer_recs.mapped('server_id').update_printers()
 
     @api.multi
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
@@ -77,21 +70,6 @@ class PrintingPrinter(models.Model):
             'status_message': cups_printer.get('printer-state-message', ''),
         }
         return vals
-
-    @api.multi
-    def update_from_cups(self, cups_connection, cups_printer):
-        """ Update a printer from the information returned by cups.
-
-        :param cups_connection: connection to CUPS, may be used when the
-                                method is overriden (e.g. in printer_tray)
-        :param cups_printer: dict of information returned by CUPS for the
-                             current printer
-        """
-        _logger.warning(
-            'Deprecated : "printing.printer".update_from_cups has been '
-            'replaced by "printing.server".update_printers')
-        self.ensure_one()
-        return self.server_id.update_printers()
 
     @api.multi
     def print_options(self, report=None, format=None, copies=1):

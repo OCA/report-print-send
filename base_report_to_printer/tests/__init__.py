@@ -9,3 +9,4 @@ from . import test_report
 from . import test_res_users
 from . import test_ir_actions_report_xml
 from . import test_printing_printer_wizard
+from . import test_printing_report_xml_action
