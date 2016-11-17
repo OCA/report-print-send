@@ -67,27 +67,29 @@ class PrintingPrinter(models.Model):
         return vals
 
     @api.multi
-    def print_options(self, report, format, copies=1):
+    def print_options(self, report=None, format=None, copies=1):
         """ Hook to define Tray """
         printing_act_obj = self.env['printing.report.xml.action']
         options = super(PrintingPrinter, self).print_options(report, format)
 
         # Retrieve user default values
-        user = self.env.user
-        tray = user.printer_tray_id
+        tray = self.env.user.printer_tray_id
 
-        # Retrieve report default values
-        if report.printer_tray_id:
-            tray = report.printer_tray_id
+        if report is not None:
+            # Retrieve report default values
+            if report.printer_tray_id:
+                tray = report.printer_tray_id
 
-        # Retrieve report-user specific values
-        action = printing_act_obj.search([('report_id', '=', report.id),
-                                          ('user_id', '=', self.env.uid),
-                                          ('action', '!=', 'user_default')],
-                                         limit=1)
-        if action.printer_tray_id:
-            tray = action.printer_tray_id
+            # Retrieve report-user specific values
+            action = printing_act_obj.search([
+                ('report_id', '=', report.id),
+                ('user_id', '=', self.env.uid),
+                ('action', '!=', 'user_default'),
+            ], limit=1)
+            if action.printer_tray_id:
+                tray = action.printer_tray_id
 
-        if tray:
-            options['InputSlot'] = str(tray.system_name)
+            if tray:
+                options['InputSlot'] = str(tray.system_name)
+
         return options
