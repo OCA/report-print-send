@@ -1,0 +1,106 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * printer_tray
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-08 23:07+0000\n"
+"PO-Revision-Date: 2016-11-08 23:07+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Lithuanian (https://www.transifex.com/oca/teams/23907/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: printer_tray
+#: field:printing.tray,create_uid:0
+msgid "Created by"
+msgstr "Sukūrė"
+
+#. module: printer_tray
+#: field:printing.tray,create_date:0
+msgid "Created on"
+msgstr "Sukurta"
+
+#. module: printer_tray
+#: field:res.users,printer_tray_id:0
+msgid "Default Printer Paper Source"
+msgstr ""
+
+#. module: printer_tray
+#: field:printing.tray,display_name:0
+msgid "Display Name"
+msgstr "Vaizduojamas pavadinimas"
+
+#. module: printer_tray
+#: field:printing.tray,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: printer_tray
+#: field:printing.tray,__last_update:0
+msgid "Last Modified on"
+msgstr "Paskutinį kartą keista"
+
+#. module: printer_tray
+#: field:printing.tray,write_uid:0
+msgid "Last Updated by"
+msgstr "Paskutinį kartą atnaujino"
+
+#. module: printer_tray
+#: field:printing.tray,write_date:0
+msgid "Last Updated on"
+msgstr "Paskutinį kartą atnaujinta"
+
+#. module: printer_tray
+#: field:printing.tray,name:0
+msgid "Name"
+msgstr "Pavadinimas"
+
+#. module: printer_tray
+#: field:ir.actions.report.xml,printer_tray_id:0
+#: field:printing.report.xml.action,printer_tray_id:0
+msgid "Paper Source"
+msgstr ""
+
+#. module: printer_tray
+#: field:printing.printer,tray_ids:0
+msgid "Paper Sources"
+msgstr ""
+
+#. module: printer_tray
+#: model:ir.model,name:printer_tray.model_printing_printer
+#: field:printing.tray,printer_id:0
+msgid "Printer"
+msgstr ""
+
+#. module: printer_tray
+#: model:ir.model,name:printer_tray.model_printing_tray
+msgid "Printer Tray"
+msgstr ""
+
+#. module: printer_tray
+#: model:ir.model,name:printer_tray.model_printing_report_xml_action
+msgid "Report Printing Actions"
+msgstr ""
+
+#. module: printer_tray
+#: field:printing.tray,system_name:0
+msgid "System name"
+msgstr ""
+
+#. module: printer_tray
+#: view:printing.printer:printer_tray.view_printing_printer_form
+msgid "Trays"
+msgstr ""
+
+#. module: printer_tray
+#: model:ir.model,name:printer_tray.model_res_users
+msgid "Users"
+msgstr ""

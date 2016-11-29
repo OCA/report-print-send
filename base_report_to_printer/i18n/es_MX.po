@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 21:56+0000\n"
-"PO-Revision-Date: 2016-08-15 21:56+0000\n"
+"POT-Creation-Date: 2016-11-08 23:07+0000\n"
+"PO-Revision-Date: 2016-11-08 23:07+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Spanish (Mexico) (https://www.transifex.com/oca/teams/23907/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_action_ids:0
 msgid "Actions"
-msgstr ""
+msgstr "Acciones"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -50,14 +50,14 @@ msgstr ""
 #: field:printing.printer.update.wizard,create_uid:0
 #: field:printing.report.xml.action,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: base_report_to_printer
 #: field:printing.action,create_date:0 field:printing.printer,create_date:0
 #: field:printing.printer.update.wizard,create_date:0
 #: field:printing.report.xml.action,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: base_report_to_printer
 #: field:printing.printer,default:0
@@ -74,7 +74,7 @@ msgstr ""
 #: field:printing.printer.update.wizard,display_name:0
 #: field:printing.report.xml.action,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre desplegado"
 
 #. module: base_report_to_printer
 #. openerp-web
@@ -108,7 +108,7 @@ msgstr ""
 #: field:printing.printer.update.wizard,id:0
 #: field:printing.report.xml.action,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: base_report_to_printer
 #: field:printing.action,__last_update:0
@@ -116,21 +116,21 @@ msgstr ""
 #: field:printing.printer.update.wizard,__last_update:0
 #: field:printing.report.xml.action,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modificacion realizada"
 
 #. module: base_report_to_printer
 #: field:printing.action,write_uid:0 field:printing.printer,write_uid:0
 #: field:printing.printer.update.wizard,write_uid:0
 #: field:printing.report.xml.action,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualizacion por"
 
 #. module: base_report_to_printer
 #: field:printing.action,write_date:0 field:printing.printer,write_date:0
 #: field:printing.printer.update.wizard,write_date:0
 #: field:printing.report.xml.action,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualización realizada"
 
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
@@ -145,7 +145,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,name:0 field:printing.printer,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/report.py:43
@@ -225,7 +225,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Security"
-msgstr ""
+msgstr "Seguridad"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -276,7 +276,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: base_report_to_printer
 #: field:printing.printer,uri:0
@@ -313,4 +313,4 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
 msgid "or"
-msgstr ""
+msgstr "ó"

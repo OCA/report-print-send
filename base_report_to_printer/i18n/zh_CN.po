@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-18 04:58+0000\n"
-"PO-Revision-Date: 2016-09-18 04:58+0000\n"
+"POT-Creation-Date: 2016-11-08 23:07+0000\n"
+"PO-Revision-Date: 2016-11-08 23:07+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/oca/teams/23907/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_action_ids:0
 msgid "Actions"
-msgstr ""
+msgstr "动作"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -37,7 +37,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/wizard/update_printers.py:55
@@ -74,7 +74,7 @@ msgstr ""
 #: field:printing.printer.update.wizard,display_name:0
 #: field:printing.report.xml.action,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "显示名称"
 
 #. module: base_report_to_printer
 #. openerp-web
@@ -116,7 +116,7 @@ msgstr "ID"
 #: field:printing.printer.update.wizard,__last_update:0
 #: field:printing.report.xml.action,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "最后修改时间"
 
 #. module: base_report_to_printer
 #: field:printing.action,write_uid:0 field:printing.printer,write_uid:0
@@ -145,7 +145,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,name:0 field:printing.printer,name:0
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/report.py:43
@@ -225,7 +225,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Security"
-msgstr ""
+msgstr "安全"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -276,7 +276,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #. module: base_report_to_printer
 #: field:printing.printer,uri:0
@@ -313,4 +313,4 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
 msgid "or"
-msgstr ""
+msgstr "或"
