@@ -62,7 +62,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr ""
+msgstr "Druh"
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
@@ -135,7 +135,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,name:0 field:printing.printer,name:0
 msgid "Name"
-msgstr ""
+msgstr "Název"
 
 #. module: base_report_to_printer
 #: view:printing.printer:0
@@ -201,7 +201,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Security"
-msgstr ""
+msgstr "Zabezpečení"
 
 #. module: base_report_to_printer
 #: field:printing.printer,status_message:0
@@ -221,7 +221,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_action_ids:0
 msgid "Actions"
-msgstr ""
+msgstr "Akce"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0

@@ -67,7 +67,7 @@ msgstr "Tipo"
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -89,7 +89,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
@@ -110,7 +110,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0
@@ -120,7 +120,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
@@ -130,7 +130,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
 msgid "Ok"
-msgstr ""
+msgstr "Aceptar"
 
 #. module: base_report_to_printer
 #: field:printing.action,name:0 field:printing.printer,name:0
@@ -161,7 +161,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_reports
 msgid "Reports"
-msgstr ""
+msgstr "Reportes"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer_update_wizard
@@ -196,7 +196,7 @@ msgstr "Error"
 #: field:ir.actions.report.xml,property_printing_action:0
 #: field:printing.report.xml.action,action:0
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0

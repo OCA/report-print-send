@@ -67,7 +67,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
 msgid "Model"
-msgstr ""
+msgstr "Alan"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -89,7 +89,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Kullanıcılar"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
@@ -110,7 +110,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Kullanıcı"
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0
@@ -135,7 +135,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,name:0 field:printing.printer,name:0
 msgid "Name"
-msgstr ""
+msgstr "Adı"
 
 #. module: base_report_to_printer
 #: view:printing.printer:0
@@ -196,7 +196,7 @@ msgstr ""
 #: field:ir.actions.report.xml,property_printing_action:0
 #: field:printing.report.xml.action,action:0
 msgid "Action"
-msgstr ""
+msgstr "Eylem"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0

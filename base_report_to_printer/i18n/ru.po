@@ -67,7 +67,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
 msgid "Model"
-msgstr ""
+msgstr "Модель"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -110,7 +110,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Пользователь"
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0
@@ -135,7 +135,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,name:0 field:printing.printer,name:0
 msgid "Name"
-msgstr ""
+msgstr "Название"
 
 #. module: base_report_to_printer
 #: view:printing.printer:0
