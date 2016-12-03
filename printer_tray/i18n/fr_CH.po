@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
+# leemannd <leemannd@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:07+0000\n"
-"PO-Revision-Date: 2016-11-08 23:07+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2016-11-29 16:19+0000\n"
+"PO-Revision-Date: 2016-11-29 16:19+0000\n"
+"Last-Translator: leemannd <leemannd@gmail.com>, 2016\n"
 "Language-Team: French (Switzerland) (https://www.transifex.com/oca/teams/23907/fr_CH/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +37,7 @@ msgstr ""
 #. module: printer_tray
 #: field:printing.tray,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: printer_tray
 #: field:printing.tray,id:0
@@ -46,7 +47,7 @@ msgstr "ID"
 #. module: printer_tray
 #: field:printing.tray,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: printer_tray
 #: field:printing.tray,write_uid:0
@@ -103,4 +104,4 @@ msgstr ""
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utilisateurs"
