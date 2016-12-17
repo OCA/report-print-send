@@ -56,7 +56,7 @@ msgstr ""
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr ""
+msgstr "ir.actions.report.xml"
 
 #. module: printer_tray
 #: field:ir.actions.report.xml,printer_tray_id:0

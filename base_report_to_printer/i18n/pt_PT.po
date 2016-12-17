@@ -62,7 +62,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
@@ -242,4 +242,4 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr ""
+msgstr "ir.actions.report.xml"
