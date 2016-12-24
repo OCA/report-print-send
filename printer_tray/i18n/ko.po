@@ -10,12 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2015-10-12 21:04+0000\n"
 "PO-Revision-Date: 2015-09-28 11:33+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-report-print-send-7-0/language/es/)\n"
+"Language-Team: Korean (http://www.transifex.com/oca/OCA-report-print-send-7-0/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_printing_tray
@@ -36,7 +36,7 @@ msgstr ""
 #. module: printer_tray
 #: field:printing.tray,name:0
 msgid "Name"
-msgstr "Nombre"
+msgstr "이름"
 
 #. module: printer_tray
 #: field:printing.tray,system_name:0
@@ -51,12 +51,12 @@ msgstr ""
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_res_users
 msgid "Users"
-msgstr "Usuarios"
+msgstr ""
 
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr "ir.actions.report.xml"
+msgstr ""
 
 #. module: printer_tray
 #: field:ir.actions.report.xml,printer_tray_id:0
