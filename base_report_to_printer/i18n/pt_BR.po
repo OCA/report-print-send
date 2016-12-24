@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:07+0000\n"
-"PO-Revision-Date: 2016-11-08 23:07+0000\n"
+"POT-Creation-Date: 2016-12-03 04:14+0000\n"
+"PO-Revision-Date: 2016-12-03 04:14+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -135,7 +135,7 @@ msgstr "Última atualização em"
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
 msgid "Location"
-msgstr ""
+msgstr "Location"
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
