@@ -102,7 +102,7 @@ class PrintingServer(models.Model):
 
         return res
 
-    @api.multi
+    @api.model
     def action_update_jobs(self):
         if not self:
             self = self.search([])
