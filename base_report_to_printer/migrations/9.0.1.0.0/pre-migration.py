@@ -7,7 +7,7 @@ from openupgradelib import openupgrade
 xmlid_renames = [
     (
         'base_report_to_printer.res_groups_printingprintoperator0',
-        'base_report_to_printer.printing_server_group_manager',
+        'base_report_to_printer.printing_group_manager',
     ),
     (
         'base_report_to_printer.ir_model_access_printingprintergroup1',
