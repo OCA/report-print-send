@@ -18,7 +18,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 9.0.2.0.0 | Report to printer
+[base_report_to_printer](base_report_to_printer/) | 9.0.2.1.0 | Report to printer
 [printer_tray](printer_tray/) | 9.0.1.0.0 | Report to printer - Paper tray selection
 
 Unported addons
