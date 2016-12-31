@@ -226,7 +226,7 @@ msgstr "Akcie"
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušiť"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.res_groups_printingprintoperator0
