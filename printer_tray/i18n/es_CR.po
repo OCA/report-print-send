@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:07+0000\n"
-"PO-Revision-Date: 2016-11-08 23:07+0000\n"
+"POT-Creation-Date: 2016-12-24 04:42+0000\n"
+"PO-Revision-Date: 2016-12-24 04:42+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Spanish (Costa Rica) (https://www.transifex.com/oca/teams/23907/es_CR/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #. module: printer_tray
 #: field:printing.tray,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: printer_tray
 #: field:printing.tray,create_date:0
@@ -51,12 +51,12 @@ msgstr ""
 #. module: printer_tray
 #: field:printing.tray,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualización por"
 
 #. module: printer_tray
 #: field:printing.tray,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualización en"
 
 #. module: printer_tray
 #: field:printing.tray,name:0
