@@ -110,7 +110,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Uživatel"
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0

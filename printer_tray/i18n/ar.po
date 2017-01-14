@@ -51,7 +51,7 @@ msgstr ""
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "المستخدمون"
 
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_ir_actions_report_xml

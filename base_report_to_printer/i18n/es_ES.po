@@ -41,7 +41,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
 msgid "Location"
-msgstr ""
+msgstr "Ubicación"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_printer_form
@@ -89,7 +89,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action

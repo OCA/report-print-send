@@ -62,7 +62,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr ""
+msgstr "Tipus"
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
@@ -110,7 +110,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Usuari"
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0
@@ -190,7 +190,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,property_printing_action:0
