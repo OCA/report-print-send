@@ -4,14 +4,13 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
-# Massimiliano Casa <mcasa@cantiericasa.com>, 2016
 # Paolo Valier <paolo.valier@hotmail.it>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:07+0000\n"
-"PO-Revision-Date: 2016-11-08 23:07+0000\n"
+"POT-Creation-Date: 2017-01-14 06:22+0000\n"
+"PO-Revision-Date: 2017-01-14 06:22+0000\n"
 "Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2016\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +44,7 @@ msgstr "Annulla"
 #: code:addons/base_report_to_printer/wizard/update_printers.py:55
 #, python-format
 msgid "Could not get the list of printers from the CUPS server (%s:%s)"
-msgstr ""
+msgstr "Impossibile ottenere la lista delle stampanti del server CUPS (%s:%s)"
 
 #. module: base_report_to_printer
 #: field:printing.action,create_uid:0 field:printing.printer,create_uid:0
@@ -83,7 +82,7 @@ msgstr "Nome da visualizzare"
 #: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:27
 #, python-format
 msgid "Document sent to the printer "
-msgstr ""
+msgstr "Documento inviato alla stampante"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -95,7 +94,7 @@ msgstr "Errore"
 #: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:30
 #, python-format
 msgid "Error when sending the document to the printer "
-msgstr ""
+msgstr "Errore nell'invio del documento alla stampante"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/printing.py:149
@@ -104,6 +103,8 @@ msgid ""
 "Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
 " running and that you can reach it from the Odoo server."
 msgstr ""
+"Impossibile connettersi al server CUPS su %s:%s. Controllare che il server "
+"CUPS sia in esecuzione e che sia raggiungibile dal server Odoo."
 
 #. module: base_report_to_printer
 #: field:printing.action,id:0 field:printing.printer,id:0
@@ -137,12 +138,12 @@ msgstr "Ultimo aggiornamento il"
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
 msgid "Location"
-msgstr "Locazione"
+msgstr "Posizione"
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
 msgid "Model"
-msgstr "Model"
+msgstr "Modello"
 
 #. module: base_report_to_printer
 #: field:printing.action,name:0 field:printing.printer,name:0
@@ -153,17 +154,17 @@ msgstr "Nome"
 #: code:addons/base_report_to_printer/report.py:43
 #, python-format
 msgid "No printer configured to print this report."
-msgstr ""
+msgstr "Nessuna stampante configurata per stampare questo report."
 
 #. module: base_report_to_printer
 #: view:res.users:base_report_to_printer.view_printing_users_form
 msgid "Preferences"
-msgstr ""
+msgstr "Preferenze"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Print"
-msgstr ""
+msgstr "Stampante"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
@@ -195,12 +196,12 @@ msgstr "Stampa"
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.res_groups_printingprintoperator0
 msgid "Printing / Print Operator"
-msgstr ""
+msgstr "In stampa / Operatore di stampa"
 
 #. module: base_report_to_printer
 #: field:res.users,printing_action:0
 msgid "Printing action"
-msgstr ""
+msgstr "Azione di stampa"
 
 #. module: base_report_to_printer
 #. openerp-web
@@ -222,12 +223,12 @@ msgstr "Azioni di stampa report"
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_reports
 msgid "Reports"
-msgstr ""
+msgstr "Reports"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Security"
-msgstr ""
+msgstr "Sicurezza"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -242,12 +243,12 @@ msgstr "Imposta default"
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
 msgid "Show Printers"
-msgstr ""
+msgstr "Mostra Stampanti"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Specific actions per user"
-msgstr ""
+msgstr "Azioni specifiche per utente"
 
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
@@ -257,12 +258,12 @@ msgstr "Stato"
 #. module: base_report_to_printer
 #: field:printing.printer,status_message:0
 msgid "Status message"
-msgstr ""
+msgstr "Messaggio di stato"
 
 #. module: base_report_to_printer
 #: field:printing.printer,system_name:0
 msgid "System name"
-msgstr ""
+msgstr "Nome di sistema"
 
 #. module: base_report_to_printer
 #: help:ir.actions.report.xml,printing_action_ids:0
