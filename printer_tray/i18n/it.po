@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
+# Paolo Valier <paolo.valier@hotmail.it>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 03:42+0000\n"
-"PO-Revision-Date: 2016-11-17 03:42+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2016-12-31 07:00+0000\n"
+"PO-Revision-Date: 2016-12-31 07:00+0000\n"
+"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2017\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,12 +68,12 @@ msgstr "Nome"
 #: model:ir.model.fields,field_description:printer_tray.field_ir_act_report_xml_printer_tray_id
 #: model:ir.model.fields,field_description:printer_tray.field_printing_report_xml_action_printer_tray_id
 msgid "Paper Source"
-msgstr ""
+msgstr "Sorgente Carta"
 
 #. module: printer_tray
 #: model:ir.model.fields,field_description:printer_tray.field_printing_printer_tray_ids
 msgid "Paper Sources"
-msgstr ""
+msgstr "Sorgenti Carta"
 
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_printing_printer
@@ -98,12 +99,12 @@ msgstr ""
 #. module: printer_tray
 #: model:ir.ui.view,arch_db:printer_tray.printing_printer_view_form
 msgid "Trays"
-msgstr ""
+msgstr "Cassetti"
 
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utenti"
 
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_ir_actions_report_xml
