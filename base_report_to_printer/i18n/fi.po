@@ -190,7 +190,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
-msgstr ""
+msgstr "Virhe"
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,property_printing_action:0

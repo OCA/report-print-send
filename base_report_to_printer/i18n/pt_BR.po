@@ -221,7 +221,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_action_ids:0
 msgid "Actions"
-msgstr ""
+msgstr "Ações"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
