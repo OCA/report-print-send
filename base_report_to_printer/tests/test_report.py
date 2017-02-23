@@ -4,6 +4,7 @@
 
 import mock
 from odoo.tests.common import TransactionCase
+from odoo import exceptions
 
 
 class StopTest(Exception):
@@ -87,3 +88,42 @@ class TestReport(TransactionCase):
                 records.ids, report.report_name)
             print_document.assert_called_once_with(
                 report, document, report.report_type)
+
+    def test_print_document_not_printable(self):
+        """ It should print the report, regardless of the defined behaviour """
+        report = self.env['ir.actions.report.xml'].search([
+            ('report_type', '=', 'qweb-pdf'),
+        ], limit=1)
+        report.printing_printer_id = self.new_printer()
+        records = self.env[report.model].search([], limit=5)
+
+        with mock.patch('odoo.addons.base_report_to_printer.models.'
+                        'printing_printer.PrintingPrinter.'
+                        'print_document') as print_document:
+            self.env['report'].print_document(records.ids, report.report_name)
+            print_document.assert_called_once()
+
+    def test_print_document_printable(self):
+        """ It should print the report, regardless of the defined behaviour """
+        report = self.env['ir.actions.report.xml'].search([
+            ('report_type', '=', 'qweb-pdf'),
+        ], limit=1)
+        report.property_printing_action_id.action_type = 'server'
+        report.printing_printer_id = self.new_printer()
+        records = self.env[report.model].search([], limit=5)
+
+        with mock.patch('odoo.addons.base_report_to_printer.models.'
+                        'printing_printer.PrintingPrinter.'
+                        'print_document') as print_document:
+            self.env['report'].print_document(records.ids, report.report_name)
+            print_document.assert_called_once()
+
+    def test_print_document_no_printer(self):
+        """ It should raise an error """
+        report = self.env['ir.actions.report.xml'].search([
+            ('report_type', '=', 'qweb-pdf'),
+        ], limit=1)
+        records = self.env[report.model].search([], limit=5)
+
+        with self.assertRaises(exceptions.UserError):
+            self.env['report'].print_document(records.ids, report.report_name)

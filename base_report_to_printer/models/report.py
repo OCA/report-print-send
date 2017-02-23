@@ -8,28 +8,19 @@ from odoo import models, exceptions, _, api
 class Report(models.Model):
     _inherit = 'report'
 
-    @api.multi
-    def print_document(self, report_name, html=None, data=None):
+    @api.model
+    def print_document(self, record_ids, report_name, html=None, data=None):
         """ Print a document, do not return the document file """
-        res = []
-        context = self.env.context
-        if context is None:
-            context = self.env['res.users'].context_get()
-        local_context = context.copy()
-        local_context['must_skip_send_to_printer'] = True
-        for rec_id in self.with_context(local_context):
-            document = rec_id.get_pdf(report_name, html=html, data=data)
-            report = self._get_report_from_name(report_name)
-            behaviour = report.behaviour()[report.id]
-            printer = behaviour['printer']
-            if not printer:
-                raise exceptions.Warning(
-                    _('No printer configured to print this report.')
-                )
-            res.append(
-                printer.print_document(report, document, report.report_type)
+        document = self.with_context(must_skip_send_to_printer=True).get_pdf(
+            record_ids, report_name, html=html, data=data)
+        report = self._get_report_from_name(report_name)
+        behaviour = report.behaviour()[report.id]
+        printer = behaviour['printer']
+        if not printer:
+            raise exceptions.Warning(
+                _('No printer configured to print this report.')
             )
-        return all(res)
+        return printer.print_document(report, document, report.report_type)
 
     @api.multi
     def _can_print_report(self, behaviour, printer, document):
