@@ -115,7 +115,7 @@ msgstr "Utilizador"
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0
 msgid "Report"
-msgstr ""
+msgstr "Relatório"
 
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
@@ -190,7 +190,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,property_printing_action:0
