@@ -4,16 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
-# Ermin Trevisan <trevi@twanda.com>, 2016
-# Philipp Hug <philipp@hug.cx>, 2016
-# Tom Palan <thomas@palan.at>, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:07+0000\n"
-"PO-Revision-Date: 2016-11-08 23:07+0000\n"
-"Last-Translator: Tom Palan <thomas@palan.at>, 2016\n"
+"POT-Creation-Date: 2017-03-04 06:00+0000\n"
+"PO-Revision-Date: 2017-03-04 06:00+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,12 +28,12 @@ msgstr "Aktion"
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_action_ids:0
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Available"
-msgstr ""
+msgstr "Verfügbar"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
@@ -46,7 +44,7 @@ msgstr "Abbrechen"
 #: code:addons/base_report_to_printer/wizard/update_printers.py:55
 #, python-format
 msgid "Could not get the list of printers from the CUPS server (%s:%s)"
-msgstr ""
+msgstr "Konnte die Druckerliste von CUPS-Server (%s:%s) nicht beziehen"
 
 #. module: base_report_to_printer
 #: field:printing.action,create_uid:0 field:printing.printer,create_uid:0
@@ -65,12 +63,12 @@ msgstr "Erstellt am:"
 #. module: base_report_to_printer
 #: field:printing.printer,default:0
 msgid "Default"
-msgstr ""
+msgstr "Vorgabe"
 
 #. module: base_report_to_printer
 #: field:res.users,printing_printer_id:0
 msgid "Default Printer"
-msgstr ""
+msgstr "Vorgabedrucker"
 
 #. module: base_report_to_printer
 #: field:printing.action,display_name:0 field:printing.printer,display_name:0
@@ -84,19 +82,19 @@ msgstr "Anzeigename"
 #: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:27
 #, python-format
 msgid "Document sent to the printer "
-msgstr ""
+msgstr "Dokumetn an den Drucker gesandt"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #. module: base_report_to_printer
 #. openerp-web
 #: code:addons/base_report_to_printer/static/src/js/qwebactionmanager.js:30
 #, python-format
 msgid "Error when sending the document to the printer "
-msgstr ""
+msgstr "Fehler, beim Versenden des Dokuments an den Drucker"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/printing.py:149
@@ -105,6 +103,8 @@ msgid ""
 "Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
 " running and that you can reach it from the Odoo server."
 msgstr ""
+"Konnte nicht mit CUPS-Server %s:%s verbinden. Prüfen Sie, ob der Server "
+"läuft und Sie diesem vom Odoo-Server aus erreichen können."
 
 #. module: base_report_to_printer
 #: field:printing.action,id:0 field:printing.printer,id:0
@@ -138,7 +138,7 @@ msgstr "Zuletzt aktualisiert am"
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
 msgid "Location"
-msgstr ""
+msgstr "Standort"
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
@@ -154,29 +154,29 @@ msgstr "Bezeichnung"
 #: code:addons/base_report_to_printer/report.py:43
 #, python-format
 msgid "No printer configured to print this report."
-msgstr ""
+msgstr "Kein Drucker zum Druck dieses Berichts eingestellt."
 
 #. module: base_report_to_printer
 #: view:res.users:base_report_to_printer.view_printing_users_form
 msgid "Preferences"
-msgstr ""
+msgstr "Präferenzen"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Print"
-msgstr ""
+msgstr "Drucke"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
 msgid "Print Job Action"
-msgstr ""
+msgstr "Druck-Job"
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_printer_id:0
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
 #: field:printing.report.xml.action,printer_id:0
 msgid "Printer"
-msgstr ""
+msgstr "Drucker"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_printer_form
@@ -184,24 +184,24 @@ msgstr ""
 #: view:printing.printer:base_report_to_printer.view_printing_printer_search
 #: view:printing.printer:base_report_to_printer.view_printing_printer_tree
 msgid "Printers"
-msgstr ""
+msgstr "Drucker"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_main
 #: selection:printing.printer,status:0
 #: view:res.users:base_report_to_printer.view_printing_users_prefs
 msgid "Printing"
-msgstr ""
+msgstr "Drucken"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.res_groups_printingprintoperator0
 msgid "Printing / Print Operator"
-msgstr ""
+msgstr "Drucken / Druckanwender"
 
 #. module: base_report_to_printer
 #: field:res.users,printing_action:0
 msgid "Printing action"
-msgstr ""
+msgstr "Druckhandlung"
 
 #. module: base_report_to_printer
 #. openerp-web
@@ -218,37 +218,37 @@ msgstr "Bericht"
 #: view:printing.report.xml.action:base_report_to_printer.printing_report_xml_action_form
 #: view:printing.report.xml.action:base_report_to_printer.printing_report_xml_action_tree
 msgid "Report Printing Actions"
-msgstr ""
+msgstr "Berichtsdruck-Aktionen"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_reports
 msgid "Reports"
-msgstr ""
+msgstr "Berichte"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Security"
-msgstr ""
+msgstr "Sicherheit"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Server Error"
-msgstr ""
+msgstr "Serverfehler"
 
 #. module: base_report_to_printer
 #: view:printing.printer:base_report_to_printer.view_printing_printer_form
 msgid "Set Default"
-msgstr ""
+msgstr "Setze Vorgabe"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
 msgid "Show Printers"
-msgstr ""
+msgstr "Zeige Drucker"
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Specific actions per user"
-msgstr ""
+msgstr "Benutzerspezifische Aktionen"
 
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
@@ -258,23 +258,27 @@ msgstr "Status"
 #. module: base_report_to_printer
 #: field:printing.printer,status_message:0
 msgid "Status message"
-msgstr ""
+msgstr "Statusmeldung"
 
 #. module: base_report_to_printer
 #: field:printing.printer,system_name:0
 msgid "System name"
-msgstr ""
+msgstr "Systembezeichnung"
 
 #. module: base_report_to_printer
 #: help:ir.actions.report.xml,printing_action_ids:0
 msgid "This field allows configuring action and printer on a per user basis"
 msgstr ""
+"Dieses Feld erlaubt eine benutzerspezifische Festlegung von Aktion und "
+"Drucker"
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
 msgid ""
 "This process will create all missing printers from the current CUPS server."
 msgstr ""
+"Dieser Schritt wird alle fehlenden Drucker vom aktuellen CUPS-Server "
+"anlegen."
 
 #. module: base_report_to_printer
 #: field:printing.action,type:0
@@ -284,24 +288,24 @@ msgstr "Art"
 #. module: base_report_to_printer
 #: field:printing.printer,uri:0
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Unavailable"
-msgstr ""
+msgstr "Nicht verfügbar"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printer_update_wizard
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printer_update_wizard
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
 msgid "Update Printers from CUPS"
-msgstr ""
+msgstr "Aktualisiere Drucker vom CUPS"
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
