@@ -201,7 +201,7 @@ msgstr "Ukrep"
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Security"
-msgstr ""
+msgstr "Varnost"
 
 #. module: base_report_to_printer
 #: field:printing.printer,status_message:0
