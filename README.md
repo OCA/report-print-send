@@ -14,6 +14,7 @@ This project aim to deal with modules related to manage document printing and se
  - ...
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
