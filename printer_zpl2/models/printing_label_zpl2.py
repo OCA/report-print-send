@@ -5,9 +5,9 @@
 import time
 import datetime
 import logging
-from openerp import api, exceptions, fields, models
-from openerp.tools.translate import _
-from openerp.tools.safe_eval import safe_eval
+from odoo import api, exceptions, fields, models
+from odoo.tools.translate import _
+from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ class PrintingLabelZpl2(models.Model):
         help='Origin point of the contents in the label, Y coordinate.')
     width = fields.Integer(
         required=True, default=480,
-        help='With of the label, will be set on the printer before printing.')
+        help='Width of the label, will be set on the printer before printing.')
     component_ids = fields.One2many(
         comodel_name='printing.label.zpl2.component', inverse_name='label_id',
         string='Label Components',
