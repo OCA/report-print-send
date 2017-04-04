@@ -113,6 +113,11 @@ class TestPrintingPrinter(TransactionCase):
             'system_name': 'Action tray',
         })
 
+        # No report passed
+        self.env.user.printer_tray_id = False
+        options = self.Model.print_options()
+        self.assertFalse('InputSlot' in options)
+
         # No tray defined
         self.env.user.printer_tray_id = False
         report.printer_tray_id = False
