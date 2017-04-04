@@ -4,8 +4,6 @@
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <menuitem id="base_report_to_printer.printing_menu_label" parent="base_report_to_printer.printing_menu" name="Labels" sequence="50"/>
-
     <record id="view_printing_label_zpl2_tree" model="ir.ui.view">
         <field name="name">printing.label.zpl2.tree</field>
         <field name="model">printing.label.zpl2</field>
@@ -119,7 +117,7 @@
         </field>
     </record>
     <record model="ir.actions.act_window" id="act_open_printing_label_zpl2_view">
-        <field name="name">ZPL II</field>
+        <field name="name">ZPL II Labels</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">printing.label.zpl2</field>
         <field name="view_type">form</field>
@@ -140,5 +138,5 @@
         <field name="view_mode">tree</field>
         <field name="view_id" ref="view_printing_label_zpl2_tree"/>
     </record>
-    <menuitem id="menu_printing_label_zpl2" parent="base_report_to_printer.printing_menu_label" sequence="20" action="act_open_printing_label_zpl2_view"/>
+    <menuitem id="menu_printing_label_zpl2" parent="base_report_to_printer.printing_menu" sequence="20" action="act_open_printing_label_zpl2_view"/>
 </odoo>
