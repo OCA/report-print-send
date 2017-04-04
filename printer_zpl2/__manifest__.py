@@ -4,12 +4,12 @@
 
 {
     'name': 'Printer ZPL II',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Printer',
     'author': 'SYLEAM, Odoo Community Association (OCA)',
     'website': 'http://www.syleam.fr/',
     'license': 'AGPL-3',
-    'external_dependancies': {
+    'external_dependencies': {
         'python': ['zpl2'],
     },
     'depends': [

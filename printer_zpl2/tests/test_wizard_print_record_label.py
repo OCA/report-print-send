@@ -4,10 +4,10 @@
 
 import mock
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
-model = 'openerp.addons.base_report_to_printer.models.printing_server'
+model = 'odoo.addons.base_report_to_printer.models.printing_server'
 
 
 class TestWizardPrintRecordLabel(TransactionCase):
