@@ -4,17 +4,11 @@
 
 import mock
 
-from openerp.tests.common import TransactionCase
-from openerp.exceptions import UserError
-
-from openerp.addons.base_report_to_printer.models.printing_printer import (
-    CUPS_HOST,
-    CUPS_PORT,
-)
+from odoo.tests.common import TransactionCase
+from odoo.exceptions import UserError
 
 
-model = '%s.%s' % ('openerp.addons.base_report_to_printer.wizards',
-                   'printing_printer_update_wizard')
+model = 'odoo.addons.base_report_to_printer.models.printing_server'
 
 
 class StopTest(Exception):
@@ -26,6 +20,7 @@ class TestPrintingPrinterWizard(TransactionCase):
     def setUp(self):
         super(TestPrintingPrinterWizard, self).setUp()
         self.Model = self.env['printing.printer.update.wizard']
+        self.server = self.env['printing.server'].create({})
         self.printer_vals = {
             'printer-info': 'Info',
             'printer-make-and-model': 'Make and Model',
@@ -36,6 +31,7 @@ class TestPrintingPrinterWizard(TransactionCase):
     def _record_vals(self, sys_name='sys_name'):
         return {
             'name': self.printer_vals['printer-info'],
+            'server_id': self.server.id,
             'system_name': sys_name,
             'model': self.printer_vals['printer-make-and-model'],
             'location': self.printer_vals['printer-location'],
@@ -45,12 +41,9 @@ class TestPrintingPrinterWizard(TransactionCase):
     @mock.patch('%s.cups' % model)
     def test_action_ok_inits_connection(self, cups):
         """ It should initialize CUPS connection """
-        try:
-            self.Model.action_ok()
-        except:
-            pass
+        self.Model.action_ok()
         cups.Connection.assert_called_once_with(
-            CUPS_HOST, CUPS_PORT,
+            host=self.server.address, port=self.server.port,
         )
 
     @mock.patch('%s.cups' % model)
@@ -83,8 +76,11 @@ class TestPrintingPrinterWizard(TransactionCase):
         )
         self.assertTrue(rec_id)
         for key, val in self._record_vals().iteritems():
+            if rec_id._fields[key].type == 'many2one':
+                val = self.env[rec_id._fields[key].comodel_name].browse(val)
+
             self.assertEqual(
-                val, getattr(rec_id, key),
+                val, rec_id[key],
             )
 
     @mock.patch('%s.cups' % model)

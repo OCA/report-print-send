@@ -8,13 +8,13 @@ odoo.define('base_report_to_printer.print', function(require) {
 
     ActionManager.include({
         ir_actions_report_xml: function(action, options) {
-            framework.blockUI();
             action = _.clone(action);
             var _t = core._t;
             var self = this;
             var _super = this._super;
 
             if ('report_type' in action && action.report_type === 'qweb-pdf') {
+                framework.blockUI();
                 new Model('ir.actions.report.xml')
                     .call('print_action_for_report_name', [action.report_name])
                     .then(function(print_action){

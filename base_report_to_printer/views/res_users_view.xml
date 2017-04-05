@@ -6,12 +6,12 @@
     <field name="model">res.users</field>
     <field name="inherit_id" ref="base.view_users_form" />
     <field name="arch" type="xml">
-      <page string="Preferences">
-        <group name="printing">
+      <xpath expr="//group[@name='preferences']/ancestor::page" position="inside">
+        <group string="Printing" name="printing">
           <field name="printing_action"/>
           <field name="printing_printer_id"/>
         </group>
-      </page>
+      </xpath>
     </field>
   </record>
 

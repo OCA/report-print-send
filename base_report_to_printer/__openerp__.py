@@ -8,7 +8,7 @@
 
 {
     'name': "Report to printer",
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Generic Modules/Base',
     'author': "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
               " LasLabs, Odoo Community Association (OCA)",
@@ -20,12 +20,14 @@
         'security/security.xml',
         'views/assets.xml',
         'views/printing_printer_view.xml',
+        'views/printing_server.xml',
+        'views/printing_job.xml',
         'views/printing_report_view.xml',
         'views/res_users_view.xml',
         'views/ir_actions_report_xml_view.xml',
         'wizards/printing_printer_update_wizard_view.xml',
     ],
-    'installable': False,
+    'installable': True,
     'application': True,
     'external_dependencies': {
         'python': ['cups'],

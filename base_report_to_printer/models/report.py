@@ -2,34 +2,25 @@
 # Copyright (c) 2014 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, exceptions, _, api
+from odoo import models, exceptions, _, api
 
 
 class Report(models.Model):
     _inherit = 'report'
 
-    @api.multi
-    def print_document(self, report_name, html=None, data=None):
+    @api.model
+    def print_document(self, record_ids, report_name, html=None, data=None):
         """ Print a document, do not return the document file """
-        res = []
-        context = self.env.context
-        if context is None:
-            context = self.env['res.users'].context_get()
-        local_context = context.copy()
-        local_context['must_skip_send_to_printer'] = True
-        for rec_id in self.with_context(local_context):
-            document = rec_id.get_pdf(report_name, html=html, data=data)
-            report = self._get_report_from_name(report_name)
-            behaviour = report.behaviour()[report.id]
-            printer = behaviour['printer']
-            if not printer:
-                raise exceptions.Warning(
-                    _('No printer configured to print this report.')
-                )
-            res.append(
-                printer.print_document(report, document, report.report_type)
+        document = self.with_context(must_skip_send_to_printer=True).get_pdf(
+            record_ids, report_name, html=html, data=data)
+        report = self._get_report_from_name(report_name)
+        behaviour = report.behaviour()[report.id]
+        printer = behaviour['printer']
+        if not printer:
+            raise exceptions.Warning(
+                _('No printer configured to print this report.')
             )
-        return all(res)
+        return printer.print_document(report, document, report.report_type)
 
     @api.multi
     def _can_print_report(self, behaviour, printer, document):
@@ -44,29 +35,22 @@ class Report(models.Model):
             return True
         return False
 
-    @api.v7
-    def get_pdf(self, cr, uid, ids, report_name, html=None,
-                data=None, context=None):
+    @api.model
+    def get_pdf(self, docids, report_name, html=None, data=None):
         """ Generate a PDF and returns it.
 
         If the action configured on the report is server, it prints the
         generated document as well.
         """
-        document = super(Report, self).get_pdf(cr, uid, ids, report_name,
-                                               html=html, data=data,
-                                               context=context)
-        report = self._get_report_from_name(cr, uid, report_name)
+        document = super(Report, self).get_pdf(
+            docids, report_name, html=html, data=data)
+
+        report = self._get_report_from_name(report_name)
         behaviour = report.behaviour()[report.id]
         printer = behaviour['printer']
-        can_print_report = self._can_print_report(cr, uid, ids,
-                                                  behaviour, printer, document,
-                                                  context=context)
+        can_print_report = self._can_print_report(behaviour, printer, document)
+
         if can_print_report:
             printer.print_document(report, document, report.report_type)
-        return document
 
-    @api.v8
-    def get_pdf(self, records, report_name, html=None, data=None):
-        return self._model.get_pdf(self._cr, self._uid,
-                                   records.ids, report_name,
-                                   html=html, data=data, context=self._context)
+        return document
