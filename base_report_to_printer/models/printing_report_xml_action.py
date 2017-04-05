@@ -6,9 +6,7 @@
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-
-from .printing_action import _available_action_types
+from odoo import models, fields, api
 
 
 class PrintingReportXmlAction(models.Model):
@@ -24,7 +22,7 @@ class PrintingReportXmlAction(models.Model):
                               required=True,
                               ondelete='cascade')
     action = fields.Selection(
-        lambda s: _available_action_types(s),
+        selection=lambda s: s.env['printing.action']._available_action_types(),
         required=True,
     )
     printer_id = fields.Many2one(comodel_name='printing.printer',
@@ -34,6 +32,7 @@ class PrintingReportXmlAction(models.Model):
     def behaviour(self):
         if not self:
             return {}
-        return {'action': self.action,
-                'printer': self.printer_id,
-                }
+        return {
+            'action': self.action,
+            'printer': self.printer_id,
+        }
