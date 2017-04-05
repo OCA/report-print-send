@@ -6,11 +6,11 @@
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import openerp
+import odoo
 
-from openerp.service.report import self_reports
+from odoo.service.report import self_reports
 
-original_exp_report = openerp.service.report.exp_report
+original_exp_report = odoo.service.report.exp_report
 
 
 def exp_report(db, uid, object, ids, datas=None, context=None):
@@ -22,15 +22,15 @@ def exp_report(db, uid, object, ids, datas=None, context=None):
     return res
 
 
-openerp.service.report.exp_report = exp_report
+odoo.service.report.exp_report = exp_report
 
 
-original_exp_report_get = openerp.service.report.exp_report_get
+original_exp_report_get = odoo.service.report.exp_report_get
 
 
 def exp_report_get(db, uid, report_id):
     # First we need to know if the module is installed
-    registry = openerp.registry(db)
+    registry = odoo.registry(db)
     if registry.get('printing.printer'):
         cr = registry.cursor()
         try:
@@ -72,4 +72,4 @@ def exp_report_get(db, uid, report_id):
     return original_exp_report_get(db, uid, report_id)
 
 
-openerp.service.report.exp_report_get = exp_report_get
+odoo.service.report.exp_report_get = exp_report_get
