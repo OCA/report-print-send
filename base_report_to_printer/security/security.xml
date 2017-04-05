@@ -8,6 +8,15 @@
     <record id="printing_group_user" model="res.groups">
       <field name="name">Printing / Print User</field>
     </record>
+    <record id="printing_server_group_manager" model="ir.model.access">
+      <field name="name">Printing Server Manager</field>
+      <field name="model_id" ref="model_printing_server"/>
+      <field name="group_id" ref="printing_group_manager"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="1" name="perm_unlink"/>
+      <field eval="1" name="perm_write"/>
+      <field eval="1" name="perm_create"/>
+    </record>
     <record id="printing_printer_group_manager" model="ir.model.access">
       <field name="name">Printing Printer Manager</field>
       <field name="model_id" ref="model_printing_printer"/>
@@ -38,9 +47,27 @@
 
   </data>
   <data>
+    <record id="printing_server_group_user" model="ir.model.access">
+      <field name="name">Printing Server User</field>
+      <field name="model_id" ref="model_printing_server"/>
+      <field name="group_id" ref="printing_group_user"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="0" name="perm_unlink"/>
+      <field eval="0" name="perm_write"/>
+      <field eval="0" name="perm_create"/>
+    </record>
     <record id="printing_printer_group_user" model="ir.model.access">
       <field name="name">Printing Printer User</field>
       <field name="model_id" ref="model_printing_printer"/>
+      <field name="group_id" ref="printing_group_user"/>
+      <field eval="1" name="perm_read"/>
+      <field eval="0" name="perm_unlink"/>
+      <field eval="0" name="perm_write"/>
+      <field eval="0" name="perm_create"/>
+    </record>
+    <record id="printing_job_group_user" model="ir.model.access">
+      <field name="name">Printing Job User</field>
+      <field name="model_id" ref="model_printing_job"/>
       <field name="group_id" ref="printing_group_user"/>
       <field eval="1" name="perm_read"/>
       <field eval="0" name="perm_unlink"/>
