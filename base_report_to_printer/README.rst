@@ -90,6 +90,7 @@ Contributors
 * Lionel Sausin <ls@numerigraphe.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Dave Lasley <dave@laslabs.com>
+* Sylvain Garancher <sylvain.garancher@syleam.fr>
 
 Maintainer
 ----------
