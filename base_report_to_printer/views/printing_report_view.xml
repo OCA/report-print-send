@@ -28,6 +28,7 @@
 
   <!-- Add a shorcut to "Actions/Report" in the Printing menu -->
   <menuitem id="printing_report_xml_action_menu"
+    sequence="30"
     parent="printing_menu"
     action="base.ir_action_report_xml"/>
 

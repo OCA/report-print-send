@@ -6,23 +6,25 @@
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-
-
-@api.model
-def _available_action_types(self):
-    return [('server', 'Send to Printer'),
-            ('client', 'Send to Client'),
-            ('user_default', "Use user's defaults"),
-            ]
+from odoo import models, fields, api
 
 
 class PrintingAction(models.Model):
     _name = 'printing.action'
     _description = 'Print Job Action'
 
+    @api.model
+    def _available_action_types(self):
+        return [
+            ('server', 'Send to Printer'),
+            ('client', 'Send to Client'),
+            ('user_default', "Use user's defaults"),
+        ]
+
     name = fields.Char(required=True)
-    type = fields.Selection(
-        lambda s: _available_action_types(s),
+    action_type = fields.Selection(
+        selection=_available_action_types,
+        string='Type',
         required=True,
+        oldname='type'
     )

@@ -6,7 +6,7 @@
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 class IrActionsReportXml(models.Model):
@@ -73,8 +73,8 @@ class IrActionsReportXml(models.Model):
 
             # Retrieve report default values
             report_action = report.property_printing_action_id
-            if report_action and report_action.type != 'user_default':
-                action = report_action.type
+            if report_action and report_action.action_type != 'user_default':
+                action = report_action.action_type
             if report.printing_printer_id:
                 printer = report.printing_printer_id
 
