@@ -7,8 +7,8 @@
 
 import logging
 
-from openerp.exceptions import UserError
-from openerp import models, api, _
+from odoo.exceptions import UserError
+from odoo import models, api, _
 
 from ..models.printing_printer import CUPS_HOST, CUPS_PORT
 

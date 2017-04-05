@@ -11,9 +11,9 @@ import logging
 import os
 from tempfile import mkstemp
 
-from openerp import models, fields, api, _
-from openerp.exceptions import UserError
-from openerp.tools.config import config
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
+from odoo.tools.config import config
 
 
 _logger = logging.getLogger(__name__)
@@ -38,8 +38,8 @@ class PrintingPrinter(models.Model):
     _description = 'Printer'
     _order = 'name'
 
-    name = fields.Char(required=True, select=True)
-    system_name = fields.Char(required=True, select=True)
+    name = fields.Char(required=True, index=True)
+    system_name = fields.Char(required=True, index=True)
     default = fields.Boolean(readonly=True)
     status = fields.Selection([('unavailable', 'Unavailable'),
                                ('printing', 'Printing'),
