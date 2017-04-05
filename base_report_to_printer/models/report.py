@@ -2,7 +2,7 @@
 # Copyright (c) 2014 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, exceptions, _, api
+from odoo import models, exceptions, _, api
 
 
 class Report(models.Model):
