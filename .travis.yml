@@ -38,11 +38,6 @@ install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-  - pip install pycups==1.9.66
-  - pip install PyPDF2==1.18
-  - pip install requests
-  - pip install zpl2
-  - git clone https://github.com/OCA/reporting-engine -b ${VERSION} $HOME/reporting-engine
 
 script:
   - travis_run_tests
