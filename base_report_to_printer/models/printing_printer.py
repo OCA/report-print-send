@@ -95,10 +95,11 @@ class PrintingPrinter(models.Model):
         finally:
             os.close(fd)
 
-        return self.print_file(file_name, report=report, copies=copies)
+        return self.print_file(
+            file_name, report=report, copies=copies, format=format)
 
     @api.multi
-    def print_file(self, file_name, report=None, copies=1):
+    def print_file(self, file_name, report=None, copies=1, format=None):
         """ Print a file """
         self.ensure_one()
 
