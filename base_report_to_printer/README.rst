@@ -29,6 +29,13 @@ Installation
 
 * Install PyCups - https://pypi.python.org/pypi/pycups
 
+.. code-block:: bash
+
+   sudo apt-get install cups
+   sudo apt-get install libcups2-dev
+   sudo apt-get install python-dev OR sudo apt-get install python3-dev
+   sudo easy_install pycups OR sudo pip install pycups
+
 
 Configuration
 =============
