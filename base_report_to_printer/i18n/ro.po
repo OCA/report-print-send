@@ -120,7 +120,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
 msgid "Status"
-msgstr ""
+msgstr "Stare"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
