@@ -52,7 +52,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Print"
-msgstr ""
+msgstr "Печать"
 
 #. module: base_report_to_printer
 #: field:res.users,printing_action:0

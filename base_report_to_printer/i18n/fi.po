@@ -62,7 +62,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr ""
+msgstr "Tyyppi"
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
