@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 22:56+0000\n"
-"PO-Revision-Date: 2017-04-06 22:56+0000\n"
+"POT-Creation-Date: 2017-05-13 06:31+0000\n"
+"PO-Revision-Date: 2017-05-13 06:31+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Acción"
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_action_ids:0
 msgid "Actions"
-msgstr ""
+msgstr "Acciones"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
