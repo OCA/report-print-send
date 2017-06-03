@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 22:59+0000\n"
-"PO-Revision-Date: 2017-04-06 22:59+0000\n"
+"POT-Creation-Date: 2017-05-11 16:25+0000\n"
+"PO-Revision-Date: 2017-05-11 16:25+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
@@ -22,37 +22,37 @@ msgstr ""
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
 msgid "11x7"
-msgstr ""
+msgstr "11x7"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
 msgid "18x10"
-msgstr ""
+msgstr "18x10"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
 msgid "21x13"
-msgstr ""
+msgstr "21x13"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
 msgid "26x13"
-msgstr ""
+msgstr "26x13"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
 msgid "28x15"
-msgstr ""
+msgstr "28x15"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
 msgid "60x40"
-msgstr ""
+msgstr "60x40"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
 msgid "9x5"
-msgstr ""
+msgstr "9x5"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_sublabel_id
@@ -60,122 +60,127 @@ msgid ""
 "Another label to include into this one as a component. This allows to define"
 " reusable labels parts."
 msgstr ""
+"Eine andere Etikette, die als Komponente in diese einzubetten ist. Das "
+"ermöglicht die Anlage wiederverwendbarer Druckbestandteile."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_bar_width_ratio
 msgid "Bar width ratio"
-msgstr ""
+msgstr "Balkenbreitenverhältnis"
 
 #. module: printer_zpl2
 #: model:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Barcode Format"
-msgstr ""
+msgstr "Barcode-Format"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,color:0
 msgid "Black"
-msgstr ""
+msgstr "Schwarz"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_block_lines
 msgid "Block lines"
-msgstr ""
+msgstr "Blockzeilen"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_block_spaces
 msgid "Block spaces"
-msgstr ""
+msgstr "Blockleerzeichen"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_block_width
 msgid "Block width"
-msgstr ""
+msgstr "Blockbreite"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,block_justify:0
 msgid "Center"
-msgstr ""
+msgstr "Mittig"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_check_digits
 msgid "Check digits"
-msgstr ""
+msgstr "Prüfziffern"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_interpretation_line_above
 msgid ""
 "Check if you want the interpretation line to be printed above the barcode."
 msgstr ""
+"Wählen Sie aus, ob Sie die interpretierte Zeile oberhalb des Barcode "
+"ausdrucken möchten."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_interpretation_line
 msgid "Check if you want the interpretation line to be printed."
-msgstr ""
+msgstr "Wählen Sie aus, ob Sie die interpretierte Zeile drucken möchten."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_check_digits
 msgid "Check if you want to compute and print the check digit."
-msgstr ""
+msgstr "Wählen Sie aus, ob Sie Prüfziffern ermitteln und andrucken möchten."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_truncate
 msgid "Check if you want to truncate the barcode."
-msgstr ""
+msgstr "Wählen Sie aus, ob Sie den Barcode kürzen möchten"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_repeat
 msgid "Check this box to repeat this component on the label."
 msgstr ""
+"Wählen Sie aus, ob Sie diese Komponente auf dem Etikett wiederholen möchten."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_block_justify
 msgid "Choose how the text will be justified in the block."
-msgstr ""
+msgstr "Wählen Sie die Textausrichtung im Block aus."
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Circle"
-msgstr ""
+msgstr "Kreis"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Code 11"
-msgstr ""
+msgstr "Code 11"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Code 128"
-msgstr ""
+msgstr "Code 128"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Code 39"
-msgstr ""
+msgstr "Code 39"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Code 49"
-msgstr ""
+msgstr "Code 49"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_color
 msgid "Color"
-msgstr ""
+msgstr "Farbe"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_color
 msgid "Color of the line to draw."
-msgstr ""
+msgstr "Farbe der zu zeichnenden Linie."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_columns_count
 msgid "Columns count"
-msgstr ""
+msgstr "Spaltenanzahl"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_ids
 msgid "Components which will be printed on the label."
-msgstr ""
+msgstr "Komponenten die auf dem Etikett gedruckt werden."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_create_uid
@@ -194,7 +199,7 @@ msgstr "Erstellt am:"
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_data
 msgid "Data"
-msgstr ""
+msgstr "Daten"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_data
@@ -202,6 +207,8 @@ msgid ""
 "Data to print on this component. Resource values can be inserted with "
 "%(object.field_name)s."
 msgstr ""
+"Daten die in dieser Komponente gedruckt werden. Quellwerte können mit "
+"%(object.field_name)s eingefügt werden."
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
@@ -211,7 +218,7 @@ msgstr "Vorgabe"
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_description
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_display_name
@@ -223,12 +230,12 @@ msgstr "Anzeigename"
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "EAN-13"
-msgstr ""
+msgstr "EAN-13"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "EAN-8"
-msgstr ""
+msgstr "EAN-8"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_font
