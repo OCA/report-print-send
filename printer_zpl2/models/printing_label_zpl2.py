@@ -39,6 +39,9 @@ class PrintingLabelZpl2(models.Model):
         comodel_name='printing.label.zpl2.component', inverse_name='label_id',
         string='Label Components',
         help='Components which will be printed on the label.')
+    menu_ir_values_id = fields.Many2one(
+        comodel_name='ir.values', string='More Menu entry',
+        readonly=True, help='More menu entry.', copy=False)
 
     @api.multi
     def _generate_zpl2_components_data(
@@ -185,4 +188,33 @@ class PrintingLabelZpl2(models.Model):
                 record, page_count=page_count, **extra)
             printer.print_document(None, label_contents, 'raw')
 
+        return True
+
+    @api.multi
+    def create_action(self):
+        """ Create a contextual action for each label. """
+        wizard_action_id = self.env.ref(
+            'printer_zpl2.action_wizard_print_record_label_view')
+        for label in self:
+            ir_values = self.env['ir.values'].sudo().create({
+                'name': _('Print Label %s') % label.name,
+                'model': label.model_id.model,
+                'key2': 'client_action_multi',
+                'value': "ir.actions.act_window,%s" % wizard_action_id.id
+            })
+            label.write({'menu_ir_values_id': ir_values.id})
+        return True
+
+    @api.multi
+    def unlink_action(self):
+        """ Remove the contextual actions created for this label. """
+        self.check_access_rights('write', raise_exception=True)
+        for label in self:
+            if label.menu_ir_values_id:
+                try:
+                    label.menu_ir_values_id.sudo().unlink()
+                except Exception:
+                    raise exceptions.UserError(
+                        _('Deletion of the action record failed.')
+                    )
         return True

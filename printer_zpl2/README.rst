@@ -59,7 +59,6 @@ You can also use the generic label printing wizard, if added on some models.
 Known issues / Roadmap
 ======================
 
-* Add a button to generate the ir.values for a model
 * Develop a "Designer" view in a separate module, to allow drawing labels with simple mouse clicks/drags
 
 Bug Tracker
@@ -82,6 +81,7 @@ Contributors
 ------------
 
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
+* Jos De Graeve <Jos.DeGraeve@apertoso.be>
 
 Maintainer
 ----------
