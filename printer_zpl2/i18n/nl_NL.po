@@ -3,21 +3,20 @@
 # * printer_zpl2
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
-# Bole <bole@dajmi5.com>, 2017
+# Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-12 21:51+0000\n"
-"PO-Revision-Date: 2017-07-12 21:51+0000\n"
-"Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
-"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"POT-Creation-Date: 2017-05-23 09:07+0000\n"
+"PO-Revision-Date: 2017-05-23 09:07+0000\n"
+"Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: hr\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
@@ -69,37 +68,37 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Barcode Format"
-msgstr "Format barkoda"
+msgstr ""
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,color:0
 msgid "Black"
-msgstr "Crno"
+msgstr "Zwart"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_block_lines
 msgid "Block lines"
-msgstr "Blok linije"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_block_spaces
 msgid "Block spaces"
-msgstr "Blok razmaci"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_block_width
 msgid "Block width"
-msgstr "Širina bloka"
+msgstr ""
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,block_justify:0
 msgid "Center"
-msgstr "Centrirano"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_check_digits
 msgid "Check digits"
-msgstr "Provjeri znamenke"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_interpretation_line_above
@@ -135,42 +134,42 @@ msgstr ""
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Circle"
-msgstr "Krug"
+msgstr "Cirkel"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Code 11"
-msgstr ""
+msgstr "Code 11"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Code 128"
-msgstr ""
+msgstr "Code 128"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Code 39"
-msgstr ""
+msgstr "Code 39"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
 msgid "Code 49"
-msgstr ""
+msgstr "Code 49"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_color
 msgid "Color"
-msgstr "Boja"
+msgstr "Kleur"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_color
 msgid "Color of the line to draw."
-msgstr "Boja linije na ispisu."
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_columns_count
 msgid "Columns count"
-msgstr "Broj kolona"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_ids
@@ -182,19 +181,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_create_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_create_uid
 msgid "Created by"
-msgstr "Kreirao"
+msgstr "Aangemaakt door"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_create_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_create_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_create_date
 msgid "Created on"
-msgstr "Kreirano"
+msgstr "Aangemaakt op"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_data
 msgid "Data"
-msgstr "Podaci"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_data
@@ -206,19 +205,19 @@ msgstr ""
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
 msgid "Default"
-msgstr "Zadano"
+msgstr "Standaard"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_description
 msgid "Description"
-msgstr "Opis"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_display_name
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_display_name
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_display_name
 msgid "Display Name"
-msgstr "Naziv "
+msgstr "Weergavenaam"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,component_type:0
@@ -243,12 +242,12 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Format"
-msgstr "Format"
+msgstr "Formaat"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_height
 msgid "Height"
-msgstr "Visina"
+msgstr "Hoogte"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_height
@@ -299,23 +298,23 @@ msgstr ""
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,orientation:0
 msgid "Inverted"
-msgstr "Invezno"
+msgstr ""
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,block_justify:0
 msgid "Justified"
-msgstr "Poravnato"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_block_justify
 msgid "Justify"
-msgstr "Poravnaj"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_label_id
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_label_id
 msgid "Label"
-msgstr "Labela"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
@@ -347,31 +346,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component___last_update
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label___last_update
 msgid "Last Modified on"
-msgstr "Zadnje modificirano"
+msgstr "Laatst gewijzigd op"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_write_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_write_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_write_uid
 msgid "Last Updated by"
-msgstr "Zadnji ažurirao"
+msgstr "Laatst bijgewerkt door"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_write_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_write_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_write_date
 msgid "Last Updated on"
-msgstr "Zadnje ažuriranje"
+msgstr "Laatst bijgewerkt op"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,block_justify:0
 msgid "Left"
-msgstr "Ljevo"
+msgstr "Links"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_block_left_margin
 msgid "Left Margin"
-msgstr "Ljeva margina"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_block_left_margin
@@ -417,7 +416,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_name
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_name
 msgid "Name"
-msgstr "Naziv"
+msgstr "Naam"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_name
@@ -427,7 +426,7 @@ msgstr ""
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,orientation:0
 msgid "Normal"
-msgstr "Normalno"
+msgstr "Normaal"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_columns_count
@@ -442,7 +441,7 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_rows_count
 msgid "Number of rows to encode."
-msgstr "Boj redaka za enkodiranje"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_block_spaces
@@ -457,12 +456,12 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_orientation
 msgid "Orientation"
-msgstr "Orjentacija"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_orientation
 msgid "Orientation of the barcode."
-msgstr "Orjentacija barkoda."
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_origin_x
@@ -515,7 +514,7 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_printer_id
 msgid "Printer"
-msgstr "Pisač"
+msgstr "Printer"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_wizard_print_record_label_printer_id
