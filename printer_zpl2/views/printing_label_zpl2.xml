@@ -26,6 +26,7 @@
                     <field name="width"/>
                     <field name="origin_x"/>
                     <field name="origin_y"/>
+                    <field name="restore_saved_config"/>
                 </group>
                 <field name="component_ids" nolabel="1" colspan="4">
                     <tree string="Label Component">
