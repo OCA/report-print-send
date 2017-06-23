@@ -4,132 +4,133 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 02:40+0000\n"
-"PO-Revision-Date: 2017-04-24 02:40+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
+"POT-Creation-Date: 2017-07-12 21:51+0000\n"
+"PO-Revision-Date: 2017-07-12 21:51+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
+"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Aborted"
-msgstr ""
+msgstr "Otkazano"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Aborted by the system"
-msgstr ""
+msgstr "Otkazano od sistema"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_property_printing_action_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_action
 msgid "Action"
-msgstr "Azione"
+msgstr "Akcija"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printing_action_ids
 msgid "Actions"
-msgstr "Azioni"
+msgstr "Akcije"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_active
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_active
 msgid "Active"
-msgstr ""
+msgstr "Aktivno"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_address
 msgid "Address"
-msgstr ""
+msgstr "Adresa"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Available"
-msgstr "Disponibile"
+msgstr "Dostuno"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Being transformed into a different format"
-msgstr ""
+msgstr "U tijeku pretvorba u drugi format"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_id_cups
 msgid "CUPS id for this job."
-msgstr ""
+msgstr "CUPS ID zadatka"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Can be restarted"
-msgstr ""
+msgstr "Može biti ponovno pokrenuto"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
 msgid "Cancel"
-msgstr "Annulla"
+msgstr "Odustani"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Cancel all running jobs"
-msgstr ""
+msgstr "Otkaži sve pokrenute zadatke"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Canceled"
-msgstr ""
+msgstr "Otkazano"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Cancelled at the device"
-msgstr ""
+msgstr "Otkazano na uređaju"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Cancelled by the printer operator"
-msgstr ""
+msgstr "Otkazano od operatera printera"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Cancelled by the user"
-msgstr ""
+msgstr "Otkazano od korisnika"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Cancelled, but printing already processed pages"
-msgstr ""
+msgstr "Otkazano, ali ispisuje već obrađene stranice"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Completed"
-msgstr ""
+msgstr "Završeno"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Completed successfully"
-msgstr ""
+msgstr "Uspješno završeno"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Completed with some errors"
-msgstr ""
+msgstr "Završeno sa nekim greškama"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Completed with some warnings"
-msgstr ""
+msgstr "Završeno sa nekim upozorenjima"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Compressed using an unknown algorithm"
-msgstr ""
+msgstr "Kompresirano korištenjem nepoznatog algoritma"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_create_uid
@@ -139,7 +140,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_create_uid
 msgid "Created by"
-msgstr "Creato da"
+msgstr "Kreirao"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_create_date
@@ -149,62 +150,62 @@ msgstr "Creato da"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_create_date
 msgid "Created on"
-msgstr "Creato il"
+msgstr "Kreirano"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_state
 msgid "Current state of the job."
-msgstr ""
+msgstr "Trenutni status zadatka"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Currently being interpreted"
-msgstr ""
+msgstr "Trenutno se interpretira"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Currently being sent to the printer"
-msgstr ""
+msgstr "Trenutno se šalje na pisač"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Currently held"
-msgstr ""
+msgstr "Trenutno je zadržano"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Currently printing"
-msgstr ""
+msgstr "Trenutno se ispisuje"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_completed
 msgid "Date and time of completion for this job."
-msgstr ""
+msgstr "Datum i vrijeme završetka ovog zadatka"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_creation
 msgid "Date and time of creation for this job."
-msgstr ""
+msgstr "Datum i vrijeme kreiranja ovog zadatka."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_processing
 msgid "Date and time of process for this job."
-msgstr ""
+msgstr "Datum i vrijeme obrade ovog zadatka."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_default
 msgid "Default"
-msgstr ""
+msgstr "Zadano"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_printer_id
 msgid "Default Printer"
-msgstr "Stampante di default"
+msgstr "Zadani pisač"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Disable"
-msgstr ""
+msgstr "Onemogući"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_display_name
@@ -214,41 +215,41 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_display_name
 msgid "Display Name"
-msgstr "Nome da visualizzare"
+msgstr "Naziv "
 
 #. module: base_report_to_printer
 #. openerp-web
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:33
 #, python-format
 msgid "Document sent to the printer "
-msgstr ""
+msgstr "Dokument poslan na pisač"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Enable"
-msgstr ""
+msgstr "Omogući"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
-msgstr "Errore"
+msgstr "Greška"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Error in the compressed data"
-msgstr ""
+msgstr "Greška u kompresiranim podacima"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Error in the document"
-msgstr ""
+msgstr "Greška u dokumentu"
 
 #. module: base_report_to_printer
 #. openerp-web
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:36
 #, python-format
 msgid "Error when sending the document to the printer "
-msgstr ""
+msgstr "Greška pri slanju dokumenta na pisač"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/models/printing_server.py:43
@@ -257,21 +258,23 @@ msgid ""
 "Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
 " running and that you can reach it from the Odoo server."
 msgstr ""
+"Neuspjelo povezivanje na CUPS poslužitelj na %s:%s. Provjerite da li je CUPS"
+" poslužitelj pokrenut i da li mu možete pristupiti sa Odoo poslužitelja."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Files are currently being received"
-msgstr ""
+msgstr "Datoteke se trenutno preuzimaju"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Files were not received in full"
-msgstr ""
+msgstr "Datoteke nisu u potpunosti preuzete"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Held because the printer is offline"
-msgstr ""
+msgstr "Zadržano jer je printer ugašen"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_id
@@ -286,39 +289,39 @@ msgstr "ID"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_address
 msgid "IP address or hostname of the server"
-msgstr ""
+msgstr "IP adresa ili naziv poslužitelja"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_active
 msgid "If checked, this server is useable."
-msgstr ""
+msgstr "Ako je označeno, poslužitelj se može koristiti"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_tree
 msgid "Job"
-msgstr ""
+msgstr "Zadatak"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_id_cups
 msgid "Job ID"
-msgstr ""
+msgstr "ID Zadatka"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_name
 msgid "Job name."
-msgstr ""
+msgstr "Naziv zadatka"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_job_ids
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Jobs"
-msgstr ""
+msgstr "Zadaci"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer_job_ids
 msgid "Jobs printed on this printer."
-msgstr ""
+msgstr "Zadaci ispisani na ovom pisaču"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action___last_update
@@ -328,7 +331,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action___last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server___last_update
 msgid "Last Modified on"
-msgstr "Ultima modifica il"
+msgstr "Zadnje modificirano"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_write_uid
@@ -338,7 +341,7 @@ msgstr "Ultima modifica il"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_write_uid
 msgid "Last Updated by"
-msgstr "Ultimo aggiornamento di"
+msgstr "Zadnji ažurirao"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_write_date
@@ -348,22 +351,22 @@ msgstr "Ultimo aggiornamento di"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_write_date
 msgid "Last Updated on"
-msgstr "Ultimo aggiornamento il"
+msgstr "Zadnje ažuriranje"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_printer_ids
 msgid "List of printers available on this server."
-msgstr ""
+msgstr "Popis pisača dostupnih na ovom poslužitelju."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_location
 msgid "Location"
-msgstr "Locazione"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_media_progress
 msgid "Media Progress"
-msgstr ""
+msgstr "Napredak medija"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_model
@@ -376,33 +379,33 @@ msgstr "Model"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_name
 msgid "Name"
-msgstr "Nome"
+msgstr "Naziv"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_name
 msgid "Name of the server."
-msgstr ""
+msgstr "Naziv ovog poslužitelja."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "No data has been received"
-msgstr ""
+msgstr "Nema zaprimljenih podataka"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/models/report.py:21
 #, python-format
 msgid "No printer configured to print this report."
-msgstr ""
+msgstr "Nijedan pisač nije postavljen za ispis ovog izvještaja."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "No reason"
-msgstr ""
+msgstr "Nema razloga"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Ok"
-msgstr "Ok"
+msgstr "U redu"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
@@ -417,27 +420,27 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_media_progress
 msgid "Percentage of progress for this job."
-msgstr ""
+msgstr "Postotak napredka za ovaj zadatak"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_port
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_port
 msgid "Port of the server."
-msgstr ""
+msgstr "Port na poslužitelju"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 msgid "Print"
-msgstr ""
+msgstr "Ispis"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
 msgid "Print Job Action"
-msgstr "Azione di stampa"
+msgstr "Akcija ispisa zadatka"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
@@ -445,17 +448,17 @@ msgstr "Azione di stampa"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_printer_id
 msgid "Printer"
-msgstr "Stampante"
+msgstr "Pisač"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Printer is stopped"
-msgstr ""
+msgstr "Pisač je zaustavljen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Printer needs ink/marker/toner"
-msgstr ""
+msgstr "Pisač treba tintu/marker/toner"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
@@ -465,7 +468,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_printer_id
 msgid "Printer used for this job."
-msgstr ""
+msgstr "Pisač korišten za ovaj zadatak."
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
@@ -474,12 +477,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_tree
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Printers"
-msgstr "Stampanti"
+msgstr "Pisači"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_printer_ids
 msgid "Printers List"
-msgstr ""
+msgstr "Popis pisača"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_menu
@@ -487,52 +490,52 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base_report_to_printer.view_users_form_simple_modif
 #: selection:printing.printer,status:0
 msgid "Printing"
-msgstr "Stampa"
+msgstr "Ispis"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.printing_group_manager
 msgid "Printing / Print Manager"
-msgstr ""
+msgstr "Ispis / Upravitelj ispisa"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.printing_group_user
 msgid "Printing / Print User"
-msgstr ""
+msgstr "Ispis / Korisnik ispisa"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_job
 msgid "Printing Job"
-msgstr ""
+msgstr "Zadatak za ispis"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer_update_wizard
 msgid "Printing Printer Update Wizard"
-msgstr ""
+msgstr "Čarobnja za ažuriranje pisača"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
 msgid "Printing Report Printing Actions"
-msgstr ""
+msgstr "Akcije ispisa izvještaja na pisač"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_action
 msgid "Printing action"
-msgstr ""
+msgstr "Akcija ispisa"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_server
 msgid "Printing server"
-msgstr ""
+msgstr "Poslužitelj za ispis"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Processing"
-msgstr ""
+msgstr "Obrada"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Processing Stopped"
-msgstr ""
+msgstr "Obrada zaustavljena"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
@@ -547,7 +550,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_state_reason
 msgid "Reason for the current job state."
-msgstr ""
+msgstr "Razlog trenutnog statusa zadatka."
 
 #. module: base_report_to_printer
 #. openerp-web
@@ -557,18 +560,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_report_id
 #, python-format
 msgid "Report"
-msgstr "Report"
+msgstr "Izvještaj"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_form
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_tree
 msgid "Report Printing Actions"
-msgstr "Azioni di stampa report"
+msgstr "Radnje ispisa izvještaja"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
-msgstr ""
+msgstr "Izvještaji"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
@@ -579,22 +582,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_server_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_server_id
 msgid "Server"
-msgstr ""
+msgstr "Poslužitelj"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Server Error"
-msgstr "Errore server"
+msgstr "Greška poslužitelja"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer_server_id
 msgid "Server used to access this printer."
-msgstr ""
+msgstr "Poslužitelj korišten za pristup ovom pisaču."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_server_id
 msgid "Server which hosts this job."
-msgstr ""
+msgstr "Poslužitelj koji odrađuje ovaj zadatak"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_server_action
@@ -603,71 +606,68 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_tree
 msgid "Servers"
-msgstr ""
+msgstr "Poslužitelji"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Set Default"
-msgstr "Imposta default"
+msgstr "Postavi zadano"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_printer_action
 msgid "Show Printers"
-msgstr ""
+msgstr "Prikaži pisače"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 msgid "Specific actions per user"
-msgstr ""
+msgstr "Specifične radnje po korisniku"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_state
 msgid "State"
-msgstr ""
+msgstr "Stanje"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_state_reason
 msgid "State Reason"
-msgstr ""
+msgstr "Razlog stanja"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_status
 msgid "Status"
-msgstr "Stato"
+msgstr "Status"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_status_message
 msgid "Status message"
-msgstr ""
+msgstr "Posuka statusa"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_system_name
 msgid "System name"
-msgstr ""
+msgstr "Sistemski naziv"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "The URI cannot be accessed"
-msgstr ""
+msgstr "URI nije moguće dohvatiti"
 
 #. module: base_report_to_printer
 #: sql_constraint:printing.job:0
 msgid "The id of the job must be unique per server !"
-msgstr ""
+msgstr "ID zadatka mora biti jedinstven po poslužitelju!"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_act_report_xml_printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
 msgstr ""
-"Questo campo permette di configurare azioni e stampanti sulla base degli "
-"utenti"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid ""
 "This process will create all missing printers from the current CUPS server."
 msgstr ""
-"Questo processo creerà tutte le stampante mancanti dal server CUPS corrente"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_completed
@@ -687,17 +687,17 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_action_type
 msgid "Type"
-msgstr "Tipo"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_uri
 msgid "URI"
-msgstr "URI"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Unavailable"
-msgstr "Non disponibile"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_active
@@ -707,7 +707,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0 selection:printing.printer,status:0
 msgid "Unknown"
-msgstr "Sconosciuto"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
@@ -729,22 +729,22 @@ msgstr ""
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printer_update_wizard
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Update Printers from CUPS"
-msgstr "Aggiorna stampanti da CUPS"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_user_id
 msgid "User"
-msgstr "Utente"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Korisnici"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr ""
+msgstr "ir.actions.report.xml"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
