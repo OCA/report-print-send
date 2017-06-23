@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import mock
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import HttpCase
 from odoo import exceptions
 
 
@@ -11,7 +11,7 @@ class StopTest(Exception):
     pass
 
 
-class TestReport(TransactionCase):
+class TestReport(HttpCase):
 
     def setUp(self):
         super(TestReport, self).setUp()
