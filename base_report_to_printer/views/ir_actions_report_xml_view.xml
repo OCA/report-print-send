@@ -6,8 +6,8 @@
     <field name="model">ir.actions.report.xml</field>
     <field name="inherit_id" ref="base.act_report_xml_view" />
     <field name="arch" type="xml">
-      <xpath expr="//page[@name='security']">
-        <page string="Print">
+      <xpath expr="//page[@name='security']" position="before" >
+        <page string="Print" name="print" >
           <group>
             <field name="property_printing_action_id"/>
             <field name="printing_printer_id"/>
