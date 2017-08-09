@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_auto_print,Read Auto Print Rules,model_auto_print_rule,base.group_user,1,0,0,0
+manage_auto_print,Manage Auto Print,model_auto_print_rule,base_report_to_printer.printing_group_manager,1,1,1,1
