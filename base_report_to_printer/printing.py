@@ -161,6 +161,7 @@ class PrintingPrinter(models.Model):
                              file_name,
                              options=options)
         _logger.info("Printing job: '%s' on %s" % (file_name, CUPS_HOST))
+        os.remove(file_name)
         return True
 
     @api.multi
