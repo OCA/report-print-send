@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 05:44+0000\n"
-"PO-Revision-Date: 2017-01-07 05:44+0000\n"
+"POT-Creation-Date: 2017-07-01 07:49+0000\n"
+"PO-Revision-Date: 2017-07-01 07:49+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Greek (Greece) (https://www.transifex.com/oca/teams/23907/el_GR/)\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,7 @@ msgstr "Τελευταία ενημέρωση στις"
 #. module: printer_tray
 #: field:printing.tray,name:0
 msgid "Name"
-msgstr ""
+msgstr "Ονομασία"
 
 #. module: printer_tray
 #: field:ir.actions.report.xml,printer_tray_id:0
