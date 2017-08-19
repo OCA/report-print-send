@@ -67,7 +67,7 @@ msgstr "Type"
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0

@@ -36,7 +36,7 @@ msgstr ""
 #. module: printer_tray
 #: field:printing.tray,name:0
 msgid "Name"
-msgstr ""
+msgstr "Ονομασία"
 
 #. module: printer_tray
 #: field:printing.tray,system_name:0

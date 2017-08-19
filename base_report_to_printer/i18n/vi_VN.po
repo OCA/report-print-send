@@ -10,12 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2015-10-12 21:04+0000\n"
 "PO-Revision-Date: 2015-09-28 11:33+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Catalan (http://www.transifex.com/oca/OCA-report-print-send-7-0/language/ca/)\n"
+"Language-Team: Vietnamese (Viet Nam) (http://www.transifex.com/oca/OCA-report-print-send-7-0/language/vi_VN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: ca\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: vi_VN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: base_report_to_printer
 #: view:res.users:0
@@ -41,7 +41,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
 msgid "Location"
-msgstr "Ubicació "
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printing_printer_form
@@ -62,12 +62,12 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr "Tipus"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.printer,model:0
 msgid "Model"
-msgstr "Model"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -89,7 +89,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
-msgstr "Usuaris"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
@@ -110,7 +110,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
-msgstr "Usuari"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0
@@ -120,7 +120,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
 msgid "Status"
-msgstr "Estat"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printing_printer_form
@@ -135,7 +135,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.action,name:0 field:printing.printer,name:0
 msgid "Name"
-msgstr "Nom"
+msgstr "Tên"
 
 #. module: base_report_to_printer
 #: view:printing.printer:0
@@ -190,18 +190,18 @@ msgstr ""
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
-msgstr "Error"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,property_printing_action:0
 #: field:printing.report.xml.action,action:0
 msgid "Action"
-msgstr "Acció"
+msgstr ""
 
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Security"
-msgstr "Seguritat"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.printer,status_message:0
@@ -226,7 +226,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:0
 msgid "Cancel"
-msgstr "Cancel·la"
+msgstr "Hủy"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.res_groups_printingprintoperator0
@@ -242,4 +242,4 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr "ir.actions.report.xml"
+msgstr ""
