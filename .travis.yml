@@ -18,7 +18,6 @@ addons:
       - python-simplejson
       - python-serial
       - python-yaml
-      - cups
       - libcups2-dev
       - wkhtmltopdf  # only add if needed and check the before_install section below
 
