@@ -52,7 +52,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:0
 msgid "Print"
-msgstr ""
+msgstr "Natisni"
 
 #. module: base_report_to_printer
 #: field:res.users,printing_action:0
@@ -115,7 +115,7 @@ msgstr "Uporabnik"
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,report_id:0
 msgid "Report"
-msgstr ""
+msgstr "Poročilo"
 
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
