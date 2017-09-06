@@ -939,3 +939,38 @@ class TestPrintingLabelZpl2(TransactionCase):
             '^JUR\n'
             # Label end
             '^XZ'.format(contents=data))
+
+    def test_qrcode_barcode_label_contents(self):
+        """ Check contents of a qr code barcode label """
+        label = self.new_label()
+        data = 'Some text'
+        self.new_component({
+            'label_id': label.id,
+            'component_type': 'qr_code',
+            'data': '"' + data + '"',
+        })
+        contents = label._generate_zpl2_data(self.printer)
+        self.assertEqual(
+            contents,
+            # Label start
+            '^XA\n'
+            # Print width
+            '^PW480\n'
+            # UTF-8 encoding
+            '^CI28\n'
+            # Label position
+            '^LH10,10\n'
+            # Barcode default format
+            '^BY2,3.0'
+            # Component position
+            '^FO10,10'
+            # Component format
+            '^BQN,2,1,Q,7'
+            # Component contents
+            '^FDMM,A{contents}'
+            # Component end
+            '^FS\n'
+            # Recall last saved parameters
+            '^JUR\n'
+            # Label end
+            '^XZ'.format(contents=data))
