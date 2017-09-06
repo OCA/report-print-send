@@ -158,6 +158,10 @@ class PrintingLabelZpl2(models.Model):
                     label_offset_x=component_offset_x,
                     label_offset_y=component_offset_y)
             else:
+                if component.component_type == zpl2.BARCODE_QR_CODE:
+                    # Adding Control Arguments to QRCode data Label
+                    data = 'MM,A{}'.format(data)
+
                 barcode_arguments = dict([
                     (field_name, component[field_name])
                     for field_name in [
@@ -172,6 +176,10 @@ class PrintingLabelZpl2(models.Model):
                         zpl2.ARG_TRUNCATE,
                         zpl2.ARG_MODULE_WIDTH,
                         zpl2.ARG_BAR_WIDTH_RATIO,
+                        zpl2.ARG_MODEL,
+                        zpl2.ARG_MAGNIFICATION_FACTOR,
+                        zpl2.ARG_ERROR_CORRECTION,
+                        zpl2.ARG_MASK_VALUE,
                     ]
                 ])
                 label_data.barcode_data(
