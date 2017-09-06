@@ -44,6 +44,7 @@ class PrintingLabelZpl2Component(models.Model):
             (zpl2.BARCODE_UPC_E, 'UPC-E'),
             (zpl2.BARCODE_CODE_128, 'Code 128'),
             (zpl2.BARCODE_EAN_13, 'EAN-13'),
+            (zpl2.BARCODE_QR_CODE, 'QR Code'),
             ('sublabel', 'Sublabel'),
         ], string='Type', required=True, default='text', oldname='type',
         help='Type of content, simple text or barcode.')
@@ -98,6 +99,23 @@ class PrintingLabelZpl2Component(models.Model):
     rows_count = fields.Integer(help='Number of rows to encode.')
     truncate = fields.Boolean(
         help='Check if you want to truncate the barcode.')
+    model = fields.Selection(
+        selection=[
+            (zpl2.MODEL_ORIGINAL, 'Original'),
+            (zpl2.MODEL_ENHANCED, 'Enhanced'),
+        ], default=zpl2.MODEL_ENHANCED,
+        help='Barcode model, used by some barcode types like QR Code.')
+    magnification_factor = fields.Integer(
+        default=1, help='Magnification Factor, from 1 to 10.')
+    error_correction = fields.Selection(
+        selection=[
+            (zpl2.ERROR_CORRECTION_ULTRA_HIGH, 'Ultra-high Reliability Level'),
+            (zpl2.ERROR_CORRECTION_HIGH, 'High Reliability Level'),
+            (zpl2.ERROR_CORRECTION_STANDARD, 'Standard Level'),
+            (zpl2.ERROR_CORRECTION_HIGH_DENSITY, 'High Density Level'),
+        ], required=True, default=zpl2.ERROR_CORRECTION_HIGH,
+        help='Error correction for some barcode types like QR Code.')
+    mask_value = fields.Integer(default=7, help='Mask Value, from 0 to 7.')
     data = fields.Char(
         size=256, default='""', required=True,
         help='Data to print on this component. Resource values can be '

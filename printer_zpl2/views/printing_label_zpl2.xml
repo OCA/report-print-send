@@ -57,7 +57,7 @@
                             </group>
                         </group>
                         <notebook colspan="4">
-                            <page string="Format" attrs="{'invisible': [('component_type', '=', ('sublabel'))]}">
+                            <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel', 'qr_code'))]}">
                                 <group>
                                     <field name="height"/>
                                     <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'circle', 'graphic'))]}"/>
@@ -70,7 +70,7 @@
                                 </group>
                             </page>
                             <!-- Barcode specific arguments -->
-                            <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel','graphic'))]}">
+                            <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel', 'graphic', 'qr_code'))]}">
                                 <group>
                                     <field name="check_digits"/>
                                     <field name="interpretation_line"/>
@@ -81,6 +81,15 @@
                                     <field name="columns_count"/>
                                     <field name="rows_count"/>
                                     <field name="truncate"/>
+                                </group>
+                            </page>
+                            <!-- 2D Barcode arguments -->
+                            <page string="2D Barcode Arguments" attrs="{'invisible': [('component_type', '!=', 'qr_code')]}">
+                                <group>
+                                    <field name="model"/>
+                                    <field name="magnification_factor"/>
+                                    <field name="error_correction"/>
+                                    <field name="mask_value"/>
                                 </group>
                             </page>
                             <!-- Text block specific arguments -->
