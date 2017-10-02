@@ -10,8 +10,6 @@ python:
 
 addons:
   apt:
-    sources:
-      - pov-wkhtmltopdf
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml  # because pip installation is slow
@@ -20,7 +18,6 @@ addons:
       - python-yaml
       - cups
       - libcups2-dev
-      - wkhtmltopdf  # only add if needed and check the before_install section below
 
 before_install:
   - "export DISPLAY=:99.0"
@@ -30,6 +27,7 @@ env:
   global:
   - VERSION="10.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
   - TRANSIFEX_USER='transbot@odoo-community.org'
+  - WKHTMLTOPDF_VERSION='0.12.4'
   - secure: HwYn7vV4wIM4ocObmgkylZmaw6FQynkbMiJmoTTfgL3y3Gy6IAPVXgTNXFUiIuYXZZ4B2GOAfcECQejCCw2KP7OCcBo1oGNuSJ2aVwiQcRH1ENDLTsMq1jcB/4vQuAmTS8WEE5nRkPyutwgE4kBYvZC4tENatakafPRAS+iNqpQ=
 
   matrix:
