@@ -24,5 +24,5 @@
         'python': ['cups'],
     },
     'installable': True,
-    'application': True,
+    'application': False,
 }
