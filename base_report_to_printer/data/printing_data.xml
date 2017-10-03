@@ -13,7 +13,7 @@
     <!-- properties -->
     <record forcecreate="True" id="property_printing_action_id" model="ir.property">
         <field name="name">property_printing_action_id</field>
-        <field name="fields_id" search="[('model', '=', 'ir.actions.report.xml'), ('name', '=', 'property_printing_action_id')]"/>
+        <field name="fields_id" search="[('model', '=', 'ir.actions.report'), ('name', '=', 'property_printing_action_id')]"/>
         <field name="value" eval="'printing.action,' + str(printing_action_2)"/>
     </record>
 
@@ -25,7 +25,7 @@
         <field name="interval_type">minutes</field>
         <field name="numbercall">-1</field>
         <field eval="False" name="doall"/>
-        <field eval="'printing.server'" name="model"/>
+        <field name="model_id" ref="base_report_to_printer.model_printing_server"/>
         <field eval="'action_update_jobs'" name="function"/>
         <field eval="'()'" name="args"/>
     </record>
