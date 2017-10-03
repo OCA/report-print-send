@@ -26,3 +26,14 @@ class ResUsers(models.Model):
     )
     printing_printer_id = fields.Many2one(comodel_name='printing.printer',
                                           string='Default Printer')
+
+    @api.model
+    def _register_hook(self):
+        self.SELF_WRITEABLE_FIELDS.extend([
+            'printing_action',
+            'printing_printer_id',
+        ])
+        self.SELF_READABLE_FIELDS.extend([
+            'printing_action',
+            'printing_printer_id',
+        ])
