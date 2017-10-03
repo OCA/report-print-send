@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="act_report_xml_view">
+        <field name="name">ir.actions.report.xml.form (in automatic printing)</field>
+        <field name="model">ir.actions.report.xml</field>
+        <field name="inherit_id" ref="base_report_to_printer.act_report_xml_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='printing_action_ids']" position="after">
+                <separator string="Specific users for Automated Documents"/>
+                <field name="auto_print_rule_ids" mode="tree">
+                    <tree string="Automatic Printing Rules" editable="bottom">
+                        <field name="user_id" context="{'active_test': False}"/>
+                        <field name="company" widget="many2many_tags" />
+                        <field name="warehouse" widget="many2many_tags" />
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
