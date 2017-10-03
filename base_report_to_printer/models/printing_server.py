@@ -78,7 +78,7 @@ class PrintingServer(models.Model):
                 for printer in server.printer_ids
             ])
             updated_printers = []
-            for name, printer_info in printers.iteritems():
+            for name, printer_info in printers.items():
                 printer = self.env['printing.printer']
                 if name in existing_printers:
                     printer = existing_printers[name]
@@ -182,21 +182,21 @@ class PrintingServer(models.Model):
                     'active': True,
                     'job_id_cups': cups_job_id,
                     'job_media_progress': job_data.get(
-                        'job-media-progress', 0),
+                        'job-media-progress', False),
                     'job_state': mapping.get(
                         job_data.get('job-state'), 'unknown'),
                     'job_state_reason': job_data.get('job-state-reasons', ''),
                     'time_at_creation': fields.Datetime.to_string(
                         datetime.fromtimestamp(job_data.get(
-                            'time-at-creation', 0))),
+                            'time-at-creation', False))),
                     'time_at_processing': job_data.get(
-                        'time-at-processing', 0) and fields.Datetime.to_string(
-                            datetime.fromtimestamp(job_data.get(
-                                'time-at-processing', 0))),
+                        'time-at-processing', False) and
+                    fields.Datetime.to_string(datetime.fromtimestamp(
+                        job_data.get('time-at-processing', False))),
                     'time_at_completed': job_data.get(
-                        'time-at-completed', 0) and fields.Datetime.to_string(
-                            datetime.fromtimestamp(job_data.get(
-                                'time-at-completed', 0))),
+                        'time-at-completed', False) and
+                    fields.Datetime.to_string(datetime.fromtimestamp(
+                        job_data.get('time-at-completed', False))),
                 }
 
                 # Search for the printer in Odoo
