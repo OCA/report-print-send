@@ -2,7 +2,7 @@
 <odoo>
 
     <menuitem name="Printing"
-        id="printing_menu"
+        id="printing_menu" sequence="1"
         parent="base.menu_administration"
         groups="printing_group_manager"
         />
@@ -16,20 +16,20 @@
                     <header>
                         <button name="enable" type="object" string="Enable" attrs="{'invisible': [('status', 'in', ('available', 'printing'))]}"/>
                         <button name="disable" type="object" string="Disable" attrs="{'invisible': [('status', '=', 'unavailable')]}"/>
-                        <button name="action_cancel_all_jobs" type="object" string="Cancel all running jobs"/>
+                        <button name="action_cancel_all_jobs" type="object" string="Cancel all running jobs" confirm="Are you sure to want to cancel all jobs of this printer?"/>
                     </header>
                     <div class="oe_title">
                         <h1>
-                            <label for="name"/>
                             <field name="name"/>
                         </h1>
                     </div>
                     <group>
                         <field name="system_name"/>
                     </group>
-                    <group col="3" colspan="4">
+                    <group col="4" colspan="4">
                         <field name="default"/>
-                        <button name="set_default" string="Set Default" type="object"/>
+                        <button name="set_default" string="Set Default" type="object" attrs="{'invisible': [('default','=', True)]}"/>
+                        <button name="unset_default" string="Unset Default" type="object" attrs="{'invisible': [('default','=', False)]}"/>
                     </group>
                     <group>
                         <field name="uri"/>
