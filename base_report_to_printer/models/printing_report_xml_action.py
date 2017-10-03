@@ -13,7 +13,7 @@ class PrintingReportXmlAction(models.Model):
     _name = 'printing.report.xml.action'
     _description = 'Printing Report Printing Actions'
 
-    report_id = fields.Many2one(comodel_name='ir.actions.report.xml',
+    report_id = fields.Many2one(comodel_name='ir.actions.report',
                                 string='Report',
                                 required=True,
                                 ondelete='cascade')

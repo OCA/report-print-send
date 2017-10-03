@@ -53,7 +53,7 @@ class TestPrintingJob(TransactionCase):
         job = self.new_job(printer, {'job_id_cups': 2})
         job.action_cancel()
         cups.Connection.side_effect = None
-        self.assertEquals(cups.Connection().cancelJob.call_count, 0)
+        self.assertEqual(cups.Connection().cancelJob.call_count, 0)
 
     @mock.patch('%s.cups' % model)
     def test_cancel_job(self, cups):

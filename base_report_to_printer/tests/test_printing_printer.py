@@ -37,13 +37,13 @@ class TestPrintingPrinter(TransactionCase):
 
     def test_printing_options(self):
         """ It should generate the right options dictionnary """
-        self.assertEquals(self.Model.print_options('report', 'raw'), {
+        self.assertEqual(self.Model.print_options('report', 'raw'), {
             'raw': 'True',
         })
-        self.assertEquals(self.Model.print_options('report', 'pdf', 2), {
+        self.assertEqual(self.Model.print_options('report', 'pdf', 2), {
             'copies': '2',
         })
-        self.assertEquals(self.Model.print_options('report', 'raw', 2), {
+        self.assertEqual(self.Model.print_options('report', 'raw', 2), {
             'raw': 'True',
             'copies': '2',
         })
@@ -55,7 +55,7 @@ class TestPrintingPrinter(TransactionCase):
         with mock.patch('%s.mkstemp' % model) as mkstemp:
             mkstemp.return_value = fd, file_name
             printer = self.new_record()
-            printer.print_document('report_name', 'content to print', 'pdf')
+            printer.print_document('report_name', b'content to print', 'pdf')
             cups.Connection().printFile.assert_called_once_with(
                 printer.system_name,
                 file_name,
@@ -72,7 +72,7 @@ class TestPrintingPrinter(TransactionCase):
             printer = self.new_record()
             with self.assertRaises(UserError):
                 printer.print_document(
-                    'report_name', 'content to print', 'pdf')
+                    'report_name', b'content to print', 'pdf')
 
     @mock.patch('%s.cups' % server_model)
     def test_print_file(self, cups):
@@ -105,7 +105,7 @@ class TestPrintingPrinter(TransactionCase):
         self.assertTrue(other_printer.default)
         # Check that calling the method on an empty recordset does nothing
         self.Model.set_default()
-        self.assertEquals(other_printer, self.Model.get_default())
+        self.assertEqual(other_printer, self.Model.get_default())
 
     @mock.patch('%s.cups' % server_model)
     def test_cancel_all_jobs(self, cups):
