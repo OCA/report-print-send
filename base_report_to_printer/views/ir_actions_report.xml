@@ -2,8 +2,8 @@
 <odoo>
 
   <record model="ir.ui.view" id="act_report_xml_view">
-    <field name="name">ir.actions.report.xml.printing</field>
-    <field name="model">ir.actions.report.xml</field>
+    <field name="name">ir.actions.report.printing</field>
+    <field name="model">ir.actions.report</field>
     <field name="inherit_id" ref="base.act_report_xml_view" />
     <field name="arch" type="xml">
       <xpath expr="//page[@name='security']" position="before" >

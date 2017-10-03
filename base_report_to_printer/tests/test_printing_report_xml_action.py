@@ -11,7 +11,7 @@ class TestPrintingReportXmlAction(TransactionCase):
         super(TestPrintingReportXmlAction, self).setUp()
         self.Model = self.env['printing.report.xml.action']
 
-        self.report = self.env['ir.actions.report.xml'].search([], limit=1)
+        self.report = self.env['ir.actions.report'].search([], limit=1)
         self.server = self.env['printing.server'].create({})
 
         self.report_vals = {

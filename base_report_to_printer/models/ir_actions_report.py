@@ -6,24 +6,20 @@
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api
+from odoo import api, exceptions, fields, models, _
 
 
-class IrActionsReportXml(models.Model):
-    """
-    Reports
-    """
-
-    _inherit = 'ir.actions.report.xml'
+class IrActionsReport(models.Model):
+    _inherit = 'ir.actions.report'
 
     property_printing_action_id = fields.Many2one(
         comodel_name='printing.action',
-        string='Action',
+        string='Default Behaviour',
         company_dependent=True,
     )
     printing_printer_id = fields.Many2one(
         comodel_name='printing.printer',
-        string='Printer'
+        string='Default Printer'
     )
     printing_action_ids = fields.One2many(
         comodel_name='printing.report.xml.action',
@@ -39,11 +35,10 @@ class IrActionsReportXml(models.Model):
 
         Called from js
         """
-        report_obj = self.env['report']
-        report = report_obj._get_report_from_name(report_name)
+        report = self._get_report_from_name(report_name)
         if not report:
             return {}
-        result = report.behaviour()[report.id]
+        result = report.behaviour()[report]
         serializable_result = {
             'action': result['action'],
             'printer_name': result['printer'].name,
@@ -79,18 +74,65 @@ class IrActionsReportXml(models.Model):
                 printer = report.printing_printer_id
 
             # Retrieve report-user specific values
-            print_action = printing_act_obj.search(
-                [('report_id', '=', report.id),
-                 ('user_id', '=', self.env.uid),
-                 ('action', '!=', 'user_default')],
-                limit=1)
+            print_action = printing_act_obj.search([
+                ('report_id', '=', report.id),
+                ('user_id', '=', self.env.uid),
+                ('action', '!=', 'user_default'),
+            ], limit=1)
             if print_action:
                 user_action = print_action.behaviour()
                 action = user_action['action']
                 if user_action['printer']:
                     printer = user_action['printer']
 
-            result[report.id] = {'action': action,
-                                 'printer': printer,
-                                 }
+            result[report] = {
+                'action': action,
+                'printer': printer,
+            }
         return result
+
+    @api.multi
+    def print_document(self, record_ids, data=None):
+        """ Print a document, do not return the document file """
+        document = self.with_context(
+            must_skip_send_to_printer=True).render_qweb_pdf(
+                record_ids, data=data)
+        behaviour = self.behaviour()[self]
+        printer = behaviour['printer']
+        if not printer:
+            raise exceptions.Warning(
+                _('No printer configured to print this report.')
+            )
+        return printer.print_document(self, document, self.report_type)
+
+    @api.multi
+    def _can_print_report(self, behaviour, printer, document):
+        """Predicate that decide if report can be sent to printer
+
+        If you want to prevent `render_qweb_pdf` to send report you can set
+        the `must_skip_send_to_printer` key to True in the context
+        """
+        if self.env.context.get('must_skip_send_to_printer'):
+            return False
+        if behaviour['action'] == 'server' and printer and document:
+            return True
+        return False
+
+    @api.model
+    def render_qweb_pdf(self, docids, data=None):
+        """ Generate a PDF and returns it.
+
+        If the action configured on the report is server, it prints the
+        generated document as well.
+        """
+        document, doc_format = super(IrActionsReport, self).render_qweb_pdf(
+            docids, data=data)
+
+        behaviour = self.behaviour()[self]
+        printer = behaviour['printer']
+        can_print_report = self._can_print_report(behaviour, printer, document)
+
+        if can_print_report:
+            printer.print_document(self, document, self.report_type)
+
+        return document, doc_format
