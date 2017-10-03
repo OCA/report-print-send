@@ -126,8 +126,13 @@ class PrintingPrinter(models.Model):
             return
         self.ensure_one()
         default_printers = self.search([('default', '=', True)])
-        default_printers.write({'default': False})
+        default_printers.unset_default()
         self.write({'default': True})
+        return True
+
+    @api.multi
+    def unset_default(self):
+        self.write({'default': False})
         return True
 
     @api.multi

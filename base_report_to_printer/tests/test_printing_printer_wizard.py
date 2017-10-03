@@ -75,7 +75,7 @@ class TestPrintingPrinterWizard(TransactionCase):
             limit=1,
         )
         self.assertTrue(rec_id)
-        for key, val in self._record_vals().iteritems():
+        for key, val in self._record_vals().items():
             if rec_id._fields[key].type == 'many2one':
                 val = self.env[rec_id._fields[key].comodel_name].browse(val)
 
