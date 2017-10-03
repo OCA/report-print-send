@@ -12,10 +12,10 @@ class TestIrActionsReportXml(TransactionCase):
 
     def setUp(self):
         super(TestIrActionsReportXml, self).setUp()
-        self.Model = self.env['ir.actions.report.xml']
+        self.Model = self.env['ir.actions.report']
         self.vals = {}
 
-        self.report = self.env['ir.actions.report.xml'].search([], limit=1)
+        self.report = self.env['ir.actions.report'].search([], limit=1)
         self.server = self.env['printing.server'].create({})
 
     def new_action(self):
@@ -46,18 +46,18 @@ class TestIrActionsReportXml(TransactionCase):
 
     def test_print_action_for_report_name_gets_report(self):
         """ It should get report by name """
-        with mock.patch.object(self.Model, 'env') as mk:
+        with mock.patch.object(self.Model, '_get_report_from_name') as mk:
             expect = 'test'
             self.Model.print_action_for_report_name(expect)
-            mk['report']._get_report_from_name.assert_called_once_with(
+            mk.assert_called_once_with(
                 expect
             )
 
     def test_print_action_for_report_name_returns_if_no_report(self):
         """ It should return empty dict when no matching report """
-        with mock.patch.object(self.Model, 'env') as mk:
+        with mock.patch.object(self.Model, '_get_report_from_name') as mk:
             expect = 'test'
-            mk['report']._get_report_from_name.return_value = False
+            mk.return_value = False
             res = self.Model.print_action_for_report_name(expect)
             self.assertDictEqual(
                 {}, res,
@@ -65,11 +65,9 @@ class TestIrActionsReportXml(TransactionCase):
 
     def test_print_action_for_report_name_returns_if_report(self):
         """ It should return correct serializable result for behaviour """
-        with mock.patch.object(self.Model, 'env') as mk:
+        with mock.patch.object(self.Model, '_get_report_from_name') as mk:
             res = self.Model.print_action_for_report_name('test')
-            behaviour = mk['report']._get_report_from_name().behaviour()[
-                mk['report']._get_report_from_name().id
-            ]
+            behaviour = mk().behaviour()[mk()]
             expect = {
                 'action': behaviour['action'],
                 'printer_name': behaviour['printer'].name,
@@ -87,7 +85,7 @@ class TestIrActionsReportXml(TransactionCase):
         report.property_printing_action_id = False
         report.printing_printer_id = False
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': 'client',
                 'printer': self.env['printing.printer'],
             },
@@ -99,7 +97,7 @@ class TestIrActionsReportXml(TransactionCase):
         self.env.user.printing_action = 'client'
         self.env.user.printing_printer_id = self.new_printer()
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': 'client',
                 'printer': self.env.user.printing_printer_id,
             },
@@ -112,7 +110,7 @@ class TestIrActionsReportXml(TransactionCase):
         report.property_printing_action_id = self.new_action()
         report.printing_printer_id = self.new_printer()
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': report.property_printing_action_id.action_type,
                 'printer': report.printing_printer_id,
             },
@@ -124,7 +122,7 @@ class TestIrActionsReportXml(TransactionCase):
         self.env.user.printing_action = 'client'
         report.property_printing_action_id.action_type = 'user_default'
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': 'client',
                 'printer': report.printing_printer_id,
             },
@@ -140,7 +138,7 @@ class TestIrActionsReportXml(TransactionCase):
             ('id', '!=', self.env.user.id),
         ], limit=1)
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': 'client',
                 'printer': report.printing_printer_id,
             },
@@ -153,11 +151,11 @@ class TestIrActionsReportXml(TransactionCase):
         self.env.user.printing_action = 'client'
         printing_action = self.new_printing_action()
         printing_action.user_id = self.env.user
-        printing_action.report_id = self.env['ir.actions.report.xml'].search([
+        printing_action.report_id = self.env['ir.actions.report'].search([
             ('id', '!=', report.id),
         ], limit=1)
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': 'client',
                 'printer': report.printing_printer_id,
             },
@@ -172,7 +170,7 @@ class TestIrActionsReportXml(TransactionCase):
         printing_action.user_id = self.env.user
         printing_action.report_id = report
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': printing_action.action,
                 'printer': report.printing_printer_id,
             },
@@ -186,7 +184,7 @@ class TestIrActionsReportXml(TransactionCase):
         printing_action.user_id = self.env.user
         printing_action.printer_id = self.new_printer()
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': printing_action.action,
                 'printer': printing_action.printer_id,
             },
@@ -201,7 +199,7 @@ class TestIrActionsReportXml(TransactionCase):
         printing_action.user_id = self.env.user
         printing_action.action = 'user_default'
         self.assertEqual(report.behaviour(), {
-            report.id: {
+            report: {
                 'action': 'client',
                 'printer': report.printing_printer_id,
             },
