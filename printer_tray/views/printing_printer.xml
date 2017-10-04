@@ -7,10 +7,10 @@
         <field name="inherit_id" ref="base_report_to_printer.printing_printer_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet/group[3]" position="after">
-                <group string="Trays">
+                <group string="Trays" name="trays">
                     <field name="tray_ids" nolabel="1">
                         <form>
-                            <group>
+                            <group name="name_fields">
                                 <field name="name"/>
                                 <field name="system_name"/>
                             </group>

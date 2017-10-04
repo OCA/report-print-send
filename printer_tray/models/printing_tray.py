@@ -9,6 +9,8 @@ class PrinterTray(models.Model):
     _name = 'printing.tray'
     _description = 'Printer Tray'
 
+    _order = 'name asc'
+
     name = fields.Char(required=True)
     system_name = fields.Char(required=True, readonly=True)
     printer_id = fields.Many2one(

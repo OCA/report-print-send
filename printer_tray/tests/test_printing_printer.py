@@ -280,7 +280,7 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
+        self.assertItemsEqual(vals['tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
         }), (0, 0, {
