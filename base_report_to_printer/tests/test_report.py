@@ -88,7 +88,7 @@ class TestReport(HttpCase):
             report.property_printing_action_id.action_type = 'server'
             report.printing_printer_id = self.new_printer()
             records = self.env[report.model].search([], limit=5)
-            document = report.render_qweb_pdf(records.ids)
+            document, doc_format = report.render_qweb_pdf(records.ids)
             print_document.assert_called_once_with(
                 report, document, report.report_type)
 

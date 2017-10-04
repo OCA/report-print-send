@@ -190,13 +190,13 @@ class PrintingServer(models.Model):
                         datetime.fromtimestamp(job_data.get(
                             'time-at-creation', False))),
                     'time_at_processing': job_data.get(
-                        'time-at-processing', False) and fields.Datetime.to_string(
-                            datetime.fromtimestamp(job_data.get(
-                                'time-at-processing', False))),
+                        'time-at-processing', False) and
+                    fields.Datetime.to_string(datetime.fromtimestamp(
+                        job_data.get('time-at-processing', False))),
                     'time_at_completed': job_data.get(
-                        'time-at-completed', False) and fields.Datetime.to_string(
-                            datetime.fromtimestamp(job_data.get(
-                                'time-at-completed', False))),
+                        'time-at-completed', False) and
+                    fields.Datetime.to_string(datetime.fromtimestamp(
+                        job_data.get('time-at-completed', False))),
                 }
 
                 # Search for the printer in Odoo

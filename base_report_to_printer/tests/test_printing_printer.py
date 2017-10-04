@@ -107,6 +107,13 @@ class TestPrintingPrinter(TransactionCase):
         self.Model.set_default()
         self.assertEqual(other_printer, self.Model.get_default())
 
+    def test_unset_default(self):
+        """ It should unset the default state of the printer """
+        printer = self.new_record()
+        self.assertTrue(printer.default)
+        printer.unset_default()
+        self.assertFalse(printer.default)
+
     @mock.patch('%s.cups' % server_model)
     def test_cancel_all_jobs(self, cups):
         """ It should cancel all jobs """

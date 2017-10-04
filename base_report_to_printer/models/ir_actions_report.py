@@ -94,8 +94,9 @@ class IrActionsReport(models.Model):
     @api.multi
     def print_document(self, record_ids, data=None):
         """ Print a document, do not return the document file """
-        document = self.with_context(must_skip_send_to_printer=True).render_qweb_pdf(
-            record_ids, data=data)
+        document = self.with_context(
+            must_skip_send_to_printer=True).render_qweb_pdf(
+                record_ids, data=data)
         behaviour = self.behaviour()[self]
         printer = behaviour['printer']
         if not printer:
@@ -124,7 +125,7 @@ class IrActionsReport(models.Model):
         If the action configured on the report is server, it prints the
         generated document as well.
         """
-        document = super(IrActionsReport, self).render_qweb_pdf(
+        document, doc_format = super(IrActionsReport, self).render_qweb_pdf(
             docids, data=data)
 
         behaviour = self.behaviour()[self]
@@ -134,4 +135,4 @@ class IrActionsReport(models.Model):
         if can_print_report:
             printer.print_document(self, document, self.report_type)
 
-        return document
+        return document, doc_format
