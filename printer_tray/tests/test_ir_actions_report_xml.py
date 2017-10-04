@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 
 class TestIrActionsReportXml(TransactionCase):
     def test_onchange_printer_tray_id_empty(self):
-        action = self.env['ir.actions.report.xml'].new(
+        action = self.env['ir.actions.report'].new(
             {'printer_tray_id': False})
         action.onchange_printing_printer_id()
         self.assertFalse(action.printer_tray_id)
@@ -31,7 +31,7 @@ class TestIrActionsReportXml(TransactionCase):
             'printer_id': printer.id,
         })
 
-        action = self.env['ir.actions.report.xml'].new(
+        action = self.env['ir.actions.report'].new(
             {'printer_tray_id': tray.id})
         self.assertEqual(action.printer_tray_id, tray)
         action.onchange_printing_printer_id()

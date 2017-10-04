@@ -5,8 +5,8 @@
 from odoo import api, fields, models
 
 
-class IrActionsReportXml(models.Model):
-    _inherit = 'ir.actions.report.xml'
+class IrActionsReport(models.Model):
+    _inherit = 'ir.actions.report'
 
     printer_tray_id = fields.Many2one(
         comodel_name='printing.tray',

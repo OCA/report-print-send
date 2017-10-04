@@ -104,7 +104,7 @@ class TestPrintingPrinter(TransactionCase):
         """
         It should generate the right options dictionnary
         """
-        report = self.env['ir.actions.report.xml'].search([], limit=1)
+        report = self.env['ir.actions.report'].search([], limit=1)
         action = self.env['printing.report.xml.action'].create({
             'user_id': self.env.user.id,
             'report_id': report.id,

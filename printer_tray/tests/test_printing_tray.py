@@ -36,7 +36,7 @@ class TestPrintingTray(TransactionCase):
 
     def test_report_behaviour(self):
         """ It should add the selected tray in the report data """
-        ir_report = self.env['ir.actions.report.xml'].search([], limit=1)
+        ir_report = self.env['ir.actions.report'].search([], limit=1)
         report = self.env['printing.report.xml.action'].create({
             'user_id': self.env.user.id,
             'report_id': ir_report.id,
