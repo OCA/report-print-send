@@ -21,6 +21,11 @@ class IrActionsReport(models.Model):
         comodel_name='printing.printer',
         string='Default Printer'
     )
+    printer_tray_id = fields.Many2one(
+        comodel_name='printing.tray',
+        string='Paper Source',
+        domain="[('printer_id', '=', printing_printer_id)]",
+    )
     printing_action_ids = fields.One2many(
         comodel_name='printing.report.xml.action',
         inverse_name='report_id',
@@ -28,6 +33,11 @@ class IrActionsReport(models.Model):
         help='This field allows configuring action and printer on a per '
              'user basis'
     )
+
+    @api.onchange('printing_printer_id')
+    def onchange_printing_printer_id(self):
+        """ Reset the tray when the printer is changed """
+        self.printer_tray_id = False
 
     @api.model
     def print_action_for_report_name(self, report_name):
