@@ -28,6 +28,17 @@ class PrintingReportXmlAction(models.Model):
     printer_id = fields.Many2one(comodel_name='printing.printer',
                                  string='Printer')
 
+    printer_tray_id = fields.Many2one(
+        comodel_name='printing.tray',
+        string='Paper Source',
+        domain="[('printer_id', '=', printer_id)]",
+    )
+
+    @api.onchange('printer_id')
+    def onchange_printer_id(self):
+        """ Reset the tray when the printer is changed """
+        self.printer_tray_id = False
+
     @api.multi
     def behaviour(self):
         if not self:
@@ -35,4 +46,5 @@ class PrintingReportXmlAction(models.Model):
         return {
             'action': self.action,
             'printer': self.printer_id,
+            'tray': self.printer_tray_id.system_name
         }
