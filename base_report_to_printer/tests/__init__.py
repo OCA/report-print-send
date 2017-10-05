@@ -4,7 +4,9 @@
 
 from . import test_printing_job
 from . import test_printing_printer
+from . import test_printing_printer_tray
 from . import test_printing_server
+from . import test_printing_tray
 from . import test_report
 from . import test_res_users
 from . import test_ir_actions_report

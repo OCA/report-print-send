@@ -11,6 +11,7 @@
           <group>
             <field name="property_printing_action_id"/>
             <field name="printing_printer_id"/>
+            <field name="printer_tray_id"/>
           </group>
 
           <separator string="Specific actions per user"/>

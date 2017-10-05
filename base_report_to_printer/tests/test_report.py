@@ -90,7 +90,8 @@ class TestReport(HttpCase):
             records = self.env[report.model].search([], limit=5)
             document, doc_format = report.render_qweb_pdf(records.ids)
             print_document.assert_called_once_with(
-                report, document, report.report_type)
+                report, document,
+                action='server', doc_format='qweb-pdf', tray=False)
 
     def test_print_document_not_printable(self):
         """ It should print the report, regardless of the defined behaviour """
