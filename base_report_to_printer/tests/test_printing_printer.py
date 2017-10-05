@@ -35,18 +35,54 @@ class TestPrintingPrinter(TransactionCase):
     def new_record(self):
         return self.Model.create(self.printer_vals)
 
-    def test_printing_options(self):
+    def test_option_tray(self):
+        """
+        It should put the value in InputSlot
+        """
+        self.assertEqual(self.Model._set_option_tray(None, 'Test Tray'),
+                         {'InputSlot': 'Test Tray'})
+        self.assertEqual(self.Model._set_option_tray(None, False),
+                         {})
+
+    def test_option_noops(self):
+        """
+        Noops should return an empty dict
+        """
+        self.assertEqual(self.Model._set_option_action(None, 'printer'), {})
+        self.assertEqual(self.Model._set_option_printer(None, self.Model), {})
+
+    def test_option_doc_format(self):
+        """
+        Raw documents should set raw boolean.
+        """
+        self.assertEqual(self.Model._set_option_doc_format(None, 'raw'),
+                         {'raw': 'True'})
+        # Deprecate _set_option_format in v12.
+        self.assertEqual(self.Model._set_option_format(None, 'raw'),
+                         {'raw': 'True'})
+
+        self.assertEqual(self.Model._set_option_doc_format(None, 'pdf'), {})
+        # Deprecate _set_option_format in v12.
+        self.assertEqual(self.Model._set_option_format(None, 'pdf'), {})
+
+    def test_print_options(self):
         """ It should generate the right options dictionnary """
-        self.assertEqual(self.Model.print_options('report', 'raw'), {
-            'raw': 'True',
-        })
-        self.assertEqual(self.Model.print_options('report', 'pdf', 2), {
             'copies': '2',
-        })
-        self.assertEqual(self.Model.print_options('report', 'raw', 2), {
-            'raw': 'True',
-            'copies': '2',
-        })
+        # TODO: None here used as report - tests here should be merged
+        # with tests in test_printing_printer_tray from when modules merged
+        report = self.env['ir.actions.report'].search([], limit=1)
+        self.assertEqual(self.Model.print_options(
+            report, doc_format='raw'), {'raw': 'True'}
+        )
+        self.assertEqual(self.Model.print_options(
+            report, doc_format='pdf', copies=2), {'copies': '2'}
+        )
+        self.assertEqual(self.Model.print_options(
+            report, doc_format='raw', copies=2),
+            {'raw': 'True', 'copies': '2'}
+        )
+        self.assertTrue('InputSlot' in self.Model.print_options(report,
+                                                                tray='Test'))
 
     @mock.patch('%s.cups' % server_model)
     def test_print_report(self, cups):
@@ -55,7 +91,8 @@ class TestPrintingPrinter(TransactionCase):
         with mock.patch('%s.mkstemp' % model) as mkstemp:
             mkstemp.return_value = fd, file_name
             printer = self.new_record()
-            printer.print_document('report_name', b'content to print', 'pdf')
+            printer.print_document(self.report, b'content to print',
+                                   doc_format='pdf')
             cups.Connection().printFile.assert_called_once_with(
                 printer.system_name,
                 file_name,
@@ -72,7 +109,7 @@ class TestPrintingPrinter(TransactionCase):
             printer = self.new_record()
             with self.assertRaises(UserError):
                 printer.print_document(
-                    'report_name', b'content to print', 'pdf')
+                    self.report, b'content to print', doc_format='pdf')
 
     @mock.patch('%s.cups' % server_model)
     def test_print_file(self, cups):
