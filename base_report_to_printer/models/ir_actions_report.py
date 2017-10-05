@@ -14,12 +14,12 @@ class IrActionsReport(models.Model):
 
     property_printing_action_id = fields.Many2one(
         comodel_name='printing.action',
-        string='Action',
+        string='Default Behaviour',
         company_dependent=True,
     )
     printing_printer_id = fields.Many2one(
         comodel_name='printing.printer',
-        string='Printer'
+        string='Default Printer'
     )
     printer_tray_id = fields.Many2one(
         comodel_name='printing.tray',

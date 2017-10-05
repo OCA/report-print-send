@@ -26,6 +26,7 @@ class TestPrintingPrinterWizard(TransactionCase):
             'printer-make-and-model': 'Make and Model',
             'printer-location': "location",
             'device-uri': 'URI',
+            'printer-uri-supported': 'uri'
         }
 
     def _record_vals(self, sys_name='sys_name'):
@@ -52,6 +53,7 @@ class TestPrintingPrinterWizard(TransactionCase):
         cups.Connection().getPrinters.return_value = {
             'sys_name': self.printer_vals,
         }
+        cups.Connection().getPPD3.return_value = (200, 0, '')
         self.Model.action_ok()
         cups.Connection().getPrinters.assert_called_once_with()
 
@@ -68,6 +70,7 @@ class TestPrintingPrinterWizard(TransactionCase):
         cups.Connection().getPrinters.return_value = {
             'sys_name': self.printer_vals,
         }
+        cups.Connection().getPPD3.return_value = (200, 0, '')
         self.Model.action_ok()
         rec_id = self.env['printing.printer'].search([
             ('system_name', '=', 'sys_name')
@@ -89,6 +92,7 @@ class TestPrintingPrinterWizard(TransactionCase):
         cups.Connection().getPrinters.return_value = {
             'sys_name': self.printer_vals,
         }
+        cups.Connection().getPPD3.return_value = (200, 0, '')
         self.env['printing.printer'].create(
             self._record_vals()
         )

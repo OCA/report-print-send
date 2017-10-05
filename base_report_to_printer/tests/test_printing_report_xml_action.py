@@ -47,12 +47,14 @@ class TestPrintingReportXmlAction(TransactionCase):
         self.assertEqual(xml_action.behaviour(), {
             'action': xml_action.action,
             'printer': xml_action.printer_id,
+            'tray': False,
         })
 
         xml_action = self.new_record({'printer_id': self.new_printer().id})
         self.assertEqual(xml_action.behaviour(), {
             'action': xml_action.action,
             'printer': xml_action.printer_id,
+            'tray': False,
         })
 
         self.assertEqual(self.Model.behaviour(), {})

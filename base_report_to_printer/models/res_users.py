@@ -33,6 +33,17 @@ class ResUsers(models.Model):
         domain="[('printer_id', '=', printing_printer_id)]",
     )
 
+    @api.model
+    def _register_hook(self):
+        self.SELF_WRITEABLE_FIELDS.extend([
+            'printing_action',
+            'printing_printer_id',
+        ])
+        self.SELF_READABLE_FIELDS.extend([
+            'printing_action',
+            'printing_printer_id',
+        ])
+
     @api.onchange('printing_printer_id')
     def onchange_printing_printer_id(self):
         """ Reset the tray when the printer is changed """
