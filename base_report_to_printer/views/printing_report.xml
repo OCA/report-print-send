@@ -7,23 +7,22 @@
         <field name="arch" type="xml">
             <form string="Report Printing Actions">
                 <group col="2">
-                    <field name="user_id"/>
+                    <field name="user_id" options="{'no_create': True}"/>
                     <field name="action"/>
-                    <field name="printer_id" select="1"/>
+                    <field name="printer_id" options="{'no_create': True}"/>
                     <field name="printer_tray_id"/>
                 </group>
             </form>
         </field>
     </record>
-
     <record model="ir.ui.view" id="printing_report_xml_action_view_tree">
         <field name="name">printing.report.xml.action.tree</field>
         <field name="model">printing.report.xml.action</field>
         <field name="arch" type="xml">
-            <tree string="Report Printing Actions">
-                <field name="user_id"/>
+            <tree string="Report Printing Actions" editable="bottom">
+                <field name="user_id" options="{'no_create': True}"/>
                 <field name="action"/>
-                <field name="printer_id"/>
+                <field name="printer_id" options="{'no_create': True}"/>
                 <field name="printer_tray_id"/>
             </tree>
         </field>

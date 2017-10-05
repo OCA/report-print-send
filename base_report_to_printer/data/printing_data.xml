@@ -10,6 +10,10 @@
         <field name="name">Send to Client</field>
         <field name="action_type">client</field>
     </record>
+    <record model="printing.action" id="printing_action_3">
+        <field name="name">Use User Defaults</field>
+        <field name="action_type">user_default</field>
+    </record>
     <!-- properties -->
     <record forcecreate="True" id="property_printing_action_id" model="ir.property">
         <field name="name">property_printing_action_id</field>

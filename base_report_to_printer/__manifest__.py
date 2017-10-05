@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 # Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
@@ -14,7 +13,7 @@
               " LasLabs, Camptocamp, Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    "depends": ['web'],
+    "depends": ['web', 'base'],
     'data': [
         'data/printing_data.xml',
         'security/security.xml',

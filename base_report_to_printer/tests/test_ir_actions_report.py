@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 LasLabs Inc.
 # Copyright 2016 SYLEAM
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -67,7 +66,7 @@ class TestIrActionsReportXml(TransactionCase):
         """ It should return correct serializable result for behaviour """
         with mock.patch.object(self.Model, '_get_report_from_name') as mk:
             res = self.Model.print_action_for_report_name('test')
-            behaviour = mk().behaviour()[mk()]
+            behaviour = mk().behaviour()
             expect = {
                 'action': behaviour['action'],
                 'printer_name': behaviour['printer'].name,
@@ -85,10 +84,8 @@ class TestIrActionsReportXml(TransactionCase):
         report.property_printing_action_id = False
         report.printing_printer_id = False
         self.assertEqual(report.behaviour(), {
-            report: {
-                'action': 'client',
-                'printer': self.env['printing.printer'],
-            },
+            'action': 'client',
+            'printer': self.env['printing.printer'],
         })
 
     def test_behaviour_user_values(self):
@@ -97,10 +94,8 @@ class TestIrActionsReportXml(TransactionCase):
         self.env.user.printing_action = 'client'
         self.env.user.printing_printer_id = self.new_printer()
         self.assertEqual(report.behaviour(), {
-            report: {
-                'action': 'client',
-                'printer': self.env.user.printing_printer_id,
-            },
+            'action': 'client',
+            'printer': self.env.user.printing_printer_id,
         })
 
     def test_behaviour_report_values(self):
@@ -110,10 +105,8 @@ class TestIrActionsReportXml(TransactionCase):
         report.property_printing_action_id = self.new_action()
         report.printing_printer_id = self.new_printer()
         self.assertEqual(report.behaviour(), {
-            report: {
                 'action': report.property_printing_action_id.action_type,
                 'printer': report.printing_printer_id,
-            },
         })
 
     def test_behaviour_user_action(self):
@@ -122,10 +115,8 @@ class TestIrActionsReportXml(TransactionCase):
         self.env.user.printing_action = 'client'
         report.property_printing_action_id.action_type = 'user_default'
         self.assertEqual(report.behaviour(), {
-            report: {
                 'action': 'client',
                 'printer': report.printing_printer_id,
-            },
         })
 
     def test_behaviour_printing_action_on_wrong_user(self):
@@ -138,10 +129,8 @@ class TestIrActionsReportXml(TransactionCase):
             ('id', '!=', self.env.user.id),
         ], limit=1)
         self.assertEqual(report.behaviour(), {
-            report: {
-                'action': 'client',
-                'printer': report.printing_printer_id,
-            },
+            'action': 'client',
+            'printer': report.printing_printer_id,
         })
 
     def test_behaviour_printing_action_on_wrong_report(self):
@@ -155,10 +144,8 @@ class TestIrActionsReportXml(TransactionCase):
             ('id', '!=', report.id),
         ], limit=1)
         self.assertEqual(report.behaviour(), {
-            report: {
-                'action': 'client',
-                'printer': report.printing_printer_id,
-            },
+            'action': 'client',
+            'printer': report.printing_printer_id,
         })
 
     def test_behaviour_printing_action_with_no_printer(self):
@@ -170,10 +157,8 @@ class TestIrActionsReportXml(TransactionCase):
         printing_action.user_id = self.env.user
         printing_action.report_id = report
         self.assertEqual(report.behaviour(), {
-            report: {
                 'action': printing_action.action,
                 'printer': report.printing_printer_id,
-            },
         })
 
     def test_behaviour_printing_action_with_printer(self):
@@ -184,10 +169,8 @@ class TestIrActionsReportXml(TransactionCase):
         printing_action.user_id = self.env.user
         printing_action.printer_id = self.new_printer()
         self.assertEqual(report.behaviour(), {
-            report: {
-                'action': printing_action.action,
-                'printer': printing_action.printer_id,
-            },
+            'action': printing_action.action,
+            'printer': printing_action.printer_id,
         })
 
     def test_behaviour_printing_action_user_defaults(self):
@@ -199,10 +182,8 @@ class TestIrActionsReportXml(TransactionCase):
         printing_action.user_id = self.env.user
         printing_action.action = 'user_default'
         self.assertEqual(report.behaviour(), {
-            report: {
                 'action': 'client',
                 'printer': report.printing_printer_id,
-            },
         })
 
     def test_onchange_printer_tray_id_empty(self):

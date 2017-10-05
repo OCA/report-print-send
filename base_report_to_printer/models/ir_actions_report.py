@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 # Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
@@ -14,12 +13,12 @@ class IrActionsReport(models.Model):
 
     property_printing_action_id = fields.Many2one(
         comodel_name='printing.action',
-        string='Action',
+        string='Default Behaviour',
         company_dependent=True,
     )
     printing_printer_id = fields.Many2one(
         comodel_name='printing.printer',
-        string='Printer'
+        string='Default Printer'
     )
     printer_tray_id = fields.Many2one(
         comodel_name='printing.tray',
@@ -48,7 +47,7 @@ class IrActionsReport(models.Model):
         report = self._get_report_from_name(report_name)
         if not report:
             return {}
-        result = report.behaviour()[report]
+        result = report.behaviour()
         serializable_result = {
             'action': result['action'],
             'printer_name': result['printer'].name,
@@ -57,49 +56,34 @@ class IrActionsReport(models.Model):
 
     @api.multi
     def behaviour(self):
-        result = {}
+        self.ensure_one()
         printer_obj = self.env['printing.printer']
         printing_act_obj = self.env['printing.report.xml.action']
-        # Set hardcoded default action
-        default_action = 'client'
-        # Retrieve system wide printer
-        default_printer = printer_obj.get_default()
-
-        # Retrieve user default values
+        # Retrieve user defaults or system defaults
         user = self.env.user
-        if user.printing_action:
-            default_action = user.printing_action
-        if user.printing_printer_id:
-            default_printer = user.printing_printer_id
+        action = user.printing_action or 'client'
+        printer = user.printing_printer_id or printer_obj.get_default()
 
-        for report in self:
-            action = default_action
-            printer = default_printer
+        # Retrieve report default values
+        report_action = self.property_printing_action_id
+        if report_action and report_action.action_type != 'user_default':
+            action = report_action.action_type
+        if self.printing_printer_id:
+            printer = self.printing_printer_id
 
-            # Retrieve report default values
-            report_action = report.property_printing_action_id
-            if report_action and report_action.action_type != 'user_default':
-                action = report_action.action_type
-            if report.printing_printer_id:
-                printer = report.printing_printer_id
+        # Retrieve report-user specific values
+        print_action = printing_act_obj.search([
+            ('report_id', '=', self.id),
+            ('user_id', '=', self.env.uid),
+            ('action', '!=', 'user_default'),
+        ], limit=1)
+        if print_action:
+            user_action = print_action.behaviour()
+            action = user_action['action']
+            if user_action['printer']:
+                printer = user_action['printer']
 
-            # Retrieve report-user specific values
-            print_action = printing_act_obj.search([
-                ('report_id', '=', report.id),
-                ('user_id', '=', self.env.uid),
-                ('action', '!=', 'user_default'),
-            ], limit=1)
-            if print_action:
-                user_action = print_action.behaviour()
-                action = user_action['action']
-                if user_action['printer']:
-                    printer = user_action['printer']
-
-            result[report] = {
-                'action': action,
-                'printer': printer,
-            }
-        return result
+        return {'action': action, 'printer': printer}
 
     @api.multi
     def print_document(self, record_ids, data=None):
@@ -107,7 +91,7 @@ class IrActionsReport(models.Model):
         document = self.with_context(
             must_skip_send_to_printer=True).render_qweb_pdf(
                 record_ids, data=data)
-        behaviour = self.behaviour()[self]
+        behaviour = self.behaviour()
         printer = behaviour['printer']
         if not printer:
             raise exceptions.Warning(
@@ -138,7 +122,7 @@ class IrActionsReport(models.Model):
         document, doc_format = super(IrActionsReport, self).render_qweb_pdf(
             docids, data=data)
 
-        behaviour = self.behaviour()[self]
+        behaviour = self.behaviour()
         printer = behaviour['printer']
         can_print_report = self._can_print_report(behaviour, printer, document)
 

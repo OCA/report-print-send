@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 # Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
@@ -32,6 +31,17 @@ class ResUsers(models.Model):
         string='Default Printer Paper Source',
         domain="[('printer_id', '=', printing_printer_id)]",
     )
+
+    @api.model
+    def _register_hook(self):
+        self.SELF_WRITEABLE_FIELDS.extend([
+            'printing_action',
+            'printing_printer_id',
+        ])
+        self.SELF_READABLE_FIELDS.extend([
+            'printing_action',
+            'printing_printer_id',
+        ])
 
     @api.onchange('printing_printer_id')
     def onchange_printing_printer_id(self):

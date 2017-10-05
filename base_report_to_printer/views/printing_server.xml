@@ -62,9 +62,9 @@
     </record>
 
     <menuitem name="Servers"
-        sequence="10"
-        id="printing_server_menu"
-        parent="printing_menu"
-        action="printing_server_action"/>
+              sequence="10"
+              id="printing_server_menu"
+              parent="printing_menu"
+              action="printing_server_action"/>
 
 </odoo>
