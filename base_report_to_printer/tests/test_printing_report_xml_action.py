@@ -56,3 +56,34 @@ class TestPrintingReportXmlAction(TransactionCase):
         })
 
         self.assertEqual(self.Model.behaviour(), {})
+
+    def test_onchange_printer_tray_id_empty(self):
+        action = self.env['printing.report.xml.action'].new(
+            {'printer_tray_id': False})
+        action.onchange_printer_id()
+        self.assertFalse(action.printer_tray_id)
+
+    def test_onchange_printer_tray_id_not_empty(self):
+        server = self.env['printing.server'].create({})
+        printer = self.env['printing.printer'].create({
+            'name': 'Printer',
+            'server_id': server.id,
+            'system_name': 'Sys Name',
+            'default': True,
+            'status': 'unknown',
+            'status_message': 'Msg',
+            'model': 'res.users',
+            'location': 'Location',
+            'uri': 'URI',
+        })
+        tray = self.env['printing.tray'].create({
+            'name': 'Tray',
+            'system_name': 'TrayName',
+            'printer_id': printer.id,
+        })
+
+        action = self.env['printing.report.xml.action'].new(
+            {'printer_tray_id': tray.id})
+        self.assertEqual(action.printer_tray_id, tray)
+        action.onchange_printer_id()
+        self.assertFalse(action.printer_tray_id)
