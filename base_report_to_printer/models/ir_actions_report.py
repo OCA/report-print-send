@@ -21,6 +21,11 @@ class IrActionsReport(models.Model):
         comodel_name='printing.printer',
         string='Default Printer'
     )
+    printer_tray_id = fields.Many2one(
+        comodel_name='printing.tray',
+        string='Paper Source',
+        domain="[('printer_id', '=', printing_printer_id)]",
+    )
     printing_action_ids = fields.One2many(
         comodel_name='printing.report.xml.action',
         inverse_name='report_id',
@@ -28,6 +33,11 @@ class IrActionsReport(models.Model):
         help='This field allows configuring action and printer on a per '
              'user basis'
     )
+
+    @api.onchange('printing_printer_id')
+    def onchange_printing_printer_id(self):
+        """ Reset the tray when the printer is changed """
+        self.printer_tray_id = False
 
     @api.model
     def print_action_for_report_name(self, report_name):
@@ -38,7 +48,7 @@ class IrActionsReport(models.Model):
         report = self._get_report_from_name(report_name)
         if not report:
             return {}
-        result = report.behaviour()[report]
+        result = report.behaviour()
         serializable_result = {
             'action': result['action'],
             'printer_name': result['printer'].name,
@@ -46,64 +56,66 @@ class IrActionsReport(models.Model):
         return serializable_result
 
     @api.multi
-    def behaviour(self):
-        result = {}
+    def _get_user_default_print_behaviour(self):
         printer_obj = self.env['printing.printer']
-        printing_act_obj = self.env['printing.report.xml.action']
-        # Set hardcoded default action
-        default_action = 'client'
-        # Retrieve system wide printer
-        default_printer = printer_obj.get_default()
-
-        # Retrieve user default values
         user = self.env.user
-        if user.printing_action:
-            default_action = user.printing_action
-        if user.printing_printer_id:
-            default_printer = user.printing_printer_id
+        return dict(
+            action=user.printing_action or 'client',
+            printer=user.printing_printer_id or printer_obj.get_default(),
+            tray=str(user.printer_tray_id.system_name) if
+            user.printer_tray_id else False
+        )
 
-        for report in self:
-            action = default_action
-            printer = default_printer
+    @api.multi
+    def _get_report_default_print_behaviour(self):
+        result = {}
+        report_action = self.property_printing_action_id
+        if report_action and report_action.action_type != 'user_default':
+            result['action'] = report_action.action_type
+        if self.printing_printer_id:
+            result['printer'] = self.printing_printer_id
+        if self.printer_tray_id:
+            result['tray'] = self.printer_tray_id.system_name
+        return result
 
-            # Retrieve report default values
-            report_action = report.property_printing_action_id
-            if report_action and report_action.action_type != 'user_default':
-                action = report_action.action_type
-            if report.printing_printer_id:
-                printer = report.printing_printer_id
+    @api.multi
+    def behaviour(self):
+        self.ensure_one()
+        printing_act_obj = self.env['printing.report.xml.action']
 
-            # Retrieve report-user specific values
-            print_action = printing_act_obj.search([
-                ('report_id', '=', report.id),
-                ('user_id', '=', self.env.uid),
-                ('action', '!=', 'user_default'),
-            ], limit=1)
-            if print_action:
-                user_action = print_action.behaviour()
-                action = user_action['action']
-                if user_action['printer']:
-                    printer = user_action['printer']
+        result = self._get_user_default_print_behaviour()
+        result.update(self._get_report_default_print_behaviour())
 
-            result[report] = {
-                'action': action,
-                'printer': printer,
-            }
+        # Retrieve report-user specific values
+        print_action = printing_act_obj.search([
+            ('report_id', '=', self.id),
+            ('user_id', '=', self.env.uid),
+            ('action', '!=', 'user_default'),
+        ], limit=1)
+        if print_action:
+            # For some reason design takes report defaults over
+            # False action entries so we must allow for that here
+            result.update({k: v for k, v in
+                          print_action.behaviour().items() if v})
         return result
 
     @api.multi
     def print_document(self, record_ids, data=None):
         """ Print a document, do not return the document file """
-        document = self.with_context(
+        document, doc_format = self.with_context(
             must_skip_send_to_printer=True).render_qweb_pdf(
                 record_ids, data=data)
-        behaviour = self.behaviour()[self]
-        printer = behaviour['printer']
+        behaviour = self.behaviour()
+        printer = behaviour.pop('printer', None)
+
         if not printer:
             raise exceptions.Warning(
                 _('No printer configured to print this report.')
             )
-        return printer.print_document(self, document, self.report_type)
+        # TODO should we use doc_format instead of report_type
+        return printer.print_document(self, document,
+                                      doc_format=self.report_type,
+                                      **behaviour)
 
     @api.multi
     def _can_print_report(self, behaviour, printer, document):
@@ -128,11 +140,12 @@ class IrActionsReport(models.Model):
         document, doc_format = super(IrActionsReport, self).render_qweb_pdf(
             docids, data=data)
 
-        behaviour = self.behaviour()[self]
-        printer = behaviour['printer']
+        behaviour = self.behaviour()
+        printer = behaviour.pop('printer', None)
         can_print_report = self._can_print_report(behaviour, printer, document)
 
         if can_print_report:
-            printer.print_document(self, document, self.report_type)
+            printer.print_document(self, document, doc_format=self.report_type,
+                                   **behaviour)
 
         return document, doc_format
