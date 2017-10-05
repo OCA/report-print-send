@@ -7,8 +7,8 @@
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import errno
 import logging
-
 import os
 from tempfile import mkstemp
 
@@ -16,6 +16,11 @@ from odoo import models, fields, api
 
 
 _logger = logging.getLogger(__name__)
+
+try:
+    import cups
+except ImportError:
+    _logger.debug('Cannot `import cups`.')
 
 
 class PrintingPrinter(models.Model):
@@ -52,6 +57,55 @@ class PrintingPrinter(models.Model):
     model = fields.Char(readonly=True)
     location = fields.Char(readonly=True)
     uri = fields.Char(string='URI', readonly=True)
+    tray_ids = fields.One2many(comodel_name='printing.tray',
+                               inverse_name='printer_id',
+                               string='Paper Sources')
+
+    @api.multi
+    def _prepare_update_from_cups(self, cups_connection, cups_printer):
+        vals = super(PrintingPrinter, self)._prepare_update_from_cups(
+            cups_connection, cups_printer)
+
+        printer_uri = cups_printer['printer-uri-supported']
+        printer_system_name = printer_uri[printer_uri.rfind('/') + 1:]
+        ppd_info = cups_connection.getPPD3(printer_system_name)
+        ppd_path = ppd_info[2]
+        if not ppd_path:
+            return vals
+
+        ppd = cups.PPD(ppd_path)
+        option = ppd.findOption('InputSlot')
+        try:
+            os.unlink(ppd_path)
+        except OSError as err:
+            # ENOENT means No such file or directory
+            # The file has already been deleted, we can continue the update
+            if err.errno != errno.ENOENT:
+                raise
+        if not option:
+            return vals
+
+        vals['tray_ids'] = []
+        cups_trays = {
+            tray_option['choice']: tray_option['text']
+            for tray_option in option.choices
+        }
+
+        # Add new trays
+        vals['tray_ids'].extend([
+            (0, 0, {'name': text, 'system_name': choice})
+            for choice, text in cups_trays.items()
+            if choice not in self.tray_ids.mapped('system_name')
+        ])
+
+        # Remove deleted trays
+        vals['tray_ids'].extend([
+            (2, tray.id)
+            for tray in self.tray_ids.filtered(
+                lambda record: record.system_name not in cups_trays.keys())
+        ])
+
+        return vals
 
     @api.multi
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
@@ -72,17 +126,7 @@ class PrintingPrinter(models.Model):
         return vals
 
     @api.multi
-    def print_options(self, report=None, format=None, copies=1):
-        """ Hook to set print options """
-        options = {}
-        if format == 'raw':
-            options['raw'] = 'True'
-        if copies > 1:
-            options['copies'] = str(copies)
-        return options
-
-    @api.multi
-    def print_document(self, report, content, format, copies=1):
+    def print_document(self, report, content, **print_opts):
         """ Print a file
 
         Format could be pdf, qweb-pdf, raw, ...
@@ -96,16 +140,48 @@ class PrintingPrinter(models.Model):
             os.close(fd)
 
         return self.print_file(
-            file_name, report=report, copies=copies, format=format)
+            file_name, report=report, **print_opts)
+
+    @staticmethod
+    def _set_option_doc_format(report, value):
+        return {'raw': 'True'} if value == 'raw' else {}
+
+    # Backwards compatibility of builtin used as kwarg
+    _set_option_format = _set_option_doc_format
 
     @api.multi
-    def print_file(self, file_name, report=None, copies=1, format=None):
+    def _set_option_tray(self, report, value):
+        """Note we use self here as some older PPD use tray
+        rather than InputSlot so we may need to query printer in override"""
+        return {'InputSlot': str(value)} if value else {}
+
+    @staticmethod
+    def _set_option_noop(report, value):
+        return {}
+
+    _set_option_action = _set_option_noop
+    _set_option_printer = _set_option_noop
+
+    @api.multi
+    def print_options(self, report=None, **print_opts):
+        options = {}
+        if not report:
+            return options
+
+        for option, value in print_opts.items():
+            try:
+                options.update(getattr(
+                    self, '_set_option_%s' % option)(report, value))
+            except AttributeError:
+                options[option] = str(value)
+        return options
+
+    @api.multi
+    def print_file(self, file_name, report=None, **print_opts):
         """ Print a file """
         self.ensure_one()
-
         connection = self.server_id._open_connection(raise_on_error=True)
-        options = self.print_options(
-            report=report, format=format, copies=copies)
+        options = self.print_options(report=report, **print_opts)
 
         _logger.debug(
             'Sending job to CUPS printer %s on %s'

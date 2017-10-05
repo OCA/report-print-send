@@ -4,14 +4,13 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
-# Bole <bole@dajmi5.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-12 21:51+0000\n"
-"PO-Revision-Date: 2017-07-12 21:51+0000\n"
-"Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
+"POT-Creation-Date: 2017-12-19 03:38+0000\n"
+"PO-Revision-Date: 2017-12-19 03:38+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +29,6 @@ msgid "Aborted by the system"
 msgstr "Otkazano od sistema"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_property_printing_action_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_action
 msgid "Action"
 msgstr "Akcija"
@@ -50,6 +48,11 @@ msgstr "Aktivno"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_address
 msgid "Address"
 msgstr "Adresa"
+
+#. module: base_report_to_printer
+#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Are you sure to want to cancel all jobs of this printer?"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -139,6 +142,7 @@ msgstr "Kompresirano korištenjem nepoznatog algoritma"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_create_uid
 msgid "Created by"
 msgstr "Kreirao"
 
@@ -149,6 +153,7 @@ msgstr "Kreirao"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_create_date
 msgid "Created on"
 msgstr "Kreirano"
 
@@ -198,9 +203,20 @@ msgid "Default"
 msgstr "Zadano"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_property_printing_action_id
+msgid "Default Behaviour"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printing_printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_printer_id
 msgid "Default Printer"
 msgstr "Zadani pisač"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printer_tray_id
+msgid "Default Printer Paper Source"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -214,6 +230,7 @@ msgstr "Onemogući"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_display_name
 msgid "Display Name"
 msgstr "Naziv "
 
@@ -221,8 +238,8 @@ msgstr "Naziv "
 #. openerp-web
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:33
 #, python-format
-msgid "Document sent to the printer "
-msgstr "Dokument poslan na pisač"
+msgid "Document sent to the printer %s"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -252,7 +269,7 @@ msgid "Error when sending the document to the printer "
 msgstr "Greška pri slanju dokumenta na pisač"
 
 #. module: base_report_to_printer
-#: code:addons/base_report_to_printer/models/printing_server.py:43
+#: code:addons/base_report_to_printer/models/printing_server.py:42
 #, python-format
 msgid ""
 "Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
@@ -283,6 +300,7 @@ msgstr "Zadržano jer je printer ugašen"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_id
 msgid "ID"
 msgstr "ID"
 
@@ -330,6 +348,7 @@ msgstr "Zadaci ispisani na ovom pisaču"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard___last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action___last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server___last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray___last_update
 msgid "Last Modified on"
 msgstr "Zadnje modificirano"
 
@@ -340,6 +359,7 @@ msgstr "Zadnje modificirano"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_write_uid
 msgid "Last Updated by"
 msgstr "Zadnji ažurirao"
 
@@ -350,6 +370,7 @@ msgstr "Zadnji ažurirao"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_write_date
 msgid "Last Updated on"
 msgstr "Zadnje ažuriranje"
 
@@ -378,6 +399,7 @@ msgstr "Model"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_name
 msgid "Name"
 msgstr "Naziv"
 
@@ -392,7 +414,7 @@ msgid "No data has been received"
 msgstr "Nema zaprimljenih podataka"
 
 #. module: base_report_to_printer
-#: code:addons/base_report_to_printer/models/report.py:21
+#: code:addons/base_report_to_printer/models/ir_actions_report.py:113
 #, python-format
 msgid "No printer configured to print this report."
 msgstr "Nijedan pisač nije postavljen za ispis ovog izvještaja."
@@ -406,6 +428,17 @@ msgstr "Nema razloga"
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Ok"
 msgstr "U redu"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printer_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_printer_tray_id
+msgid "Paper Source"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_tray_ids
+msgid "Paper Sources"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
@@ -444,11 +477,16 @@ msgstr "Akcija ispisa zadatka"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printing_printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_printer_id
 msgid "Printer"
 msgstr "Pisač"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_tray
+msgid "Printer Tray"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
@@ -503,6 +541,11 @@ msgid "Printing / Print User"
 msgstr "Ispis / Korisnik ispisa"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_action
+msgid "Printing Action"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_job
 msgid "Printing Job"
 msgstr "Zadatak za ispis"
@@ -516,11 +559,6 @@ msgstr "Čarobnja za ažuriranje pisača"
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
 msgid "Printing Report Printing Actions"
 msgstr "Akcije ispisa izvještaja na pisač"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_action
-msgid "Printing action"
-msgstr "Akcija ispisa"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_server
@@ -556,7 +594,6 @@ msgstr "Razlog trenutnog statusa zadatka."
 #. openerp-web
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:32
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:35
-#: model:ir.model,name:base_report_to_printer.model_report
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_report_id
 #, python-format
 msgid "Report"
@@ -640,13 +677,14 @@ msgstr "Status"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_status_message
-msgid "Status message"
-msgstr "Posuka statusa"
+msgid "Status Message"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_system_name
-msgid "System name"
-msgstr "Sistemski naziv"
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_system_name
+msgid "System Name"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
@@ -671,17 +709,22 @@ msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_completed
-msgid "Time at completed"
+msgid "Time At Completed"
 msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_creation
-msgid "Time at creation"
+msgid "Time At Creation"
 msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_processing
-msgid "Time at processing"
+msgid "Time At Processing"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Trays"
 msgstr ""
 
 #. module: base_report_to_printer
@@ -710,6 +753,11 @@ msgid "Unknown"
 msgstr ""
 
 #. module: base_report_to_printer
+#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Unset Default"
+msgstr ""
+
+#. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Unsupported format"
 msgstr ""
@@ -722,6 +770,13 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Update Printers"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.actions.server,name:base_report_to_printer.ir_cron_update_printers_ir_actions_server
+#: model:ir.cron,cron_name:base_report_to_printer.ir_cron_update_printers
+#: model:ir.cron,name:base_report_to_printer.ir_cron_update_printers
+msgid "Update Printers Jobs"
 msgstr ""
 
 #. module: base_report_to_printer
@@ -742,9 +797,9 @@ msgid "Users"
 msgstr "Korisnici"
 
 #. module: base_report_to_printer
-#: model:ir.model,name:base_report_to_printer.model_ir_actions_report_xml
-msgid "ir.actions.report.xml"
-msgstr "ir.actions.report.xml"
+#: model:ir.model,name:base_report_to_printer.model_ir_actions_report
+msgid "ir.actions.report"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard

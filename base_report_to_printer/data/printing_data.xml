@@ -26,8 +26,8 @@
         <field name="numbercall">-1</field>
         <field eval="False" name="doall"/>
         <field name="model_id" ref="base_report_to_printer.model_printing_server"/>
-        <field eval="'action_update_jobs'" name="function"/>
-        <field eval="'()'" name="args"/>
+        <field name="state">code</field>
+        <field name="code">model.action_update_jobs()</field>
     </record>
 
 </odoo>
