@@ -23,22 +23,32 @@
                             <field name="name"/>
                         </h1>
                     </div>
-                    <group>
+                    <group name="name">
                         <field name="system_name"/>
                     </group>
-                    <group col="4" colspan="4">
+                    <group col="4" colspan="4" name="default">
                         <field name="default"/>
                         <button name="set_default" string="Set Default" type="object" attrs="{'invisible': [('default','=', True)]}"/>
                         <button name="unset_default" string="Unset Default" type="object" attrs="{'invisible': [('default','=', False)]}"/>
                     </group>
-                    <group>
+                    <group name="details">
                         <field name="uri"/>
                         <field name="model"/>
                         <field name="location"/>
                         <field name="status"/>
                         <field name="status_message"/>
                     </group>
-                    <group>
+                    <group string="Trays" name="trays">
+                        <field name="tray_ids" nolabel="1">
+                            <form>
+                                <group name="name_fields">
+                                    <field name="name"/>
+                                    <field name="system_name"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                    <group name="jobs">
                         <separator string="Jobs" colspan="2"/>
                         <field name="job_ids" nolabel="1"/>
                     </group>
