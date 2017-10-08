@@ -93,7 +93,10 @@ class IrActionsReport(models.Model):
             ('action', '!=', 'user_default'),
         ], limit=1)
         if print_action:
-            result.update(print_action.behaviour())
+            # For some reason design takes report defaults over
+            # False action entries so we must allow for that here
+            result.update({k: v for k, v in
+                          print_action.behaviour().items() if v})
         return result
 
     @api.multi
