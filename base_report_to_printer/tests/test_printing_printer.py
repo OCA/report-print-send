@@ -40,16 +40,16 @@ class TestPrintingPrinter(TransactionCase):
         """ It should generate the right options dictionnary """
         # TODO: None here used as report - tests here should be merged
         # with tests in test_printing_printer_tray from when modules merged
-        self.assertEqual(self.Model.print_options(None, 'raw'), {
-            'raw': 'True',
-        })
-        self.assertEqual(self.Model.print_options(None, 'pdf', 2), {
-            'copies': '2',
-        })
-        self.assertEqual(self.Model.print_options(None, 'raw', 2), {
-            'raw': 'True',
-            'copies': '2',
-        })
+        self.assertEqual(self.Model.print_options(
+            None, doc_format='raw'), {'raw': 'True',}
+        )
+        self.assertEqual(self.Model.print_options(
+            None, doc_format='pdf', copies=2), {'copies': '2',}
+        )
+        self.assertEqual(self.Model.print_options(
+            None, doc_format='raw', copies=2),
+            {'raw': 'True', 'copies': '2',}
+        )
 
     @mock.patch('%s.cups' % server_model)
     def test_print_report(self, cups):
@@ -58,7 +58,8 @@ class TestPrintingPrinter(TransactionCase):
         with mock.patch('%s.mkstemp' % model) as mkstemp:
             mkstemp.return_value = fd, file_name
             printer = self.new_record()
-            printer.print_document(self.report, b'content to print', 'pdf')
+            printer.print_document(self.report, b'content to print',
+                                   doc_format='pdf')
             cups.Connection().printFile.assert_called_once_with(
                 printer.system_name,
                 file_name,
@@ -75,7 +76,7 @@ class TestPrintingPrinter(TransactionCase):
             printer = self.new_record()
             with self.assertRaises(UserError):
                 printer.print_document(
-                    self.report, b'content to print', 'pdf')
+                    self.report, b'content to print', doc_format='pdf')
 
     @mock.patch('%s.cups' % server_model)
     def test_print_file(self, cups):

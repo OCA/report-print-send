@@ -63,7 +63,7 @@ class IrActionsReport(models.Model):
             action=user.printing_action or 'client',
             printer=user.printing_printer_id or printer_obj.get_default(),
             tray=str(user.printer_tray_id.system_name) if
-                user.printer_tray_id else False
+            user.printer_tray_id else False
         )
 
     @api.multi

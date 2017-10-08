@@ -145,7 +145,7 @@ class PrintingPrinter(models.Model):
     def _set_option_tray(self, report, value):
         """Note we use self here as some older PPD use tray
         rather than InputSlot so we may need to query printer in override"""
-        return {'InputSlot': str(value)}
+        return {'InputSlot': str(value)} if value else {}
 
     @staticmethod
     def _set_option_noop(report, value):
