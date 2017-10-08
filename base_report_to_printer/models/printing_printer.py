@@ -126,36 +126,7 @@ class PrintingPrinter(models.Model):
         return vals
 
     @api.multi
-    def print_options(self, report=None, format=None, copies=1):
-        """ Hook to set print options """
-        options = {}
-        if format == 'raw':
-            options['raw'] = 'True'
-        if copies > 1:
-            options['copies'] = str(copies)
-        if report is not None:
-            printing_act_obj = self.env['printing.report.xml.action']
-            if report.printer_tray_id:
-                tray = report.printer_tray_id
-            else:
-                # Retrieve user default values
-                tray = self.env.user.printer_tray_id
-
-            # Retrieve report-user specific values
-            action = printing_act_obj.search([
-                ('report_id', '=', report.id),
-                ('user_id', '=', self.env.uid),
-                ('action', '!=', 'user_default'),
-            ], limit=1)
-            if action.printer_tray_id:
-                tray = action.printer_tray_id
-
-            if tray:
-                options['InputSlot'] = str(tray.system_name)
-        return options
-
-    @api.multi
-    def print_document(self, report, content, format, copies=1):
+    def print_document(self, report, content, **print_opts):
         """ Print a file
 
         Format could be pdf, qweb-pdf, raw, ...
@@ -169,16 +140,44 @@ class PrintingPrinter(models.Model):
             os.close(fd)
 
         return self.print_file(
-            file_name, report=report, copies=copies, format=format)
+            file_name, report=report, **print_opts)
+
+    @staticmethod
+    def _set_option_doc_format(report, value):
+        return {'raw': 'True'} if value == 'raw' else {}
+
+    # Backwards compatibility of builtin used as kwarg
+    _set_option_format = _set_option_doc_format
 
     @api.multi
-    def print_file(self, file_name, report=None, copies=1, format=None):
+    def _set_option_tray(self, report, value):
+        """Note we use self here as some older PPD use tray
+        rather than InputSlot so we may need to query printer in override"""
+        return {'InputSlot': str(value)}
+
+    @staticmethod
+    def _set_option_noop(report, value):
+        return {}
+
+    _set_option_action = _set_option_noop
+    _set_option_printer = _set_option_noop
+
+    @api.multi
+    def print_options(self, report=None, **print_opts):
+        options = {}
+        for option, value in print_opts.items():
+            try:
+                getattr(self, '_set_option_%s' % option)(report, value)
+            except AttributeError:
+                options[option] = str(value)
+        return options
+
+    @api.multi
+    def print_file(self, file_name, report=None, **print_opts):
         """ Print a file """
         self.ensure_one()
-
         connection = self.server_id._open_connection(raise_on_error=True)
-        options = self.print_options(
-            report=report, format=format, copies=copies)
+        options = self.print_options(report=report, **print_opts)
 
         _logger.debug(
             'Sending job to CUPS printer %s on %s'
