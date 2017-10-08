@@ -50,8 +50,7 @@ class TestPrintingPrinter(TransactionCase):
         Noops should return an empty dict
         """
         self.assertEqual(self.Model._set_option_action(None, 'printer'), {})
-        self.assertEqual(self.Model._set_option_printer(None, self.printer),
-                         {})
+        self.assertEqual(self.Model._set_option_printer(None, self.Model), {})
 
     def test_option_doc_format(self):
         """
@@ -82,9 +81,8 @@ class TestPrintingPrinter(TransactionCase):
             report, doc_format='raw', copies=2),
             {'raw': 'True', 'copies': '2'}
         )
-        self.assertIn('InputSlot',
-                      self.Model.print_options(report, tray='Test').keys()
-                      )
+        self.assertTrue('InputSlot' in self.Model.print_options(report,
+                                                                tray='Test'))
 
     @mock.patch('%s.cups' % server_model)
     def test_print_report(self, cups):
