@@ -44,6 +44,12 @@ class TestIrActionsReportXml(TransactionCase):
             'uri': 'URI',
         })
 
+    def new_tray(self, vals=None, defaults=None):
+        values = dict(defaults)
+        if vals is not None:
+            values.update(vals)
+        return self.env['printing.tray'].create(values)
+
     def test_print_action_for_report_name_gets_report(self):
         """ It should get report by name """
         with mock.patch.object(self.Model, '_get_report_from_name') as mk:
@@ -204,6 +210,70 @@ class TestIrActionsReportXml(TransactionCase):
             'tray': False,
         },
         )
+
+    def test_print_tray_behaviour(self):
+        """
+        It should return the correct tray
+        """
+        report = self.env['ir.actions.report'].search([], limit=1)
+        action = self.env['printing.report.xml.action'].create({
+            'user_id': self.env.user.id,
+            'report_id': report.id,
+            'action': 'server',
+        })
+        printer = self.new_printer()
+        tray_vals = {
+            'name': 'Tray',
+            'system_name': 'Tray',
+            'printer_id': printer.id,
+        }
+        user_tray = self.new_tray({'system_name':'User tray'}, tray_vals)
+        report_tray = self.new_tray({'system_name': 'Report tray'}, tray_vals)
+        action_tray = self.new_tray({'system_name': 'Action tray'}, tray_vals)
+
+
+        # No report passed
+        self.env.user.printer_tray_id = False
+        options = self.printer.print_options()
+        self.assertFalse('InputSlot' in options)
+
+        # No tray defined
+        self.env.user.printer_tray_id = False
+        report.printer_tray_id = False
+        action.printer_tray_id = False
+        options = report.behaviour()
+        self.assertTrue('tray' in options)
+
+        # Only user tray is defined
+        self.env.user.printer_tray_id = user_tray
+        report.printer_tray_id = False
+        action.printer_tray_id = False
+        options = report.behaviour()
+        self.assertIn({'tray': 'User tray'}, options)
+
+        # Only report tray is defined
+        self.env.user.printer_tray_id = False
+        report.printer_tray_id = report_tray
+        action.printer_tray_id = False
+        self.assertIn({'tray': 'Report tray'}, report.behaviour())
+
+        # Only action tray is defined
+        self.env.user.printer_tray_id = False
+        report.printer_tray_id = False
+        action.printer_tray_id = action_tray
+        self.assertIn({'tray': 'Action tray'}, report.behaviour())
+
+        # User and report tray defined
+        self.env.user.printer_tray_id = False
+        report.printer_tray_id = False
+        action.printer_tray_id = action_tray
+        self.assertIn({'tray': 'User tray'}, report.behaviour())
+
+        # All trays are defined
+        self.env.user.printer_tray_id = user_tray
+        report.printer_tray_id = report_tray
+        action.printer_tray_id = action_tray
+        self.assertIn({'tray': 'Action tray'}, report.behaviour())
 
     def test_onchange_printer_tray_id_empty(self):
         action = self.env['ir.actions.report'].new(
