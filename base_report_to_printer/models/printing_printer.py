@@ -157,9 +157,13 @@ class PrintingPrinter(models.Model):
     @api.multi
     def print_options(self, report=None, **print_opts):
         options = {}
+        if not report:
+            return options
+
         for option, value in print_opts.items():
             try:
-                getattr(self, '_set_option_%s' % option)(report, value)
+                options.update(getattr(
+                    self, '_set_option_%s' % option)(report, value))
             except AttributeError:
                 options[option] = str(value)
         return options
