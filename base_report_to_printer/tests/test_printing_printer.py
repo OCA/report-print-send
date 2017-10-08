@@ -41,14 +41,14 @@ class TestPrintingPrinter(TransactionCase):
         # TODO: None here used as report - tests here should be merged
         # with tests in test_printing_printer_tray from when modules merged
         self.assertEqual(self.Model.print_options(
-            None, doc_format='raw'), {'raw': 'True',}
+            None, doc_format='raw'), {'raw': 'True'}
         )
         self.assertEqual(self.Model.print_options(
-            None, doc_format='pdf', copies=2), {'copies': '2',}
+            None, doc_format='pdf', copies=2), {'copies': '2'}
         )
         self.assertEqual(self.Model.print_options(
             None, doc_format='raw', copies=2),
-            {'raw': 'True', 'copies': '2',}
+            {'raw': 'True', 'copies': '2'}
         )
 
     @mock.patch('%s.cups' % server_model)
