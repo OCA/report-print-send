@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="printer_update_wizard" model="ir.ui.view">
+        <field name="name">printing.printer.update.wizard</field>
+        <field name="model">printing.printer.update.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Printers from CUPS">
+                <label string="This process will create all missing printers from the current CUPS server." colspan="2"/>
+                <footer>
+                    <button name="action_ok" string="Ok" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_printer_update_wizard" model="ir.actions.act_window">
+        <field name="name">Update Printers from CUPS</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">printing.printer.update.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem action="action_printer_update_wizard" sequence="40" id="menu_printer_update_wizard" parent="printing_menu"/>
+</odoo>
