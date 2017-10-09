@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_server_action_form">
+        <field name="name">ir.actions.server.form</field>
+        <field name="model">ir.actions.server</field>
+        <field name="inherit_id" ref="base.view_server_action_form"/>
+        <field name="arch" type="xml">
+            <field name="model_name" position="attributes">
+                <attribute name="force_save">1</attribute>
+            </field>
+            <field name="model_id" position="attributes">
+                <attribute name="invisible">context.get('hide_report')</attribute>
+            </field>
+            <field name="state" position="attributes">
+                <attribute name="readonly">context.get('hide_report')</attribute>
+                <attribute name="force_save">1</attribute>
+            </field>
+            <field name="link_field_id" position="after">
+                <field name="report_id"
+                       attrs="{'invisible': [('state', '!=', 'print')], 'required': [('state', '=', 'print')]}"
+                       readonly="context.get('hide_report')" force_save="1"
+                />
+                <field name="print_action_type"
+                       attrs="{'invisible': [('state', '!=', 'print')], 'required': [('state', '=', 'print')]}"/>
+                <field name="printer_id"
+                       attrs="{'invisible': [('state', '!=', 'print')], 'required': [('state', '=', 'print'), ('print_action_type', '=', 'server')]}"/>
+                <field name="printer_tray_id"
+                       attrs="{'invisible': [('state', '!=', 'print')]}"/>
+                <field name="print_options"
+                       attrs="{'invisible': [('state', '!=', 'print')], 'required': [('state', '=', 'print'), ('print_action_type', '=', 'server')]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_server_print_action" model="ir.actions.act_window">
+        <field name="name">Server Print Actions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">base.automation</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="base_automation.view_base_automation_tree"/>
+        <field name="context">{'default_state': 'print'}</field>
+        <field name="domain">[('state', '=', 'print')]</field>
+    </record>
+
+    <menuitem action="action_server_print_action" id="menu_server_action"
+              parent="base_report_to_printer.printing_menu" sequence="50"/>
+
+</odoo>

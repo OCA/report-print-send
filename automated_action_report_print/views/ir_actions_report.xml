@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="act_report_view">
+        <field name="name">ir.actions.report.form (in automatic printing)</field>
+        <field name="model">ir.actions.report</field>
+        <field name="inherit_id" ref="base_report_to_printer.act_report_xml_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='printing_action_ids']" position="after">
+                <separator string="Automated Printing Actions"/>
+                <field name="model_id" invisible="1"/>
+                <field name="automated_action_ids" mode="tree,form"
+                       context="{'default_report_id': id, 'default_state': 'print', 'hide_report': 1, 'default_model_id': model_id}">
+                    <tree string="Automation">
+                        <field name="sequence" widget="handle"/>
+                        <field name="name"/>
+                        <field name="trigger"/>
+                        <field name="print_action_type" />
+                        <field name="printer_id"/>
+                        <field name="printer_tray_id"/>
+                        <field name="model_id" invisible="1"/>
+                        <field name="model_name" invisible="1" force_save="1"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
