@@ -1,29 +1,14 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Author: Guewen Baconnier
+# Copyright 2012-2017 Camptocamp SA
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import requests
 import logging
 import urlparse
 import json
 import pytz
+import base64
 
 from datetime import datetime
 from requests.packages.urllib3.filepost import encode_multipart_formdata
@@ -34,7 +19,7 @@ POST_SENDING_STATUS = {
     100: 'Ready/Pending',
     101: 'Processing',
     102: 'Waiting for confirmation',
-    200: 'Sent',
+    1: 'Sent',
     300: 'Some error occured and object wasn\'t sent',
     400: 'Sending cancelled',
 }
@@ -90,14 +75,9 @@ class Pingen(object):
         """ Build a requests session """
         if self._session is not None:
             return self._session
-        self._session = requests.Session(
-            params={'token': self._token},
-            # with safe_mode, requests catch errors and
-            # returns a blank response with an error
-            config={'safe_mode': True},
-            # verify = False required for staging environment
-            # because the SSL certificate is wrong
-            verify=not self.staging)
+        self._session = requests.Session()
+        self._session.params = {'token': self._token}
+        self._session.verify = not self.staging
         return self._session
 
     def __enter__(self):
@@ -121,22 +101,36 @@ class Pingen(object):
         :param str endpoint: endpoint to call
         :param kwargs: additional arguments forwarded to the requests method
         """
-        complete_url = urlparse.urljoin(self.url, endpoint)
+
+        p_url = urlparse.urljoin(self.url, endpoint)
+
+        if endpoint == 'document/get':
+            complete_url = '{}{}{}{}{}'.format(p_url,
+                                               '/id/',
+                                               kwargs['params']['id'],
+                                               '/token/',
+                                               self._token)
+        else:
+            complete_url = '{}{}{}'.format(p_url,
+                                           '/token/',
+                                           self._token)
 
         response = method(complete_url, **kwargs)
 
         if not response.ok:
             raise ConnectionError(
-                "%s: %s" % (response.json['errorcode'],
-                            response.json['errormessage']))
+                "%s: %s" % (response.json()['errorcode'],
+                            response.json()['errormessage']))
 
-        if response.json['error']:
+        if response.json()['error']:
             raise APIError(
-                "%s: %s" % (response.json['errorcode'], response.json['errormessage']))
+                "%s: %s" % (response.json()['errorcode'],
+                            response.json()['errormessage']))
 
         return response
 
-    def push_document(self, filename, filestream, send=None, speed=None, color=None):
+    def push_document(self, filename, filestream,
+                      send=None, speed=None, color=None):
         """ Upload a document to pingen.com and eventually ask to send it
 
         :param str filename: name of the file to push
@@ -174,7 +168,7 @@ class Pingen(object):
             headers={'Content-Type': content_type},
             data=multipart)
 
-        rjson = response.json
+        rjson = response.json()
 
         document_id = rjson['id']
         if rjson.get('send'):
@@ -203,7 +197,7 @@ class Pingen(object):
             params={'id': document_id},
             data={'data': json.dumps(data)})
 
-        return response.json['id']
+        return response.json()['id']
 
     def post_infos(self, post_id):
         """ Return the information of a post
@@ -213,10 +207,10 @@ class Pingen(object):
         """
         response = self._send(
             self.session.get,
-            'post/get',
+            'document/get',
             params={'id': post_id})
 
-        return response.json['item']
+        return response.json()['item']
 
     @staticmethod
     def is_posted(post_infos):
@@ -224,4 +218,4 @@ class Pingen(object):
 
         :param dict post_infos: post infos returned by `post_infos`
         """
-        return post_infos['status'] == 200
+        return post_infos['status'] == 1
