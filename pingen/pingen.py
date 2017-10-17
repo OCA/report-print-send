@@ -1,29 +1,14 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Author: Guewen Baconnier
+# Copyright 2012-2017 Camptocamp SA
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import requests
 import logging
 import urlparse
 import json
 import pytz
+import base64
 
 from datetime import datetime
 from requests.packages.urllib3.filepost import encode_multipart_formdata
@@ -90,14 +75,9 @@ class Pingen(object):
         """ Build a requests session """
         if self._session is not None:
             return self._session
-        self._session = requests.Session(
-            params={'token': self._token},
-            # with safe_mode, requests catch errors and
-            # returns a blank response with an error
-            config={'safe_mode': True},
-            # verify = False required for staging environment
-            # because the SSL certificate is wrong
-            verify=not self.staging)
+        self._session = requests.Session()
+        self._session.params = {'token': self._token}
+        self._session.verify = not self.staging
         return self._session
 
     def __enter__(self):
@@ -121,7 +101,8 @@ class Pingen(object):
         :param str endpoint: endpoint to call
         :param kwargs: additional arguments forwarded to the requests method
         """
-        complete_url = urlparse.urljoin(self.url, endpoint)
+        p_url = urlparse.urljoin(self.url, endpoint)
+        complete_url = p_url + '/token/' + self._token
 
         response = method(complete_url, **kwargs)
 
@@ -132,11 +113,13 @@ class Pingen(object):
 
         if response.json['error']:
             raise APIError(
-                "%s: %s" % (response.json['errorcode'], response.json['errormessage']))
+                "%s: %s" % (response.json['errorcode'],
+                            response.json['errormessage']))
 
         return response
 
-    def push_document(self, filename, filestream, send=None, speed=None, color=None):
+    def push_document(self, filename, filestream,
+                      send=None, speed=None, color=None):
         """ Upload a document to pingen.com and eventually ask to send it
 
         :param str filename: name of the file to push
@@ -162,7 +145,7 @@ class Pingen(object):
         # the entire body and send it to `data`
         # https://github.com/kennethreitz/requests/issues/950
         formdata = {
-            'file': (filename, filestream.read()),
+            'file': (filename, base64.b64decode(filestream.read())),
             'data': json.dumps(data),
             }
 

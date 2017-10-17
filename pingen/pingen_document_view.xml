@@ -155,7 +155,7 @@
       <field name="search_view_id" ref="view_pingen_document_search"/>
     </record>
 
-    <menuitem action="action_pingen_document" id="menu_pingen_document" parent="base.next_id_4"/>
+    <menuitem action="action_pingen_document" id="menu_pingen_document" parent="base.next_id_9"/>
 
   </data>
 </openerp>
