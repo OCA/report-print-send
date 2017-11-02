@@ -34,6 +34,7 @@ class PrintingLabelZpl2Component(models.Model):
             ('text', 'Text'),
             ('rectangle', 'Rectangle / Line'),
             ('circle', 'Circle'),
+            ('graphic', 'Graphic'),
             (zpl2.BARCODE_CODE_11, 'Code 11'),
             (zpl2.BARCODE_INTERLEAVED_2_OF_5, 'Interleaved 2 of 5'),
             (zpl2.BARCODE_CODE_39, 'Code 39'),
@@ -142,3 +143,8 @@ class PrintingLabelZpl2Component(models.Model):
     block_left_margin = fields.Integer(
         string='Left Margin',
         help='Left margin for the second and other lines in the block.')
+    graphic_image = fields.Binary(
+        "Image",
+        attachment=True,
+        help="This field holds the image used as image for "
+             "the product, limited to 1024x1024px.")
