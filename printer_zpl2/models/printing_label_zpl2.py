@@ -7,7 +7,7 @@ import io
 import logging
 import time
 
-from PIL import Image
+from PIL import Image, ImageOps
 from openerp import api, exceptions, fields, models
 from openerp.tools.safe_eval import safe_eval
 from openerp.tools.translate import _
