@@ -82,6 +82,7 @@ Contributors
 ------------
 
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
+* Jos De Graeve <Jos.DeGraeve@apertoso.be>
 
 Maintainer
 ----------
