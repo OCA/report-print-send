@@ -146,5 +146,5 @@ class PrintingLabelZpl2Component(models.Model):
     graphic_image = fields.Binary(
         "Image",
         attachment=True,
-        help="This field holds the image used as image for "
-             "the product, limited to 1024x1024px.")
+        help="This field holds a static image to print. "
+             "If not set, the data field is evaluated")

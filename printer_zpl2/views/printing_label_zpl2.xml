@@ -58,11 +58,11 @@
                             </group>
                         </group>
                         <notebook colspan="4">
-                            <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel','graphic'))]}">
+                            <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel'))]}">
                                 <group>
                                     <field name="height"/>
-                                    <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'circle'))]}"/>
-                                    <field name="reverse_print"/>
+                                    <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'graphic', 'rectangle', 'circle'))]}"/>
+                                    <field name="reverse_print" attrs="{'invisible': [('component_type', 'in', ('graphic'))]}"/>
                                     <field name="orientation" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}"/>
                                     <field name="font" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
                                     <field name="in_block" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>

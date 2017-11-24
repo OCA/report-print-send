@@ -122,6 +122,17 @@ class PrintingLabelZpl2(models.Model):
                         base64.decodestring(
                             component.graphic_image or data
                         )))
+                if component.width and component.height:
+                    pil_image = pil_image.resize(
+                        (component.width, component.height, )
+                    )
+                # rotation ( pil rotates counter clockwise )
+                if component.orientation == zpl2.ORIENTATION_ROTATED:
+                    pil_image = pil_image.rotate(-90)
+                elif component.orientation == zpl2.ORIENTATION_INVERTED:
+                    pil_image = pil_image.rotate(-180)
+                elif component.orientation == zpl2.ORIENTATION_BOTTOM_UP:
+                    pil_image = pil_image.rotate(-270)
                 label_data.graphic_image(
                     component_offset_x, component_offset_y,
                     pil_image
