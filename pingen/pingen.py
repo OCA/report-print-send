@@ -145,7 +145,7 @@ class Pingen(object):
         # the entire body and send it to `data`
         # https://github.com/kennethreitz/requests/issues/950
         formdata = {
-            'file': (filename, base64.b64decode(filestream.read())),
+            'file': (filename, filestream.read()),
             'data': json.dumps(data),
             }
 
