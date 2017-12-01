@@ -261,10 +261,10 @@ class PingenDocument(models.Model):
         pingen of a document in the Sendcenter
         :param Pingen pingen: pingen object to reuse
         """
-        if not self.post_id:
+        if not self.pingen_id:
             return
         try:
-            post_infos = pingen.post_infos(self.post_id)
+            post_infos = pingen.post_infos(self.pingen_id)
         except ConnectionError:
             _logger.exception(
                 'Connection Error when asking for '
@@ -277,19 +277,19 @@ class PingenDocument(models.Model):
                 'Pingen Document %s to %s.' %
                 (self.id, pingen.url))
             raise
-        currency_ids = self.env['res.currency'].search(
-            [('name', '=', post_infos['currency'])])
-        country_ids = self.env['res.country'].search(
+        # currency_ids = self.env['res.currency'].search(
+        #     [('name', '=', post_infos['currency'])])
+        country = self.env['res.country'].search(
             [('code', '=', post_infos['country'])])
         send_date = pingen_datetime_to_utc(post_infos['date'])
         vals = {
-            'post_status': POST_SENDING_STATUS[post_infos['status']],
-            'cost': post_infos['cost'],
-            'currency_id': currency_ids[0] if currency_ids else False,
+            # 'post_status': POST_SENDING_STATUS[post_infos['status']],
+            # 'cost': post_infos['cost'],
+            # 'currency_id': currency_ids[0] if currency_ids else False,
             'parsed_address': post_infos['address'],
-            'country_id': country_ids[0] if country_ids else False,
+            'country_id': country.id if country else False,
             'send_date': fields.Datetime.to_string(send_date),
-            'pages': post_infos['pages'],
+            # 'pages': post_infos['pages'],
             'last_error_message': False,
             }
         if pingen.is_posted(post_infos):
@@ -336,12 +336,12 @@ class PingenDocument(models.Model):
                 document._update_post_infos(pingen=session)
             except ConnectionError as e:
                 raise UserError(
-                    _('Connection Error when updating' +
+                    _('Connection Error when updating ' +
                       'the status of Document %s'
                       ' from Pingen') % document.name)
             except APIError as e:
                 raise UserError(
-                    _('Error when updating the status' +
+                    _('Error when updating the status ' +
                       'of Document %s from Pingen: '
                       '\n%s') % (document.name, e))
             except BaseException as e:

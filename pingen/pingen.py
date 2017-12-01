@@ -19,7 +19,7 @@ POST_SENDING_STATUS = {
     100: 'Ready/Pending',
     101: 'Processing',
     102: 'Waiting for confirmation',
-    200: 'Sent',
+    1: 'Sent',
     300: 'Some error occured and object wasn\'t sent',
     400: 'Sending cancelled',
 }
@@ -101,20 +101,31 @@ class Pingen(object):
         :param str endpoint: endpoint to call
         :param kwargs: additional arguments forwarded to the requests method
         """
+
         p_url = urlparse.urljoin(self.url, endpoint)
-        complete_url = p_url + '/token/' + self._token
+
+        if endpoint == 'document/get':
+            complete_url = '{}{}{}{}{}'.format(p_url,
+                                               '/id/',
+                                               kwargs['params']['id'],
+                                               '/token/',
+                                               self._token)
+        else:
+            complete_url = '{}{}{}'.format(p_url,
+                                           '/token/',
+                                           self._token)
 
         response = method(complete_url, **kwargs)
 
         if not response.ok:
             raise ConnectionError(
-                "%s: %s" % (response.json['errorcode'],
-                            response.json['errormessage']))
+                "%s: %s" % (response.json()['errorcode'],
+                            response.json()['errormessage']))
 
-        if response.json['error']:
+        if response.json()['error']:
             raise APIError(
-                "%s: %s" % (response.json['errorcode'],
-                            response.json['errormessage']))
+                "%s: %s" % (response.json()['errorcode'],
+                            response.json()['errormessage']))
 
         return response
 
@@ -157,7 +168,7 @@ class Pingen(object):
             headers={'Content-Type': content_type},
             data=multipart)
 
-        rjson = response.json
+        rjson = response.json()
 
         document_id = rjson['id']
         if rjson.get('send'):
@@ -186,7 +197,7 @@ class Pingen(object):
             params={'id': document_id},
             data={'data': json.dumps(data)})
 
-        return response.json['id']
+        return response.json()['id']
 
     def post_infos(self, post_id):
         """ Return the information of a post
@@ -196,10 +207,10 @@ class Pingen(object):
         """
         response = self._send(
             self.session.get,
-            'post/get',
+            'document/get',
             params={'id': post_id})
 
-        return response.json['item']
+        return response.json()['item']
 
     @staticmethod
     def is_posted(post_infos):
@@ -207,4 +218,4 @@ class Pingen(object):
 
         :param dict post_infos: post infos returned by `post_infos`
         """
-        return post_infos['status'] == 200
+        return post_infos['status'] == 1
