@@ -9,7 +9,7 @@
     'author': 'SYLEAM, Odoo Community Association (OCA)',
     'website': 'http://www.syleam.fr/',
     'license': 'AGPL-3',
-    'external_dependancies': {
+    'external_dependencies': {
         'python': ['zpl2'],
     },
     'depends': [
