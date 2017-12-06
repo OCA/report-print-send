@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2016 LasLabs Inc.
 # Copyright 2016 SYLEAM
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -43,6 +44,12 @@ class TestIrActionsReportXml(TransactionCase):
             'uri': 'URI',
         })
 
+    def new_tray(self, vals=None, defaults=None):
+        values = dict(defaults)
+        if vals is not None:
+            values.update(vals)
+        return self.env['printing.tray'].create(values)
+
     def test_print_action_for_report_name_gets_report(self):
         """ It should get report by name """
         with mock.patch.object(self.Model, '_get_report_from_name') as mk:
@@ -86,7 +93,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': self.env['printing.printer'],
-        })
+            'tray': False,
+        },
+        )
 
     def test_behaviour_user_values(self):
         """ It should return the action and printer from user """
@@ -96,7 +105,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': self.env.user.printing_printer_id,
-        })
+            'tray': False,
+        },
+        )
 
     def test_behaviour_report_values(self):
         """ It should return the action and printer from report """
@@ -105,9 +116,11 @@ class TestIrActionsReportXml(TransactionCase):
         report.property_printing_action_id = self.new_action()
         report.printing_printer_id = self.new_printer()
         self.assertEqual(report.behaviour(), {
-                'action': report.property_printing_action_id.action_type,
-                'printer': report.printing_printer_id,
-        })
+            'action': report.property_printing_action_id.action_type,
+            'printer': report.printing_printer_id,
+            'tray': False,
+        },
+        )
 
     def test_behaviour_user_action(self):
         """ It should return the action and printer from user action"""
@@ -115,9 +128,11 @@ class TestIrActionsReportXml(TransactionCase):
         self.env.user.printing_action = 'client'
         report.property_printing_action_id.action_type = 'user_default'
         self.assertEqual(report.behaviour(), {
-                'action': 'client',
-                'printer': report.printing_printer_id,
-        })
+            'action': 'client',
+            'printer': report.printing_printer_id,
+            'tray': False,
+        },
+        )
 
     def test_behaviour_printing_action_on_wrong_user(self):
         """ It should return the action and printer ignoring printing action
@@ -131,7 +146,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': report.printing_printer_id,
-        })
+            'tray': False,
+        },
+        )
 
     def test_behaviour_printing_action_on_wrong_report(self):
         """ It should return the action and printer ignoring printing action
@@ -146,7 +163,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': report.printing_printer_id,
-        })
+            'tray': False,
+        },
+        )
 
     def test_behaviour_printing_action_with_no_printer(self):
         """ It should return the action from printing action and printer from other
@@ -157,9 +176,11 @@ class TestIrActionsReportXml(TransactionCase):
         printing_action.user_id = self.env.user
         printing_action.report_id = report
         self.assertEqual(report.behaviour(), {
-                'action': printing_action.action,
-                'printer': report.printing_printer_id,
-        })
+            'action': printing_action.action,
+            'printer': report.printing_printer_id,
+            'tray': False,
+        },
+        )
 
     def test_behaviour_printing_action_with_printer(self):
         """ It should return the action and printer from printing action """
@@ -171,7 +192,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': printing_action.action,
             'printer': printing_action.printer_id,
-        })
+            'tray': False,
+        },
+        )
 
     def test_behaviour_printing_action_user_defaults(self):
         """ It should return the action and printer from user with printing action
@@ -182,9 +205,73 @@ class TestIrActionsReportXml(TransactionCase):
         printing_action.user_id = self.env.user
         printing_action.action = 'user_default'
         self.assertEqual(report.behaviour(), {
-                'action': 'client',
-                'printer': report.printing_printer_id,
+            'action': 'client',
+            'printer': report.printing_printer_id,
+            'tray': False,
+        },
+        )
+
+    def test_print_tray_behaviour(self):
+        """
+        It should return the correct tray
+        """
+        report = self.env['ir.actions.report'].search([], limit=1)
+        action = self.env['printing.report.xml.action'].create({
+            'user_id': self.env.user.id,
+            'report_id': report.id,
+            'action': 'server',
         })
+        printer = self.new_printer()
+        tray_vals = {
+            'name': 'Tray',
+            'system_name': 'Tray',
+            'printer_id': printer.id,
+        }
+        user_tray = self.new_tray({'system_name': 'User tray'}, tray_vals)
+        report_tray = self.new_tray({'system_name': 'Report tray'}, tray_vals)
+        action_tray = self.new_tray({'system_name': 'Action tray'}, tray_vals)
+
+        # No report passed
+        self.env.user.printer_tray_id = False
+        options = printer.print_options()
+        self.assertFalse('InputSlot' in options)
+
+        # No tray defined
+        self.env.user.printer_tray_id = False
+        report.printer_tray_id = False
+        action.printer_tray_id = False
+        options = report.behaviour()
+        self.assertTrue('tray' in options)
+
+        # Only user tray is defined
+        self.env.user.printer_tray_id = user_tray
+        report.printer_tray_id = False
+        action.printer_tray_id = False
+        self.assertEqual('User tray', report.behaviour()['tray'])
+
+        # Only report tray is defined
+        self.env.user.printer_tray_id = False
+        report.printer_tray_id = report_tray
+        action.printer_tray_id = False
+        self.assertEqual('Report tray', report.behaviour()['tray'])
+
+        # Only action tray is defined
+        self.env.user.printer_tray_id = False
+        report.printer_tray_id = False
+        action.printer_tray_id = action_tray
+        self.assertEqual('Action tray', report.behaviour()['tray'])
+
+        # User and report tray defined
+        self.env.user.printer_tray_id = user_tray
+        report.printer_tray_id = report_tray
+        action.printer_tray_id = False
+        self.assertEqual('Report tray', report.behaviour()['tray'])
+
+        # All trays are defined
+        self.env.user.printer_tray_id = user_tray
+        report.printer_tray_id = report_tray
+        action.printer_tray_id = action_tray
+        self.assertEqual('Action tray', report.behaviour()['tray'])
 
     def test_onchange_printer_tray_id_empty(self):
         action = self.env['ir.actions.report'].new(
