@@ -50,8 +50,8 @@ class IrActionsServer(models.Model):
                 [x[1] for x in eval_context['records'].name_get()])
         else:
             record_ids = None
-        action.report_id.with_delay(description=description).print_document_auto(
-            record_ids, behaviour=self.print_behaviour())
+        action.report_id.with_delay(description=description)\
+            .print_document_auto(record_ids, behaviour=self.print_behaviour())
         return False
 
     @api.multi
