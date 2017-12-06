@@ -15,21 +15,25 @@ odoo.define('base_report_to_printer.print', function(require) {
 
             if ('report_type' in action_val && action_val.report_type === 'qweb-pdf') {
                 framework.blockUI();
-                new Model('ir.actions.report').
-                    call('print_action_for_report_name', [action_val.report_name]).
-                    then(function(print_action){
-                        if (print_action && print_action.action_val === 'server') {
-                            framework.unblockUI();
-                            new Model('report').
-                                call('print_document',
-                                      [action_val.context.active_ids, action_val.report_name],
-                                      {data: action_val.data || {}, context: action_val.context || {}}).
-                                then(function(){
-                                    self.do_notify(_t('Report'),
-                                                   _t('Document sent to the printer ') + print_action.printer_name);
-                                }).fail(function() {
-                                    self.do_notify(_t('Report'),
-                                                   _t('Error when sending the document to the printer ') + print_action.printer_name);
+               rpc.query({
+                    model: 'ir.actions.report',
+                    method: 'print_action_for_report_name',
+                    args: [action_val.report_name]
+                }).then(function (print_action) {
+                    if (print_action && print_action.action_val === 'server') {
+                        framework.unblockUI();
+                        rpc.query({
+                            model: 'ir.actions.report',
+                            method: 'print_document',
+                            args: [action_val.context.active_ids, action_val.report_name],
+                            kwargs: {data: action_val.data || {}},
+                            context: action_val.context || {}
+                        }).then(function () {
+                            self.do_notify(_t('Report'),
+                                _.str.sprintf(_t('Document sent to the printer %s'), print_action.printer_name));
+                        }).fail(function () {
+                            self.do_notify(_t('Report'),
+                                _.str.sprintf(_t('Error when sending the document to the printer '), print_action.printer_name));
 
                                 });
                         } else {
