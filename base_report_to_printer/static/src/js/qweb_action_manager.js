@@ -31,10 +31,10 @@ odoo.define('base_report_to_printer.print', function (require) {
                             context: action_val.context || {}
                         }).then(function () {
                             self.do_notify(_t('Report'),
-                                _t('Document sent to the printer ') + print_action.printer_name);
+                                _.str.sprintf(_t('Document sent to the printer %s'), print_action.printer_name));
                         }).fail(function () {
                             self.do_notify(_t('Report'),
-                                _t('Error when sending the document to the printer ') + print_action.printer_name);
+                                _.str.sprintf(_t('Error when sending the document to the printer '), print_action.printer_name));
 
                         });
                     } else {
