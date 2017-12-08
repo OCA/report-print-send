@@ -154,17 +154,17 @@ class PingenDocument(models.Model):
                     new_cr, self.env.uid, self.env.context)
                 # Instead of raising, store the error in the pingen.document
                 self = self.with_env(new_env)
-                for document in self:
+                not_sent_docs = self.search([('state', '!=', 'sent')])
+                for document in not_sent_docs:
                     session = document._get_pingen_session()
                     if document.state == 'error':
-                        self._resolve_error()
+                        document._resolve_error()
                         document.refresh()
                     try:
                         if document.state == 'pending':
-                            self._push_to_pingen(pingen=session)
-
+                            document._push_to_pingen(pingen=session)
                         elif document.state == 'pushed':
-                            self._ask_pingen_send(pingen=session)
+                            document._ask_pingen_send(pingen=session)
                     except ConnectionError as e:
                         document.write({'last_error_message': e,
                                         'state': 'error'})
@@ -309,11 +309,11 @@ class PingenDocument(models.Model):
                     new_cr, self.env.uid, self.env.context)
                 # Instead of raising, store the error in the pingen.document
                 self = self.with_env(new_env)
-                for document in self:
+                pushed_docs = self.search([('state', '!=', 'sent')])
+                for document in pushed_docs:
                     session = document._get_pingen_session()
                     try:
-                        self._update_post_infos(
-                            document, pingen=session)
+                        document._update_post_infos(pingen=session)
                     except (ConnectionError, APIError):
                         # will be retried the next time
                         # In any case, the error has been
