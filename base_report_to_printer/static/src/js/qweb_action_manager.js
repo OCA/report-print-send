@@ -6,7 +6,6 @@ odoo.define('base_report_to_printer.print', function (require) {
     var framework = require('web.framework');
     var rpc = require('web.rpc');
 
-
     ActionManager.include({
         ir_actions_report: function (action, options) {
             var action_val = _.clone(action);
@@ -14,19 +13,19 @@ odoo.define('base_report_to_printer.print', function (require) {
             var self = this;
             var _super = this._super;
 
-            if ('report_type' in action_val && action_val.report_type === 'qweb-pdf') {
+            if (action_val.report_type === 'qweb-pdf') {
                 framework.blockUI();
                 rpc.query({
                     model: 'ir.actions.report',
                     method: 'print_action_for_report_name',
                     args: [action_val.report_name]
                 }).then(function (print_action) {
-                    if (print_action && print_action.action_val === 'server') {
+                    if (print_action && print_action.action === 'server') {
                         framework.unblockUI();
                         rpc.query({
                             model: 'ir.actions.report',
                             method: 'print_document',
-                            args: [action_val.context.active_ids, action_val.report_name],
+                            args: [action_val.id, action_val.context.active_ids],
                             kwargs: {data: action_val.data || {}},
                             context: action_val.context || {}
                         }).then(function () {
