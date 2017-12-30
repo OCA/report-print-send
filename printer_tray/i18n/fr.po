@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Florian Hatat <mininet@wanadoo.fr>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 02:40+0000\n"
-"PO-Revision-Date: 2017-04-24 02:40+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-09 09:42+0000\n"
+"PO-Revision-Date: 2017-12-09 09:42+0000\n"
+"Last-Translator: Florian Hatat <mininet@wanadoo.fr>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +89,7 @@ msgstr "Bac d'impression"
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_printing_report_xml_action
 msgid "Printing Report Printing Actions"
-msgstr ""
+msgstr "Actions d'impression des rapports"
 
 #. module: printer_tray
 #: model:ir.model.fields,field_description:printer_tray.field_printing_tray_system_name
@@ -108,4 +109,4 @@ msgstr "Utilisateur"
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr ""
+msgstr "ir.actions.report.xml"
