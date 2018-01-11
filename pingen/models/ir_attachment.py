@@ -24,8 +24,7 @@ class IrAttachment(models.Model):
     pingen_speed = fields.Selection(
         [('1', 'Priority'), ('2', 'Economy')],
         'Speed', default='2',
-        help='Defines the sending speed if ' +
-             'the document is automatically sent')
+        help='Defines the sending speed if the document is automatically sent')
     pingen_color = fields.Selection([('0', 'B/W'), ('1', 'Color')],
                                     'Type of print',
                                     default='0')
@@ -62,17 +61,16 @@ class IrAttachment(models.Model):
             if document:
                 if document.state == 'pushed':
                     raise UserError(
-                        _('Error. The attachment ' +
-                          '%s is already pushed to pingen.com.') %
-                        self.name)
+                        _('Error. The attachment %s is '
+                          'already pushed to pingen.com.') % self.name)
                 document.write({'state': 'canceled'})
         return
 
     def create(self, vals):
-        attachment_id = super(IrAttachment, self).create(vals)
+        attachment = super(IrAttachment, self).create(vals)
         if 'send_to_pingen' in vals:
-            attachment_id._handle_pingen_document()
-        return attachment_id
+            attachment._handle_pingen_document()
+        return attachment
 
     def write(self, vals):
         res = super(IrAttachment, self).write(vals)

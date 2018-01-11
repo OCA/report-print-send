@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="base_config_settings_inherit" model="ir.ui.view">
+        <field name="name">base.config.settings.inherit</field>
+        <field name="inherit_id" ref="base_setup.view_general_configuration"/>
+        <field name="model">base.config.settings</field>
+        <field name="arch" type="xml">
+            <group name="report" position="before">
+                <group string="Pingen Integration">
+                      <field name="pingen_token" groups="base.group_system"/>
+                      <field name="pingen_staging" groups="base.group_system"/>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
