@@ -1,23 +1,47 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 LasLabs Inc.
+# Copyright 2017 Tecnativa - Jairo Llopis
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import mock
-from odoo.tests.common import HttpCase
+from odoo.tests import common
 from odoo import exceptions
 
 
-class StopTest(Exception):
-    pass
-
-
-class TestReport(HttpCase):
-
+@common.at_install(False)
+@common.post_install(True)
+class TestReport(common.HttpCase):
     def setUp(self):
         super(TestReport, self).setUp()
         self.Model = self.env['report']
         self.server = self.env['printing.server'].create({})
         self.report_vals = {}
+        self.report_imd = self.env["ir.model.data"].create({
+            "name": "test",
+            "module": "base_report_to_printer",
+            "model": "ir.ui.view",
+        })
+        self.report_view = self.env["ir.ui.view"].create({
+            "name": "Test",
+            "type": "qweb",
+            "xml_id": "base_report_to_printer.test",
+            "model_data_id": self.report_imd.id,
+            "arch": """<t t-name="base_report_to_printer.test">
+                <div>Test</div>
+            </t>""",
+        })
+        self.report_imd.res_id = self.report_view.id
+        self.report = self.env["ir.actions.report.xml"].create({
+            "name": "Test",
+            "report_type": "qweb-pdf",
+            "model": "res.partner",
+            "report_name": "base_report_to_printer.test",
+        })
+        self.partners = self.env["res.partner"]
+        for n in range(5):
+            self.partners += self.env["res.partner"].create({
+                "name": "Test %d" % n,
+            })
 
     def new_record(self):
         return self.Model.create(self.report_vals)
@@ -65,11 +89,8 @@ class TestReport(HttpCase):
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            report = self.env['ir.actions.report.xml'].search([
-                ('report_type', '=', 'qweb-pdf'),
-            ], limit=1)
-            records = self.env[report.model].search([], limit=5)
-            self.env['report'].get_pdf(records.ids, report.report_name)
+            self.Model.get_pdf(
+                self.partners.ids, self.report.report_name)
             print_document.assert_not_called()
 
     def test_get_pdf_printable(self):
@@ -78,52 +99,36 @@ class TestReport(HttpCase):
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            report = self.env['ir.actions.report.xml'].search([
-                ('report_type', '=', 'qweb-pdf'),
-            ], limit=1)
-            report.property_printing_action_id.action_type = 'server'
-            report.printing_printer_id = self.new_printer()
-            records = self.env[report.model].search([], limit=5)
-            document = self.env['report'].get_pdf(
-                records.ids, report.report_name)
+            self.report.property_printing_action_id.action_type = 'server'
+            self.report.printing_printer_id = self.new_printer()
+            document = self.Model.get_pdf(
+                self.partners.ids, self.report.report_name)
             print_document.assert_called_once_with(
-                report, document, report.report_type)
+                self.report, document, self.report.report_type)
 
     def test_print_document_not_printable(self):
         """ It should print the report, regardless of the defined behaviour """
-        report = self.env['ir.actions.report.xml'].search([
-            ('report_type', '=', 'qweb-pdf'),
-        ], limit=1)
-        report.printing_printer_id = self.new_printer()
-        records = self.env[report.model].search([], limit=5)
-
+        self.report.printing_printer_id = self.new_printer()
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            self.env['report'].print_document(records.ids, report.report_name)
+            self.Model.print_document(
+                self.partners.ids, self.report.report_name)
             print_document.assert_called_once()
 
     def test_print_document_printable(self):
         """ It should print the report, regardless of the defined behaviour """
-        report = self.env['ir.actions.report.xml'].search([
-            ('report_type', '=', 'qweb-pdf'),
-        ], limit=1)
-        report.property_printing_action_id.action_type = 'server'
-        report.printing_printer_id = self.new_printer()
-        records = self.env[report.model].search([], limit=5)
-
+        self.report.property_printing_action_id.action_type = 'server'
+        self.report.printing_printer_id = self.new_printer()
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            self.env['report'].print_document(records.ids, report.report_name)
+            self.Model.print_document(
+                self.partners.ids, self.report.report_name)
             print_document.assert_called_once()
 
     def test_print_document_no_printer(self):
         """ It should raise an error """
-        report = self.env['ir.actions.report.xml'].search([
-            ('report_type', '=', 'qweb-pdf'),
-        ], limit=1)
-        records = self.env[report.model].search([], limit=5)
-
         with self.assertRaises(exceptions.UserError):
-            self.env['report'].print_document(records.ids, report.report_name)
+            self.Model.print_document(
+                self.partners.ids, self.report.report_name)
