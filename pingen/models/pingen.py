@@ -8,7 +8,6 @@ import logging
 import urlparse
 import json
 import pytz
-import base64
 
 from datetime import datetime
 from requests.packages.urllib3.filepost import encode_multipart_formdata
@@ -45,10 +44,6 @@ def pingen_datetime_to_utc(dt):
 class PingenException(RuntimeError):
     """There was an ambiguous exception that occurred while handling your
     request."""
-
-
-class ConnectionError(PingenException):
-    """An Error occured with the pingen API"""
 
 
 class APIError(PingenException):
@@ -116,11 +111,6 @@ class Pingen(object):
                                            self._token)
 
         response = method(complete_url, **kwargs)
-
-        if not response.ok:
-            raise ConnectionError(
-                "%s: %s" % (response.json()['errorcode'],
-                            response.json()['errormessage']))
 
         if response.json()['error']:
             raise APIError(
