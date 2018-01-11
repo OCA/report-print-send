@@ -7,6 +7,7 @@ import mock
 from odoo.tests import common
 from odoo import exceptions
 
+
 @common.at_install(False)
 @common.post_install(True)
 class TestReport(common.HttpCase):
