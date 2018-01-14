@@ -6,11 +6,11 @@
         <field name="model">printing.server</field>
         <field name="arch" type="xml">
             <form string="Servers">
+                <header>
+                    <button name="action_update_printers" type="object" string="Update Printers"/>
+                    <button name="action_update_jobs" type="object" string="Update Jobs"/>
+                </header>
                 <sheet>
-                    <header>
-                        <button name="action_update_printers" type="object" string="Update Printers"/>
-                        <button name="action_update_jobs" type="object" string="Update Jobs"/>
-                    </header>
                     <div class="oe_title">
                         <h1>
                             <field name="name"/>
