@@ -6,11 +6,11 @@
         <field name="model">printing.job</field>
         <field name="arch" type="xml">
             <form string="Job">
+                <header>
+                    <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible': [('job_state', 'in', ('canceled', 'aborted', 'completed'))]}"/>
+                    <field name="job_state" widget="statusbar"/>
+                </header>
                 <sheet>
-                    <header>
-                        <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible': [('job_state', 'in', ('canceled', 'aborted', 'completed'))]}"/>
-                        <field name="job_state" widget="statusbar"/>
-                    </header>
                     <group>
                         <group>
                             <field name="name"/>
