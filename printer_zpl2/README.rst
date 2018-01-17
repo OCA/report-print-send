@@ -15,6 +15,7 @@ See below for more details.
 Installation
 ============
 
+**Upgrade Note:** If upgrading from a version prior to 10.0.2.0.0, you must make sure to update the `zpl2` Python package to at least version 1.1
 Nothing special, just install the module.
 
 Configuration
