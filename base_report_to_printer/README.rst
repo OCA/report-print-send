@@ -99,6 +99,7 @@ Contributors
 * Dave Lasley <dave@laslabs.com>
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
+* Luis Felipe Mileo <mileo@kmee.com.br>
 
 Maintainer
 ----------

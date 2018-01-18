@@ -4,9 +4,10 @@
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# Copyright (C) 2018 KMEE INFORMATICA LTDA (<http://kmee.com.br>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api
+from odoo import models, fields, api, tools
 
 
 class IrActionsReportXml(models.Model):
@@ -39,8 +40,7 @@ class IrActionsReportXml(models.Model):
 
         Called from js
         """
-        report_obj = self.env['report']
-        report = report_obj._get_report_from_name(report_name)
+        report = self.search([('report_name', '=', report_name)], limit=1)
         if not report:
             return {}
         result = report.behaviour()[report.id]
@@ -94,3 +94,36 @@ class IrActionsReportXml(models.Model):
                                  'printer': printer,
                                  }
         return result
+
+    @api.multi
+    def _can_print_report(self, behaviour, printer, document):
+        """Predicate that decide if report can be sent to printer
+
+        If you want to prevent `get_pdf` to send report you can set
+        the `must_skip_send_to_printer` key to True in the context
+        """
+        if self.env.context.get('must_skip_send_to_printer'):
+            return False
+        if behaviour['action'] == 'server' and printer and document:
+            return True
+        return False
+
+    @api.model
+    def render_report(self, res_ids, name, data):
+        """
+        Look up a report definition and render the report for the provided IDs.
+        """
+        document, file_type = super(IrActionsReportXml, self).render_report(
+            res_ids, name, data)
+
+        report = self.search([('report_name', '=', name)], limit=1)
+        behaviour = report.behaviour()[report.id]
+        printer = behaviour['printer']
+
+        can_print_report = self._can_print_report(
+            behaviour, printer, document)
+
+        if can_print_report:
+            printer.print_document(report, document, report.report_type)
+            return
+        return document, file_type

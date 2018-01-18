@@ -13,15 +13,15 @@ odoo.define('base_report_to_printer.print', function(require) {
             var self = this;
             var _super = this._super;
 
-            if ('report_type' in _action && _action.report_type === 'qweb-pdf') {
+            if ('report_type' in _action) {
                 framework.blockUI();
                 new Model('ir.actions.report.xml')
                     .call('print_action_for_report_name', [_action.report_name])
                     .then(function(print_action){
                         if (print_action && print_action.action === 'server') {
                             framework.unblockUI();
-                            new Model('report')
-                                .call('print_document',
+                            new Model('ir.actions.report.xml')
+                                .call('render_report',
                                       [_action.context.active_ids,
                                        _action.report_name,
                                        ],
