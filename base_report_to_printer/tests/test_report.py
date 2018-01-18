@@ -19,7 +19,6 @@ class TestReport(common.HttpCase):
             'model': 'ir.actions.report',
             'report_name': 'Test Report',
         }
-        self.report_vals = {}
         self.report_imd = self.env["ir.model.data"].create({
             "name": "test",
             "module": "base_report_to_printer",
