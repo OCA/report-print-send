@@ -35,7 +35,7 @@ class TestReport(common.HttpCase):
             </t>""",
         })
         self.report_imd.res_id = self.report_view.id
-        self.report = self.env["ir.actions.report.xml"].create({
+        self.report = self.env["ir.actions.report"].create({
             "name": "Test",
             "report_type": "qweb-pdf",
             "model": "res.partner",
