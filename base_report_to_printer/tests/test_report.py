@@ -92,8 +92,7 @@ class TestReport(common.HttpCase):
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            self.report.get_pdf(
-                self.partners.ids, self.report.report_name)
+            self.report.render_qweb_pdf(self.partners.ids)
             print_document.assert_not_called()
 
     def test_render_qweb_pdf_printable(self):
@@ -104,10 +103,10 @@ class TestReport(common.HttpCase):
                         'print_document') as print_document:
             self.report.property_printing_action_id.action_type = 'server'
             self.report.printing_printer_id = self.new_printer()
-            document = self.report.get_pdf(
-                self.partners.ids, self.report.report_name)
+            document = self.report.render_qweb_pdf(self.partners.ids)
             print_document.assert_called_once_with(
-                self.report, document, self.report.report_type)
+                self.report, document[0],
+                action='server', doc_format='qweb-pdf', tray=False)
 
     def test_print_document_not_printable(self):
         """ It should print the report, regardless of the defined behaviour """
@@ -115,8 +114,7 @@ class TestReport(common.HttpCase):
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            self.report.print_document(
-                self.partners.ids, self.report.report_name)
+            self.report.print_document(self.partners.ids)
             print_document.assert_called_once()
 
     def test_print_document_printable(self):
@@ -126,12 +124,10 @@ class TestReport(common.HttpCase):
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            self.report.print_document(
-                self.partners.ids, self.report.report_name)
+            self.report.print_document(self.partners.ids)
             print_document.assert_called_once()
 
     def test_print_document_no_printer(self):
         """ It should raise an error """
         with self.assertRaises(exceptions.UserError):
-            self.report.print_document(
-                self.partners.ids, self.report.report_name)
+            self.report.print_document(self.partners.ids)
