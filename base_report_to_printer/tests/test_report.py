@@ -34,7 +34,7 @@ class TestReport(common.HttpCase):
             </t>""",
         })
         self.report_imd.res_id = self.report_view.id
-        self.report = self.env["ir.actions.report"].create({
+        self.report = self.Model.create({
             "name": "Test",
             "report_type": "qweb-pdf",
             "model": "res.partner",
@@ -92,7 +92,7 @@ class TestReport(common.HttpCase):
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            self.Model.get_pdf(
+            self.report.get_pdf(
                 self.partners.ids, self.report.report_name)
             print_document.assert_not_called()
 
@@ -104,7 +104,7 @@ class TestReport(common.HttpCase):
                         'print_document') as print_document:
             self.report.property_printing_action_id.action_type = 'server'
             self.report.printing_printer_id = self.new_printer()
-            document = self.Model.get_pdf(
+            document = self.report.get_pdf(
                 self.partners.ids, self.report.report_name)
             print_document.assert_called_once_with(
                 self.report, document, self.report.report_type)
@@ -115,7 +115,7 @@ class TestReport(common.HttpCase):
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            self.Model.print_document(
+            self.report.print_document(
                 self.partners.ids, self.report.report_name)
             print_document.assert_called_once()
 
@@ -126,12 +126,12 @@ class TestReport(common.HttpCase):
         with mock.patch('odoo.addons.base_report_to_printer.models.'
                         'printing_printer.PrintingPrinter.'
                         'print_document') as print_document:
-            self.Model.print_document(
+            self.report.print_document(
                 self.partners.ids, self.report.report_name)
             print_document.assert_called_once()
 
     def test_print_document_no_printer(self):
         """ It should raise an error """
         with self.assertRaises(exceptions.UserError):
-            self.Model.print_document(
+            self.report.print_document(
                 self.partners.ids, self.report.report_name)

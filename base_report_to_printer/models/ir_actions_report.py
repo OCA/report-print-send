@@ -129,7 +129,6 @@ class IrActionsReport(models.Model):
             return True
         return False
 
-    @api.model
     def render_qweb_pdf(self, docids, data=None):
         """ Generate a PDF and returns it.
 
