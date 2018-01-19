@@ -2,10 +2,12 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import TransactionCase
+from odoo.tests import common
 
 
-class TestResUsers(TransactionCase):
+@common.at_install(False)
+@common.post_install(True)
+class TestResUsers(common.TransactionCase):
 
     def setUp(self):
         super(TestResUsers, self).setUp()
