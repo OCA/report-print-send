@@ -105,6 +105,7 @@ Contributors
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Dave Lasley <dave@laslabs.com>
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
+* Jairo Llopis <jairo.llopis@tecnativa.com>
 
 Maintainer
 ----------
