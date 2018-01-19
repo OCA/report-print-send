@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 # Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
@@ -130,7 +129,6 @@ class IrActionsReport(models.Model):
             return True
         return False
 
-    @api.model
     def render_qweb_pdf(self, docids, data=None):
         """ Generate a PDF and returns it.
 
