@@ -18,6 +18,7 @@
         'security/ir.model.access.csv',
         'views/printing_label_zpl2.xml',
         'wizard/print_record_label.xml',
+        'wizard/wizard_import_zpl2.xml',
     ],
     'installable': True,
 }
