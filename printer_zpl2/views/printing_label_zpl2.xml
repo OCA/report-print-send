@@ -17,6 +17,9 @@
         <field name="model">printing.label.zpl2</field>
         <field name="arch" type="xml">
             <form string="ZPL II Label">
+                <header>
+                    <button name="import_zpl2" string="Import ZPL2" type="object"/>
+                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <field name="action_window_id" invisible="1"/>
