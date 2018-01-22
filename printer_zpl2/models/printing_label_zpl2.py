@@ -49,9 +49,12 @@ class PrintingLabelZpl2(models.Model):
         default=True)
     action_window_id = fields.Many2one(
         comodel_name='ir.actions.act_window', string='Action', readonly=True)
+    test_print_mode = fields.Boolean(string='Mode Print')
     test_labelary_mode = fields.Boolean(string='Mode Labelary')
     record_id = fields.Integer(string='Record ID', default=1)
     extra = fields.Text(string="Extra", default='{}')
+    printer_id = fields.Many2one(
+        comodel_name='printing.printer', string='Printer')
     labelary_image = fields.Binary(string='Image from Labelary', readonly=True)
     labelary_dpmm = fields.Selection(
         selection=[
@@ -292,6 +295,14 @@ class PrintingLabelZpl2(models.Model):
             self.record_id = record.id
 
         return record
+
+    def print_test_label(self):
+        for label in self:
+            if label.test_print_mode and label.record_id and label.printer_id:
+                record = label._get_record()
+                extra = safe_eval(label.extra, {'env': self.env})
+                if record:
+                    label.print_label(label.printer_id, record, **extra)
 
     @api.onchange(
         'record_id', 'labelary_dpmm', 'labelary_width', 'labelary_height',
