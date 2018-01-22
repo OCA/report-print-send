@@ -6,8 +6,9 @@ import base64
 import datetime
 import io
 import logging
+import requests
 from PIL import Image, ImageOps
-from odoo import exceptions, fields, models, _
+from odoo import api, exceptions, fields, models, _
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -48,6 +49,19 @@ class PrintingLabelZpl2(models.Model):
         default=True)
     action_window_id = fields.Many2one(
         comodel_name='ir.actions.act_window', string='Action', readonly=True)
+    test_labelary_mode = fields.Boolean(string='Mode Labelary')
+    record_id = fields.Integer(string='Record ID', default=1)
+    extra = fields.Text(string="Extra", default='{}')
+    labelary_image = fields.Binary(string='Image from Labelary', readonly=True)
+    labelary_dpmm = fields.Selection(
+        selection=[
+            ('6dpmm', '6dpmm (152 pdi)'),
+            ('8dpmm', '8dpmm (203 dpi)'),
+            ('12dpmm', '12dpmm (300 pdi)'),
+            ('24dpmm', '24dpmm (600 dpi)'),
+        ], string='Print density', required=True, default='8dpmm')
+    labelary_width = fields.Float(string='Width in mm', default=140)
+    labelary_height = fields.Float(string='Height in mm', default=70)
 
     def _generate_zpl2_components_data(
             self, label_data, record, page_number=1, page_count=1,
@@ -205,10 +219,12 @@ class PrintingLabelZpl2(models.Model):
         self.ensure_one()
         label_data = zpl2.Zpl2()
 
+        labelary_emul = extra.get('labelary_emul', False)
         for page_number in range(page_count):
             # Initialize printer's configuration
             label_data.label_start()
-            label_data.print_width(self.width)
+            if not labelary_emul:
+                label_data.print_width(self.width)
             label_data.label_encoding()
 
             label_data.label_home(self.origin_x, self.origin_y)
@@ -255,3 +271,65 @@ class PrintingLabelZpl2(models.Model):
 
     def unlink_action(self):
         self.mapped('action_window_id').unlink()
+
+    def _get_record(self):
+        self.ensure_one()
+        Obj = self.env[self.model_id.model]
+        record = Obj.search([('id', '=', self.record_id)], limit=1)
+        if not record:
+            record = Obj.search([], limit=1, order='id desc')
+            self.record_id = record.id
+
+        return record
+
+    @api.onchange(
+        'record_id', 'labelary_dpmm', 'labelary_width', 'labelary_height',
+        'component_ids', 'origin_x', 'origin_y')
+    def _on_change_labelary(self):
+        self.ensure_one()
+        if not(self.test_labelary_mode and self.record_id and
+                self.labelary_width and self.labelary_height and
+                self.labelary_dpmm and self.component_ids):
+            return
+        record = self._get_record()
+        if record:
+            # If case there an error (in the data field with the safe_eval
+            # for exemple) the new component or the update is not lost.
+            try:
+                url = 'http://api.labelary.com/v1/printers/' \
+                    '{dpmm}/labels/{width}x{height}/0/'
+                width = round(self.labelary_width / 25.4, 2)
+                height = round(self.labelary_height / 25.4, 2)
+                url = url.format(
+                    dpmm=self.labelary_dpmm, width=width, height=height)
+                extra = safe_eval(self.extra, {'env': self.env})
+                zpl_file = self._generate_zpl2_data(
+                    record, labelary_emul=True, **extra)
+                files = {'file': zpl_file}
+                headers = {'Accept': 'image/png'}
+                response = requests.post(
+                    url, headers=headers, files=files, stream=True)
+                if response.status_code == 200:
+                    # Add a padd
+                    im = Image.open(io.BytesIO(response.content))
+                    im_size = im.size
+                    new_im = Image.new(
+                        'RGB', (im_size[0] + 2, im_size[1] + 2),
+                        (164, 164, 164))
+                    new_im.paste(im, (1, 1))
+                    imgByteArr = io.BytesIO()
+                    new_im.save(imgByteArr, format='PNG')
+                    self.labelary_image = base64.b64encode(
+                        imgByteArr.getvalue())
+                else:
+                    return {'warning': {
+                        'title': _('Error with Labelary API.'),
+                        'message': response.status_code,
+                    }}
+
+            except Exception as e:
+                self.labelary_image = False
+                return {'warning': {
+                    'title': _('Some thing is wrong.'),
+                    'message': e,
+                }}
