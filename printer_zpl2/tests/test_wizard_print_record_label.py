@@ -39,6 +39,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
             active_model='printing.printer',
             active_id=self.printer.id,
             active_ids=[self.printer.id],
+            printer_zpl2_id=self.printer.id,
         )
         wizard = wizard_obj.create({})
         self.assertEqual(wizard.printer_id, self.printer)
@@ -87,6 +88,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
             active_model='printing.printer',
             active_id=self.printer.id,
             active_ids=[self.printer.id],
+            printer_zpl2_id=self.printer.id,
         )
         wizard = wizard_obj.create({})
         self.assertEqual(wizard.label_id, self.label)
