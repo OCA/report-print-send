@@ -5,6 +5,8 @@
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
+# Copyright 2015 Oihane Crucelaegui - AvanzOSC
+# Copyright 2017 Luis M. Ontalba - Tecnativa
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
@@ -94,7 +96,14 @@ class PrintingPrinter(models.Model):
             os.write(fd, content)
         finally:
             os.close(fd)
-
+        if copies == 1:
+            # If number of copies is not indicated by argument, check context
+            # or report definition
+            copies = (
+                self.env.context.get('report_copies') or
+                (report and report.report_copies) or
+                copies
+            )
         return self.print_file(
             file_name, report=report, copies=copies, format=format)
 

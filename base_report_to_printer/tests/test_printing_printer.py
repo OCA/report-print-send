@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 LasLabs Inc.
+# Copyright 2017 Tecnativa.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import tempfile
@@ -31,6 +32,9 @@ class TestPrintingPrinter(TransactionCase):
             'location': 'Location',
             'uri': 'URI',
         }
+        self.report = self.env['ir.actions.report.xml'].search([
+            ('report_type', '=', 'qweb-pdf'),
+        ], limit=1)
 
     def new_record(self):
         return self.Model.create(self.printer_vals)
@@ -55,7 +59,7 @@ class TestPrintingPrinter(TransactionCase):
         with mock.patch('%s.mkstemp' % model) as mkstemp:
             mkstemp.return_value = fd, file_name
             printer = self.new_record()
-            printer.print_document('report_name', 'content to print', 'pdf')
+            printer.print_document(self.report, 'content to print', 'pdf')
             cups.Connection().printFile.assert_called_once_with(
                 printer.system_name,
                 file_name,
@@ -72,7 +76,7 @@ class TestPrintingPrinter(TransactionCase):
             printer = self.new_record()
             with self.assertRaises(UserError):
                 printer.print_document(
-                    'report_name', 'content to print', 'pdf')
+                    self.report, 'content to print', 'pdf')
 
     @mock.patch('%s.cups' % server_model)
     def test_print_file(self, cups):

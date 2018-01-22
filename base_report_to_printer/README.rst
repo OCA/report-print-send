@@ -99,6 +99,8 @@ Contributors
 * Dave Lasley <dave@laslabs.com>
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
+* Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
+* Luis M. Ontalba <luis.martinez@tecnativa.com>
 
 Maintainer
 ----------

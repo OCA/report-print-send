@@ -4,6 +4,7 @@
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# Copyright 2015 Oihane Crucelaegui - AvanzOSC
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api
@@ -20,6 +21,10 @@ class IrActionsReportXml(models.Model):
         comodel_name='printing.action',
         string='Action',
         company_dependent=True,
+    )
+    report_copies = fields.Integer(
+        string="# Copies",
+        default=1,
     )
     printing_printer_id = fields.Many2one(
         comodel_name='printing.printer',
