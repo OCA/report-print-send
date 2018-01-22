@@ -23,7 +23,10 @@ class PrintRecordLabel(models.TransientModel):
         values = super(PrintRecordLabel, self).default_get(fields_list)
 
         # Automatically select the printer and label, if only one is available
-        printers = self.env['printing.printer'].search([])
+        printers = self.env['printing.printer'].search(
+            [('id', '=', self.env.context.get('printer_zpl2_id'))])
+        if not printers:
+            printers = self.env['printing.printer'].search([])
         if len(printers) == 1:
             values['printer_id'] = printers.id
 
