@@ -3,10 +3,17 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import mock
+import logging
 
 from odoo import exceptions
 from odoo.tests.common import TransactionCase
 
+_logger = logging.getLogger(__name__)
+
+try:
+    import zpl2
+except ImportError:
+    _logger.debug('Cannot `import zpl2`.')
 
 model = 'odoo.addons.base_report_to_printer.models.printing_server'
 
@@ -974,3 +981,91 @@ class TestPrintingLabelZpl2(TransactionCase):
             '^JUR\n'
             # Label end
             '^XZ'.format(contents=data))
+
+    def test_graphic_label_contents_blank(self):
+        """ Check contents of a image label """
+        label = self.new_label()
+        data = 'R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+        self.new_component({
+            'label_id': label.id,
+            'component_type': 'graphic',
+            'data': '"' + data + '"',
+        })
+        contents = label._generate_zpl2_data(self.printer).decode("utf-8")
+        self.assertEqual(
+            contents,
+            "^XA\n"
+            "^PW480\n"
+            "^CI28\n"
+            "^LH10,10\n"
+            "^FO10,10^GFA,1.0,1.0,1.0,b'00'^FS\n"
+            "^JUR\n"
+            "^XZ")
+
+    def test_graphic_label_contents_blank_rotated(self):
+        """ Check contents of image rotated label """
+        label = self.new_label()
+        data = 'R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+        self.new_component({
+            'label_id': label.id,
+            'component_type': 'graphic',
+            'data': '"' + data + '"',
+            'height': 10,
+            'width': 10,
+            'reverse_print': 1,
+            'orientation': zpl2.ORIENTATION_ROTATED,
+        })
+        contents = label._generate_zpl2_data(self.printer).decode("utf-8")
+        self.assertEqual(
+            contents,
+            "^XA\n"
+            "^PW480\n"
+            "^CI28\n"
+            "^LH10,10\n"
+            "^FO10,10^GFA,20.0,20.0,2.0,"
+            "b'FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0'^FS\n"
+            "^JUR\n"
+            "^XZ")
+
+    def test_graphic_label_contents_blank_inverted(self):
+        """ Check contents of a image inverted label """
+        label = self.new_label()
+        data = 'R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+        self.new_component({
+            'label_id': label.id,
+            'component_type': 'graphic',
+            'data': '"' + data + '"',
+            'orientation': zpl2.ORIENTATION_INVERTED,
+        })
+        contents = label._generate_zpl2_data(self.printer).decode("utf-8")
+        self.assertEqual(
+            contents,
+            "^XA\n"
+            "^PW480\n"
+            "^CI28\n"
+            "^LH10,10\n"
+            "^FO10,10^GFA,1.0,1.0,1.0,b'00'^FS\n"
+            "^JUR\n"
+            "^XZ")
+
+    def test_graphic_label_contents_blank_bottom(self):
+        """ Check contents of a image bottom label """
+        label = self.new_label()
+        data = 'R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+        self.new_component({
+            'label_id': label.id,
+            'component_type': 'graphic',
+            'data': '"' + data + '"',
+            'orientation': zpl2.ORIENTATION_BOTTOM_UP,
+        })
+        contents = label._generate_zpl2_data(self.printer).decode("utf-8")
+        self.assertEqual(
+            contents,
+            "^XA\n"
+            "^PW480\n"
+            "^CI28\n"
+            "^LH10,10\n"
+            "^FO10,10^GFA,1.0,1.0,1.0,b'00'^FS\n"
+            "^JUR\n"
+            "^XZ")
+
