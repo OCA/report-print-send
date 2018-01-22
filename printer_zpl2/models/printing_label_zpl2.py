@@ -121,8 +121,9 @@ class PrintingLabelZpl2(models.Model):
                         zpl2.ARG_ROUNDING: component.rounding,
                     })
             elif component.component_type == 'graphic':
+                image = component.graphic_image or data
                 pil_image = Image.open(io.BytesIO(
-                    base64.b64decode(component.graphic_image or data)))
+                    base64.b64decode(image)))
                 if component.width and component.height:
                     pil_image = pil_image.resize(
                         (component.width, component.height))
