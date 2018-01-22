@@ -46,6 +46,8 @@ class PrintingLabelZpl2(models.Model):
         string="Restore printer's configuration",
         help="Restore printer's saved configuration and end of each label ",
         default=True)
+    action_window_id = fields.Many2one(
+        comodel_name='ir.actions.act_window', string='Action', readonly=True)
 
     def _generate_zpl2_components_data(
             self, label_data, record, page_number=1, page_count=1,
@@ -226,3 +228,20 @@ class PrintingLabelZpl2(models.Model):
                 report=None, content=label_contents, doc_format='raw')
 
         return True
+
+    def create_action(self):
+        for label in self.filtered(lambda record: not record.action_window_id):
+            label.action_window_id = self.env['ir.actions.act_window'].create({
+                'name': _('Print Label'),
+                'src_model': label.model_id.model,
+                'binding_model_id': label.model_id.id,
+                'res_model': 'wizard.print.record.label',
+                'view_mode': 'form',
+                'target': 'new',
+                'binding_type': 'action',
+            })
+
+        return True
+
+    def unlink_action(self):
+        self.mapped('action_window_id').unlink()
