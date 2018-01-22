@@ -126,6 +126,30 @@
                                     </notebook>
                                 </form>
                             </field>
+                            <group string="Emulation" attrs="{'invisible':[('test_labelary_mode', '=', False)]}">
+                                <field name="labelary_image" widget="image" nolabel="1" force_save="1"/>
+                                <p class="oe_grey" colspan="4">
+                                    Note : It is an emulation from http://labelary.com/, the result on printer can be diffrent.
+                                </p>
+                            </group>
+                        </page>
+                        <page string="Test Mode">
+                            <group>
+                                <group>
+                                    <field name="test_labelary_mode"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="record_id" context="{'select_model_id':model_id}" attrs="{'invisible':[('test_labelary_mode', '=', False)], 'required':[('test_labelary_mode', '=', True)]}"/>
+                                    <field name="labelary_dpmm" attrs="{'invisible':[('test_labelary_mode', '=', False)], 'required':[('test_labelary_mode', '=', True)]}"/>
+                                    <field name="labelary_width" attrs="{'invisible':[('test_labelary_mode', '=', False)], 'required':[('test_labelary_mode', '=', True)]}"/>
+                                    <field name="labelary_height" attrs="{'invisible':[('test_labelary_mode', '=', False)], 'required':[('test_labelary_mode', '=', True)]}"/>
+                                </group>
+                            </group>
+                            <group string="Extra">
+                                <field name="extra" nolabel="1" widget="ace" options="{'mode': 'python'}" attrs="{'invisible':[('test_labelary_mode', '=', False)]}"/>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
