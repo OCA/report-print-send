@@ -1,4 +1,5 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import mock
 
 from odoo.tests.common import TransactionCase
 
@@ -37,6 +38,15 @@ class TestWizardPrintRecordLabel(TransactionCase):
         if not record:
             record = Obj.search([], limit=1, order='id desc')
         self.assertEqual(res, record)
+
+    @mock.patch('%s.cups' % model)
+    def test_print_label_test(self, cups):
+        """ Check if print test """
+        self.label.test_print_mode = True
+        self.label.printer_id = self.printer
+        self.label.record_id = 10
+        self.label.print_test_label()
+        cups.Connection().printFile.assert_called_once()
 
     def test_emulation_without_params(self):
         """ Check if not execute next if not in this mode """
