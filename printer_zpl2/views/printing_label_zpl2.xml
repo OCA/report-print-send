@@ -19,6 +19,9 @@
             <form string="ZPL II Label">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
+                        <field name="action_window_id" invisible="1"/>
+                        <button name="create_action" string="Add in the 'Action' menu" type="object" attrs="{'invisible':[('action_window_id','!=',False)]}" icon="fa-plus-square" help="Display an option on related documents." class="oe_stat_button"/>
+                        <button name="unlink_action" string="Remove from the 'Action' menu" type="object" attrs="{'invisible':[('action_window_id','=',False)]}" icon="fa-minus-square" help="Remove the contextual action." class="oe_stat_button"/>
                         <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
                             <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
                         </button>
