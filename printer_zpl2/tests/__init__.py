@@ -3,3 +3,4 @@
 
 from . import test_printing_label_zpl2
 from . import test_wizard_print_record_label
+from . import test_generate_action
