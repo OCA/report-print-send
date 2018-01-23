@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -16,7 +15,7 @@ except ImportError:
 class PrintingLabelZpl2Component(models.Model):
     _name = 'printing.label.zpl2.component'
     _description = 'ZPL II Label Component'
-    _order = 'sequence'
+    _order = 'sequence, id'
 
     label_id = fields.Many2one(
         comodel_name='printing.label.zpl2', string='Label',
