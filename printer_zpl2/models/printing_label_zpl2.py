@@ -110,6 +110,8 @@ class PrintingLabelZpl2(models.Model):
                 label_data.font_data(
                     component_offset_x, component_offset_y,
                     barcode_arguments, data)
+            elif component.component_type == 'zpl2_raw':
+                label_data._write_command(data)
             elif component.component_type == 'rectangle':
                 label_data.graphic_box(
                     component_offset_x, component_offset_y, {

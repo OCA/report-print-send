@@ -50,20 +50,22 @@
                                         </group>
                                         <group>
                                             <field name="component_type"/>
-                                            <field name="repeat"/>
+                                            <field name="repeat" attrs="{'invisible': [('component_type', '=', 'zpl2_raw')]}"/>
                                         </group>
-                                        <group>
+                                        <group attrs="{'invisible': [('component_type', '=', 'zpl2_raw')]}">
                                             <field name="origin_x"/>
                                             <field name="origin_y"/>
                                         </group>
                                         <group>
-                                            <field name="data" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}"/>
                                             <field name="graphic_image" attrs="{'invisible': [('component_type', '!=', 'graphic')]}"/>
                                             <field name="sublabel_id" attrs="{'invisible': [('component_type', '!=', 'sublabel')]}"/>
                                         </group>
                                     </group>
+                                    <group attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}" string="Data">
+                                        <field name="data" widget="ace" options="{'mode': 'python'}" nolabel="1"/>
+                                    </group>
                                     <notebook colspan="4">
-                                        <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel', 'qr_code'))]}">
+                                        <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel', 'qr_code', 'zpl2_raw'))]}">
                                             <group>
                                                 <field name="height"/>
                                                 <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'circle', 'graphic'))]}"/>
@@ -76,7 +78,7 @@
                                             </group>
                                         </page>
                                         <!-- Barcode specific arguments -->
-                                        <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel', 'graphic', 'qr_code'))]}">
+                                        <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel', 'graphic', 'qr_code', 'zpl2_raw'))]}">
                                             <group>
                                                 <field name="check_digits"/>
                                                 <field name="interpretation_line"/>
