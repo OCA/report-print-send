@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -8,8 +7,7 @@ import datetime
 import io
 import logging
 from PIL import Image, ImageOps
-from odoo import api, exceptions, fields, models
-from odoo.tools.translate import _
+from odoo import exceptions, fields, models, _
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -23,8 +21,10 @@ except ImportError:
 class PrintingLabelZpl2(models.Model):
     _name = 'printing.label.zpl2'
     _description = 'ZPL II Label'
+    _order = 'model_id, name, id'
 
     name = fields.Char(required=True, help='Label Name.')
+    active = fields.Boolean(default=True)
     description = fields.Char(help='Long description for this label.')
     model_id = fields.Many2one(
         comodel_name='ir.model', string='Model', required=True,
@@ -47,7 +47,6 @@ class PrintingLabelZpl2(models.Model):
         help="Restore printer's saved configuration and end of each label ",
         default=True)
 
-    @api.multi
     def _generate_zpl2_components_data(
             self, label_data, record, page_number=1, page_count=1,
             label_offset_x=0, label_offset_y=0, **extra):
@@ -123,7 +122,7 @@ class PrintingLabelZpl2(models.Model):
             elif component.component_type == 'graphic':
                 image = component.graphic_image or data
                 pil_image = Image.open(io.BytesIO(
-                    base64.b64decode(image)))
+                    base64.b64decode(image))).convert('RGB')
                 if component.width and component.height:
                     pil_image = pil_image.resize(
                         (component.width, component.height))
@@ -188,7 +187,6 @@ class PrintingLabelZpl2(models.Model):
                     component.origin_y + offset_y,
                     component.component_type, barcode_arguments, data)
 
-    @api.multi
     def _generate_zpl2_data(self, record, page_count=1, **extra):
         self.ensure_one()
         label_data = zpl2.Zpl2()
@@ -212,7 +210,6 @@ class PrintingLabelZpl2(models.Model):
 
         return label_data.output()
 
-    @api.multi
     def print_label(self, printer, record, page_count=1, **extra):
         for label in self:
             if record._name != label.model_id.model:
@@ -223,6 +220,7 @@ class PrintingLabelZpl2(models.Model):
             # Send the label to printer
             label_contents = label._generate_zpl2_data(
                 record, page_count=page_count, **extra)
-            printer.print_document(None, label_contents, 'raw')
+            printer.print_document(
+                report=None, content=label_contents, doc_format='raw')
 
         return True
