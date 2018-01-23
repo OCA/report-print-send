@@ -5,7 +5,6 @@
 -->
 <odoo>
     <record id="view_printing_label_zpl2_tree" model="ir.ui.view">
-        <field name="name">printing.label.zpl2.tree</field>
         <field name="model">printing.label.zpl2</field>
         <field name="arch" type="xml">
             <tree string="ZPL II Label">
@@ -15,115 +14,125 @@
         </field>
     </record>
     <record id="view_printing_label_zpl2_form" model="ir.ui.view">
-        <field name="name">printing.label.zpl2.form</field>
         <field name="model">printing.label.zpl2</field>
         <field name="arch" type="xml">
             <form string="ZPL II Label">
-                <group col="4">
-                    <field name="name"/>
-                    <field name="model_id"/>
-                    <field name="description"/>
-                    <field name="width"/>
-                    <field name="origin_x"/>
-                    <field name="origin_y"/>
-                    <field name="restore_saved_config"/>
-                </group>
-                <field name="component_ids" nolabel="1" colspan="4">
-                    <tree string="Label Component">
-                        <field name="sequence"/>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                        </button>
+                    </div>
+                    <group col="4">
                         <field name="name"/>
-                        <field name="component_type"/>
+                        <field name="model_id"/>
+                        <field name="description"/>
+                        <field name="width"/>
                         <field name="origin_x"/>
                         <field name="origin_y"/>
-                    </tree>
-                    <form string="Label Component">
-                        <group>
-                            <group>
-                                <field name="name"/>
-                                <field name="sequence"/>
-                            </group>
-                            <group>
-                                <field name="component_type"/>
-                                <field name="repeat"/>
-                            </group>
-                            <group>
-                                <field name="origin_x"/>
-                                <field name="origin_y"/>
-                            </group>
-                            <group>
-                                <field name="data" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}"/>
-                                <field name="graphic_image" attrs="{'invisible': [('component_type', '!=', 'graphic')]}"/>
-                                <field name="sublabel_id" attrs="{'invisible': [('component_type', '!=', 'sublabel')]}"/>
-                            </group>
-                        </group>
-                        <notebook colspan="4">
-                            <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel', 'qr_code'))]}">
-                                <group>
-                                    <field name="height"/>
-                                    <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'circle', 'graphic'))]}"/>
-                                    <field name="reverse_print"/>
-                                    <field name="orientation" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}"/>
-                                    <field name="font" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
-                                    <field name="in_block" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
-                                    <field name="thickness" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'circle'))]}"/>
-                                    <field name="color" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'circle'))]}"/>
-                                </group>
-                            </page>
-                            <!-- Barcode specific arguments -->
-                            <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel', 'graphic', 'qr_code'))]}">
-                                <group>
-                                    <field name="check_digits"/>
-                                    <field name="interpretation_line"/>
-                                    <field name="interpretation_line_above"/>
-                                    <field name="module_width"/>
-                                    <field name="bar_width_ratio"/>
-                                    <field name="security_level"/>
-                                    <field name="columns_count"/>
-                                    <field name="rows_count"/>
-                                    <field name="truncate"/>
-                                </group>
-                            </page>
-                            <!-- 2D Barcode arguments -->
-                            <page string="2D Barcode Arguments" attrs="{'invisible': [('component_type', '!=', 'qr_code')]}">
-                                <group>
-                                    <field name="model"/>
-                                    <field name="magnification_factor"/>
-                                    <field name="error_correction"/>
-                                    <field name="mask_value"/>
-                                </group>
-                            </page>
-                            <!-- Text block specific arguments -->
-                            <page string="Text Block Format" attrs="{'invisible': ['|', ('component_type', '!=', 'text'), ('in_block', '=', False)]}">
-                                <group>
-                                    <field name="block_width"/>
-                                    <field name="block_lines"/>
-                                    <field name="block_spaces"/>
-                                    <field name="block_justify"/>
-                                    <field name="block_left_margin"/>
-                                </group>
-                            </page>
-                            <!-- Repeat specific arguments -->
-                            <page string="Repeat" attrs="{'invisible': [('repeat', '=', False)]}">
-                                <group>
-                                    <field name="repeat_offset"/>
-                                    <field name="repeat_count"/>
-                                    <field name="repeat_offset_x"/>
-                                    <field name="repeat_offset_y"/>
-                                </group>
-                            </page>
-                        </notebook>
-                    </form>
-                </field>
+                        <field name="restore_saved_config"/>
+                    </group>
+                    <notebook>
+                        <page string="Composents">
+                            <field name="component_ids" nolabel="1" colspan="4">
+                                <tree string="Label Component">
+                                    <field name="sequence"/>
+                                    <field name="name"/>
+                                    <field name="component_type"/>
+                                    <field name="origin_x"/>
+                                    <field name="origin_y"/>
+                                </tree>
+                                <form string="Label Component">
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="sequence"/>
+                                        </group>
+                                        <group>
+                                            <field name="component_type"/>
+                                            <field name="repeat"/>
+                                        </group>
+                                        <group>
+                                            <field name="origin_x"/>
+                                            <field name="origin_y"/>
+                                        </group>
+                                        <group>
+                                            <field name="data" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}"/>
+                                            <field name="graphic_image" attrs="{'invisible': [('component_type', '!=', 'graphic')]}"/>
+                                            <field name="sublabel_id" attrs="{'invisible': [('component_type', '!=', 'sublabel')]}"/>
+                                        </group>
+                                    </group>
+                                    <notebook colspan="4">
+                                        <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel', 'qr_code'))]}">
+                                            <group>
+                                                <field name="height"/>
+                                                <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'circle', 'graphic'))]}"/>
+                                                <field name="reverse_print"/>
+                                                <field name="orientation" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}"/>
+                                                <field name="font" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
+                                                <field name="in_block" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
+                                                <field name="thickness" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'circle'))]}"/>
+                                                <field name="color" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'circle'))]}"/>
+                                            </group>
+                                        </page>
+                                        <!-- Barcode specific arguments -->
+                                        <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel', 'graphic', 'qr_code'))]}">
+                                            <group>
+                                                <field name="check_digits"/>
+                                                <field name="interpretation_line"/>
+                                                <field name="interpretation_line_above"/>
+                                                <field name="module_width"/>
+                                                <field name="bar_width_ratio"/>
+                                                <field name="security_level"/>
+                                                <field name="columns_count"/>
+                                                <field name="rows_count"/>
+                                                <field name="truncate"/>
+                                            </group>
+                                        </page>
+                                        <!-- 2D Barcode arguments -->
+                                        <page string="2D Barcode Arguments" attrs="{'invisible': [('component_type', '!=', 'qr_code')]}">
+                                            <group>
+                                                <field name="model"/>
+                                                <field name="magnification_factor"/>
+                                                <field name="error_correction"/>
+                                                <field name="mask_value"/>
+                                            </group>
+                                        </page>
+                                        <!-- Text block specific arguments -->
+                                        <page string="Text Block Format" attrs="{'invisible': ['|', ('component_type', '!=', 'text'), ('in_block', '=', False)]}">
+                                            <group>
+                                                <field name="block_width"/>
+                                                <field name="block_lines"/>
+                                                <field name="block_spaces"/>
+                                                <field name="block_justify"/>
+                                                <field name="block_left_margin"/>
+                                            </group>
+                                        </page>
+                                        <!-- Repeat specific arguments -->
+                                        <page string="Repeat" attrs="{'invisible': [('repeat', '=', False)]}">
+                                            <group>
+                                                <field name="repeat_offset"/>
+                                                <field name="repeat_count"/>
+                                                <field name="repeat_offset_x"/>
+                                                <field name="repeat_offset_y"/>
+                                            </group>
+                                        </page>
+                                    </notebook>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
             </form>
         </field>
     </record>
     <record id="view_printing_label_zpl2_search" model="ir.ui.view">
-        <field name="name">printing.label.zpl2.search</field>
         <field name="model">printing.label.zpl2</field>
         <field name="arch" type="xml">
             <search string="ZPL II Label">
                 <field name="name"/>
                 <field name="model_id"/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
             </search>
         </field>
     </record>
