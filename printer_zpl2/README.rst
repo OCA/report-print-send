@@ -25,18 +25,18 @@ To configure this module, you need to:
 #. Go to *Settings > Printing > Labels > ZPL II*
 #. Create new labels
 
-It's also possible to add a label printing wizard on any model by creating a new *ir.values* record.
+It's also possible to add a label printing wizard on any model by creating a new *ir.actions.act_window* record.
 For example, to add the printing wizard on the *product.product* model :
 
 .. code-block:: xml
 
-    <record model="ir.values" id="wizard_wizard_print_product_label">
-        <field name="name">Print Product Label</field>
-        <field name="key">action</field>
-        <field name="key2">client_action_multi</field>
-        <field name="model">product.product</field>
-        <field name="value" eval="'ir.actions.act_window,' + str(ref('printer_zpl2.action_wizard_print_record_label_view'))"/>
-    </record>
+    <act_window id="action_wizard_purchase"
+      name="Print Label"
+      src_model="product.product"
+      res_model="wizard.print.record.label"
+      view_mode="form"
+      target="new"
+      key2="client_action_multi"/>
 
 Usage
 =====
@@ -54,7 +54,7 @@ You can also use the generic label printing wizard, if added on some models.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/144/10.0
+   :target: https://runbot.odoo-community.org/runbot/144/11.0
 
 Known issues / Roadmap
 ======================
@@ -82,6 +82,7 @@ Contributors
 ------------
 
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
+* Florent de Labarre
 * Jos De Graeve <Jos.DeGraeve@apertoso.be>
 
 Maintainer
