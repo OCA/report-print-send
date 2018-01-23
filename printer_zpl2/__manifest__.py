@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     'name': 'Printer ZPL II',
-    'version': '10.0.1.1.1',
+    'version': '11.0.1.0.0',
     'category': 'Printer',
     'author': 'SYLEAM, Apertoso NV, Odoo Community Association (OCA)',
     'website': 'http://www.syleam.fr/',
