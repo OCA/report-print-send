@@ -11,6 +11,16 @@ try:
 except ImportError:
     _logger.debug('Cannot `import zpl2`.')
 
+DEFAULT_PYTHON_CODE = """# Python One-Liners
+#  - object: record on which the action is triggered; may be be void
+#  - page_number: Current Page
+#  - page_count: Total Page
+#  - time, datetime: Python libraries
+#  Exemple : object.name
+
+""
+"""
+
 
 class PrintingLabelZpl2Component(models.Model):
     _name = 'printing.label.zpl2.component'
@@ -45,6 +55,7 @@ class PrintingLabelZpl2Component(models.Model):
             (zpl2.BARCODE_EAN_13, 'EAN-13'),
             (zpl2.BARCODE_QR_CODE, 'QR Code'),
             ('sublabel', 'Sublabel'),
+            ('zpl2_raw', 'ZPL2'),
         ], string='Type', required=True, default='text', oldname='type',
         help='Type of content, simple text or barcode.')
     font = fields.Selection(
@@ -115,8 +126,8 @@ class PrintingLabelZpl2Component(models.Model):
         ], required=True, default=zpl2.ERROR_CORRECTION_HIGH,
         help='Error correction for some barcode types like QR Code.')
     mask_value = fields.Integer(default=7, help='Mask Value, from 0 to 7.')
-    data = fields.Char(
-        size=256, default='""', required=True,
+    data = fields.Text(
+        default=DEFAULT_PYTHON_CODE, required=True,
         help='Data to print on this component. Resource values can be '
         'inserted with %(object.field_name)s.')
     sublabel_id = fields.Many2one(

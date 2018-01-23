@@ -1068,3 +1068,22 @@ class TestPrintingLabelZpl2(TransactionCase):
             "^JUR\n"
             "^XZ")
 
+    def test_zpl2_raw_contents_blank(self):
+        """ Check contents of a image label """
+        label = self.new_label()
+        data = '^FO50,50^GB100,100,100^FS'
+        self.new_component({
+            'label_id': label.id,
+            'component_type': 'zpl2_raw',
+            'data': '"' + data + '"',
+        })
+        contents = label._generate_zpl2_data(self.printer).decode("utf-8")
+        self.assertEqual(
+            contents,
+            '^XA\n'
+            '^PW480\n'
+            '^CI28\n'
+            '^LH10,10\n'
+            '^FO50,50^GB100,100,100^FS\n'
+            '^JUR\n'
+            '^XZ')
