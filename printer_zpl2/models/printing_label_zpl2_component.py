@@ -42,6 +42,7 @@ class PrintingLabelZpl2Component(models.Model):
         selection=[
             ('text', 'Text'),
             ('rectangle', 'Rectangle / Line'),
+            ('diagonal', 'Diagonal Line'),
             ('circle', 'Circle'),
             ('graphic', 'Graphic'),
             (zpl2.BARCODE_CODE_11, 'Code 11'),
@@ -85,6 +86,12 @@ class PrintingLabelZpl2Component(models.Model):
             (zpl2.ORIENTATION_BOTTOM_UP, 'Read from Bottom up'),
         ], required=True, default=zpl2.ORIENTATION_NORMAL,
         help='Orientation of the barcode.')
+    diagonal_orientation = fields.Selection(
+        selection=[
+            (zpl2.DIAGONAL_ORIENTATION_LEFT, 'Left (\\)'),
+            (zpl2.DIAGONAL_ORIENTATION_RIGHT, 'Right (/)'),
+        ], default=zpl2.DIAGONAL_ORIENTATION_LEFT,
+        help='Orientation of the diagonal line.')
     check_digits = fields.Boolean(
         help='Check if you want to compute and print the check digit.')
     height = fields.Integer(
