@@ -71,7 +71,7 @@ class TestPrintingPrinter(TransactionCase):
         # with tests in test_printing_printer_tray from when modules merged
         report = self.env['ir.actions.report'].search([], limit=1)
         self.assertEqual(self.Model.print_options(
-            report, doc_format='raw'), {'raw': 'True'}
+            doc_format='raw'), {'raw': 'True'}
         )
         self.assertEqual(self.Model.print_options(
             report, doc_format='pdf', copies=2), {'copies': '2'}
