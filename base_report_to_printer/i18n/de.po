@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2017-12-19 03:38+0000\n"
+"POT-Creation-Date: 2018-02-02 17:01+0000\n"
+"PO-Revision-Date: 2018-02-02 17:01+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
@@ -94,47 +94,47 @@ msgstr "Abgebrochen"
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Cancelled at the device"
-msgstr ""
+msgstr "Am Gerät abgebrochen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Cancelled by the printer operator"
-msgstr ""
+msgstr "Durch Druckerbetreuer abgebrochen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Cancelled by the user"
-msgstr ""
+msgstr "Durch Anwender abgebrochen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Cancelled, but printing already processed pages"
-msgstr ""
+msgstr "Abgebrochen, drucke aber bereits verarbeitete Seiten noch aus"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Completed"
-msgstr ""
+msgstr "Abgeschlossen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Completed successfully"
-msgstr ""
+msgstr "Erfolgreich abgeschlossen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Completed with some errors"
-msgstr ""
+msgstr "Mit Fehlern abgeschlossen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Completed with some warnings"
-msgstr ""
+msgstr "Mit Warnungen abgeschlossen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Compressed using an unknown algorithm"
-msgstr ""
+msgstr "Komprimiert unbekannten Algorhythmus verwendend"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_create_uid
@@ -161,68 +161,68 @@ msgstr "Erstellt am:"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_state
 msgid "Current state of the job."
-msgstr ""
+msgstr "Aktueller Status des Jobs."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Currently being interpreted"
-msgstr ""
+msgstr "Wird aktuell verarbeitet"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Currently being sent to the printer"
-msgstr ""
+msgstr "Wird aktuell an den Drucker gesendet"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Currently held"
-msgstr ""
+msgstr "Aktuell angehalten"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Currently printing"
-msgstr ""
+msgstr "Aktuell am Drucken"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_completed
 msgid "Date and time of completion for this job."
-msgstr ""
+msgstr "Datum und Uhrzeit des Jobabschlusses."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_creation
 msgid "Date and time of creation for this job."
-msgstr ""
+msgstr "Datum und Uhrzeit der Jobanlage."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_processing
 msgid "Date and time of process for this job."
-msgstr ""
+msgstr "Datum und Uhrzeit der Jobbearbeitung."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_default
 msgid "Default"
-msgstr ""
+msgstr "Vorgabe"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_property_printing_action_id
 msgid "Default Behaviour"
-msgstr ""
+msgstr "Vorgabeverhalten"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printing_printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_printer_id
 msgid "Default Printer"
-msgstr ""
+msgstr "Vorgabedrucker"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printer_tray_id
 msgid "Default Printer Paper Source"
-msgstr ""
+msgstr "Vorgabe Drucker-Papierquelle"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Disable"
-msgstr ""
+msgstr "Ausschalten"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_display_name
@@ -240,34 +240,34 @@ msgstr "Anzeigename"
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:33
 #, python-format
 msgid "Document sent to the printer %s"
-msgstr ""
+msgstr "Dokument an Drucker %s gesendet"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Enable"
-msgstr ""
+msgstr "Einschalten"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Error in the compressed data"
-msgstr ""
+msgstr "Fehler in komprimierten Daten"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Error in the document"
-msgstr ""
+msgstr "Fehler im Dokument"
 
 #. module: base_report_to_printer
 #. openerp-web
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:36
 #, python-format
 msgid "Error when sending the document to the printer "
-msgstr ""
+msgstr "Fehler beim Versand des Dokuments an den Drucker"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/models/printing_server.py:42
@@ -276,21 +276,24 @@ msgid ""
 "Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
 " running and that you can reach it from the Odoo server."
 msgstr ""
+"Versuch der Verbindung an CUPS-Server an %s:%s gescheitert. Stellen Sie "
+"sicher, dass der Server läuft und dass sie diesen vom Odoo-Server aus "
+"erreichen können."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Files are currently being received"
-msgstr ""
+msgstr "Dateien werden momentan empfangen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Files were not received in full"
-msgstr ""
+msgstr "Dateien wurden nicht vollständig erhalten"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Held because the printer is offline"
-msgstr ""
+msgstr "Angehalten, da der Drucker offline ist."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_id
@@ -306,39 +309,39 @@ msgstr "ID"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_address
 msgid "IP address or hostname of the server"
-msgstr ""
+msgstr "IP-Adresse oder Hostname des Servers"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_active
 msgid "If checked, this server is useable."
-msgstr ""
+msgstr "Wenn angehakt ist dieser Server verwendbar."
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_tree
 msgid "Job"
-msgstr ""
+msgstr "Job"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_id_cups
 msgid "Job ID"
-msgstr ""
+msgstr "Job-ID"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_name
 msgid "Job name."
-msgstr ""
+msgstr "Jobbezeichnung."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_job_ids
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Jobs"
-msgstr ""
+msgstr "Jobs"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer_job_ids
 msgid "Jobs printed on this printer."
-msgstr ""
+msgstr "Auf diesem Drucker gedruckte Jobs."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action___last_update
@@ -376,22 +379,22 @@ msgstr "Zuletzt aktualisiert am"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_printer_ids
 msgid "List of printers available on this server."
-msgstr ""
+msgstr "Liste der auf diesem Server verfügbaren Drucker."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_location
 msgid "Location"
-msgstr ""
+msgstr "Standort"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_media_progress
 msgid "Media Progress"
-msgstr ""
+msgstr "Medienfortschritt"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_model
 msgid "Model"
-msgstr ""
+msgstr "Modell"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_name
@@ -405,74 +408,74 @@ msgstr "Bezeichnung"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_name
 msgid "Name of the server."
-msgstr ""
+msgstr "Bezeichnung des Servers."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "No data has been received"
-msgstr ""
+msgstr "Keine Daten erhalten"
 
 #. module: base_report_to_printer
-#: code:addons/base_report_to_printer/models/ir_actions_report.py:113
+#: code:addons/base_report_to_printer/models/ir_actions_report.py:112
 #, python-format
 msgid "No printer configured to print this report."
-msgstr ""
+msgstr "Kein Drucker zum Druck dieses Berichts bestimmt."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "No reason"
-msgstr ""
+msgstr "Ohne Grund"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printer_tray_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_printer_tray_id
 msgid "Paper Source"
-msgstr ""
+msgstr "Papierquelle"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_tray_ids
 msgid "Paper Sources"
-msgstr ""
+msgstr "Papierquellen"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Pending"
-msgstr ""
+msgstr "Ausstehend"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Pending Held"
-msgstr ""
+msgstr "Ausstehend angehalten"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_media_progress
 msgid "Percentage of progress for this job."
-msgstr ""
+msgstr "Fortschrittsgrad für diesen Job."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_port
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server_port
 msgid "Port of the server."
-msgstr ""
+msgstr "Port auf dem Server."
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 msgid "Print"
-msgstr ""
+msgstr "Druck"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
 msgid "Print Job Action"
-msgstr ""
+msgstr "Druckjob-Aktion"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
@@ -480,32 +483,32 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_printer_id
 msgid "Printer"
-msgstr ""
+msgstr "Drucker"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_tray
 msgid "Printer Tray"
-msgstr ""
+msgstr "Papierfach"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Printer is stopped"
-msgstr ""
+msgstr "Drucker ist angehalten"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Printer needs ink/marker/toner"
-msgstr ""
+msgstr "Drucker bedarf Tinte/Papier/Toner"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Printer state reason set to 'stopped-partly'"
-msgstr ""
+msgstr "Druckerstatus Grund ist 'Teilweise angehalten'"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_printer_id
 msgid "Printer used for this job."
-msgstr ""
+msgstr "Für diesen Job eingesetzter Drucker."
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
@@ -514,12 +517,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_tree
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Printers"
-msgstr ""
+msgstr "Drucker"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_printer_ids
 msgid "Printers List"
-msgstr ""
+msgstr "Druckerliste"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_menu
@@ -527,67 +530,67 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base_report_to_printer.view_users_form_simple_modif
 #: selection:printing.printer,status:0
 msgid "Printing"
-msgstr ""
+msgstr "Drucke"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.printing_group_manager
 msgid "Printing / Print Manager"
-msgstr ""
+msgstr "Drucken / Druckverwaltung"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.printing_group_user
 msgid "Printing / Print User"
-msgstr ""
+msgstr "Drucken / Druckanwender"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_action
 msgid "Printing Action"
-msgstr ""
+msgstr "Druckaktion"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_job
 msgid "Printing Job"
-msgstr ""
+msgstr "Drucken Job"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer_update_wizard
 msgid "Printing Printer Update Wizard"
-msgstr ""
+msgstr "Druckerpflegeassistent"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
 msgid "Printing Report Printing Actions"
-msgstr ""
+msgstr "Berichtsdruck Aktionen"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_server
 msgid "Printing server"
-msgstr ""
+msgstr "Druckserver"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Processing"
-msgstr ""
+msgstr "Aufbereitung"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
 msgid "Processing Stopped"
-msgstr ""
+msgstr "Aufbereitung angehalten"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Queued at the output device"
-msgstr ""
+msgstr "In Warteschlange am Ausgabegerät "
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Queued for printing"
-msgstr ""
+msgstr "In Druckwarteschlage"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_state_reason
 msgid "Reason for the current job state."
-msgstr ""
+msgstr "Grund für diesen Job-Status."
 
 #. module: base_report_to_printer
 #. openerp-web
@@ -596,44 +599,44 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_report_id
 #, python-format
 msgid "Report"
-msgstr ""
+msgstr "Bericht"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_form
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_tree
 msgid "Report Printing Actions"
-msgstr ""
+msgstr "Berichtsdruckaktionen"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
-msgstr ""
+msgstr "Berichte"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Resources not available to print the job"
-msgstr ""
+msgstr "Ressourcen für Druckaufgabe fehlen"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_server_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_server_id
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Server Error"
-msgstr ""
+msgstr "Serverfehler"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer_server_id
 msgid "Server used to access this printer."
-msgstr ""
+msgstr "Für Zugang zum Drucker verwendeter Server."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_server_id
 msgid "Server which hosts this job."
-msgstr ""
+msgstr "Server, der diesen Job ausführt"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_server_action
@@ -642,165 +645,166 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_tree
 msgid "Servers"
-msgstr ""
+msgstr "Server"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Set Default"
-msgstr ""
+msgstr "Setze Vorgabe"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_printer_action
 msgid "Show Printers"
-msgstr ""
+msgstr "Zeige Drucker"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 msgid "Specific actions per user"
-msgstr ""
+msgstr "Anwenderspezifische Aktionen"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_state
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_state_reason
 msgid "State Reason"
-msgstr ""
+msgstr "Statusursache"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_status
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_status_message
 msgid "Status Message"
-msgstr ""
+msgstr "Statusmeldung"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_system_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_system_name
 msgid "System Name"
-msgstr ""
+msgstr "Systembezeichnung"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "The URI cannot be accessed"
-msgstr ""
+msgstr "Die URI kann nicht erreicht werden"
 
 #. module: base_report_to_printer
 #: sql_constraint:printing.job:0
 msgid "The id of the job must be unique per server !"
-msgstr ""
+msgstr "Die ID eines Jobs muss je Server eindeutig sein."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_act_report_xml_printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
-msgstr ""
+msgstr "Dieses Feld ermöglicht die Aktion und Drucker pro Anwender vorzugeben"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid ""
 "This process will create all missing printers from the current CUPS server."
 msgstr ""
+"Dieser Vorgang wird fehlende Drucker vom aktuellen CUPS-Server anlegen."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_completed
 msgid "Time At Completed"
-msgstr ""
+msgstr "Uhrzeit bei Abschluss"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_creation
 msgid "Time At Creation"
-msgstr ""
+msgstr "Uhrzeit bei Anlage"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_processing
 msgid "Time At Processing"
-msgstr ""
+msgstr "Uhrzeit bei Aufbereitung"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Trays"
-msgstr ""
+msgstr "Fächer"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_action_type
 msgid "Type"
-msgstr ""
+msgstr "Art"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_uri
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Unavailable"
-msgstr ""
+msgstr "Nicht verfügbar"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job_active
 msgid "Unchecked if the job is purged from cups."
-msgstr ""
+msgstr "Abgewählt, wenn der Job in CUPS gelöscht wurde."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0 selection:printing.printer,status:0
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Unset Default"
-msgstr ""
+msgstr "Unbestimmte Vorgabe"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Unsupported format"
-msgstr ""
+msgstr "Unbestimmtes Format"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Update Jobs"
-msgstr ""
+msgstr "Jobs auffrischen"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Update Printers"
-msgstr ""
+msgstr "Drucker auffrischen"
 
 #. module: base_report_to_printer
 #: model:ir.actions.server,name:base_report_to_printer.ir_cron_update_printers_ir_actions_server
 #: model:ir.cron,cron_name:base_report_to_printer.ir_cron_update_printers
 #: model:ir.cron,name:base_report_to_printer.ir_cron_update_printers
 msgid "Update Printers Jobs"
-msgstr ""
+msgstr "Druckjobs auffrischen"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printer_update_wizard
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printer_update_wizard
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Update Printers from CUPS"
-msgstr ""
+msgstr "Drucker von CUPS auffrischen"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_user_id
 msgid "User"
-msgstr ""
+msgstr "Anwender"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Anwender"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_ir_actions_report
 msgid "ir.actions.report"
-msgstr ""
+msgstr "ir.actions.report"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "or"
-msgstr ""
+msgstr "oder"
