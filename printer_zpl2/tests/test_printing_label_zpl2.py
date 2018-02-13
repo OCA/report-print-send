@@ -527,6 +527,35 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Label end
             '^XZ')
 
+    def test_diagonal_line_label_contents(self):
+        """ Check contents of a diagonal line label """
+        label = self.new_label()
+        self.new_component({
+            'label_id': label.id,
+            'component_type': 'diagonal',
+        })
+        contents = label._generate_zpl2_data(self.printer).decode("utf-8")
+        self.assertEqual(
+            contents,
+            # Label start
+            '^XA\n'
+            # Print width
+            '^PW480\n'
+            # UTF-8 encoding
+            '^CI28\n'
+            # Label position
+            '^LH10,10\n'
+            # Component position
+            '^FO10,10'
+            # Component format
+            '^GD3,3,1,B,L'
+            # Component end
+            '^FS\n'
+            # Recall last saved parameters
+            '^JUR\n'
+            # Label end
+            '^XZ')
+
     def test_circle_label_contents(self):
         """ Check contents of a circle label """
         label = self.new_label()
