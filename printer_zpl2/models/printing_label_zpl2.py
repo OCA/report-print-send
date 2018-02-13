@@ -123,6 +123,16 @@ class PrintingLabelZpl2(models.Model):
                         zpl2.ARG_COLOR: component.color,
                         zpl2.ARG_ROUNDING: component.rounding,
                     })
+            elif component.component_type == 'diagonal':
+                label_data.graphic_diagonal_line(
+                    component_offset_x, component_offset_y, {
+                        zpl2.ARG_WIDTH: component.width,
+                        zpl2.ARG_HEIGHT: component.height,
+                        zpl2.ARG_THICKNESS: component.thickness,
+                        zpl2.ARG_COLOR: component.color,
+                        zpl2.ARG_DIAGONAL_ORIENTATION:
+                        component.diagonal_orientation,
+                    })
             elif component.component_type == 'graphic':
                 image = component.graphic_image or data
                 pil_image = Image.open(io.BytesIO(

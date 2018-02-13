@@ -64,24 +64,25 @@
                                             <field name="sublabel_id" attrs="{'invisible': [('component_type', '!=', 'sublabel')]}"/>
                                         </group>
                                     </group>
-                                    <group attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}" string="Data">
+                                    <group attrs="{'invisible': [('component_type', 'in', ('rectangle', 'diagonal', 'circle'))]}" string="Data">
                                         <field name="data" widget="ace" options="{'mode': 'python'}" nolabel="1"/>
                                     </group>
                                     <notebook colspan="4">
                                         <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel', 'qr_code', 'zpl2_raw'))]}">
                                             <group>
                                                 <field name="height"/>
-                                                <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'circle', 'graphic'))]}"/>
+                                                <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'diagonal', 'circle', 'graphic'))]}"/>
                                                 <field name="reverse_print"/>
-                                                <field name="orientation" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}"/>
+                                                <field name="orientation" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'diagonal', 'circle'))]}"/>
                                                 <field name="font" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
                                                 <field name="in_block" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
-                                                <field name="thickness" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'circle'))]}"/>
-                                                <field name="color" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'circle'))]}"/>
+                                                <field name="thickness" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'diagonal', 'circle'))]}"/>
+                                                <field name="color" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'diagonal', 'circle'))]}"/>
+                                                <field name="diagonal_orientation" attrs="{'invisible': [('component_type', '!=', 'diagonal')], 'required': [('component_type', '=', 'diagonal')]}"/>
                                             </group>
                                         </page>
                                         <!-- Barcode specific arguments -->
-                                        <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel', 'graphic', 'qr_code', 'zpl2_raw'))]}">
+                                        <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'diagonal', 'circle', 'sublabel', 'graphic', 'qr_code', 'zpl2_raw'))]}">
                                             <group>
                                                 <field name="check_digits"/>
                                                 <field name="interpretation_line"/>
