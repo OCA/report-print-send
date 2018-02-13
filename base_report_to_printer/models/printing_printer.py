@@ -164,9 +164,6 @@ class PrintingPrinter(models.Model):
     @api.multi
     def print_options(self, report=None, **print_opts):
         options = {}
-        if not report:
-            return options
-
         for option, value in print_opts.items():
             try:
                 options.update(getattr(
