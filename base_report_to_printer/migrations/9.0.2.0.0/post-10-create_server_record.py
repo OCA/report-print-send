@@ -16,4 +16,5 @@ def migrate(cr, v):
             'name': config.get('cups_host', 'localhost'),
             'address': config.get('cups_host', 'localhost'),
             'port': config.get('cups_port', 631),
+            'printer_ids': [(6, 0, env['printing.printer'].search([]).ids)],
         })
