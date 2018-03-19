@@ -4,7 +4,7 @@
 
 {
     'name': 'Printer ZPL II',
-    'version': '10.0.1.1.1',
+    'version': '10.0.1.1.2',
     'category': 'Printer',
     'author': 'SYLEAM, Odoo Community Association (OCA)',
     'website': 'http://www.syleam.fr/',
