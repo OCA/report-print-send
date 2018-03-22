@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -188,6 +187,6 @@ class PrintingLabelZpl2(models.Model):
             # Send the label to printer
             label_contents = label._generate_zpl2_data(
                 record, page_count=page_count, **extra)
-            printer.print_document(None, label_contents, 'raw')
+            printer.print_document(label_contents, 'raw')
 
         return True
