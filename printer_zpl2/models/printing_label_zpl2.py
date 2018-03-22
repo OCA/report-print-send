@@ -174,7 +174,7 @@ class PrintingLabelZpl2(models.Model):
                 label_data.configuration_update(zpl2.CONF_RECALL_LAST_SAVED)
             label_data.label_end()
 
-        return label_data.output()
+        return label_data.output().decode('utf-8')
 
     @api.multi
     def print_label(self, printer, record, page_count=1, **extra):
