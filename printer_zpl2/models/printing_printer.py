@@ -10,6 +10,7 @@ class PrintingPrinter(models.Model):
     @api.multi
     def print_document(self, report, content, **print_opts):
         self.ensure_one()
-        content = bytes(content, 'utf-8')
+        content = content.encode('utf-8')
+        content = bytes(content)
         return super(PrintingPrinter, self).print_document(report, content,
                                                            **print_opts)
