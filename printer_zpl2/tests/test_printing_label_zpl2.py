@@ -45,13 +45,13 @@ class TestPrintingLabelZpl2(TransactionCase):
 
     def new_label(self, vals=None):
         values = self.label_vals.copy()
-        if vals is not None:
+        if vals:
             values.update(vals)
         return self.Model.create(values)
 
     def new_component(self, vals=None):
         values = self.component_vals.copy()
-        if vals is not None:
+        if vals:
             values.update(vals)
         return self.ComponentModel.create(values)
 
