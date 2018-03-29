@@ -15,8 +15,8 @@
                     <field name="data" widget="ace" nolabel="1"/>
                 </group>
                 <footer>
-                    <button type="special" special="cancel" string="Cancel"/>
-                    <button string="Import" type="object" name="import_zpl2" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                    <button string="Import" type="object" name="import_zpl2" class="btn-primary"/>
                 </footer>
             </form>
         </field>
