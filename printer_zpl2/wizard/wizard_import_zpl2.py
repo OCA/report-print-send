@@ -1,3 +1,6 @@
+# Copyright (C) 2018 Florent Mirieu (<https://github.com/fmdl>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 import logging
 import re
 import base64
@@ -6,7 +9,7 @@ import io
 
 
 from PIL import Image, ImageOps
-from odoo import models, api, fields, _
+from odoo import fields, models, _
 
 _logger = logging.getLogger(__name__)
 
@@ -425,7 +428,7 @@ class WizardImportZPl2(models.TransientModel):
             if field in self.model_fields.keys():
                 field_type = self.model_fields[field].get('type', False)
                 if field_type == 'boolean':
-                    if value == '' or value == zpl2.BOOL_NO:
+                    if not value or value == zpl2.BOOL_NO:
                         value = False
                     else:
                         value = True
