@@ -42,7 +42,7 @@
                         <button name="print_test_label" string="Print Test" type="object" class="oe_highlight"/>
                     </group>
                     <notebook>
-                        <page string="Composents">
+                        <page string="Components">
                             <field name="component_ids" nolabel="1" colspan="4">
                                 <tree string="Label Component">
                                     <field name="sequence"/>
@@ -135,7 +135,7 @@
                             <group string="Emulation" attrs="{'invisible':[('test_labelary_mode', '=', False)]}">
                                 <field name="labelary_image" widget="image" nolabel="1" force_save="1"/>
                                 <p class="oe_grey" colspan="4">
-                                    Note : It is an emulation from http://labelary.com/, the result on printer can be diffrent.
+                                    Note : It is an emulation from http://labelary.com/, the result on printer can be different.
                                 </p>
                             </group>
                         </page>
