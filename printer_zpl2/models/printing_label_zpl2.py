@@ -168,7 +168,7 @@ class PrintingLabelZpl2(models.Model):
 
             self._generate_zpl2_components_data(
                 label_data, record, page_number=page_number,
-                page_count=page_count)
+                page_count=page_count, **extra)
 
             # Restore printer's configuration and end the label
             if self.restore_saved_config:
