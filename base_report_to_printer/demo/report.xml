@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Tecnativa - Jairo Llopis
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+
+<data>
+
+    <template id="report_1">
+        <h1 t-tranlsation="off">Dummy report just for tests</h1>
+    </template>
+
+    <report
+        id="action_report_1"
+        model="res.partner"
+        string="Demo Report 1"
+        report_type="qweb-pdf"
+        name="base_report_to_printer.report_1"
+        file="base_report_to_printer.report_1"
+    />
+
+</data>

@@ -8,11 +8,11 @@
 
 {
     'name': "Report to printer",
-    'version': '10.0.1.0.4',
+    'version': '10.0.2.0.0',
     'category': 'Generic Modules/Base',
-    'author': "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
-              "LasLabs, Odoo Community Association (OCA)",
-    'website': 'http://www.agilebg.com',
+    'author': "Agile Business Group & Domsense, Pegueroles SCP, NaN, "
+              "LasLabs, Tecnativa, Odoo Community Association (OCA)",
+    'website': 'https://github.com/OCA/report-print-send',
     'license': 'AGPL-3',
     "depends": ['report'],
     'data': [
@@ -26,6 +26,9 @@
         'views/res_users_view.xml',
         'views/ir_actions_report_xml_view.xml',
         'wizards/printing_printer_update_wizard_view.xml',
+    ],
+    'demo': [
+        'demo/report.xml',
     ],
     'installable': True,
     'application': True,

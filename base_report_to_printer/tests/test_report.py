@@ -104,7 +104,7 @@ class TestReport(common.HttpCase):
             document = self.Model.get_pdf(
                 self.partners.ids, self.report.report_name)
             print_document.assert_called_once_with(
-                self.report, document, self.report.report_type)
+                self.report.report_name, document, self.report.report_type)
 
     def test_print_document_not_printable(self):
         """ It should print the report, regardless of the defined behaviour """
