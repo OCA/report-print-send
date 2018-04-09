@@ -73,6 +73,7 @@ class PrintingPrinter(models.Model):
         }
         return vals
 
+    # TODO Rename param report to report_name, to make behavior obvious
     @api.multi
     def print_options(self, report=None, format=None, copies=1):
         """ Hook to set print options """
@@ -83,8 +84,9 @@ class PrintingPrinter(models.Model):
             options['copies'] = str(copies)
         return options
 
+    # TODO Rename param report to report_name, to make behavior obvious
     @api.multi
-    def print_document(self, report, content, format, copies=1):
+    def print_document(self, report, content, format, copies=None):
         """ Print a file
 
         Format could be pdf, qweb-pdf, raw, ...
@@ -96,17 +98,19 @@ class PrintingPrinter(models.Model):
             os.write(fd, content)
         finally:
             os.close(fd)
-        if copies == 1:
+        report_obj = self.env["report"]._get_report_from_name(report)
+        if copies is None:
             # If number of copies is not indicated by argument, check context
             # or report definition
             copies = (
                 self.env.context.get('report_copies') or
-                (report and report.report_copies) or
-                copies
+                report_obj.report_copies or
+                1
             )
         return self.print_file(
             file_name, report=report, copies=copies, format=format)
 
+    # TODO Rename param report to report_name, to make behavior obvious
     @api.multi
     def print_file(self, file_name, report=None, copies=1, format=None):
         """ Print a file """

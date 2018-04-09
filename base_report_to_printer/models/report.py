@@ -20,7 +20,11 @@ class Report(models.Model):
             raise exceptions.Warning(
                 _('No printer configured to print this report.')
             )
-        return printer.print_document(report, document, report.report_type)
+        return printer.print_document(
+            report_name,
+            document,
+            report.report_type,
+        )
 
     @api.multi
     def _can_print_report(self, behaviour, printer, document):
@@ -51,6 +55,6 @@ class Report(models.Model):
         can_print_report = self._can_print_report(behaviour, printer, document)
 
         if can_print_report:
-            printer.print_document(report, document, report.report_type)
+            printer.print_document(report_name, document, report.report_type)
 
         return document
