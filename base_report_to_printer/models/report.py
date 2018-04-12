@@ -24,6 +24,7 @@ class Report(models.Model):
             report_name,
             document,
             report.report_type,
+            copies=self.env.context.get('report_copies')
         )
 
     @api.multi
