@@ -151,7 +151,9 @@ class PrintingLabelZpl2(models.Model):
                         component.diagonal_orientation,
                     })
             elif component.component_type == 'graphic':
-                image = component.graphic_image or data
+                # During the on_change don't take the bin_size
+                image = component.with_context(bin_size_graphic_image=False)\
+                    .graphic_image or data
                 pil_image = Image.open(io.BytesIO(
                     base64.b64decode(image))).convert('RGB')
                 if component.width and component.height:
