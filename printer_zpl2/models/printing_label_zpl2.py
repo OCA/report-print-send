@@ -292,8 +292,7 @@ class PrintingLabelZpl2(models.Model):
         record = Obj.search([('id', '=', self.record_id)], limit=1)
         if not record:
             record = Obj.search([], limit=1, order='id desc')
-            self.record_id = record.id
-
+        self.record_id = record.id
         return record
 
     def print_test_label(self):
