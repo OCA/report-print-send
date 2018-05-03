@@ -2,20 +2,27 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=====================
-ZPL II Label printing
-=====================
+============
+ZPL II Label
+============
 
-This module extends the **Report to printer** (``base_report_to_printer``)
-module to add a ZPL II label printing feature.
+This module adds the possibility to define printing labels in the
+Zebra Programming Language (ZPL II).
 
-This module is meant to be used as a base for module development, and does not provide a GUI on its own.
-See below for more details.
+See https://en.wikipedia.org/wiki/Zebra_(programming_language)
+
+This module is meant to be used as a base for module development, and does
+not provide a GUI on its own. See below for more details.
 
 Installation
 ============
 
-Nothing special, just install the module.
+Install python module 'zpl2' - https://pypi.org/project/zpl2
+
+.. code-block:: bash
+
+   sudo pip install zpl2
+
 
 Configuration
 =============
@@ -30,7 +37,8 @@ To configure this module, you need to:
 Usage
 =====
 
-To render a label, you need to call use the label printing method from anywhere (other modules, server actions, etc.).
+To render a label, you need to call use the label printing method from
+anywhere (other modules, server actions, etc.).
 
 .. code-block:: python
 
@@ -45,7 +53,8 @@ To render a label, you need to call use the label printing method from anywhere 
 Known issues / Roadmap
 ======================
 
-* Develop a "Designer" view in a separate module, to allow drawing labels with simple mouse clicks/drags
+* Develop a "Designer" view in a separate module, to allow drawing labels
+  with simple mouse clicks/drags
 
 Bug Tracker
 ===========
