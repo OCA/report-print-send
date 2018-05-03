@@ -33,7 +33,7 @@ class PrintingLabelZpl2(models.Model):
 
     def create_action(self):
         for label in self.filtered(lambda record: not record.action_window_id):
-            label.action_window_id = self.env['ir.actions.act_window'].create({
+            vals = {
                 'name': _('Print Label'),
                 'src_model': label.model_id.model,
                 'binding_model_id': label.model_id.id,
@@ -41,8 +41,15 @@ class PrintingLabelZpl2(models.Model):
                 'view_mode': 'form',
                 'target': 'new',
                 'binding_type': 'action',
-            })
-
+            }
+            # Provide a valid xml_id for the record, so that in case we
+            # uninstall the module, these records will also be deleted.
+            # Otherwise an error would occur indicating that model
+            # 'wizard.print.record.label' as the action is not going to be
+            # deleted when you uninstall the module.
+            xml_id = 'printer_zpl2.%s' % label.id
+            label.action_window_id = self.env['ir.model.data']._update(
+                'ir.actions.act_window', 'printer_zpl2', vals, xml_id)
         return True
 
     def unlink_action(self):

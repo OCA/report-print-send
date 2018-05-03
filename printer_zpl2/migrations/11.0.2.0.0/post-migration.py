@@ -22,4 +22,3 @@ def migrate(cr, version):
         FROM ir_model_fields
         WHERE model='printing.label.zpl2.component')
     """)
-
