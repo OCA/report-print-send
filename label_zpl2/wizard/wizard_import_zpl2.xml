@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_wizard_import_zpl2_form" model="ir.ui.view">
+        <field name="name">wizard.import.zpl2.form</field>
+        <field name="model">wizard.import.zpl2</field>
+        <field name="arch" type="xml">
+            <form string="Print Label">
+                <group>
+                    <group>
+                        <field name="label_id"/>
+                        <field name="delete_component"/>
+                    </group>
+                </group>
+                <group string="ZPL2">
+                    <field name="data" widget="ace" nolabel="1"/>
+                </group>
+                <footer>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                    <button string="Import" type="object" name="import_zpl2" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

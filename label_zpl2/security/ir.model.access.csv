@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+printing_label_zpl2_user,Printing Label ZPL2 User,model_printing_label_zpl2,label_group_user,1,0,0,0
+printing_label_zpl2_manager,Printing Label ZPL2 Manager,model_printing_label_zpl2,label_group_manager,1,1,1,1
+printing_label_zpl2_component_user,Printing Label ZPL2 Component User,model_printing_label_zpl2_component,label_group_user,1,0,0,0
+printing_label_zpl2_component_manager,Printing Label ZPL2 Component Manager,model_printing_label_zpl2_component,label_group_manager,1,1,1,1

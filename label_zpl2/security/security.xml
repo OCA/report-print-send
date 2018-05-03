@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+        <record id="label_group_manager" model="res.groups">
+            <field name="name">Label / Label Manager</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+        <record id="label_group_user" model="res.groups">
+            <field name="name">Label / Label User</field>
+        </record>
+</odoo>

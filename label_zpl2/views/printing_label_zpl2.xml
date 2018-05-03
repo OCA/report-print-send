@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<!--
+    Copyright 2016 SYLEAM
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_printing_label_zpl2_tree" model="ir.ui.view">
+        <field name="model">printing.label.zpl2</field>
+        <field name="arch" type="xml">
+            <tree string="ZPL II Label">
+                <field name="name"/>
+                <field name="model_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_printing_label_zpl2_form" model="ir.ui.view">
+        <field name="model">printing.label.zpl2</field>
+        <field name="arch" type="xml">
+            <form string="ZPL II Label">
+                <header>
+                    <button name="import_zpl2" string="Import ZPL2" type="object"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                        </button>
+                    </div>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="model_id"/>
+                        <field name="description"/>
+                        <field name="width"/>
+                        <field name="origin_x"/>
+                        <field name="origin_y"/>
+                        <field name="restore_saved_config"/>
+                    </group>
+                    <notebook>
+                        <page string="Components">
+                            <field name="component_ids" nolabel="1" colspan="4">
+                                <tree string="Label Component">
+                                    <field name="sequence"/>
+                                    <field name="name"/>
+                                    <field name="component_type"/>
+                                    <field name="origin_x"/>
+                                    <field name="origin_y"/>
+                                </tree>
+                                <form string="Label Component">
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="sequence"/>
+                                        </group>
+                                        <group>
+                                            <field name="component_type"/>
+                                            <field name="repeat" attrs="{'invisible': [('component_type', '=', 'zpl2_raw')]}"/>
+                                        </group>
+                                        <group attrs="{'invisible': [('component_type', '=', 'zpl2_raw')]}">
+                                            <field name="origin_x"/>
+                                            <field name="origin_y"/>
+                                        </group>
+                                        <group>
+                                            <field name="graphic_image" attrs="{'invisible': [('component_type', '!=', 'graphic')]}"/>
+                                            <field name="sublabel_id" attrs="{'invisible': [('component_type', '!=', 'sublabel')]}"/>
+                                        </group>
+                                    </group>
+                                    <group attrs="{'invisible': [('component_type', 'in', ('rectangle', 'diagonal', 'circle'))]}" string="Data">
+                                        <field name="data" widget="ace" options="{'mode': 'python'}" nolabel="1"/>
+                                    </group>
+                                    <notebook colspan="4">
+                                        <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel', 'qr_code', 'zpl2_raw'))]}">
+                                            <group>
+                                                <field name="height"/>
+                                                <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'diagonal', 'circle', 'graphic'))]}"/>
+                                                <field name="reverse_print"/>
+                                                <field name="orientation" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'diagonal', 'circle'))]}"/>
+                                                <field name="font" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
+                                                <field name="in_block" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
+                                                <field name="thickness" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'diagonal', 'circle'))]}"/>
+                                                <field name="color" attrs="{'invisible': [('component_type', 'not in', ('rectangle', 'diagonal', 'circle'))]}"/>
+                                                <field name="diagonal_orientation" attrs="{'invisible': [('component_type', '!=', 'diagonal')], 'required': [('component_type', '=', 'diagonal')]}"/>
+                                            </group>
+                                        </page>
+                                        <!-- Barcode specific arguments -->
+                                        <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'diagonal', 'circle', 'sublabel', 'graphic', 'qr_code', 'zpl2_raw'))]}">
+                                            <group>
+                                                <field name="check_digits"/>
+                                                <field name="interpretation_line"/>
+                                                <field name="interpretation_line_above"/>
+                                                <field name="module_width"/>
+                                                <field name="bar_width_ratio"/>
+                                                <field name="security_level"/>
+                                                <field name="columns_count"/>
+                                                <field name="rows_count"/>
+                                                <field name="truncate"/>
+                                            </group>
+                                        </page>
+                                        <!-- 2D Barcode arguments -->
+                                        <page string="2D Barcode Arguments" attrs="{'invisible': [('component_type', '!=', 'qr_code')]}">
+                                            <group>
+                                                <field name="model"/>
+                                                <field name="magnification_factor"/>
+                                                <field name="error_correction"/>
+                                                <field name="mask_value"/>
+                                            </group>
+                                        </page>
+                                        <!-- Text block specific arguments -->
+                                        <page string="Text Block Format" attrs="{'invisible': ['|', ('component_type', '!=', 'text'), ('in_block', '=', False)]}">
+                                            <group>
+                                                <field name="block_width"/>
+                                                <field name="block_lines"/>
+                                                <field name="block_spaces"/>
+                                                <field name="block_justify"/>
+                                                <field name="block_left_margin"/>
+                                            </group>
+                                        </page>
+                                        <!-- Repeat specific arguments -->
+                                        <page string="Repeat" attrs="{'invisible': [('repeat', '=', False)]}">
+                                            <group>
+                                                <field name="repeat_offset"/>
+                                                <field name="repeat_count"/>
+                                                <field name="repeat_offset_x"/>
+                                                <field name="repeat_offset_y"/>
+                                            </group>
+                                        </page>
+                                    </notebook>
+                                </form>
+                            </field>
+                            <group string="Emulation" attrs="{'invisible':[('test_labelary_mode', '=', False)]}">
+                                <field name="labelary_image" widget="image" nolabel="1" force_save="1"/>
+                                <p class="oe_grey" colspan="4">
+                                    Note : It is an emulation from http://labelary.com/, the result on printer can be different.
+                                </p>
+                            </group>
+                        </page>
+                        <page string="Test Mode">
+                            <group>
+                                <group>
+                                    <field name="test_labelary_mode"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="record_id" attrs="{'invisible':[('test_labelary_mode', '=', False)], 'required':[('test_labelary_mode', '=', True)]}"/>
+
+                                    <field name="labelary_dpmm" attrs="{'invisible':[('test_labelary_mode', '=', False)], 'required':[('test_labelary_mode', '=', True)]}"/>
+                                    <field name="labelary_width" attrs="{'invisible':[('test_labelary_mode', '=', False)], 'required':[('test_labelary_mode', '=', True)]}"/>
+                                    <field name="labelary_height" attrs="{'invisible':[('test_labelary_mode', '=', False)], 'required':[('test_labelary_mode', '=', True)]}"/>
+                                </group>
+                            </group>
+                            <group string="Extra">
+                                <field name="extra" nolabel="1" widget="ace" options="{'mode': 'python'}" attrs="{'invisible':[('test_labelary_mode', '=', False)]}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_printing_label_zpl2_search" model="ir.ui.view">
+        <field name="model">printing.label.zpl2</field>
+        <field name="arch" type="xml">
+            <search string="ZPL II Label">
+                <field name="name"/>
+                <field name="model_id"/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_printing_label_zpl2_view">
+        <field name="name">ZPL II Labels</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">printing.label.zpl2</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_printing_label_zpl2_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_printing_label_zpl2_view_form">
+        <field name="act_window_id" ref="act_open_printing_label_zpl2_view"/>
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_printing_label_zpl2_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_open_printing_label_zpl2_view_tree">
+        <field name="act_window_id" ref="act_open_printing_label_zpl2_view"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_printing_label_zpl2_tree"/>
+    </record>
+    <menuitem name="Labels"
+        id="label_menu" sequence="1"
+        parent="base.menu_administration"
+        groups="label_group_manager"
+        />
+    <menuitem id="menu_printing_label_zpl2" parent="label_menu" sequence="20" action="act_open_printing_label_zpl2_view"/>
+</odoo>
