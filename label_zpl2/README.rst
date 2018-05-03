@@ -69,6 +69,7 @@ Contributors
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
 * Florent de Labarre
 * Jos De Graeve <Jos.DeGraeve@apertoso.be>
+* Enric Tobella <etobella@creublanca.es>
 
 Maintainer
 ----------
