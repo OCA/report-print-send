@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+        <record id="base_report_to_printer.printing_group_manager" model="res.groups">
+            <field name="implied_ids"
+               eval="[(4, ref('label_zpl2.label_group_manager'))]"/>
+        </record>
+        <record id="base_report_to_printer.printing_group_user" model="res.groups">
+            <field name="implied_ids"
+               eval="[(4, ref('label_zpl2.label_group_manager'))]"/>
+        </record>
+</odoo>

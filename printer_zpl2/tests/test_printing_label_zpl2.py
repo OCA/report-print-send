@@ -139,7 +139,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         """
         label = self.new_label({
             'model_id': self.env.ref(
-                'printer_zpl2.model_printing_label_zpl2').id,
+                'label_zpl2.model_printing_label_zpl2').id,
         })
         data = 'Some text'
         self.new_component({
@@ -198,7 +198,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         """
         label = self.new_label({
             'model_id': self.env.ref(
-                'printer_zpl2.model_printing_label_zpl2').id,
+                'label_zpl2.model_printing_label_zpl2').id,
         })
         data = ['First text', 'Second text', 'Third text']
         self.new_component({
@@ -250,7 +250,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         """
         label = self.new_label({
             'model_id': self.env.ref(
-                'printer_zpl2.model_printing_label_zpl2').id,
+                'label_zpl2.model_printing_label_zpl2').id,
         })
         data = ['Text {value}'.format(value=ind) for ind in range(20)]
         self.new_component({
@@ -306,7 +306,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         sublabel = self.new_label({
             'name': 'Sublabel',
             'model_id': self.env.ref(
-                'printer_zpl2.model_printing_label_zpl2_component').id,
+                'label_zpl2.model_printing_label_zpl2_component').id,
         })
         self.new_component({
             'label_id': sublabel.id,
@@ -321,7 +321,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         })
         label = self.new_label({
             'model_id': self.env.ref(
-                'printer_zpl2.model_printing_label_zpl2').id,
+                'label_zpl2.model_printing_label_zpl2').id,
         })
         self.new_component({
             'label_id': label.id,

@@ -6,8 +6,8 @@
 ZPL II Label printing
 =====================
 
-This module extends the **Report to printer** (``base_report_to_printer``)
-module to add a ZPL II label printing feature.
+This module integrates the **Report to printer** (``base_report_to_printer``)
+with the module that generates ZPL II label.
 
 This module is meant to be used as a base for module development, and does not provide a GUI on its own.
 See below for more details.
@@ -22,7 +22,7 @@ Configuration
 
 To configure this module, you need to:
 
-#. Go to *Settings > Printing > Labels > ZPL II*
+#. Go to *Settings > Labels > ZPL II Labels*
 #. Create new labels
 #. Import ZPL2 code
 #. Use the Test Mode tab during the creation
