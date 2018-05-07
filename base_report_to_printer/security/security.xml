@@ -7,6 +7,7 @@
         </record>
         <record id="printing_group_user" model="res.groups">
             <field name="name">Printing / Print User</field>
+            <field name="users" eval="[(4, ref('base.group_user'))]"/>
         </record>
         <record id="printing_server_group_manager" model="ir.model.access">
             <field name="name">Printing Server Manager</field>
