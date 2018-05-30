@@ -21,7 +21,7 @@ class PrintingJob(models.Model):
         help='CUPS id for this job.')
     server_id = fields.Many2one(
         comodel_name='printing.server', string='Server',
-        related='printer_id.server_id', store=True,
+        related='printer_id.server_id', store=True, readonly=True,
         help='Server which hosts this job.')
     printer_id = fields.Many2one(
         comodel_name='printing.printer', string='Printer', required=True,
