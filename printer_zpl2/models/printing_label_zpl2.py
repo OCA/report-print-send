@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+import time
 import base64
 import datetime
 import io
 import logging
-import time
 
 from PIL import Image, ImageOps
 from openerp import api, exceptions, fields, models
-from openerp.tools.safe_eval import safe_eval
 from openerp.tools.translate import _
+from openerp.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
 
@@ -117,23 +118,25 @@ class PrintingLabelZpl2(models.Model):
                         zpl2.ARG_ROUNDING: component.rounding,
                     })
             elif component.component_type == 'graphic':
-                pil_image = Image.open(
-                    io.BytesIO(
-                        base64.decodestring(
-                            component.graphic_image or data
-                        )))
+                pil_image = Image.open(io.BytesIO(
+                    base64.b64decode(component.graphic_image or data)))
                 if component.width and component.height:
                     pil_image = pil_image.resize(
-                        (component.width, component.height, )
-                    )
-                # rotation ( pil rotates counter clockwise )
+                        (component.width, component.height))
+
+                # Invert the colors
+                if component.reverse_print:
+                    pil_image = ImageOps.invert(pil_image)
+
+                # Rotation (PIL rotates counter clockwise)
                 if component.orientation == zpl2.ORIENTATION_ROTATED:
-                    pil_image = pil_image.rotate(-90)
+                    pil_image = pil_image.transpose(Image.ROTATE_270)
                 elif component.orientation == zpl2.ORIENTATION_INVERTED:
-                    pil_image = pil_image.rotate(-180)
+                    pil_image = pil_image.transpose(Image.ROTATE_180)
                 elif component.orientation == zpl2.ORIENTATION_BOTTOM_UP:
-                    pil_image = pil_image.rotate(-270)
-                label_data.graphic_image(
+                    pil_image = pil_image.transpose(Image.ROTATE_90)
+
+                label_data.graphic_field(
                     component_offset_x, component_offset_y,
                     pil_image
                 )

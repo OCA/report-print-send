@@ -144,7 +144,6 @@ class PrintingLabelZpl2Component(models.Model):
         string='Left Margin',
         help='Left margin for the second and other lines in the block.')
     graphic_image = fields.Binary(
-        "Image",
-        attachment=True,
-        help="This field holds a static image to print. "
-             "If not set, the data field is evaluated")
+        string='Image', attachment=True,
+        help='This field holds a static image to print. '
+             'If not set, the data field is evaluated.')

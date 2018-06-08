@@ -58,11 +58,11 @@
                             </group>
                         </group>
                         <notebook colspan="4">
-                            <page string="Format" attrs="{'invisible': [('component_type', 'in', ('sublabel'))]}">
+                            <page string="Format" attrs="{'invisible': [('component_type', '=', 'sublabel')]}">
                                 <group>
                                     <field name="height"/>
-                                    <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'graphic', 'rectangle', 'circle'))]}"/>
-                                    <field name="reverse_print" attrs="{'invisible': [('component_type', 'in', ('graphic'))]}"/>
+                                    <field name="width" attrs="{'invisible': [('component_type', 'not in', ('text', 'rectangle', 'circle', 'graphic'))]}"/>
+                                    <field name="reverse_print"/>
                                     <field name="orientation" attrs="{'invisible': [('component_type', 'in', ('rectangle', 'circle'))]}"/>
                                     <field name="font" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
                                     <field name="in_block" attrs="{'invisible': [('component_type', '!=', 'text')]}"/>
@@ -71,7 +71,7 @@
                                 </group>
                             </page>
                             <!-- Barcode specific arguments -->
-                            <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel','graphic'))]}">
+                            <page string="Barcode Format" attrs="{'invisible': [('component_type', 'in', ('text', 'rectangle', 'circle', 'sublabel', 'graphic'))]}">
                                 <group>
                                     <field name="check_digits"/>
                                     <field name="interpretation_line"/>
