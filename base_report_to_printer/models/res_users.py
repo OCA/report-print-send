@@ -29,6 +29,7 @@ class ResUsers(models.Model):
 
     @api.model
     def _register_hook(self):
+        super()._register_hook()
         self.SELF_WRITEABLE_FIELDS.extend([
             'printing_action',
             'printing_printer_id',
