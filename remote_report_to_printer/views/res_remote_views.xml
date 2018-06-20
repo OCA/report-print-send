@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_remote_form" model="ir.ui.view">
+        <field name="name">res.remote.form</field>
+        <field name="model">res.remote</field>
+        <field name="inherit_id" ref="base_remote.res_remote_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="printers" string="Printers">
+                    <field name="remote_printer_ids"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
