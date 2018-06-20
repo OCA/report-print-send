@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <record model="printing.action" id="printing_action_remote">
+        <field name="name">Use Remote Defaults</field>
+        <field name="action_type">remote_default</field>
+    </record>
+
+</odoo>
