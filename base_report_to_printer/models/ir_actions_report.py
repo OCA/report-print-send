@@ -129,6 +129,13 @@ class IrActionsReport(models.Model):
             return True
         return False
 
+    @api.noguess
+    def report_action(self, docids, data=None, config=True):
+        res = super().report_action(docids, data=data, config=config)
+        if not res.get('id'):
+            res['id'] = self.id
+        return res
+
     def render_qweb_pdf(self, docids, data=None):
         """ Generate a PDF and returns it.
 
