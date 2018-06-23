@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * printer_zpl2
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-05-12 02:40+0000\n"
 "PO-Revision-Date: 2017-05-12 02:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/oca/teams/23907/zh_CN/)\n"
+"Language-Team: Chinese (China) (https://www.transifex.com/oca/teams/23907/"
+"zh_CN/)\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: printer_zpl2
@@ -56,8 +57,8 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_sublabel_id
 msgid ""
-"Another label to include into this one as a component. This allows to define"
-" reusable labels parts."
+"Another label to include into this one as a component. This allows to define "
+"reusable labels parts."
 msgstr ""
 
 #. module: printer_zpl2
@@ -567,6 +568,16 @@ msgid "Repeatable"
 msgstr ""
 
 #. module: printer_zpl2
+#: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_restore_saved_config
+msgid "Restore printer's configuration"
+msgstr ""
+
+#. module: printer_zpl2
+#: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_restore_saved_config
+msgid "Restore printer's saved configuration and end of each label "
+msgstr ""
+
+#. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_reverse_print
 msgid "Reverse print"
 msgstr ""
@@ -638,7 +649,7 @@ msgid "Thickness of the line to draw."
 msgstr ""
 
 #. module: printer_zpl2
-#: code:addons/printer_zpl2/models/printing_label_zpl2.py:180
+#: code:addons/printer_zpl2/models/printing_label_zpl2.py:185
 #, python-format
 msgid "This label cannot be used on {model}"
 msgstr ""

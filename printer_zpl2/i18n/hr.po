@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * printer_zpl2
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Bole <bole@dajmi5.com>, 2017
@@ -13,11 +13,12 @@ msgstr ""
 "PO-Revision-Date: 2017-07-12 21:51+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: hr\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
@@ -57,8 +58,8 @@ msgstr "9x5"
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_sublabel_id
 msgid ""
-"Another label to include into this one as a component. This allows to define"
-" reusable labels parts."
+"Another label to include into this one as a component. This allows to define "
+"reusable labels parts."
 msgstr ""
 
 #. module: printer_zpl2
@@ -568,6 +569,16 @@ msgid "Repeatable"
 msgstr ""
 
 #. module: printer_zpl2
+#: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_restore_saved_config
+msgid "Restore printer's configuration"
+msgstr ""
+
+#. module: printer_zpl2
+#: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_restore_saved_config
+msgid "Restore printer's saved configuration and end of each label "
+msgstr ""
+
+#. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_reverse_print
 msgid "Reverse print"
 msgstr ""
@@ -639,7 +650,7 @@ msgid "Thickness of the line to draw."
 msgstr ""
 
 #. module: printer_zpl2
-#: code:addons/printer_zpl2/models/printing_label_zpl2.py:180
+#: code:addons/printer_zpl2/models/printing_label_zpl2.py:185
 #, python-format
 msgid "This label cannot be used on {model}"
 msgstr ""
