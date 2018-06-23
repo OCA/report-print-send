@@ -32,8 +32,18 @@ msgid "Default Printer Paper Source"
 msgstr ""
 
 #. module: printer_tray
+#: field:printing.tray,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: printer_tray
 #: field:printing.tray,id:0
 msgid "ID"
+msgstr ""
+
+#. module: printer_tray
+#: field:printing.tray,__last_update:0
+msgid "Last Modified on"
 msgstr ""
 
 #. module: printer_tray
@@ -53,6 +63,7 @@ msgstr ""
 
 #. module: printer_tray
 #: field:ir.actions.report.xml,printer_tray_id:0
+#: field:printing.report.xml.action,printer_tray_id:0
 msgid "Paper Source"
 msgstr ""
 
@@ -70,6 +81,11 @@ msgstr ""
 #. module: printer_tray
 #: model:ir.model,name:printer_tray.model_printing_tray
 msgid "Printer Tray"
+msgstr ""
+
+#. module: printer_tray
+#: model:ir.model,name:printer_tray.model_printing_report_xml_action
+msgid "Report Printing Actions"
 msgstr ""
 
 #. module: printer_tray
