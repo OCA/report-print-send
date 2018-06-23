@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -11,12 +11,18 @@ msgstr ""
 "POT-Creation-Date: 2017-04-24 02:40+0000\n"
 "PO-Revision-Date: 2017-04-24 02:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (Portugal) (https://www.transifex.com/oca/teams/23907/pt_PT/)\n"
+"Language-Team: Portuguese (Portugal) (https://www.transifex.com/oca/"
+"teams/23907/pt_PT/)\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_report_copies
+msgid "# Copies"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
@@ -202,6 +208,11 @@ msgid "Default Printer"
 msgstr ""
 
 #. module: base_report_to_printer
+#: model:ir.actions.report.xml,name:base_report_to_printer.action_report_1
+msgid "Demo Report 1"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Disable"
 msgstr ""
@@ -221,6 +232,11 @@ msgstr ""
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:33
 #, python-format
 msgid "Document sent to the printer "
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.ui.view,arch_db:base_report_to_printer.report_1
+msgid "Dummy report just for tests"
 msgstr ""
 
 #. module: base_report_to_printer
@@ -254,8 +270,8 @@ msgstr ""
 #: code:addons/base_report_to_printer/models/printing_server.py:43
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
 
 #. module: base_report_to_printer

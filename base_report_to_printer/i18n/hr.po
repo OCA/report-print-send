@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Bole <bole@dajmi5.com>, 2017
@@ -13,11 +13,17 @@ msgstr ""
 "PO-Revision-Date: 2017-07-12 21:51+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: hr\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_report_copies
+msgid "# Copies"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
@@ -203,6 +209,12 @@ msgid "Default Printer"
 msgstr "Zadani pisač"
 
 #. module: base_report_to_printer
+#: model:ir.actions.report.xml,name:base_report_to_printer.action_report_1
+#, fuzzy
+msgid "Demo Report 1"
+msgstr "Izvještaj"
+
+#. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Disable"
 msgstr "Onemogući"
@@ -223,6 +235,11 @@ msgstr "Naziv "
 #, python-format
 msgid "Document sent to the printer "
 msgstr "Dokument poslan na pisač"
+
+#. module: base_report_to_printer
+#: model:ir.ui.view,arch_db:base_report_to_printer.report_1
+msgid "Dummy report just for tests"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -255,11 +272,11 @@ msgstr "Greška pri slanju dokumenta na pisač"
 #: code:addons/base_report_to_printer/models/printing_server.py:43
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
-"Neuspjelo povezivanje na CUPS poslužitelj na %s:%s. Provjerite da li je CUPS"
-" poslužitelj pokrenut i da li mu možete pristupiti sa Odoo poslužitelja."
+"Neuspjelo povezivanje na CUPS poslužitelj na %s:%s. Provjerite da li je CUPS "
+"poslužitelj pokrenut i da li mu možete pristupiti sa Odoo poslužitelja."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0

@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # enjolras <yo@miguelrevilla.com>, 2017
@@ -13,11 +13,16 @@ msgstr ""
 "PO-Revision-Date: 2018-01-16 12:47+0000\n"
 "Last-Translator: enjolras <yo@miguelrevilla.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_report_copies
+msgid "# Copies"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
@@ -203,6 +208,11 @@ msgid "Default Printer"
 msgstr "Impresora predeterminada"
 
 #. module: base_report_to_printer
+#: model:ir.actions.report.xml,name:base_report_to_printer.action_report_1
+msgid "Demo Report 1"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Disable"
 msgstr "Desactivar"
@@ -223,6 +233,11 @@ msgstr "Nombre mostrado"
 #, python-format
 msgid "Document sent to the printer "
 msgstr "Documento enviado a la impresora"
+
+#. module: base_report_to_printer
+#: model:ir.ui.view,arch_db:base_report_to_printer.report_1
+msgid "Dummy report just for tests"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -255,11 +270,11 @@ msgstr "Error al enviar el documento a la impresora"
 #: code:addons/base_report_to_printer/models/printing_server.py:43
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
-"Imposible conectar al servidor CUPS en %s:%s. Compruebe que el servidor CUPS"
-" está funcionando y que es accesible desde el servidor de Odoo."
+"Imposible conectar al servidor CUPS en %s:%s. Compruebe que el servidor CUPS "
+"está funcionando y que es accesible desde el servidor de Odoo."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0

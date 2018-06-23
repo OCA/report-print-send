@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Florian Hatat <mininet@wanadoo.fr>, 2017
@@ -13,11 +13,16 @@ msgstr ""
 "PO-Revision-Date: 2017-12-09 09:42+0000\n"
 "Last-Translator: Florian Hatat <mininet@wanadoo.fr>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_report_copies
+msgid "# Copies"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
@@ -203,6 +208,12 @@ msgid "Default Printer"
 msgstr "Imprimante par défaut"
 
 #. module: base_report_to_printer
+#: model:ir.actions.report.xml,name:base_report_to_printer.action_report_1
+#, fuzzy
+msgid "Demo Report 1"
+msgstr "Rapport"
+
+#. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Disable"
 msgstr "Désactiver"
@@ -223,6 +234,11 @@ msgstr "Nom à afficher"
 #, python-format
 msgid "Document sent to the printer "
 msgstr "Document envoyé à l'imprimante "
+
+#. module: base_report_to_printer
+#: model:ir.ui.view,arch_db:base_report_to_printer.report_1
+msgid "Dummy report just for tests"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -255,8 +271,8 @@ msgstr "Erreur lors de l'envoi du document à l'imprimante "
 #: code:addons/base_report_to_printer/models/printing_server.py:43
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
 "La connexion au serveur CUPS %s:%s a échoué. Veuillez contrôler que le "
 "serveur soit démarré et qu'il soit atteignable depuis le serveur Odoo. "
@@ -662,16 +678,15 @@ msgstr "L'ID de la tâche doit être unique pour un serveur donné !"
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_act_report_xml_printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
 msgstr ""
-"Ce champs permet de configurer les actions et les imprimantes par "
-"utilisateur"
+"Ce champs permet de configurer les actions et les imprimantes par utilisateur"
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid ""
 "This process will create all missing printers from the current CUPS server."
 msgstr ""
-"Cette opération va créer les imprimantes manquantes à partir du serveur CUPS"
-" courant."
+"Cette opération va créer les imprimantes manquantes à partir du serveur CUPS "
+"courant."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_completed
