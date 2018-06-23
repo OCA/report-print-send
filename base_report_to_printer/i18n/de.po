@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2017-03-04 06:02+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_report_to_printer
@@ -255,11 +255,11 @@ msgstr "Fehler beim Übermitteln des Dokuments an den Drucker"
 #: code:addons/base_report_to_printer/models/printing_server.py:43
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
-"Konnte nicht mit dem CUPS server an %s:%s verbinden. Prüfen Sie, ob der CUPS"
-" server läuft und vom Odoo-Server aus erreichbar ist."
+"Konnte nicht mit dem CUPS server an %s:%s verbinden. Prüfen Sie, ob der CUPS "
+"server läuft und vom Odoo-Server aus erreichbar ist."
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
@@ -322,6 +322,11 @@ msgstr "Aufgaben"
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer_job_ids
 msgid "Jobs printed on this printer."
 msgstr "Am Drucker ausgeführte Aufgaben."
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.printing_menu_label
+msgid "Labels"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action___last_update

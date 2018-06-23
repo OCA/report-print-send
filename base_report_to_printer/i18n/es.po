@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2017-02-28 01:37+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_report_to_printer
@@ -254,8 +254,8 @@ msgstr "Error al enviar el documento a la impresora"
 #: code:addons/base_report_to_printer/models/printing_server.py:43
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
 "Error al conector al servidor CUPS en %s:%s. Compruebe que el servidor CUPS "
 "está ejecutándose y que puede acceder a él desde el servidor Odoo."
@@ -321,6 +321,11 @@ msgstr "Trabajos"
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer_job_ids
 msgid "Jobs printed on this printer."
 msgstr "Trabajos imprimidos en esta impresora."
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.printing_menu_label
+msgid "Labels"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action___last_update
@@ -663,8 +668,7 @@ msgstr "Este campo permite configurar acciones e impresoras por usuario"
 msgid ""
 "This process will create all missing printers from the current CUPS server."
 msgstr ""
-"Este proceso creará todas las impresoras que falten del servidor CUPS "
-"actual."
+"Este proceso creará todas las impresoras que falten del servidor CUPS actual."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_completed
