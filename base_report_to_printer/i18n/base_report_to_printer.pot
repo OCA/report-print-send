@@ -1,23 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * base_report_to_printer
+#	* base_report_to_printer
 #
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 22:56+0000\n"
-"PO-Revision-Date: 2017-04-06 22:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: Spanish (Costa Rica) (https://www.transifex.com/oca/"
-"teams/23907/es_CR/)\n"
-"Language: es_CR\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,property_printing_action:0
@@ -28,7 +22,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:ir.actions.report.xml,printing_action_ids:0
 msgid "Actions"
-msgstr "Acciones"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -38,7 +32,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr ""
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/wizard/update_printers.py:55
@@ -47,18 +41,20 @@ msgid "Could not get the list of printers from the CUPS server (%s:%s)"
 msgstr ""
 
 #. module: base_report_to_printer
-#: field:printing.action,create_uid:0 field:printing.printer,create_uid:0
+#: field:printing.action,create_uid:0
+#: field:printing.printer,create_uid:0
 #: field:printing.printer.update.wizard,create_uid:0
 #: field:printing.report.xml.action,create_uid:0
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: base_report_to_printer
-#: field:printing.action,create_date:0 field:printing.printer,create_date:0
+#: field:printing.action,create_date:0
+#: field:printing.printer,create_date:0
 #: field:printing.printer.update.wizard,create_date:0
 #: field:printing.report.xml.action,create_date:0
 msgid "Created on"
-msgstr "Creado en"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.printer,default:0
@@ -71,7 +67,8 @@ msgid "Default Printer"
 msgstr ""
 
 #. module: base_report_to_printer
-#: field:printing.action,display_name:0 field:printing.printer,display_name:0
+#: field:printing.action,display_name:0
+#: field:printing.printer,display_name:0
 #: field:printing.printer.update.wizard,display_name:0
 #: field:printing.report.xml.action,display_name:0
 msgid "Display Name"
@@ -99,17 +96,16 @@ msgstr ""
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/printing.py:149
 #, python-format
-msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
-"running and that you can reach it from the Odoo server."
+msgid "Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is running and that you can reach it from the Odoo server."
 msgstr ""
 
 #. module: base_report_to_printer
-#: field:printing.action,id:0 field:printing.printer,id:0
+#: field:printing.action,id:0
+#: field:printing.printer,id:0
 #: field:printing.printer.update.wizard,id:0
 #: field:printing.report.xml.action,id:0
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.action,__last_update:0
@@ -120,18 +116,20 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: base_report_to_printer
-#: field:printing.action,write_uid:0 field:printing.printer,write_uid:0
+#: field:printing.action,write_uid:0
+#: field:printing.printer,write_uid:0
 #: field:printing.printer.update.wizard,write_uid:0
 #: field:printing.report.xml.action,write_uid:0
 msgid "Last Updated by"
-msgstr "Ultima actualización por"
+msgstr ""
 
 #. module: base_report_to_printer
-#: field:printing.action,write_date:0 field:printing.printer,write_date:0
+#: field:printing.action,write_date:0
+#: field:printing.printer,write_date:0
 #: field:printing.printer.update.wizard,write_date:0
 #: field:printing.report.xml.action,write_date:0
 msgid "Last Updated on"
-msgstr "Ultima actualización en"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.printer,location:0
@@ -144,9 +142,10 @@ msgid "Model"
 msgstr ""
 
 #. module: base_report_to_printer
-#: field:printing.action,name:0 field:printing.printer,name:0
+#: field:printing.action,name:0
+#: field:printing.printer,name:0
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/report.py:43
@@ -226,7 +225,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: view:ir.actions.report.xml:base_report_to_printer.action_report_xml_form
 msgid "Security"
-msgstr "Seguridad"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -251,7 +250,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.printer,status:0
 msgid "Status"
-msgstr "Estado"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.printer,status_message:0
@@ -270,14 +269,13 @@ msgstr ""
 
 #. module: base_report_to_printer
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
-msgid ""
-"This process will create all missing printers from the current CUPS server."
+msgid "This process will create all missing printers from the current CUPS server."
 msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.action,type:0
 msgid "Type"
-msgstr "Tipo"
+msgstr ""
 
 #. module: base_report_to_printer
 #: field:printing.printer,uri:0
@@ -304,7 +302,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: field:printing.report.xml.action,user_id:0
 msgid "User"
-msgstr "Usuario"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
@@ -315,3 +313,4 @@ msgstr ""
 #: view:printing.printer.update.wizard:base_report_to_printer.printer_update_wizard
 msgid "or"
 msgstr ""
+

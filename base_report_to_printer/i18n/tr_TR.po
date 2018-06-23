@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # Ozge Altinisik <ozge@altinkaya.com.tr>, 2017
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2016-12-31 06:57+0000\n"
 "PO-Revision-Date: 2016-12-31 06:57+0000\n"
 "Last-Translator: Ozge Altinisik <ozge@altinkaya.com.tr>, 2017\n"
-"Language-Team: Turkish (Turkey) (https://www.transifex.com/oca/teams/23907/tr_TR/)\n"
+"Language-Team: Turkish (Turkey) (https://www.transifex.com/oca/teams/23907/"
+"tr_TR/)\n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: tr_TR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: base_report_to_printer
@@ -99,8 +100,8 @@ msgstr "Belgeyi yazıcıya gönderirken bir hata oluştu"
 #: code:addons/base_report_to_printer/printing.py:149
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
 "%s:%s üzerindeki CUPS sunucusuna bağlanırken hata oluştu. CUPS sunucunun "
 "çalıştığından emin olun ve Odoo sunucusundan ulaşabildiğinizi kontrol edin. "

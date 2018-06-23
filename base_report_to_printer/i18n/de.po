@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2017-03-04 06:00+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_report_to_printer
@@ -100,8 +100,8 @@ msgstr "Fehler, beim Versenden des Dokuments an den Drucker"
 #: code:addons/base_report_to_printer/printing.py:149
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
 "Konnte nicht mit CUPS-Server %s:%s verbinden. Prüfen Sie, ob der Server "
 "läuft und Sie diesem vom Odoo-Server aus erreichen können."
@@ -277,8 +277,7 @@ msgstr ""
 msgid ""
 "This process will create all missing printers from the current CUPS server."
 msgstr ""
-"Dieser Schritt wird alle fehlenden Drucker vom aktuellen CUPS-Server "
-"anlegen."
+"Dieser Schritt wird alle fehlenden Drucker vom aktuellen CUPS-Server anlegen."
 
 #. module: base_report_to_printer
 #: field:printing.action,type:0

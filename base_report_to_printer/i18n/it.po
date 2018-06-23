@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_report_to_printer
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
 # Paolo Valier <paolo.valier@hotmail.it>, 2016
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2017-01-14 06:22+0000\n"
 "Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2016\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_report_to_printer
@@ -100,8 +100,8 @@ msgstr "Errore nell'invio del documento alla stampante"
 #: code:addons/base_report_to_printer/printing.py:149
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
 "Impossibile connettersi al server CUPS su %s:%s. Controllare che il server "
 "CUPS sia in esecuzione e che sia raggiungibile dal server Odoo."
