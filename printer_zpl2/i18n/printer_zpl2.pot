@@ -1,22 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * printer_zpl2
+#	* printer_zpl2
 #
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 22:59+0000\n"
-"PO-Revision-Date: 2017-04-06 22:59+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
-"Language: pt\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,font:0
@@ -55,9 +50,7 @@ msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_sublabel_id
-msgid ""
-"Another label to include into this one as a component. This allows to define "
-"reusable labels parts."
+msgid "Another label to include into this one as a component. This allows to define reusable labels parts."
 msgstr ""
 
 #. module: printer_zpl2
@@ -102,8 +95,7 @@ msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_interpretation_line_above
-msgid ""
-"Check if you want the interpretation line to be printed above the barcode."
+msgid "Check if you want the interpretation line to be printed above the barcode."
 msgstr ""
 
 #. module: printer_zpl2
@@ -181,14 +173,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_create_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_create_uid
 msgid "Created by"
-msgstr "Criado por"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_create_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_create_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_create_date
 msgid "Created on"
-msgstr "Criado em"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_data
@@ -197,9 +189,7 @@ msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_data
-msgid ""
-"Data to print on this component. Resource values can be inserted with "
-"%(object.field_name)s."
+msgid "Data to print on this component. Resource values can be inserted with %(object.field_name)s."
 msgstr ""
 
 #. module: printer_zpl2
@@ -251,9 +241,7 @@ msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_height
-msgid ""
-"Height of the printed component. For a text component, height of a single "
-"character."
+msgid "Height of the printed component. For a text component, height of a single character."
 msgstr ""
 
 #. module: printer_zpl2
@@ -261,18 +249,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_id
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_reverse_print
-msgid ""
-"If checked, the data will be printed in the inverse color of the background."
+msgid "If checked, the data will be printed in the inverse color of the background."
 msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_in_block
-msgid ""
-"If checked, the data will be restrected in a defined block on the label."
+msgid "If checked, the data will be restrected in a defined block on the label."
 msgstr ""
 
 #. module: printer_zpl2
@@ -353,14 +339,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_write_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_write_uid
 msgid "Last Updated by"
-msgstr "Atualizado pela última vez por"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component_write_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_write_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_write_date
 msgid "Last Updated on"
-msgstr "Atualizado pela última vez em"
+msgstr ""
 
 #. module: printer_zpl2
 #: selection:printing.label.zpl2.component,block_justify:0
@@ -681,9 +667,7 @@ msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_width
-msgid ""
-"Width of the printed component. For a text component, width of a single "
-"character."
+msgid "Width of the printed component. For a text component, width of a single character."
 msgstr ""
 
 #. module: printer_zpl2
@@ -693,14 +677,12 @@ msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_repeat_offset_x
-msgid ""
-"X coordinate offset between each occurence of this component on the label."
+msgid "X coordinate offset between each occurence of this component on the label."
 msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_repeat_offset_y
-msgid ""
-"Y coordinate offset between each occurence of this component on the label."
+msgid "Y coordinate offset between each occurence of this component on the label."
 msgstr ""
 
 #. module: printer_zpl2
@@ -721,3 +703,4 @@ msgstr ""
 #: model:ir.model,name:printer_zpl2.model_printing_label_zpl2_component
 msgid "ZPL II Label Component"
 msgstr ""
+

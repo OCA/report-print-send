@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * printer_zpl2
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2017-05-11 16:25+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: printer_zpl2
@@ -57,8 +57,8 @@ msgstr "9x5"
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component_sublabel_id
 msgid ""
-"Another label to include into this one as a component. This allows to define"
-" reusable labels parts."
+"Another label to include into this one as a component. This allows to define "
+"reusable labels parts."
 msgstr ""
 "Eine andere Etikette, die als Komponente in diese einzubetten ist. Das "
 "ermöglicht die Anlage wiederverwendbarer Druckbestandteile."
