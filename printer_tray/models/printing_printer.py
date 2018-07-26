@@ -76,16 +76,18 @@ class PrintingPrinter(models.Model):
         options = super(PrintingPrinter, self).print_options(report, format)
 
         if report is not None:
+            full_report = self.env['report']._get_report_from_name(report) \
+                if isinstance(report, basestring) else report
             # Retrieve report default values
-            if report.printer_tray_id:
-                tray = report.printer_tray_id
+            if full_report.printer_tray_id:
+                tray = full_report.printer_tray_id
             else:
                 # Retrieve user default values
                 tray = self.env.user.printer_tray_id
 
             # Retrieve report-user specific values
             action = printing_act_obj.search([
-                ('report_id', '=', report.id),
+                ('report_id', '=', full_report.id),
                 ('user_id', '=', self.env.uid),
                 ('action', '!=', 'user_default'),
             ], limit=1)
