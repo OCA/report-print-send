@@ -6,7 +6,7 @@
 import requests
 import base64
 
-from odoo import models, fields, _
+from odoo import models, fields, _, api
 from odoo.exceptions import UserError
 
 
@@ -66,12 +66,14 @@ class IrAttachment(models.Model):
                 document.write({'state': 'canceled'})
         return
 
+    @api.model
     def create(self, vals):
         attachment = super(IrAttachment, self).create(vals)
         if 'send_to_pingen' in vals:
             attachment._handle_pingen_document()
         return attachment
 
+    @api.multi
     def write(self, vals):
         res = super(IrAttachment, self).write(vals)
         if 'send_to_pingen' in vals:
