@@ -22,7 +22,7 @@ Also, this option can be selected as a user default option for printer.
 Usage
 =====
 
- * In *Settings > User & Companies > Remotes* configure the remotes printers by usage
+ * In *Settings > Remotes* configure the remotes printers by usage
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
