@@ -23,7 +23,7 @@ import requests
 import base64
 
 from openerp.osv import osv, orm, fields
-from openerp.tools.translate import _
+from openerp.tools.translate import _, api
 
 
 class ir_attachment(orm.Model):
@@ -92,12 +92,14 @@ class ir_attachment(orm.Model):
                 document.write({'state': 'canceled'}, context=context)
         return
 
+    @api.model
     def create(self, cr, uid, vals, context=None):
         attachment_id = super(ir_attachment, self).create(cr, uid, vals, context=context)
         if 'send_to_pingen' in vals:
             self._handle_pingen_document(cr, uid, attachment_id, context=context)
         return attachment_id
 
+    @api.model
     def write(self, cr, uid, ids, vals, context=None):
         res = super(ir_attachment, self).write(cr, uid, ids, vals, context=context)
         if 'send_to_pingen' in vals:
