@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo11-addon-base_report_to_printer',
         'odoo11-addon-printer_zpl2',
+        'odoo11-addon-remote_report_to_printer',
     ],
     classifiers=[
         'Programming Language :: Python',
