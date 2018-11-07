@@ -3,7 +3,7 @@
 
 {
     'name': "Report to printer on remotes",
-    'version': '11.0.2.1.0',
+    'version': '11.0.2.1.1',
     'category': 'Generic Modules/Base',
     'author': "Creu Blanca, Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
