@@ -2,12 +2,20 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError
 
 
 class TestRemotePrinter(TransactionCase):
 
     def setUp(self):
         super().setUp()
+        self.system_user_group = self.env.ref('base.group_system')
+        self.user_group = self.env.ref('base.group_user')
+        self.printer_manager = self._create_user('printer_manager',
+                                                 self.system_user_group.id)
+        self.printer_user = self._create_user('printer_user',
+                                              self.user_group.id)
+
         name = 'testing_remote_server'
         self.remote = self.env['res.remote'].search([('name', '=', name)])
         if not self.remote:
@@ -36,8 +44,18 @@ class TestRemotePrinter(TransactionCase):
             'printer_id': self.printer_1.id,
         })
 
+    def _create_user(self, name, group_ids):
+        return self.env['res.users'].with_context(
+            {'no_reset_password': True}).create(
+            {'name': name,
+             'password': 'demo',
+             'login': name,
+             'email': '@'.join([name, '@test.com']),
+             'groups_id': [(6, 0, [group_ids])]
+             })
+
     def test_constrain(self):
-        self.env['res.remote.printer'].create({
+        self.env['res.remote.printer'].sudo(self.printer_manager).create({
             'remote_id': self.remote.id,
             'printer_id': self.printer_1.id,
             'is_default': True,
@@ -50,12 +68,48 @@ class TestRemotePrinter(TransactionCase):
             })
 
     def test_onchange_printer(self):
-        remote_printer = self.env['res.remote.printer'].create({
-            'remote_id': self.remote.id,
-            'printer_id': self.printer_1.id,
-            'printer_tray_id': self.tray_1.id,
-        })
+        remote_printer = self.env['res.remote.printer'].sudo(
+            self.printer_manager).create({
+                'remote_id': self.remote.id,
+                'printer_id': self.printer_1.id,
+                'printer_tray_id': self.tray_1.id,
+            })
         self.assertTrue(remote_printer.printer_tray_id)
         remote_printer.printer_id = self.printer_2
         remote_printer._onchange_printing_printer_id()
         self.assertFalse(remote_printer.printer_tray_id)
+
+    def test_permissions_delete_manager(self):
+        printer = self.env['res.remote.printer'].sudo(
+            self.printer_manager).create({
+                'remote_id': self.remote.id,
+                'printer_id': self.printer_1.id,
+                'is_default': True,
+            }
+        )
+        printer.sudo(self.printer_manager).unlink()
+        printer = self.env['res.remote.printer'].search([
+            ('remote_id', '=', self.remote.id),
+            ('printer_id', '=', self.printer_1.id)], limit=1)
+        self.assertEquals(printer, self.env['res.remote.printer'])
+
+    def test_permissions_delete_user(self):
+        printer = self.env['res.remote.printer'].sudo(
+            self.printer_manager).create({
+                'remote_id': self.remote.id,
+                'printer_id': self.printer_1.id,
+                'is_default': True,
+            }
+        )
+        with self.assertRaises(AccessError):
+            printer.sudo(self.printer_user).unlink()
+
+    def test_permissions_create_user(self):
+        with self.assertRaises(AccessError):
+            self.env['res.remote.printer'].sudo(
+                self.printer_user).create({
+                    'remote_id': self.remote.id,
+                    'printer_id': self.printer_1.id,
+                    'is_default': True,
+                }
+            )
