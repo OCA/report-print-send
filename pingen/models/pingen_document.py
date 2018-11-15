@@ -133,9 +133,8 @@ class PingenDocument(models.Model):
                           '\n%s') % (self.name, e)
         except Exception as e:
             _logger.exception(
-                'Unexpected Error when updating ' +
-                'the status of pingen.document %s: ' %
-                self.id)
+                'Unexpected Error when updating the status of pingen.document '
+                '%s: ' % self.id)
             error_msg = _('Unexpected Error when updating the '
                           'status of Document %s') % self.name
         finally:
@@ -216,14 +215,12 @@ class PingenDocument(models.Model):
                 self.pingen_color)
         except ConnectionError:
             _logger.exception(
-                'Connection Error when asking for sending ' +
-                'Pingen Document %s to %s.' %
-                (self.id, pingen.url))
+                'Connection Error when asking for sending Pingen Document %s '
+                'to %s.' % (self.id, pingen.url))
             raise
         except APIError:
             _logger.exception(
-                'API Error when asking for sending ' +
-                'Pingen Document %s to %s.' %
+                'API Error when asking for sending Pingen Document %s to %s.' %
                 (self.id, pingen.url))
             raise
         self.write(
@@ -231,8 +228,8 @@ class PingenDocument(models.Model):
              'state': 'sendcenter',
              'post_id': post_id})
         _logger.info(
-            'Pingen Document %s: asked for' +
-            'sending to %s' % (self.id, pingen.url))
+            'Pingen Document %s: asked for sending to %s' % (
+                self.id, pingen.url))
         return True
 
     def ask_pingen_send(self):
@@ -280,8 +277,7 @@ class PingenDocument(models.Model):
             raise
         except APIError:
             _logger.exception(
-                'API Error when asking for sending ' +
-                'Pingen Document %s to %s.' %
+                'API Error when asking for sending Pingen Document %s to %s.' %
                 (self.id, pingen.url))
             raise
         country = self.env['res.country'].search(
