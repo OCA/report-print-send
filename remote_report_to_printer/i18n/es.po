@@ -1,0 +1,129 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* remote_report_to_printer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2018-11-16 20:19+0000\n"
+"Last-Translator: Enric Tobella <etobella@creublanca.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.2.2\n"
+
+#. module: remote_report_to_printer
+#: sql_constraint:res.remote.printer:0
+msgid "A Remote cannot have the same printer for the same usage"
+msgstr "El remoto no puede repetir la misma impresora para el mismo uso"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_id
+msgid "ID"
+msgstr "ID"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_is_default
+msgid "Is Default"
+msgstr "Por defecto"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer___last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: remote_report_to_printer
+#: code:addons/remote_report_to_printer/models/res_remote_printer.py:48
+#, python-format
+msgid "Only one default printer is allowed"
+msgstr "Sólo se permite una impresora por defecto"
+
+#. module: remote_report_to_printer
+#: model:ir.model,name:remote_report_to_printer.model_printing_action
+msgid "Print Job Action"
+msgstr "Acción de imprimir un trabajo"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_printer_id
+msgid "Printer"
+msgstr "Impresora"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_printer_tray_id
+msgid "Printer Tray"
+msgstr "Bandeja de impresora"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_printer_usage
+msgid "Printer Usage"
+msgstr "Uso de impresora"
+
+#. module: remote_report_to_printer
+#: model:ir.ui.view,arch_db:remote_report_to_printer.res_remote_form
+msgid "Printers"
+msgstr "Impresoras"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer_remote_id
+msgid "Remote"
+msgstr "Remoto"
+
+#. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_remote_printer_ids
+#: model:ir.ui.view,arch_db:remote_report_to_printer.res_remote_printer_form
+msgid "Remote Printer"
+msgstr "Impresora de remoto"
+
+#. module: remote_report_to_printer
+#: model:ir.ui.view,arch_db:remote_report_to_printer.res_remote_printer_tree
+msgid "Remote Printers"
+msgstr "Impresoras de remoto"
+
+#. module: remote_report_to_printer
+#: model:ir.model,name:remote_report_to_printer.model_res_remote
+msgid "Remotes"
+msgstr "Remotos"
+
+#. module: remote_report_to_printer
+#: selection:res.remote.printer,printer_usage:0
+msgid "Standard"
+msgstr "Estándar"
+
+#. module: remote_report_to_printer
+#: model:ir.model,name:remote_report_to_printer.model_ir_actions_report
+msgid "ir.actions.report"
+msgstr "ir.actions.report"
+
+#. module: remote_report_to_printer
+#: model:ir.model,name:remote_report_to_printer.model_res_remote_printer
+msgid "res.remote.printer"
+msgstr "res.remote.printer"
