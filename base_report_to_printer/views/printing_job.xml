@@ -2,7 +2,7 @@
 <odoo>
 
     <record model="ir.ui.view" id="printing_job_view_form">
-        <field name="name">printing.job.form</field>
+        <field name="name">printing.job.form (in base_report_to_printer)</field>
         <field name="model">printing.job</field>
         <field name="arch" type="xml">
             <form string="Job">
@@ -30,7 +30,7 @@
     </record>
 
     <record model="ir.ui.view" id="printing_job_view_tree">
-        <field name="name">printing.job.tree</field>
+        <field name="name">printing.job.tree (in base_report_to_printer)</field>
         <field name="model">printing.job</field>
         <field name="arch" type="xml">
             <tree string="Job">
