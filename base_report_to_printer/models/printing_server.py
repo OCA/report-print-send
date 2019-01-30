@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -206,6 +205,11 @@ class PrintingServer(models.Model):
                     ('server_id', '=', server.id),
                     ('system_name', '=', printer_system_name),
                 ], limit=1)
+                # CUPS retains jobs for disconnected printers and also may
+                # leak jobs data for unshared printers, therefore we just
+                # discard here if not printer found
+                if not printer:
+                    continue
                 job_values['printer_id'] = printer.id
 
                 if jobs:
