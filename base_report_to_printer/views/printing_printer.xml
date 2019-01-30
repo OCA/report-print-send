@@ -8,7 +8,7 @@
         />
 
     <record model="ir.ui.view" id="printing_printer_view_form">
-        <field name="name">printing.printer.form</field>
+        <field name="name">printing.printer.form (in base_report_to_printer)</field>
         <field name="model">printing.printer</field>
         <field name="arch" type="xml">
             <form string="Printers">
@@ -58,7 +58,7 @@
     </record>
 
     <record model="ir.ui.view" id="printing_printer_view_tree">
-        <field name="name">printing.printer.tree</field>
+        <field name="name">printing.printer.tree (in base_report_to_printer)</field>
         <field name="model">printing.printer</field>
         <field name="arch" type="xml">
             <tree string="Printers" colors="green:status=='available'; orange:status=='printing'; red:1;">
@@ -71,7 +71,7 @@
     </record>
 
     <record model="ir.ui.view" id="printing_printer_view_search">
-        <field name="name">printing.printer.search</field>
+        <field name="name">printing.printer.search (in base_report_to_printer)</field>
         <field name="model">printing.printer</field>
         <field name="arch" type="xml">
             <search string="Printers">

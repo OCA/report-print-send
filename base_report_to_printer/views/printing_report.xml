@@ -2,7 +2,7 @@
 <odoo>
 
     <record model="ir.ui.view" id="printing_report_xml_action_view_form">
-        <field name="name">printing.report.xml.action.form</field>
+        <field name="name">printing.report.xml.action.form (in base_report_to_printer)</field>
         <field name="model">printing.report.xml.action</field>
         <field name="arch" type="xml">
             <form string="Report Printing Actions">
@@ -17,7 +17,7 @@
     </record>
 
     <record model="ir.ui.view" id="printing_report_xml_action_view_tree">
-        <field name="name">printing.report.xml.action.tree</field>
+        <field name="name">printing.report.xml.action.tree (in base_report_to_printer)</field>
         <field name="model">printing.report.xml.action</field>
         <field name="arch" type="xml">
             <tree string="Report Printing Actions">

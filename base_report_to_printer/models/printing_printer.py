@@ -62,9 +62,20 @@ class PrintingPrinter(models.Model):
 
     @api.multi
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
-        vals = super(PrintingPrinter, self)._prepare_update_from_cups(
-            cups_connection, cups_printer)
-
+        mapping = {
+            3: 'available',
+            4: 'printing',
+            5: 'error'
+        }
+        vals = {
+            'name': cups_printer['printer-info'],
+            'model': cups_printer.get('printer-make-and-model', False),
+            'location': cups_printer.get('printer-location', False),
+            'uri': cups_printer.get('device-uri', False),
+            'status': mapping.get(cups_printer.get(
+                'printer-state'), 'unknown'),
+            'status_message': cups_printer.get('printer-state-message', ''),
+        }
         printer_uri = cups_printer['printer-uri-supported']
         printer_system_name = printer_uri[printer_uri.rfind('/') + 1:]
         ppd_info = cups_connection.getPPD3(printer_system_name)
@@ -103,33 +114,12 @@ class PrintingPrinter(models.Model):
             for tray in self.tray_ids.filtered(
                 lambda record: record.system_name not in cups_trays.keys())
         ])
-
-        return vals
-
-    @api.multi
-    def _prepare_update_from_cups(self, cups_connection, cups_printer):
-        mapping = {
-            3: 'available',
-            4: 'printing',
-            5: 'error'
-        }
-        vals = {
-            'name': cups_printer['printer-info'],
-            'model': cups_printer.get('printer-make-and-model', False),
-            'location': cups_printer.get('printer-location', False),
-            'uri': cups_printer.get('device-uri', False),
-            'status': mapping.get(cups_printer.get(
-                'printer-state'), 'unknown'),
-            'status_message': cups_printer.get('printer-state-message', ''),
-        }
         return vals
 
     @api.multi
     def print_document(self, report, content, **print_opts):
         """ Print a file
-
         Format could be pdf, qweb-pdf, raw, ...
-
         """
         self.ensure_one()
         fd, file_name = mkstemp()

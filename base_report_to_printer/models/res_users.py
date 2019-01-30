@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (c) 2007 Ferran Pegueroles <ferran@pegueroles.com>
 # Copyright (c) 2009 Albert Cervera i Areny <albert@nan-tic.com>
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
@@ -38,7 +37,7 @@ class ResUsers(models.Model):
             'printing_action',
             'printing_printer_id',
         ])
-    
+
     printer_tray_id = fields.Many2one(
         comodel_name='printing.tray',
         string='Default Printer Paper Source',
@@ -49,4 +48,3 @@ class ResUsers(models.Model):
     def onchange_printing_printer_id(self):
         """ Reset the tray when the printer is changed """
         self.printer_tray_id = False
-
