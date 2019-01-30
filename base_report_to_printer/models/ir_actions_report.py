@@ -136,14 +136,14 @@ class IrActionsReport(models.Model):
             res['id'] = self.id
         return res
 
-    def render_qweb_pdf(self, docids, data=None):
+    def render_qweb_pdf(self, res_ids=None, data=None):
         """ Generate a PDF and returns it.
 
         If the action configured on the report is server, it prints the
         generated document as well.
         """
         document, doc_format = super(IrActionsReport, self).render_qweb_pdf(
-            docids, data=data)
+            res_ids=res_ids, data=data)
 
         behaviour = self.behaviour()
         printer = behaviour.pop('printer', None)
