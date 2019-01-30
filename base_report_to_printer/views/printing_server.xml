@@ -2,7 +2,7 @@
 <odoo>
 
     <record model="ir.ui.view" id="printing_server_view_form">
-        <field name="name">printing.server.form</field>
+        <field name="name">printing.server.form (in base_report_to_printer)</field>
         <field name="model">printing.server</field>
         <field name="arch" type="xml">
             <form string="Servers">
@@ -30,7 +30,7 @@
     </record>
 
     <record model="ir.ui.view" id="printing_server_view_tree">
-        <field name="name">printing.server.tree</field>
+        <field name="name">printing.server.tree (in base_report_to_printer)</field>
         <field name="model">printing.server</field>
         <field name="arch" type="xml">
             <tree string="Servers">
@@ -42,7 +42,7 @@
     </record>
 
     <record model="ir.ui.view" id="printing_server_view_search">
-        <field name="name">printing.server.search</field>
+        <field name="name">printing.server.search (in base_report_to_printer)</field>
         <field name="model">printing.server</field>
         <field name="arch" type="xml">
             <search string="Servers">
