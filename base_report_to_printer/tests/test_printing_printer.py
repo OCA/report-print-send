@@ -30,6 +30,7 @@ class TestPrintingPrinter(TransactionCase):
             'location': 'Location',
             'uri': 'URI',
         }
+        self.report = self.env['ir.actions.report'].search([], limit=1)
 
     def new_record(self):
         return self.Model.create(self.printer_vals)
@@ -66,7 +67,6 @@ class TestPrintingPrinter(TransactionCase):
 
     def test_print_options(self):
         """ It should generate the right options dictionnary """
-            'copies': '2',
         # TODO: None here used as report - tests here should be merged
         # with tests in test_printing_printer_tray from when modules merged
         report = self.env['ir.actions.report'].search([], limit=1)
