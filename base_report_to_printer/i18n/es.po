@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-28 01:37+0000\n"
-"PO-Revision-Date: 2017-02-28 01:37+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"PO-Revision-Date: 2019-03-01 15:53+0000\n"
+"Last-Translator: Marta Vázquez Rodríguez <vazrodmar@gmail.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.4\n"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
@@ -221,7 +222,7 @@ msgstr "Nombre mostrado"
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:33
 #, python-format
 msgid "Document sent to the printer "
-msgstr "Documento enviado a la impresora"
+msgstr "Documento enviado a la impresora "
 
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -248,7 +249,7 @@ msgstr "Error en el documento"
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:36
 #, python-format
 msgid "Error when sending the document to the printer "
-msgstr "Error al enviar el documento a la impresora"
+msgstr "Error al enviar el documento a la impresora "
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/models/printing_server.py:43
@@ -325,7 +326,7 @@ msgstr "Trabajos imprimidos en esta impresora."
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_menu_label
 msgid "Labels"
-msgstr ""
+msgstr "Etiquetas"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action___last_update
@@ -656,7 +657,7 @@ msgstr "La URI no puede ser accedida"
 #. module: base_report_to_printer
 #: sql_constraint:printing.job:0
 msgid "The id of the job must be unique per server !"
-msgstr "El ID del trabajo debe ser único por servidor"
+msgstr "El ID del trabajo debe ser único por servidor !"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_act_report_xml_printing_action_ids
