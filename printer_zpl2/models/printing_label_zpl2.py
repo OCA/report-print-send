@@ -191,7 +191,7 @@ class PrintingLabelZpl2(models.Model):
             else:
                 if component.component_type == zpl2.BARCODE_QR_CODE:
                     # Adding Control Arguments to QRCode data Label
-                    data = 'MM,A{}'.format(data)
+                    data = '{}A,{}'.format(component.error_correction, data)
 
                 barcode_arguments = dict([
                     (field_name, component[field_name])
