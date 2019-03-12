@@ -1002,7 +1002,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             '^BQN,2,1,Q,7'
             # Component contents
-            '^FDMM,A{contents}'
+            '^FDQA,{contents}'
             # Component end
             '^FS\n'
             # Recall last saved parameters
