@@ -16,7 +16,9 @@ DEFAULT_PYTHON_CODE = """# Python One-Liners
 #  - page_number: Current Page
 #  - page_count: Total Page
 #  - time, datetime: Python libraries
+#  - return 'component_not_show' to don't show this component
 #  Exemple : object.name
+
 
 ""
 """
