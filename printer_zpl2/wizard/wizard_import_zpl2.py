@@ -1,4 +1,4 @@
-# Copyright (C) 2018 Florent Mirieu (<https://github.com/fmdl>)
+# Copyright (C) 2018 Florent de Labarre (<https://github.com/fmdl>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
@@ -376,13 +376,12 @@ class WizardImportZPl2(models.TransientModel):
         return 0
 
     def import_zpl2(self):
+        self.ensure_one()
         Zpl2Component = self.env['printing.label.zpl2.component']
 
         if self.delete_component:
             self.mapped('label_id.component_ids').unlink()
 
-        Model = self.env['printing.label.zpl2.component']
-        self.model_fields = Model.fields_get()
         sequence = self._start_sequence()
         default = {}
 
@@ -423,10 +422,12 @@ class WizardImportZPl2(models.TransientModel):
             vals['orientation'] = 'N'
 
         # Field
+        Zpl2Component = self.env['printing.label.zpl2.component']
+        model_fields = Zpl2Component.fields_get()
         component = {}
         for field, value in vals.items():
-            if field in self.model_fields.keys():
-                field_type = self.model_fields[field].get('type', False)
+            if field in model_fields.keys():
+                field_type = model_fields[field].get('type', False)
                 if field_type == 'boolean':
                     if not value or value == zpl2.BOOL_NO:
                         value = False
