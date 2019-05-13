@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="printing_server_view_form">
+        <field name="name">printing.server.form (in base_report_to_printer)</field>
+        <field name="model">printing.server</field>
+        <field name="arch" type="xml">
+            <form string="Servers">
+                <header>
+                    <button name="action_update_printers" type="object" string="Update Printers"/>
+                    <button name="action_update_jobs" type="object" string="Update Jobs"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="address"/>
+                        <field name="port"/>
+                    </group>
+                    <group>
+                        <separator string="Printers" colspan="2"/>
+                        <field name="printer_ids" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="printing_server_view_tree">
+        <field name="name">printing.server.tree (in base_report_to_printer)</field>
+        <field name="model">printing.server</field>
+        <field name="arch" type="xml">
+            <tree string="Servers">
+                <field name="name"/>
+                <field name="address"/>
+                <field name="port"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="printing_server_view_search">
+        <field name="name">printing.server.search (in base_report_to_printer)</field>
+        <field name="model">printing.server</field>
+        <field name="arch" type="xml">
+            <search string="Servers">
+                <field name="name"/>
+                <field name="address"/>
+                <field name="port"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="printing_server_action">
+        <field name="name">Servers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">printing.server</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Servers"
+        sequence="10"
+        id="printing_server_menu"
+        parent="printing_menu"
+        action="printing_server_action"/>
+
+</odoo>
