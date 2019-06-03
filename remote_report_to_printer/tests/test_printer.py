@@ -66,7 +66,7 @@ class TestRemotePrinter(TransactionCase):
         report = self.Model.search([], limit=1)
         self.env.user.printing_action = 'remote_default'
         report.property_printing_action_id = self.browse_ref(
-            'base_report_to_printer.printing_action_3'
+            'remote_report_to_printer.printing_action_3'
         )
         with patch(
             'odoo.addons.base_remote.models.base.Base.remote', new=self.remote
@@ -96,7 +96,7 @@ class TestRemotePrinter(TransactionCase):
         report = self.Model.search([], limit=1)
         self.env.user.printing_action = 'remote_default'
         report.property_printing_action_id = self.browse_ref(
-            'base_report_to_printer.printing_action_3'
+            'remote_report_to_printer.printing_action_3'
         )
         with patch(
             'odoo.addons.base_remote.models.base.Base.remote',
