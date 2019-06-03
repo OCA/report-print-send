@@ -3,10 +3,10 @@
 
 {
     'name': "Report to printer on remotes",
-    'version': '11.0.2.1.1',
+    'version': '12.0.2.1.1',
     'category': 'Generic Modules/Base',
     'author': "Creu Blanca, Odoo Community Association (OCA)",
-    'website': 'http://www.agilebg.com',
+    'website': 'http://www.github.com/OCA/report-print-send',
     'license': 'AGPL-3',
     "depends": ['base_remote', 'base_report_to_printer'],
     'data': [
@@ -16,5 +16,4 @@
         'views/res_remote_printer_views.xml',
     ],
     'installable': True,
-    'application': True,
 }
