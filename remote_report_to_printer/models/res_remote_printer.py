@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 class ResRemotePrinter(models.Model):
     _name = 'res.remote.printer'
+    _description = 'Remote Printer'
 
     remote_id = fields.Many2one(
         'res.remote',
