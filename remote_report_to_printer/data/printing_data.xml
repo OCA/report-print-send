@@ -6,4 +6,8 @@
         <field name="action_type">remote_default</field>
     </record>
 
+    <record model="printing.action" id="printing_action_3">
+            <field name="name">Use User Defaults</field>
+            <field name="action_type">user_default</field>
+    </record>
 </odoo>
