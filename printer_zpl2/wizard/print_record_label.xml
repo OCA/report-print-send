@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+    Copyright 2016 SYLEAM
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_wizard_print_product_label_form" model="ir.ui.view">
+        <field name="name">wizard.print.record.label.form</field>
+        <field name="model">wizard.print.record.label</field>
+        <field name="arch" type="xml">
+            <form string="Print Label">
+                <group>
+                    <field name="printer_id"/>
+                    <field name="label_id"/>
+                </group>
+                <footer>
+                    <button type="special" special="cancel" string="Cancel"/>
+                    <button string="Print label" type="object" name="print_label" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_wizard_print_record_label_view">
+        <field name="name">Print Label</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.print.record.label</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
