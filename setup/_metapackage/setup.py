@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-base_report_to_printer',
+        'odoo12-addon-printer_zpl2',
     ],
     classifiers=[
         'Programming Language :: Python',
