@@ -29,28 +29,28 @@ msgid "Aborted by the system"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_action
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__action
 msgid "Action"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printing_action_ids
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "Actions"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_active
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_active
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__active
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__active
 msgid "Active"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_address
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__address
 msgid "Address"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Are you sure to want to cancel all jobs of this printer?"
 msgstr ""
 
@@ -65,7 +65,7 @@ msgid "Being transformed into a different format"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_id_cups
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups
 msgid "CUPS id for this job."
 msgstr ""
 
@@ -75,13 +75,13 @@ msgid "Can be restarted"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
 msgid "Cancel"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Cancel all running jobs"
 msgstr ""
 
@@ -136,29 +136,29 @@ msgid "Compressed using an unknown algorithm"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_create_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_create_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_create_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_create_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_create_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_create_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_create_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_create_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_create_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_create_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_create_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_create_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_date
 msgid "Created on"
 msgstr "Creado en"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_state
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
 msgid "Current state of the job."
 msgstr ""
 
@@ -183,66 +183,66 @@ msgid "Currently printing"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_completed
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_completed
 msgid "Date and time of completion for this job."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_creation
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
 msgid "Date and time of creation for this job."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_time_at_processing
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
 msgid "Date and time of process for this job."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_default
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__default
 msgid "Default"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_property_printing_action_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__property_printing_action_id
 msgid "Default Behaviour"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printing_printer_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_printer_id
 msgid "Default Printer"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printer_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_tray_id
 msgid "Default Printer Paper Source"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Disable"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_display_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_display_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_display_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_display_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_display_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_display_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: base_report_to_printer
 #. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:33
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:28
 #, python-format
 msgid "Document sent to the printer %s"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Enable"
 msgstr ""
 
@@ -263,7 +263,7 @@ msgstr ""
 
 #. module: base_report_to_printer
 #. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:36
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:35
 #, python-format
 msgid "Error when sending the document to the printer "
 msgstr ""
@@ -292,117 +292,117 @@ msgid "Held because the printer is offline"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__id
 msgid "ID"
 msgstr "ID"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_server_address
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__address
 msgid "IP address or hostname of the server"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_server_active
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__active
 msgid "If checked, this server is useable."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_tree
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_tree
 msgid "Job"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_id_cups
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_id_cups
 msgid "Job ID"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_name
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__name
 msgid "Job name."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_job_ids
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__job_ids
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Jobs"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_printer_job_ids
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__job_ids
 msgid "Jobs printed on this printer."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action___last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job___last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer___last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard___last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action___last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server___last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray___last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_write_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_write_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_write_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_write_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_write_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_write_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_write_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_write_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard_write_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_write_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_write_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_write_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_date
 msgid "Last Updated on"
 msgstr "Última actualización en"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_server_printer_ids
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__printer_ids
 msgid "List of printers available on this server."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_location
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__location
 msgid "Location"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_media_progress
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_media_progress
 msgid "Media Progress"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_model
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__model
 msgid "Model"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__name
 msgid "Name"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_server_name
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__name
 msgid "Name of the server."
 msgstr ""
 
@@ -423,18 +423,18 @@ msgid "No reason"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Ok"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_act_report_xml_printer_tray_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_printer_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_tray_id
 msgid "Paper Source"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_tray_ids
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__tray_ids
 msgid "Paper Sources"
 msgstr ""
 
@@ -449,22 +449,22 @@ msgid "Pending Held"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_media_progress
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_media_progress
 msgid "Percentage of progress for this job."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_port
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__port
 msgid "Port"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_server_port
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__port
 msgid "Port of the server."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 msgid "Print"
 msgstr ""
 
@@ -475,9 +475,9 @@ msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_printer_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_printer_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__printer_id
 msgid "Printer"
 msgstr ""
 
@@ -502,28 +502,28 @@ msgid "Printer state reason set to 'stopped-partly'"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_printer_id
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__printer_id
 msgid "Printer used for this job."
 msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_tree
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_tree
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Printers"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server_printer_ids
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__printer_ids
 msgid "Printers List"
 msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_menu
-#: model:ir.ui.view,arch_db:base_report_to_printer.view_users_form
-#: model:ir.ui.view,arch_db:base_report_to_printer.view_users_form_simple_modif
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_users_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_users_form_simple_modif
 #: selection:printing.printer,status:0
 msgid "Printing"
 msgstr ""
@@ -539,7 +539,7 @@ msgid "Printing / Print User"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users_printing_action
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_action
 msgid "Printing Action"
 msgstr ""
 
@@ -584,22 +584,27 @@ msgid "Queued for printing"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_job_state_reason
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state_reason
 msgid "Reason for the current job state."
 msgstr ""
 
 #. module: base_report_to_printer
 #. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:32
-#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:35
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_report_id
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:26
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:33
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__report_id
 #, python-format
 msgid "Report"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_form
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_tree
+#: model:ir.model,name:base_report_to_printer.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_tree
 msgid "Report Printing Actions"
 msgstr ""
 
@@ -614,8 +619,8 @@ msgid "Resources not available to print the job"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_server_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_server_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__server_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__server_id
 msgid "Server"
 msgstr ""
 
@@ -625,26 +630,26 @@ msgid "Server Error"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_printer_server_id
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__server_id
 msgid "Server used to access this printer."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_server_id
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__server_id
 msgid "Server which hosts this job."
 msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_server_action
 #: model:ir.ui.menu,name:base_report_to_printer.printing_server_menu
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_tree
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_tree
 msgid "Servers"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Set Default"
 msgstr ""
 
@@ -654,33 +659,33 @@ msgid "Show Printers"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 msgid "Specific actions per user"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_state
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_state
 msgid "State"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_job_state_reason
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_state_reason
 msgid "State Reason"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_status
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status
 msgid "Status"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_status_message
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status_message
 msgid "Status Message"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_system_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_system_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__system_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__system_name
 msgid "System Name"
 msgstr ""
 
@@ -695,43 +700,43 @@ msgid "The id of the job must be unique per server !"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_ir_act_report_xml_printing_action_ids
+#: model:ir.model.fields,help:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid ""
 "This process will create all missing printers from the current CUPS server."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_completed
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
 msgid "Time At Completed"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_creation
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
 msgid "Time At Creation"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_processing
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
 msgid "Time At Processing"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Trays"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action_action_type
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__action_type
 msgid "Type"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_uri
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__uri
 msgid "URI"
 msgstr ""
 
@@ -741,7 +746,7 @@ msgid "Unavailable"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,help:base_report_to_printer.field_printing_job_active
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__active
 msgid "Unchecked if the job is purged from cups."
 msgstr ""
 
@@ -751,7 +756,7 @@ msgid "Unknown"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Unset Default"
 msgstr ""
 
@@ -761,12 +766,12 @@ msgid "Unsupported format"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Update Jobs"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Update Printers"
 msgstr ""
 
@@ -780,12 +785,12 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printer_update_wizard
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printer_update_wizard
-#: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Update Printers from CUPS"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action_user_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__user_id
 msgid "User"
 msgstr ""
 
@@ -795,11 +800,6 @@ msgid "Users"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model,name:base_report_to_printer.model_ir_actions_report
-msgid "ir.actions.report"
-msgstr ""
-
-#. module: base_report_to_printer
-#: model:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "or"
 msgstr ""
