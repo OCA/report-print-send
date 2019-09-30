@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-from odoo import models, fields, api
+from odoo import models, fields
 
 _logger = logging.getLogger(__name__)
 
@@ -85,12 +85,10 @@ class PrintingJob(models.Model):
          'The id of the job must be unique per server !'),
     ]
 
-    @api.multi
     def action_cancel(self):
         self.ensure_one()
         return self.cancel()
 
-    @api.multi
     def cancel(self, purge_job=False):
         for job in self:
             connection = job.server_id._open_connection()

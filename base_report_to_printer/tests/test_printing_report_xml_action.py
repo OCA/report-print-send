@@ -40,7 +40,8 @@ class TestPrintingReportXmlAction(TransactionCase):
         })
 
     def test_behaviour(self):
-        """ It should return some action's data, unless called on empty recordset
+        """ It should return some action's data, unless called on empty
+            recordset
         """
         xml_action = self.new_record()
         self.assertEqual(xml_action.behaviour(), {

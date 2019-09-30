@@ -11,7 +11,7 @@ import logging
 import os
 from tempfile import mkstemp
 
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 _logger = logging.getLogger(__name__)
@@ -60,7 +60,6 @@ class PrintingPrinter(models.Model):
                                inverse_name='printer_id',
                                string='Paper Sources')
 
-    @api.multi
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
         mapping = {
             3: 'available',
@@ -116,7 +115,6 @@ class PrintingPrinter(models.Model):
         ])
         return vals
 
-    @api.multi
     def print_document(self, report, content, **print_opts):
         """ Print a file
         Format could be pdf, qweb-pdf, raw, ...
@@ -138,7 +136,6 @@ class PrintingPrinter(models.Model):
     # Backwards compatibility of builtin used as kwarg
     _set_option_format = _set_option_doc_format
 
-    @api.multi
     def _set_option_tray(self, report, value):
         """Note we use self here as some older PPD use tray
         rather than InputSlot so we may need to query printer in override"""
@@ -151,7 +148,6 @@ class PrintingPrinter(models.Model):
     _set_option_action = _set_option_noop
     _set_option_printer = _set_option_noop
 
-    @api.multi
     def print_options(self, report=None, **print_opts):
         options = {}
         for option, value in print_opts.items():
@@ -162,7 +158,6 @@ class PrintingPrinter(models.Model):
                 options[option] = str(value)
         return options
 
-    @api.multi
     def print_file(self, file_name, report=None, **print_opts):
         """ Print a file """
         self.ensure_one()
@@ -182,7 +177,6 @@ class PrintingPrinter(models.Model):
         ))
         return True
 
-    @api.multi
     def set_default(self):
         if not self:
             return
@@ -192,21 +186,17 @@ class PrintingPrinter(models.Model):
         self.write({'default': True})
         return True
 
-    @api.multi
     def unset_default(self):
         self.write({'default': False})
         return True
 
-    @api.multi
     def get_default(self):
         return self.search([('default', '=', True)], limit=1)
 
-    @api.multi
     def action_cancel_all_jobs(self):
         self.ensure_one()
         return self.cancel_all_jobs()
 
-    @api.multi
     def cancel_all_jobs(self, purge_jobs=False):
         for printer in self:
             connection = printer.server_id._open_connection()
@@ -218,7 +208,6 @@ class PrintingPrinter(models.Model):
 
         return True
 
-    @api.multi
     def enable(self):
         for printer in self:
             connection = printer.server_id._open_connection()
@@ -229,7 +218,6 @@ class PrintingPrinter(models.Model):
 
         return True
 
-    @api.multi
     def disable(self):
         for printer in self:
             connection = printer.server_id._open_connection()
