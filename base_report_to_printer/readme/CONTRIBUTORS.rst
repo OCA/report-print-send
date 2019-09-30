@@ -9,3 +9,4 @@
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Graeme Gellatly <graeme@o4sb.com>
+* Rod Schouteden <rod@schout-it.be>
