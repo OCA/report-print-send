@@ -38,7 +38,6 @@ class PrintingReportXmlAction(models.Model):
         """ Reset the tray when the printer is changed """
         self.printer_tray_id = False
 
-    @api.multi
     def behaviour(self):
         if not self:
             return {}
