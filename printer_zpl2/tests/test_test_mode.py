@@ -4,30 +4,35 @@ import mock
 
 from odoo.tests.common import TransactionCase
 
-model = 'odoo.addons.base_report_to_printer.models.printing_server'
+model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 
 class TestWizardPrintRecordLabel(TransactionCase):
     def setUp(self):
         super(TestWizardPrintRecordLabel, self).setUp()
-        self.Model = self.env['wizard.print.record.label']
-        self.server = self.env['printing.server'].create({})
-        self.printer = self.env['printing.printer'].create({
-            'name': 'Printer',
-            'server_id': self.server.id,
-            'system_name': 'Sys Name',
-            'default': True,
-            'status': 'unknown',
-            'status_message': 'Msg',
-            'model': 'res.users',
-            'location': 'Location',
-            'uri': 'URI',
-        })
-        self.label = self.env['printing.label.zpl2'].create({
-            'name': 'ZPL II Label',
-            'model_id': self.env.ref(
-                'base_report_to_printer.model_printing_printer').id,
-        })
+        self.Model = self.env["wizard.print.record.label"]
+        self.server = self.env["printing.server"].create({})
+        self.printer = self.env["printing.printer"].create(
+            {
+                "name": "Printer",
+                "server_id": self.server.id,
+                "system_name": "Sys Name",
+                "default": True,
+                "status": "unknown",
+                "status_message": "Msg",
+                "model": "res.users",
+                "location": "Location",
+                "uri": "URI",
+            }
+        )
+        self.label = self.env["printing.label.zpl2"].create(
+            {
+                "name": "ZPL II Label",
+                "model_id": self.env.ref(
+                    "base_report_to_printer.model_printing_printer"
+                ).id,
+            }
+        )
 
     def test_get_record(self):
         """ Check if return a record """
@@ -35,12 +40,12 @@ class TestWizardPrintRecordLabel(TransactionCase):
         res = self.label._get_record()
 
         Obj = self.env[self.label.model_id.model]
-        record = Obj.search([('id', '=', self.label.record_id)], limit=1)
+        record = Obj.search([("id", "=", self.label.record_id)], limit=1)
         if not record:
-            record = Obj.search([], limit=1, order='id desc')
+            record = Obj.search([], limit=1, order="id desc")
         self.assertEqual(res, record)
 
-    @mock.patch('%s.cups' % model)
+    @mock.patch("%s.cups" % model)
     def test_print_label_test(self, cups):
         """ Check if print test """
         self.label.test_print_mode = True
@@ -53,18 +58,17 @@ class TestWizardPrintRecordLabel(TransactionCase):
         """ Check if not execute next if not in this mode """
         self.label.test_labelary_mode = False
         self.label._on_change_labelary()
-        self.assertIs(self.label.labelary_image, None)
+        self.assertIs(self.label.labelary_image, False)
 
     def test_emulation_with_bad_header(self):
         """ Check if bad header """
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
-        self.label.labelary_dpmm = '8dpmm'
+        self.label.labelary_dpmm = "8dpmm"
         self.label.labelary_height = 10000000
-        self.env['printing.label.zpl2.component'].create({
-            'name': 'ZPL II Label',
-            'label_id': self.label.id,
-            'data': '"Test"'})
+        self.env["printing.label.zpl2.component"].create(
+            {"name": "ZPL II Label", "label_id": self.label.id, "data": '"Test"'}
+        )
         self.label._on_change_labelary()
         self.assertFalse(self.label.labelary_image)
 
@@ -73,24 +77,22 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
         self.label.labelary_height = 30
-        self.label.labelary_dpmm = '8dpmm'
-        component = self.env['printing.label.zpl2.component'].create({
-            'name': 'ZPL II Label',
-            'label_id': self.label.id,
-            'data': 'wrong_data'})
+        self.label.labelary_dpmm = "8dpmm"
+        component = self.env["printing.label.zpl2.component"].create(
+            {"name": "ZPL II Label", "label_id": self.label.id, "data": "wrong_data"}
+        )
         self.label._on_change_labelary()
         component.unlink()
-        self.assertIs(self.label.labelary_image, None)
+        self.assertIs(self.label.labelary_image, False)
 
     def test_emulation_with_good_data(self):
         """ Check if ok """
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
         self.label.labelary_height = 30
-        self.label.labelary_dpmm = '8dpmm'
-        self.env['printing.label.zpl2.component'].create({
-            'name': 'ZPL II Label',
-            'label_id': self.label.id,
-            'data': '"good_data"', })
+        self.label.labelary_dpmm = "8dpmm"
+        self.env["printing.label.zpl2.component"].create(
+            {"name": "ZPL II Label", "label_id": self.label.id, "data": '"good_data"'}
+        )
         self.label._on_change_labelary()
         self.assertTrue(self.label.labelary_image)
