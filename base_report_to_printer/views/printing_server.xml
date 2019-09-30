@@ -33,7 +33,7 @@
         <field name="name">printing.server.tree (in base_report_to_printer)</field>
         <field name="model">printing.server</field>
         <field name="arch" type="xml">
-            <tree string="Servers">
+            <tree>
                 <field name="name"/>
                 <field name="address"/>
                 <field name="port"/>
@@ -57,7 +57,6 @@
         <field name="name">Servers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">printing.server</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
