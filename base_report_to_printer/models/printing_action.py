@@ -25,5 +25,4 @@ class PrintingAction(models.Model):
         selection=_available_action_types,
         string='Type',
         required=True,
-        oldname='type'
     )

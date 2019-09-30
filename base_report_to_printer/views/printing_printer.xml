@@ -61,7 +61,7 @@
         <field name="name">printing.printer.tree (in base_report_to_printer)</field>
         <field name="model">printing.printer</field>
         <field name="arch" type="xml">
-            <tree string="Printers" colors="green:status=='available'; orange:status=='printing'; red:1;">
+            <tree decoration-success="status=='available'" decoration-warning="status=='printing'" decoration-danger="status not in ['printing', 'available']">
                 <field name="default"/>
                 <field name="name"/>
                 <field name="system_name"/>
@@ -87,7 +87,6 @@
         <field name="name">Show Printers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">printing.printer</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 

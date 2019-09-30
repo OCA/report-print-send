@@ -18,7 +18,6 @@
         <field name="name">Update Printers from CUPS</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">printing.printer.update.wizard</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
