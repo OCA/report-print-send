@@ -7,7 +7,7 @@
     <record id="view_printing_label_zpl2_tree" model="ir.ui.view">
         <field name="model">printing.label.zpl2</field>
         <field name="arch" type="xml">
-            <tree string="ZPL II Label">
+            <tree>
                 <field name="name"/>
                 <field name="model_id"/>
             </tree>
@@ -44,7 +44,7 @@
                     <notebook>
                         <page string="Components">
                             <field name="component_ids" nolabel="1" colspan="4">
-                                <tree string="Label Component">
+                                <tree>
                                     <field name="sequence"/>
                                     <field name="name"/>
                                     <field name="component_type"/>
@@ -178,7 +178,6 @@
         <field name="name">ZPL II Labels</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">printing.label.zpl2</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="view_printing_label_zpl2_search"/>
         <field name="domain">[]</field>
