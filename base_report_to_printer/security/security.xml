@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <odoo>
-    
+
     <record id="printing_group_user" model="res.groups">
         <field name="name">Printing / Print User</field>
     </record>
