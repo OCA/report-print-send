@@ -32,8 +32,8 @@ odoo.define('base_report_to_printer.print', function (require) {
                         }, function () {
                             self.do_notify(_t('Report'),
                                 _.str.sprintf(
-                                    _t('Error when sending the document\
-                                        to the printer '),
+                                    _t('Error when sending the document ' +
+                                        'to the printer '),
                                     print_action.printer_name
                                 )
                             );
@@ -48,4 +48,3 @@ odoo.define('base_report_to_printer.print', function (require) {
         },
     });
 });
-
