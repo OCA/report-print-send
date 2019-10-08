@@ -20,22 +20,15 @@ addons:
       - cups
       - libcups2-dev
 
-before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-
 env:
   global:
-  - VERSION="12.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
-  - TRANSIFEX_USER='transbot@odoo-community.org'
-  - WKHTMLTOPDF_VERSION='0.12.4'
-  - secure: HwYn7vV4wIM4ocObmgkylZmaw6FQynkbMiJmoTTfgL3y3Gy6IAPVXgTNXFUiIuYXZZ4B2GOAfcECQejCCw2KP7OCcBo1oGNuSJ2aVwiQcRH1ENDLTsMq1jcB/4vQuAmTS8WEE5nRkPyutwgE4kBYvZC4tENatakafPRAS+iNqpQ=
+  - VERSION="12.0" TESTS="0" LINT_CHECK="0" MAKEPOT="0"
+  - WKHTMLTOPDF_VERSION='0.12.5'
 
   matrix:
   - LINT_CHECK="1"
-  - TRANSIFEX="1"
   - TESTS="1" ODOO_REPO="OCA/OCB"
-  - TESTS="1" ODOO_REPO="odoo/odoo"
+  - TESTS="1" ODOO_REPO="odoo/odoo" MAKEPOT="1"
 
 
 install:
