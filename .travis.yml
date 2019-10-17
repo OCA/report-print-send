@@ -10,6 +10,7 @@ addons:
   apt:
     packages:
       - expect-dev  # provides unbuffer utility
+      - libcups2-dev  # Required to install pycups
 
 env:
   global:
