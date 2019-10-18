@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_users_form">
+        <field name="name">res.users.form (in base_report_to_printer)</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='preferences']/ancestor::page" position="inside">
+                <group string="Printing" name="printing">
+                    <field name="printing_action"/>
+                    <field name="printing_printer_id" options="{'no_create': True}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_users_form_simple_modif">
+        <field name="name">res.users.form.simple (in base_report_to_printer)</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <footer position="before">
+                <group string="Printing" name="printing">
+                    <field name="printing_action" readonly="0"/>
+                    <field name="printing_printer_id" readonly="0" options="{'no_create': True}"/>
+                </group>
+            </footer>
+        </field>
+    </record>
+
+</odoo>
