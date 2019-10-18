@@ -12,7 +12,7 @@
     "author": "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
     " LasLabs, Camptocamp, Odoo Community Association (OCA),"
     " Open for Small Business Ltd",
-    "website": "http://www.agilebg.com",
+    "website": "https://github.com/OCA/report-print-send",
     "license": "AGPL-3",
     "depends": ["web"],
     "data": [
