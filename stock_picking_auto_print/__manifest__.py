@@ -18,5 +18,6 @@
     'data': [
         'views/ir_action_report_view.xml'
     ],
+    'maintainers': ['bodedra'],
     'installable': True,
 }
