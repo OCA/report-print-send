@@ -11,7 +11,6 @@
     'category': 'Generic Modules/Base',
     'website': 'http://www.opensourceintegrators.com',
     'depends': [
-        'stock',
         'sale_stock',
         'base_report_to_printer',
     ],
