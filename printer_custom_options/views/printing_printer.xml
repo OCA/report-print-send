@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="printing_printer_view_form">
+      <field name="name">printing.printer.form</field>
+      <field name="model">printing.printer</field>
+      <field name="inherit_id" ref="base_report_to_printer.printing_printer_view_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet/group[3]" position="after">
+          <group string="Printer Options Selected">
+            <field name="printer_options" widget="many2many_tags"
+                   domain="[('printer_id', '=', active_id)]"/>
+            <field name="printer_option_choices"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>
