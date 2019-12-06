@@ -8,55 +8,65 @@ from odoo import api, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
+    def _search_default_report(self, country_id=False, company_id=False):
+        report_id = False
+        report_action_pool = self.env['ir.actions.report']
+        domain = [('model', '=', 'stock.picking'),
+                  ('is_default_report', '=', True)]
+        fields = ['country_id', 'company_id']
+        stock_picking_reports = report_action_pool.search_read(domain, fields)
+        if country_id and company_id:
+            for value in stock_picking_reports:
+                if value.get('country_id') and value.get('company_id'):
+                    if value.get('country_id')[0] == country_id and \
+                            value.get('company_id')[0] == company_id:
+                        return value['id']
+        elif country_id:
+            for value in stock_picking_reports:
+                if value.get('country_id'):
+                    if value.get('country_id')[0] == country_id:
+                        return value['id']
+        elif company_id:
+            for value in stock_picking_reports:
+                if value.get('company_id'):
+                    if value.get('company_id')[0] == company_id:
+                        return value['id']
+        else:
+            report_id = self.env.ref(
+                'stock.action_report_picking').with_context(
+                landscape=True).report_action(self).get('id')
+        return report_id
+
     @api.multi
     def _stock_picking_default_auto_print_report(self):
         user_company_id = self.env.user.company_id.id
         report_action_pool = self.env['ir.actions.report']
         for picking in self.filtered(lambda p: p.sale_id):
             default_report_id = False
-
-            # Find picking defaults reports
-            default_report_ids = report_action_pool.search(
-                [('model', '=', 'stock.picking'),
-                 ('is_default_report', '=', True)]).ids
-
             # Check Partner country id
             country_id = False
             if picking.partner_id.country_id:
                 country_id = picking.partner_id.country_id.id
 
-            if default_report_ids and country_id:
+            if country_id and user_company_id:
                 # Filter report with Country and Company
-                report_ids = report_action_pool.search(
-                    [('country_id', '=', country_id),
-                     ('company_id', '=', user_company_id),
-                     ('id', 'in', default_report_ids)],
-                    limit=1)
-                if report_ids:
-                    default_report_id = report_ids.id
+                default_report_id = picking._search_default_report(
+                    country_id, user_company_id)
 
             if not default_report_id and country_id:
                 # Filter report with Country
-                report_ids = report_action_pool.search(
-                    [('country_id', '=', country_id),
-                     ('id', 'in', default_report_ids)],
-                    limit=1)
-                if report_ids:
-                    default_report_id = report_ids.id
+                default_report_id = picking._search_default_report(
+                    country_id=country_id)
 
             if not default_report_id:
                 # Filter report with Company
-                report_ids = report_action_pool.search(
-                    [('company_id', '=', user_company_id),
-                     ('id', 'in', default_report_ids)],
-                    limit=1)
-                if report_ids:
-                    default_report_id = report_ids.id
+                default_report_id = picking._search_default_report(
+                    company_id=user_company_id)
 
             if not default_report_id:
-                default_report_id = self.env.ref(
-                    'stock.action_report_picking').with_context(
-                    landscape=True).report_action(picking).get('id')
+                # Search for default picking operation report
+                default_report_id = picking._search_default_report()
+
             action_report = report_action_pool.browse(
                 default_report_id)
 
