@@ -18,3 +18,13 @@ def migrate(cr, v):
             'port': config.get('cups_port', 631),
             'printer_ids': [(6, 0, env['printing.printer'].search([]).ids)],
         })
+        # Update the noupdate=1 cron if modified fields weren't touched
+        cron = env.ref("base_report_to_printer.ir_cron_update_printers")
+        if (
+            cron.model == "printing.printer" and
+            cron.function == "update_printers_status"
+        ):
+            cron.write({
+                "function": "action_update_jobs",
+                "model": "printing.server",
+            })
