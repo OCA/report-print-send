@@ -20,10 +20,10 @@ Direct Print
     :target: https://translation.odoo-community.org/projects/report-print-send-11-0/report-print-send-11-0-stock_picking_auto_print
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/144/11.0
+    :target: https://runbot.odoo-community.org/runbot/144/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 
 **Table of contents**
@@ -71,6 +71,7 @@ Contributors
 
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
 * Balaji Kannan <bkannan@opensourceintegrators.com>
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 
 Other credits
 ~~~~~~~~~~~~~
