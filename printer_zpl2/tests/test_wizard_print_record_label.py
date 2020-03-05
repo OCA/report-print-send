@@ -48,7 +48,10 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.assertEqual(wizard.printer_id, self.printer)
         self.assertEqual(wizard.label_id, self.label)
         wizard.print_label()
-        cups.Connection().printFile.assert_called_once()
+        file_name = 'test.zpl'
+        cups.Connection().printFile.assert_called_once_with(
+                self.printer.system_name, file_name, file_name, options={}
+        )
 
     def test_wizard_multiple_printers_and_labels(self):
         """ Check that printer_id and label_id are not automatically filled
