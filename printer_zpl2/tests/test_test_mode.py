@@ -51,10 +51,10 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.label.test_print_mode = True
         self.label.printer_id = self.printer
         self.label.record_id = 10
-        file_name = 'test.zpl'
-        self.label.print_test_label()        
+        file_name = "test.zpl"
+        self.label.print_test_label()
         cups.Connection().printFile.assert_called_once_with(
-                self.printer.system_name, file_name, file_name, options={}
+            self.printer.system_name, file_name, file_name, options={}
         )
 
     def test_emulation_without_params(self):
