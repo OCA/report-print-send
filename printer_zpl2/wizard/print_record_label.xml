@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!--
     Copyright 2016 SYLEAM
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -10,12 +10,17 @@
         <field name="arch" type="xml">
             <form string="Print Label">
                 <group>
-                    <field name="printer_id"/>
-                    <field name="label_id"/>
+                    <field name="printer_id" />
+                    <field name="label_id" />
                 </group>
                 <footer>
-                    <button type="special" special="cancel" string="Cancel"/>
-                    <button string="Print label" type="object" name="print_label" class="oe_highlight"/>
+                    <button type="special" special="cancel" string="Cancel" />
+                    <button
+                        string="Print label"
+                        type="object"
+                        name="print_label"
+                        class="oe_highlight"
+                    />
                 </footer>
             </form>
         </field>
