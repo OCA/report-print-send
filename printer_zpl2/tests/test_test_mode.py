@@ -51,16 +51,15 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.label.test_print_mode = True
         self.label.printer_id = self.printer
         self.label.record_id = 10
-        file_name = 'test.zpl'
-        self.label.print_test_label()        
+        file_name = "test.zpl"
+        self.label.print_test_label()
         cups.Connection().printFile.assert_called_once_with(
-                self.printer.system_name, file_name, file_name, options={}
+            self.printer.system_name, file_name, file_name, options={}
         )
 
     def test_emulation_without_params(self):
         """ Check if not execute next if not in this mode """
         self.label.test_labelary_mode = False
-        self.label._on_change_labelary()
         self.assertIs(self.label.labelary_image, False)
 
     def test_emulation_with_bad_header(self):
@@ -72,7 +71,6 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"Test"'}
         )
-        self.label._on_change_labelary()
         self.assertFalse(self.label.labelary_image)
 
     def test_emulation_with_bad_data_compute(self):
@@ -84,7 +82,6 @@ class TestWizardPrintRecordLabel(TransactionCase):
         component = self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": "wrong_data"}
         )
-        self.label._on_change_labelary()
         component.unlink()
         self.assertIs(self.label.labelary_image, False)
 
@@ -97,5 +94,4 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"good_data"'}
         )
-        self.label._on_change_labelary()
         self.assertTrue(self.label.labelary_image)
