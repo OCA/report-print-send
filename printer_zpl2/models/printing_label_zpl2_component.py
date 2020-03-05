@@ -56,16 +56,16 @@ class PrintingLabelZpl2Component(models.Model):
             ("diagonal", "Diagonal Line"),
             ("circle", "Circle"),
             ("graphic", "Graphic"),
-            (zpl2.BARCODE_CODE_11, "Code 11"),
-            (zpl2.BARCODE_INTERLEAVED_2_OF_5, "Interleaved 2 of 5"),
-            (zpl2.BARCODE_CODE_39, "Code 39"),
-            (zpl2.BARCODE_CODE_49, "Code 49"),
-            (zpl2.BARCODE_PDF417, "PDF417"),
-            (zpl2.BARCODE_EAN_8, "EAN-8"),
-            (zpl2.BARCODE_UPC_E, "UPC-E"),
-            (zpl2.BARCODE_CODE_128, "Code 128"),
-            (zpl2.BARCODE_EAN_13, "EAN-13"),
-            (zpl2.BARCODE_QR_CODE, "QR Code"),
+            (str(zpl2.BARCODE_CODE_11), "Code 11"),
+            (str(zpl2.BARCODE_INTERLEAVED_2_OF_5), "Interleaved 2 of 5"),
+            (str(zpl2.BARCODE_CODE_39), "Code 39"),
+            (str(zpl2.BARCODE_CODE_49), "Code 49"),
+            (str(zpl2.BARCODE_PDF417), "PDF417"),
+            (str(zpl2.BARCODE_EAN_8), "EAN-8"),
+            (str(zpl2.BARCODE_UPC_E), "UPC-E"),
+            (str(zpl2.BARCODE_CODE_128), "Code 128"),
+            (str(zpl2.BARCODE_EAN_13), "EAN-13"),
+            (str(zpl2.BARCODE_QR_CODE), "QR Code"),
             ("sublabel", "Sublabel"),
             ("zpl2_raw", "ZPL2"),
         ],
@@ -76,42 +76,42 @@ class PrintingLabelZpl2Component(models.Model):
     )
     font = fields.Selection(
         selection=[
-            (zpl2.FONT_DEFAULT, "Default"),
-            (zpl2.FONT_9X5, "9x5"),
-            (zpl2.FONT_11X7, "11x7"),
-            (zpl2.FONT_18X10, "18x10"),
-            (zpl2.FONT_28X15, "28x15"),
-            (zpl2.FONT_26X13, "26x13"),
-            (zpl2.FONT_60X40, "60x40"),
-            (zpl2.FONT_21X13, "21x13"),
+            (str(zpl2.FONT_DEFAULT), "Default"),
+            (str(zpl2.FONT_9X5), "9x5"),
+            (str(zpl2.FONT_11X7), "11x7"),
+            (str(zpl2.FONT_18X10), "18x10"),
+            (str(zpl2.FONT_28X15), "28x15"),
+            (str(zpl2.FONT_26X13), "26x13"),
+            (str(zpl2.FONT_60X40), "60x40"),
+            (str(zpl2.FONT_21X13), "21x13"),
         ],
         required=True,
-        default=zpl2.FONT_DEFAULT,
+        default=str(zpl2.FONT_DEFAULT),
         help="Font to use, for text only.",
     )
     thickness = fields.Integer(help="Thickness of the line to draw.")
     color = fields.Selection(
-        selection=[(zpl2.COLOR_BLACK, "Black"), (zpl2.COLOR_WHITE, "White")],
-        default=zpl2.COLOR_BLACK,
+        selection=[(str(zpl2.COLOR_BLACK), "Black"), (str(zpl2.COLOR_WHITE), "White")],
+        default=str(zpl2.COLOR_BLACK),
         help="Color of the line to draw.",
     )
     orientation = fields.Selection(
         selection=[
-            (zpl2.ORIENTATION_NORMAL, "Normal"),
-            (zpl2.ORIENTATION_ROTATED, "Rotated"),
-            (zpl2.ORIENTATION_INVERTED, "Inverted"),
-            (zpl2.ORIENTATION_BOTTOM_UP, "Read from Bottom up"),
+            (str(zpl2.ORIENTATION_NORMAL), "Normal"),
+            (str(zpl2.ORIENTATION_ROTATED), "Rotated"),
+            (str(zpl2.ORIENTATION_INVERTED), "Inverted"),
+            (str(zpl2.ORIENTATION_BOTTOM_UP), "Read from Bottom up"),
         ],
         required=True,
-        default=zpl2.ORIENTATION_NORMAL,
+        default=str(zpl2.ORIENTATION_NORMAL),
         help="Orientation of the barcode.",
     )
     diagonal_orientation = fields.Selection(
         selection=[
-            (zpl2.DIAGONAL_ORIENTATION_LEFT, "Left (\\)"),
-            (zpl2.DIAGONAL_ORIENTATION_RIGHT, "Right (/)"),
+            (str(zpl2.DIAGONAL_ORIENTATION_LEFT), "Left (\\)"),
+            (str(zpl2.DIAGONAL_ORIENTATION_RIGHT), "Right (/)"),
         ],
-        default=zpl2.DIAGONAL_ORIENTATION_LEFT,
+        default=str(zpl2.DIAGONAL_ORIENTATION_LEFT),
         help="Orientation of the diagonal line.",
     )
     check_digits = fields.Boolean(
@@ -152,15 +152,16 @@ class PrintingLabelZpl2Component(models.Model):
     magnification_factor = fields.Integer(
         default=1, help="Magnification Factor, from 1 to 10."
     )
+    only_product_barcode = fields.Boolean("Only product barcode data")
     error_correction = fields.Selection(
         selection=[
-            (zpl2.ERROR_CORRECTION_ULTRA_HIGH, "Ultra-high Reliability Level"),
-            (zpl2.ERROR_CORRECTION_HIGH, "High Reliability Level"),
-            (zpl2.ERROR_CORRECTION_STANDARD, "Standard Level"),
-            (zpl2.ERROR_CORRECTION_HIGH_DENSITY, "High Density Level"),
+            (str(zpl2.ERROR_CORRECTION_ULTRA_HIGH), "Ultra-high Reliability Level"),
+            (str(zpl2.ERROR_CORRECTION_HIGH), "High Reliability Level"),
+            (str(zpl2.ERROR_CORRECTION_STANDARD), "Standard Level"),
+            (str(zpl2.ERROR_CORRECTION_HIGH_DENSITY), "High Density Level"),
         ],
         required=True,
-        default=zpl2.ERROR_CORRECTION_HIGH,
+        default=str(zpl2.ERROR_CORRECTION_HIGH),
         help="Error correction for some barcode types like QR Code.",
     )
     mask_value = fields.Integer(default=7, help="Mask Value, from 0 to 7.")
@@ -211,10 +212,10 @@ class PrintingLabelZpl2Component(models.Model):
     )
     block_justify = fields.Selection(
         selection=[
-            (zpl2.JUSTIFY_LEFT, "Left"),
-            (zpl2.JUSTIFY_CENTER, "Center"),
-            (zpl2.JUSTIFY_JUSTIFIED, "Justified"),
-            (zpl2.JUSTIFY_RIGHT, "Right"),
+            (str(zpl2.JUSTIFY_LEFT), "Left"),
+            (str(zpl2.JUSTIFY_CENTER), "Center"),
+            (str(zpl2.JUSTIFY_JUSTIFIED), "Justified"),
+            (str(zpl2.JUSTIFY_RIGHT), "Right"),
         ],
         string="Justify",
         required=True,

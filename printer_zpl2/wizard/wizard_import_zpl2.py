@@ -9,7 +9,7 @@ import re
 
 from PIL import Image, ImageOps
 
-from odoo import _ as translate, fields, models
+from odoo import _, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -376,7 +376,7 @@ class WizardImportZPl2(models.TransientModel):
 
             args = line.split("^")
             for arg in args:
-                for _, code in SUPPORTED_CODE.items():
+                for _key, code in SUPPORTED_CODE.items():
                     component_arg = code["method"](arg)
                     if component_arg:
                         if code.get("default", False):
@@ -398,8 +398,9 @@ class WizardImportZPl2(models.TransientModel):
                 seq = sequence + i * 10
                 vals.update(
                     {
-                        "name": translate("Import %s") % seq,
+                        "name": _("Import %s") % seq,
                         "sequence": seq,
+                        "model": str(zpl2.MODEL_ENHANCED),
                         "label_id": self.label_id.id,
                     }
                 )
@@ -423,5 +424,7 @@ class WizardImportZPl2(models.TransientModel):
                         value = True
                 if field_type in ("integer", "float"):
                     value = float(value)
+                if field == "model":
+                    value = int(float(value))
                 component.update({field: value})
         return component
