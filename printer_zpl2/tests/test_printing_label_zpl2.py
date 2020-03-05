@@ -67,10 +67,10 @@ class TestPrintingLabelZpl2(TransactionCase):
     def test_print_empty_label(self, cups):
         """ Check that printing an empty label works """
         label = self.new_label()
-        file_name = 'test.zpl'
+        file_name = "test.zpl"
         label.print_label(self.printer, self.printer)
         cups.Connection().printFile.assert_called_once_with(
-                printer.system_name, file_name, file_name, options={}
+            self.printer.system_name, file_name, file_name, options={}
         )
 
     def test_empty_label_contents(self):
@@ -1170,3 +1170,24 @@ class TestPrintingLabelZpl2(TransactionCase):
         self.assertEqual(
             contents, "^XA\n" "^PW480\n" "^CI28\n" "^LH10,10\n" "^JUR\n" "^XZ"
         )
+
+    def test_zpl2_component_quick_move(self):
+        """ Check component quick move """
+        label = self.new_label()
+        component = self.new_component(
+            {
+                "label_id": label.id,
+                "component_type": "zpl2_raw",
+                "data": '""',
+                "origin_x": 20,
+                "origin_y": 30,
+            }
+        )
+        component.action_plus_origin_x()
+        self.assertEqual(30, component.origin_x)
+        component.action_minus_origin_x()
+        self.assertEqual(20, component.origin_x)
+        component.action_plus_origin_y()
+        self.assertEqual(40, component.origin_y)
+        component.action_minus_origin_y()
+        self.assertEqual(30, component.origin_y)
