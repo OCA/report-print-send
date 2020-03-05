@@ -52,8 +52,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
     def test_emulation_without_params(self):
         """ Check if not execute next if not in this mode """
         self.label.test_labelary_mode = False
-        self.label._on_change_labelary()
-        self.assertIs(self.label.labelary_image, None)
+        self.assertIs(self.label.labelary_image, False)
 
     def test_emulation_with_bad_header(self):
         """ Check if bad header """
@@ -65,7 +64,6 @@ class TestWizardPrintRecordLabel(TransactionCase):
             'name': 'ZPL II Label',
             'label_id': self.label.id,
             'data': '"Test"'})
-        self.label._on_change_labelary()
         self.assertFalse(self.label.labelary_image)
 
     def test_emulation_with_bad_data_compute(self):
@@ -78,9 +76,8 @@ class TestWizardPrintRecordLabel(TransactionCase):
             'name': 'ZPL II Label',
             'label_id': self.label.id,
             'data': 'wrong_data'})
-        self.label._on_change_labelary()
         component.unlink()
-        self.assertIs(self.label.labelary_image, None)
+        self.assertIs(self.label.labelary_image, False)
 
     def test_emulation_with_good_data(self):
         """ Check if ok """
@@ -92,5 +89,4 @@ class TestWizardPrintRecordLabel(TransactionCase):
             'name': 'ZPL II Label',
             'label_id': self.label.id,
             'data': '"good_data"', })
-        self.label._on_change_labelary()
         self.assertTrue(self.label.labelary_image)

@@ -49,7 +49,11 @@
                                     <field name="name"/>
                                     <field name="component_type"/>
                                     <field name="origin_x"/>
+                                    <button name="action_minus_origin_x" type="object" string="-" icon="fa-minus-square"/>
+                                    <button name="action_plus_origin_x" type="object" string="+" icon="fa-plus-square"/>
                                     <field name="origin_y"/>
+                                    <button name="action_minus_origin_y" type="object" string="-" icon="fa-minus-square"/>
+                                    <button name="action_plus_origin_y" type="object" string="+" icon="fa-plus-square"/>
                                 </tree>
                                 <form string="Label Component">
                                     <group>

@@ -1135,3 +1135,22 @@ class TestPrintingLabelZpl2(TransactionCase):
             '^LH10,10\n'
             '^JUR\n'
             '^XZ')
+
+    def test_zpl2_component_quick_move(self):
+        """ Check component quick move """
+        label = self.new_label()
+        component = self.new_component({
+            'label_id': label.id,
+            'component_type': 'zpl2_raw',
+            'data': '""',
+            'origin_x': 20,
+            'origin_y': 30,
+        })
+        component.action_plus_origin_x()
+        self.assertEqual(30, component.origin_x)
+        component.action_minus_origin_x()
+        self.assertEqual(20, component.origin_x)
+        component.action_plus_origin_y()
+        self.assertEqual(40, component.origin_y)
+        component.action_minus_origin_y()
+        self.assertEqual(30, component.origin_y)

@@ -55,7 +55,8 @@ class PrintingLabelZpl2(models.Model):
     extra = fields.Text(string="Extra", default='{}')
     printer_id = fields.Many2one(
         comodel_name='printing.printer', string='Printer')
-    labelary_image = fields.Binary(string='Image from Labelary', readonly=True)
+    labelary_image = fields.Binary(string='Image from Labelary',
+                                   compute='_compute_labelary_image')
     labelary_dpmm = fields.Selection(
         selection=[
             ('6dpmm', '6dpmm (152 pdi)'),
@@ -312,15 +313,19 @@ class PrintingLabelZpl2(models.Model):
                 if record:
                     label.print_label(label.printer_id, record, **extra)
 
-    @api.onchange(
+    @api.depends(
         'record_id', 'labelary_dpmm', 'labelary_width', 'labelary_height',
-        'component_ids', 'origin_x', 'origin_y')
-    def _on_change_labelary(self):
+        'component_ids', 'origin_x', 'origin_y', 'test_labelary_mode')
+    def _compute_labelary_image(self):
+        for label in self:
+            label.labelary_image = label._generate_labelary_image()
+
+    def _generate_labelary_image(self):
         self.ensure_one()
         if not(self.test_labelary_mode and self.record_id and
                 self.labelary_width and self.labelary_height and
                 self.labelary_dpmm and self.component_ids):
-            return
+            return False
         record = self._get_record()
         if record:
             # If case there an error (in the data field with the safe_eval
@@ -349,17 +354,11 @@ class PrintingLabelZpl2(models.Model):
                     new_im.paste(im, (1, 1))
                     imgByteArr = io.BytesIO()
                     new_im.save(imgByteArr, format='PNG')
-                    self.labelary_image = base64.b64encode(
-                        imgByteArr.getvalue())
+                    return base64.b64encode(imgByteArr.getvalue())
                 else:
-                    return {'warning': {
-                        'title': _('Error with Labelary API.'),
-                        'message': response.status_code,
-                    }}
+                    _logger.warning(
+                        _("Error with Labelary API. %s") % response.status_code)
 
             except Exception as e:
-                self.labelary_image = False
-                return {'warning': {
-                    'title': _('Some thing is wrong.'),
-                    'message': e,
-                }}
+                _logger.warning(_("Error with Labelary API. %s") % e)
+        return False

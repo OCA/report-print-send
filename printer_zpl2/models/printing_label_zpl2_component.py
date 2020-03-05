@@ -184,3 +184,19 @@ class PrintingLabelZpl2Component(models.Model):
         string='Image', attachment=True,
         help='This field holds a static image to print. '
              'If not set, the data field is evaluated.')
+
+    def action_plus_origin_x(self):
+        self.ensure_one()
+        self.origin_x += 10
+
+    def action_minus_origin_x(self):
+        self.ensure_one()
+        self.origin_x -= 10
+
+    def action_plus_origin_y(self):
+        self.ensure_one()
+        self.origin_y += 10
+
+    def action_minus_origin_y(self):
+        self.ensure_one()
+        self.origin_y -= 10
