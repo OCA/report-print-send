@@ -1,135 +1,125 @@
 <?xml version="1.0" ?>
 <odoo>
-
     <record id="printing_group_user" model="res.groups">
         <field name="name">Printing / Print User</field>
     </record>
-
     <record id="printing_group_manager" model="res.groups">
         <field name="name">Printing / Print Manager</field>
-        <field name="implied_ids"
-               eval="[(4, ref('printing_group_user'))]"/>
+        <field name="implied_ids" eval="[(4, ref('printing_group_user'))]" />
     </record>
-
     <record id="base.group_user" model="res.groups">
-        <field name="implied_ids"
-               eval="[(4, ref('printing_group_user'))]"/>
+        <field name="implied_ids" eval="[(4, ref('printing_group_user'))]" />
     </record>
-
     <record id="base.group_erp_manager" model="res.groups">
-        <field name="implied_ids"
-               eval="[(4, ref('printing_group_manager'))]"/>
+        <field name="implied_ids" eval="[(4, ref('printing_group_manager'))]" />
     </record>
-
     <record id="printing_server_group_manager" model="ir.model.access">
         <field name="name">Printing Server Manager</field>
-        <field name="model_id" ref="model_printing_server"/>
-        <field name="group_id" ref="printing_group_manager"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="1" name="perm_unlink"/>
-        <field eval="1" name="perm_write"/>
-        <field eval="1" name="perm_create"/>
+        <field name="model_id" ref="model_printing_server" />
+        <field name="group_id" ref="printing_group_manager" />
+        <field eval="1" name="perm_read" />
+        <field eval="1" name="perm_unlink" />
+        <field eval="1" name="perm_write" />
+        <field eval="1" name="perm_create" />
     </record>
     <record id="printing_printer_group_manager" model="ir.model.access">
         <field name="name">Printing Printer Manager</field>
-        <field name="model_id" ref="model_printing_printer"/>
-        <field name="group_id" ref="printing_group_manager"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="1" name="perm_unlink"/>
-        <field eval="1" name="perm_write"/>
-        <field eval="1" name="perm_create"/>
+        <field name="model_id" ref="model_printing_printer" />
+        <field name="group_id" ref="printing_group_manager" />
+        <field eval="1" name="perm_read" />
+        <field eval="1" name="perm_unlink" />
+        <field eval="1" name="perm_write" />
+        <field eval="1" name="perm_create" />
     </record>
     <record id="printing_action_group_manager" model="ir.model.access">
         <field name="name">Printing Action Manager</field>
-        <field name="model_id" ref="model_printing_action"/>
-        <field name="group_id" ref="printing_group_manager"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="1" name="perm_unlink"/>
-        <field eval="1" name="perm_write"/>
-        <field eval="1" name="perm_create"/>
+        <field name="model_id" ref="model_printing_action" />
+        <field name="group_id" ref="printing_group_manager" />
+        <field eval="1" name="perm_read" />
+        <field eval="1" name="perm_unlink" />
+        <field eval="1" name="perm_write" />
+        <field eval="1" name="perm_create" />
     </record>
     <record id="printing_report_xml_action_group_manager" model="ir.model.access">
         <field name="name">Printing Report Xml Action Manager</field>
-        <field name="model_id" ref="model_printing_report_xml_action"/>
-        <field name="group_id" ref="printing_group_manager"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="1" name="perm_unlink"/>
-        <field eval="1" name="perm_write"/>
-        <field eval="1" name="perm_create"/>
+        <field name="model_id" ref="model_printing_report_xml_action" />
+        <field name="group_id" ref="printing_group_manager" />
+        <field eval="1" name="perm_read" />
+        <field eval="1" name="perm_unlink" />
+        <field eval="1" name="perm_write" />
+        <field eval="1" name="perm_create" />
     </record>
-
     <record id="printing_server_group_user" model="ir.model.access">
         <field name="name">Printing Server User</field>
-        <field name="model_id" ref="model_printing_server"/>
-        <field name="group_id" ref="printing_group_user"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="0" name="perm_unlink"/>
-        <field eval="0" name="perm_write"/>
-        <field eval="0" name="perm_create"/>
+        <field name="model_id" ref="model_printing_server" />
+        <field name="group_id" ref="printing_group_user" />
+        <field eval="1" name="perm_read" />
+        <field eval="0" name="perm_unlink" />
+        <field eval="0" name="perm_write" />
+        <field eval="0" name="perm_create" />
     </record>
     <record id="printing_printer_group_user" model="ir.model.access">
         <field name="name">Printing Printer User</field>
-        <field name="model_id" ref="model_printing_printer"/>
-        <field name="group_id" ref="printing_group_user"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="0" name="perm_unlink"/>
-        <field eval="0" name="perm_write"/>
-        <field eval="0" name="perm_create"/>
+        <field name="model_id" ref="model_printing_printer" />
+        <field name="group_id" ref="printing_group_user" />
+        <field eval="1" name="perm_read" />
+        <field eval="0" name="perm_unlink" />
+        <field eval="0" name="perm_write" />
+        <field eval="0" name="perm_create" />
     </record>
     <record id="printing_job_group_user" model="ir.model.access">
         <field name="name">Printing Job User</field>
-        <field name="model_id" ref="model_printing_job"/>
-        <field name="group_id" ref="printing_group_user"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="0" name="perm_unlink"/>
-        <field eval="0" name="perm_write"/>
-        <field eval="0" name="perm_create"/>
+        <field name="model_id" ref="model_printing_job" />
+        <field name="group_id" ref="printing_group_user" />
+        <field eval="1" name="perm_read" />
+        <field eval="0" name="perm_unlink" />
+        <field eval="0" name="perm_write" />
+        <field eval="0" name="perm_create" />
     </record>
     <record id="printing_job_group_manager" model="ir.model.access">
         <field name="name">Printing Job User</field>
-        <field name="model_id" ref="model_printing_job"/>
-        <field name="group_id" ref="printing_group_manager"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="1" name="perm_unlink"/>
-        <field eval="1" name="perm_write"/>
-        <field eval="1" name="perm_create"/>
+        <field name="model_id" ref="model_printing_job" />
+        <field name="group_id" ref="printing_group_manager" />
+        <field eval="1" name="perm_read" />
+        <field eval="1" name="perm_unlink" />
+        <field eval="1" name="perm_write" />
+        <field eval="1" name="perm_create" />
     </record>
     <record id="printing_action_group_user" model="ir.model.access">
         <field name="name">Printing Action User</field>
-        <field name="model_id" ref="model_printing_action"/>
-        <field name="group_id" ref="printing_group_user"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="0" name="perm_unlink"/>
-        <field eval="0" name="perm_write"/>
-        <field eval="0" name="perm_create"/>
+        <field name="model_id" ref="model_printing_action" />
+        <field name="group_id" ref="printing_group_user" />
+        <field eval="1" name="perm_read" />
+        <field eval="0" name="perm_unlink" />
+        <field eval="0" name="perm_write" />
+        <field eval="0" name="perm_create" />
     </record>
     <record id="printing_report_xml_action_group_user" model="ir.model.access">
         <field name="name">Printing Report Xml Action User</field>
-        <field name="model_id" ref="model_printing_report_xml_action"/>
-        <field name="group_id" ref="printing_group_user"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="0" name="perm_unlink"/>
-        <field eval="0" name="perm_write"/>
-        <field eval="0" name="perm_create"/>
+        <field name="model_id" ref="model_printing_report_xml_action" />
+        <field name="group_id" ref="printing_group_user" />
+        <field eval="1" name="perm_read" />
+        <field eval="0" name="perm_unlink" />
+        <field eval="0" name="perm_write" />
+        <field eval="0" name="perm_create" />
     </record>
     <!--Ported from printing_tray -->
     <record id="access_printing_tray_all" model="ir.model.access">
         <field name="name">Printing Tray User</field>
-        <field name="model_id" ref="model_printing_tray"/>
-        <field name="group_id" ref="printing_group_user"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="0" name="perm_unlink"/>
-        <field eval="0" name="perm_write"/>
-        <field eval="0" name="perm_create"/>
+        <field name="model_id" ref="model_printing_tray" />
+        <field name="group_id" ref="printing_group_user" />
+        <field eval="1" name="perm_read" />
+        <field eval="0" name="perm_unlink" />
+        <field eval="0" name="perm_write" />
+        <field eval="0" name="perm_create" />
     </record>
     <record id="access_printing_tray_operator" model="ir.model.access">
         <field name="name">Printing Tray User</field>
-        <field name="model_id" ref="model_printing_tray"/>
-        <field name="group_id" ref="printing_group_manager"/>
-        <field eval="1" name="perm_read"/>
-        <field eval="1" name="perm_unlink"/>
-        <field eval="1" name="perm_write"/>
-        <field eval="1" name="perm_create"/>
+        <field name="model_id" ref="model_printing_tray" />
+        <field name="group_id" ref="printing_group_manager" />
+        <field eval="1" name="perm_read" />
+        <field eval="1" name="perm_unlink" />
+        <field eval="1" name="perm_write" />
+        <field eval="1" name="perm_create" />
     </record>
-
 </odoo>
