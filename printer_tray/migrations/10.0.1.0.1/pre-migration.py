@@ -10,8 +10,3 @@ def migrate(cr, version):
     openupgrade.rename_models(cr, [
         ('printing.tray', 'printing.tray.input'),
     ])
-
-    openupgrade.rename_tables(cr, [
-
-        ('printing.tray', 'printing.tray.input'),
-    ])
