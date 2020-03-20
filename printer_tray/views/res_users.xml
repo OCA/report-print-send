@@ -9,7 +9,8 @@
       <field name="inherit_id" ref="base_report_to_printer.view_users_form" />
       <field name="arch" type="xml">
         <field name="printing_printer_id" position="after">
-          <field name="printer_tray_id"/>
+          <field name="printer_input_tray_id"/>
+          <field name="printer_output_tray_id"/>
         </field>
       </field>
     </record>
@@ -21,7 +22,8 @@
       <field name="inherit_id" ref="base_report_to_printer.view_users_form_simple_modif" />
       <field name="arch" type="xml">
         <field name="printing_printer_id" position="after">
-          <field name="printer_tray_id"/>
+          <field name="printer_input_tray_id"/>
+          <field name="printer_output_tray_id"/>
         </field>
       </field>
     </record>

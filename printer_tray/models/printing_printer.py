@@ -19,9 +19,14 @@ except ImportError:
 class PrintingPrinter(models.Model):
     _inherit = 'printing.printer'
 
-    tray_ids = fields.One2many(comodel_name='printing.tray',
-                               inverse_name='printer_id',
-                               string='Paper Sources')
+    input_tray_ids = fields.One2many(comodel_name='printing.tray.input',
+                                     inverse_name='printer_id',
+                                     string='Paper Sources',
+                                     oldname='tray_ids')
+
+    output_tray_ids = fields.One2many(comodel_name='printing.tray.output',
+                                      inverse_name='printer_id',
+                                      string='Output trays')
 
     @api.multi
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
@@ -36,7 +41,9 @@ class PrintingPrinter(models.Model):
             return vals
 
         ppd = cups.PPD(ppd_path)
-        option = ppd.findOption('InputSlot')
+        input_options = ppd.findOption('InputSlot')
+        output_options = ppd.findOption('OutputBin')
+
         try:
             os.unlink(ppd_path)
         except OSError as err:
@@ -44,28 +51,32 @@ class PrintingPrinter(models.Model):
             # The file has already been deleted, we can continue the update
             if err.errno != errno.ENOENT:
                 raise
-        if not option:
-            return vals
 
-        vals['tray_ids'] = []
-        cups_trays = {
-            tray_option['choice']: tray_option['text']
-            for tray_option in option.choices
-        }
+        if input_options:
+            vals['input_tray_ids'] = [
+                (0, 0, {'name': opt['text'], 'system_name': opt['choice']})
+                for opt in input_options.choices
+                if opt['choice'] not in self.input_tray_ids.mapped('system_name')
+            ]
+            trays = [opt['choice'] for opt in input_options.choices]
+            vals['input_tray_ids'].extend([
+                (2, tray.id)
+                for tray in self.input_tray_ids
+                if tray.system_name not in trays
+            ])
 
-        # Add new trays
-        vals['tray_ids'].extend([
-            (0, 0, {'name': text, 'system_name': choice})
-            for choice, text in cups_trays.items()
-            if choice not in self.tray_ids.mapped('system_name')
-        ])
-
-        # Remove deleted trays
-        vals['tray_ids'].extend([
-            (2, tray.id)
-            for tray in self.tray_ids.filtered(
-                lambda record: record.system_name not in cups_trays.keys())
-        ])
+        if output_options:
+            vals['output_tray_ids'] = [
+                (0, 0, {'name': opt['text'], 'system_name': opt['choice']})
+                for opt in output_options.choices
+                if opt['choice'] not in self.output_tray_ids.mapped('system_name')
+            ]
+            trays = [opt['choice'] for opt in output_options.choices]
+            vals['output_tray_ids'].extend([
+                (2, tray.id)
+                for tray in self.output_tray_ids
+                if tray.system_name not in trays
+            ])
 
         return vals
 
@@ -78,12 +89,12 @@ class PrintingPrinter(models.Model):
         if report is not None:
             full_report = self.env['report']._get_report_from_name(report) \
                 if isinstance(report, basestring) else report
-            # Retrieve report default values
-            if full_report.printer_tray_id:
-                tray = full_report.printer_tray_id
-            else:
-                # Retrieve user default values
-                tray = self.env.user.printer_tray_id
+
+            in_tray = full_report.printer_input_tray_id or \
+                self.env.user.printer_input_tray_id
+
+            out_tray = full_report.printer_output_tray_id or \
+                self.env.user.printer_output_tray_id
 
             # Retrieve report-user specific values
             action = printing_act_obj.search([
@@ -91,10 +102,19 @@ class PrintingPrinter(models.Model):
                 ('user_id', '=', self.env.uid),
                 ('action', '!=', 'user_default'),
             ], limit=1)
-            if action.printer_tray_id:
-                tray = action.printer_tray_id
+            if action.printer_input_tray_id:
+                in_tray = action.printer_input_tray_id
+            if action.printer_output_tray_id:
+                out_tray = action.printer_output_tray_id
 
-            if tray:
-                options['InputSlot'] = str(tray.system_name)
+            if 'printer_input_tray_id' in self.env.context:
+                in_tray = self.env.context['printer_input_tray_id']
+            if 'printer_output_tray_id' in self.env.context:
+                out_tray = self.env.context['printer_output_tray_id']
+
+            if in_tray:
+                options['InputSlot'] = str(in_tray.system_name)
+            if out_tray:
+                options['OutputBin'] = str(out_tray.system_name)
 
         return options

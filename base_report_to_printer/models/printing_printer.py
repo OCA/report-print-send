@@ -121,15 +121,16 @@ class PrintingPrinter(models.Model):
             report=report, format=format, copies=copies)
 
         _logger.debug(
-            'Sending job to CUPS printer %s on %s'
+            'Sending job to CUPS printer %s on %s '
             % (self.system_name, self.server_id.address))
         connection.printFile(self.system_name,
                              file_name,
                              file_name,
                              options=options)
-        _logger.info("Printing job: '%s' on %s" % (
+        _logger.info("Printing job: '%s' on %s (Options %s)" % (
             file_name,
             self.server_id.address,
+            options
         ))
         return True
 
