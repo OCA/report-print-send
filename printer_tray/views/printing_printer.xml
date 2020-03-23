@@ -8,7 +8,15 @@
       <field name="arch" type="xml">
         <xpath expr="//sheet/group[3]" position="after">
           <group string="Trays">
-            <field name="tray_ids" nolabel="1">
+            <field name="input_tray_ids">
+              <form>
+                <group>
+                  <field name="name"/>
+                  <field name="system_name"/>
+                </group>
+              </form>
+            </field>
+            <field name="output_tray_ids">
               <form>
                 <group>
                   <field name="name"/>

@@ -1,3 +1,7 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 access_printing_tray_all,printing_tray all,model_printing_tray,base_report_to_printer.printing_group_user,1,0,0,0
 access_printing_tray_operator,printing_tray operator,model_printing_tray,base_report_to_printer.printing_group_manager,1,1,1,1
+access_printing_tray_input_all,printing_tray_input all,model_printing_tray_input,base_report_to_printer.printing_group_user,1,0,0,0
+access_printing_tray_input_operator,printing_tray operator,model_printing_tray_input,base_report_to_printer.printing_group_manager,1,1,1,1
+access_printing_tray_output_all,printing_tray_output all,model_printing_tray_output,base_report_to_printer.printing_group_user,1,0,0,0
+access_printing_tray_output_operator,printing_tray_output operator,model_printing_tray_output,base_report_to_printer.printing_group_manager,1,1,1,1

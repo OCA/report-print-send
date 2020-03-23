@@ -9,7 +9,8 @@
       <field name="inherit_id" ref="base_report_to_printer.act_report_xml_view" />
       <field name="arch" type="xml">
         <field name="printing_printer_id" position="after">
-          <field name="printer_tray_id"/>
+          <field name="printer_input_tray_id" attrs="{'invisible':[('printing_printer_id', '=', False)]}"/>
+          <field name="printer_output_tray_id" attrs="{'invisible':[('printing_printer_id', '=', False)]}"/>
         </field>
       </field>
     </record>
