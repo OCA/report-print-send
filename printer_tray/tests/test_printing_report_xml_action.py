@@ -8,9 +8,9 @@ from odoo.tests.common import TransactionCase
 class TestPrintingReportXmlAction(TransactionCase):
     def test_onchange_printer_tray_id_empty(self):
         action = self.env['printing.report.xml.action'].new(
-            {'printer_tray_id': False})
+            {'printer_input_tray_id': False})
         action.onchange_printer_id()
-        self.assertFalse(action.printer_tray_id)
+        self.assertFalse(action.printer_input_tray_id)
 
     def test_onchange_printer_tray_id_not_empty(self):
         server = self.env['printing.server'].create({})
@@ -25,14 +25,14 @@ class TestPrintingReportXmlAction(TransactionCase):
             'location': 'Location',
             'uri': 'URI',
         })
-        tray = self.env['printing.tray'].create({
+        tray = self.env['printing.tray.input'].create({
             'name': 'Tray',
             'system_name': 'TrayName',
             'printer_id': printer.id,
         })
 
         action = self.env['printing.report.xml.action'].new(
-            {'printer_tray_id': tray.id})
-        self.assertEqual(action.printer_tray_id, tray)
+            {'printer_input_tray_id': tray.id})
+        self.assertEqual(action.printer_input_tray_id, tray)
         action.onchange_printer_id()
-        self.assertFalse(action.printer_tray_id)
+        self.assertFalse(action.printer_input_tray_id)

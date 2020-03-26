@@ -57,11 +57,11 @@ class TestPrintingPrinter(TransactionCase):
             'printer_id': self.printer.id,
         }
 
-    def new_tray(self, vals=None):
+    def new_input_tray(self, vals=None):
         values = self.tray_vals
         if vals is not None:
             values.update(vals)
-        return self.env['printing.tray'].create(values)
+        return self.env['printing.tray.input'].create(values)
 
     def build_ppd(self, input_slots=None):
         """
@@ -110,59 +110,59 @@ class TestPrintingPrinter(TransactionCase):
             'report_id': report.id,
             'action': 'server',
         })
-        user_tray = self.new_tray({
+        user_tray = self.new_input_tray({
             'system_name': 'User tray',
         })
-        report_tray = self.new_tray({
+        report_tray = self.new_input_tray({
             'system_name': 'Report tray',
         })
-        action_tray = self.new_tray({
+        action_tray = self.new_input_tray({
             'system_name': 'Action tray',
         })
 
         # No report passed
-        self.env.user.printer_tray_id = False
+        self.env.user.printer_input_tray_id = False
         options = self.Model.print_options()
         self.assertFalse('InputSlot' in options)
 
         # No tray defined
-        self.env.user.printer_tray_id = False
-        report.printer_tray_id = False
-        action.printer_tray_id = False
+        self.env.user.printer_input_tray_id = False
+        report.printer_input_tray_id = False
+        action.printer_input_tray_id = False
         options = self.Model.print_options(report, 'pdf')
         self.assertFalse('InputSlot' in options)
 
         # Only user tray is defined
-        self.env.user.printer_tray_id = user_tray
-        report.printer_tray_id = False
-        action.printer_tray_id = False
+        self.env.user.printer_input_tray_id = user_tray
+        report.printer_input_tray_id = False
+        action.printer_input_tray_id = False
         options = self.Model.print_options(report, 'pdf')
         self.assertEquals(options, {
             'InputSlot': 'User tray',
         })
 
         # Only report tray is defined
-        self.env.user.printer_tray_id = False
-        report.printer_tray_id = report_tray
-        action.printer_tray_id = False
+        self.env.user.printer_input_tray_id = False
+        report.printer_input_tray_id = report_tray
+        action.printer_input_tray_id = False
         options = self.Model.print_options(report, 'pdf')
         self.assertEquals(options, {
             'InputSlot': 'Report tray',
         })
 
         # Only action tray is defined
-        self.env.user.printer_tray_id = False
-        report.printer_tray_id = False
-        action.printer_tray_id = action_tray
+        self.env.user.printer_input_tray_id = False
+        report.printer_input_tray_id = False
+        action.printer_input_tray_id = action_tray
         options = self.Model.print_options(report, 'pdf')
         self.assertEquals(options, {
             'InputSlot': 'Action tray',
         })
 
         # All trays are defined
-        self.env.user.printer_tray_id = user_tray
-        report.printer_tray_id = report_tray
-        action.printer_tray_id = action_tray
+        self.env.user.printer_input_tray_id = user_tray
+        report.printer_input_tray_id = report_tray
+        action.printer_input_tray_id = action_tray
         options = self.Model.print_options(report, 'pdf')
         self.assertEquals(options, {
             'InputSlot': 'Action tray',
@@ -190,7 +190,7 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertFalse('tray_ids' in vals)
+        self.assertFalse('input_tray_ids' in vals)
 
     @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups_empty_ppd(self, cups):
@@ -208,7 +208,7 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertFalse('tray_ids' in vals)
+        self.assertFalse('input_tray_ids' in vals)
 
     @mock.patch('%s.cups' % server_model)
     @mock.patch('os.unlink')
@@ -246,7 +246,7 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
         })])
@@ -262,7 +262,7 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
         })])
@@ -280,7 +280,7 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
         }), (0, 0, {
@@ -302,13 +302,12 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         # Create a tray which is in the PPD file
-        self.new_tray({'system_name': 'Tray1'})
+        self.new_input_tray({'system_name': 'Tray1'})
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
-            'name': 'Auto (Default)',
-            'system_name': 'Auto',
-        })])
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
+            'name': u'Auto (Default)',
+            'system_name': u'Auto'})])
 
     @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups_unknown_trays(self, cups):
@@ -321,10 +320,10 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         # Create a tray which is absent from the PPD file
-        tray = self.new_tray()
+        tray = self.new_input_tray()
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
-            'name': 'Auto (Default)',
-            'system_name': 'Auto',
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
+            'name': u'Auto (Default)',
+            'system_name': u'Auto',
         }), (2, tray.id)])
