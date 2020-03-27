@@ -8,6 +8,7 @@
             <form string="Report Printing Actions">
                 <group col="2">
                     <field name="user_id"/>
+                    <field name="language_id"/>
                     <field name="action"/>
                     <field name="printer_id" select="1"/>
                     <field name="printer_tray_id"/>
@@ -22,6 +23,7 @@
         <field name="arch" type="xml">
             <tree string="Report Printing Actions">
                 <field name="user_id"/>
+                <field name="language_id"/>
                 <field name="action"/>
                 <field name="printer_id"/>
                 <field name="printer_tray_id"/>

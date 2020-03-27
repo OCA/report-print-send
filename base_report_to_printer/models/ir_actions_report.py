@@ -85,12 +85,12 @@ class IrActionsReport(models.Model):
         result = self._get_user_default_print_behaviour()
         result.update(self._get_report_default_print_behaviour())
 
-        # Retrieve report-user specific values
+        # Retrieve report-user/language specific values
         print_action = printing_act_obj.search([
             ('report_id', '=', self.id),
-            ('user_id', '=', self.env.uid),
-            ('action', '!=', 'user_default'),
-        ], limit=1)
+            '|', ('user_id', '=', self.env.uid),
+            ('language_id.code', '=', self.env.lang),
+            ('action', '!=', 'user_default')])
         if print_action:
             # For some reason design takes report defaults over
             # False action entries so we must allow for that here

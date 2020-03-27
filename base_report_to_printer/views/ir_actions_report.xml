@@ -14,7 +14,7 @@
                         <field name="printer_tray_id"/>
                     </group>
 
-                    <separator string="Specific actions per user"/>
+                    <separator string="Specific actions per user/language"/>
                     <field name="printing_action_ids"/>
                 </page>
             </xpath>
