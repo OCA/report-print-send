@@ -13,7 +13,8 @@ class Report(models.Model):
         """ Print a document, do not return the document file """
         document = self.with_context(must_skip_send_to_printer=True).get_pdf(
             record_ids, report_name, html=html, data=data)
-        report = self._get_report_from_name(report_name)
+        # Preserve language context for selecting options depending on the language
+        report = self._get_report_from_name(report_name).with_context(self.env.context)
         behaviour = report.behaviour()[report.id]
         printer = behaviour['printer']
         if not printer:
