@@ -8,6 +8,6 @@ from odoo import fields, models
 class IrActionsReport(models.Model):
     _inherit = "ir.actions.report"
 
-    is_default_report = fields.Boolean('Is Default Report?')
-    country_id = fields.Many2one('res.country', string='Country')
-    company_id = fields.Many2one('res.company', string='Company')
+    is_default_report = fields.Boolean("Is Default Report?")
+    country_id = fields.Many2one("res.country", string="Country")
+    company_id = fields.Many2one("res.company", string="Company")
