@@ -11,9 +11,19 @@ class StockPikcing(TransactionCase):
 
         self.stock_location = self.env.ref("stock.stock_location_stock")
         self.customer_location = self.env.ref("stock.stock_location_customers")
-        self.scrapped_location = self.env.ref("stock.stock_location_scrapped")
+        stock_location_locations_virtual = self.env["stock.location"].create(
+            {"name": "Virtual Locations", "usage": "view", "posz": 1}
+        )
+        self.scrapped_location = self.env["stock.location"].create(
+            {
+                "name": "Scrapped",
+                "location_id": stock_location_locations_virtual.id,
+                "scrap_location": True,
+                "usage": "inventory",
+            }
+        )
 
-        uom_unit = self.env.ref("product.product_uom_unit")
+        uom_unit = self.env.ref("uom.product_uom_unit")
 
         self.product_A = self.env["product.product"].create(
             {
@@ -55,7 +65,7 @@ class StockPikcing(TransactionCase):
             }
         )
 
-        self.uom_unit = self.env.ref("product.product_uom_unit")
+        self.uom_unit = self.env.ref("uom.product_uom_unit")
 
     def test_stock_picking_auto_print(self):
         """ Auto print when DO is ready or done
