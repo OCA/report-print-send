@@ -2,7 +2,7 @@
 # Copyright (C) 2019 Open Source Integrators
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, models
+from odoo import models
 
 
 class StockPicking(models.Model):
@@ -41,7 +41,6 @@ class StockPicking(models.Model):
             )
         return report_id
 
-    @api.multi
     def _stock_picking_default_auto_print_report(self):
         user_company_id = self.env.user.company_id.id
         report_action_pool = self.env["ir.actions.report"]
@@ -78,18 +77,16 @@ class StockPicking(models.Model):
 
             try:
                 action_report.print_document(picking.id)
-            except:
+            except Exception:
                 pass
         return True
 
-    @api.multi
     def write(self, vals):
         res = super(StockPicking, self).write(vals)
         if "date_done" in vals:
             self._stock_picking_default_auto_print_report()
         return res
 
-    @api.multi
     def action_assign(self):
         res = super(StockPicking, self).action_assign()
         for picking in self:
