@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-base_report_to_printer',
+        'odoo13-addon-stock_picking_auto_print',
     ],
     classifiers=[
         'Programming Language :: Python',
