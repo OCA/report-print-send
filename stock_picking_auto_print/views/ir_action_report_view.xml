@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="country_company_default_report_xml_view" model="ir.ui.view">
+        <field name="name">country.company.default.report.form</field>
+        <field name="model">ir.actions.report</field>
+        <field name="inherit_id" ref="base_report_to_printer.act_report_xml_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='print']/group" position="after">
+                <group>
+                    <field name="is_default_report" />
+                    <field name="country_id" />
+                    <field name="company_id" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
