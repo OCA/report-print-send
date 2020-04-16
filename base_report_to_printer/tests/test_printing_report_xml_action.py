@@ -46,23 +46,28 @@ class TestPrintingReportXmlAction(TransactionCase):
         self.assertEqual(xml_action.behaviour(), {
             'action': xml_action.action,
             'printer': xml_action.printer_id,
-            'tray': False,
+            'input_tray': False,
+            'output_tray': False,
         })
 
         xml_action = self.new_record({'printer_id': self.new_printer().id})
         self.assertEqual(xml_action.behaviour(), {
             'action': xml_action.action,
             'printer': xml_action.printer_id,
-            'tray': False,
+            'input_tray': False,
+            'output_tray': False,
         })
 
         self.assertEqual(self.Model.behaviour(), {})
 
     def test_onchange_printer_tray_id_empty(self):
-        action = self.env['printing.report.xml.action'].new(
-            {'printer_tray_id': False})
+        action = self.env['printing.report.xml.action'].new({
+            'printer_input_tray_id': False,
+            'printer_output_tray_id': False,
+        })
         action.onchange_printer_id()
-        self.assertFalse(action.printer_tray_id)
+        self.assertFalse(action.printer_input_tray_id)
+        self.assertFalse(action.printer_output_tray_id)
 
     def test_onchange_printer_tray_id_not_empty(self):
         server = self.env['printing.server'].create({})
@@ -77,14 +82,23 @@ class TestPrintingReportXmlAction(TransactionCase):
             'location': 'Location',
             'uri': 'URI',
         })
-        tray = self.env['printing.tray'].create({
+        input_tray = self.env['printing.tray.input'].create({
+            'name': 'Tray',
+            'system_name': 'TrayName',
+            'printer_id': printer.id,
+        })
+        output_tray = self.env['printing.tray.output'].create({
             'name': 'Tray',
             'system_name': 'TrayName',
             'printer_id': printer.id,
         })
 
-        action = self.env['printing.report.xml.action'].new(
-            {'printer_tray_id': tray.id})
-        self.assertEqual(action.printer_tray_id, tray)
+        action = self.env['printing.report.xml.action'].new({
+            'printer_input_tray_id': input_tray.id,
+            'printer_output_tray_id': output_tray.id,
+        })
+        self.assertEqual(action.printer_input_tray_id, input_tray)
+        self.assertEqual(action.printer_output_tray_id, output_tray)
         action.onchange_printer_id()
-        self.assertFalse(action.printer_tray_id)
+        self.assertFalse(action.printer_input_tray_id)
+        self.assertFalse(action.printer_output_tray_id)

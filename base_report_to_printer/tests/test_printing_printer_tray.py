@@ -30,6 +30,20 @@ ppd_input_slot_body = """
 ppd_input_slot_footer = """
 *CloseUI: *InputSlot
 """
+ppd_output_slot_header = """
+*OpenUI *OutputBin/Output Tray: PickOne
+*OrderDependency: 40 AnySetup *OutputBin
+*DefaultOutputBin: Default
+*OutputBin Default/Default: "
+    << /OutputType (Default) >> setpagedevice"
+"""
+ppd_output_slot_body = """
+*OutputBin {name}/{text}: "
+    << /OutputType (Bin{nb}) >> setpagedevice"
+"""
+ppd_output_slot_footer = """
+*CloseUI: *OutputBin
+"""
 
 
 class TestPrintingPrinter(TransactionCase):
@@ -56,29 +70,38 @@ class TestPrintingPrinter(TransactionCase):
             'printer_id': self.printer.id,
         }
 
-    def new_tray(self, vals=None):
+    def new_tray(self, tray_type='input', vals=None):
         values = self.tray_vals
         if vals is not None:
             values.update(vals)
-        return self.env['printing.tray'].create(values)
+        return self.env['printing.tray.' + tray_type].create(values)
 
-    def build_ppd(self, input_slots=None):
+    def build_ppd(self, trays=None):
         """
         Builds a fake PPD file declaring defined input slots
         """
         ppd_contents = ppd_header
         ppd_contents += ppd_input_slot_header
-        if input_slots is not None:
-            for input_slot in input_slots:
+        if trays is not None:
+            for slot in trays:
                 ppd_contents += ppd_input_slot_body.format(
-                    name=input_slot['name'],
-                    text=input_slot['text'],
+                    name=slot['name'],
+                    text=slot['text'],
                 )
         ppd_contents += ppd_input_slot_footer
+        ppd_contents += ppd_output_slot_header
+        if trays is not None:
+            for slot in trays:
+                ppd_contents += ppd_output_slot_body.format(
+                    name=slot['name'],
+                    text=slot['text'],
+                    nb=slot['text'][-1],
+                )
+        ppd_contents += ppd_output_slot_footer
 
         return ppd_contents
 
-    def mock_cups_ppd(self, cups, file_name=None, input_slots=None):
+    def mock_cups_ppd(self, cups, file_name=None, trays=None):
         """
         Create a fake PPD file (if needed), then mock the getPPD3 method
         return value to give that file
@@ -87,7 +110,7 @@ class TestPrintingPrinter(TransactionCase):
             fd, file_name = tempfile.mkstemp()
 
         if file_name:
-            ppd_contents = self.build_ppd(input_slots=input_slots)
+            ppd_contents = self.build_ppd(trays=trays)
             with open(file_name, 'w') as fp:
                 fp.write(ppd_contents)
 
@@ -121,7 +144,8 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertFalse('tray_ids' in vals)
+        self.assertFalse('input_tray_ids' in vals)
+        self.assertFalse('output_tray_ids' in vals)
 
     @mock.patch('%s.cups' % server_model)
     def test_prepare_update_from_cups_empty_ppd(self, cups):
@@ -139,7 +163,8 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertFalse('tray_ids' in vals)
+        self.assertFalse('input_tray_ids' in vals)
+        self.assertFalse('output_tray_ids' in vals)
 
     @mock.patch('%s.cups' % server_model)
     @mock.patch('os.unlink')
@@ -176,9 +201,13 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
+        })])
+        self.assertEqual(vals['output_tray_ids'], [(0, 0, {
+            'name': 'Default',
+            'system_name': 'Default',
         })])
 
     @mock.patch('%s.cups' % server_model)
@@ -192,9 +221,13 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
+        })])
+        self.assertEqual(vals['output_tray_ids'], [(0, 0, {
+            'name': 'Default',
+            'system_name': 'Default',
         })])
 
     @mock.patch('%s.cups' % server_model)
@@ -202,7 +235,7 @@ class TestPrintingPrinter(TransactionCase):
         """
         Check the return value when adding multiple trays at once
         """
-        self.mock_cups_ppd(cups, input_slots=[
+        self.mock_cups_ppd(cups, trays=[
             {'name': 'Tray1', 'text': 'Tray 1'},
         ])
 
@@ -210,9 +243,16 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertItemsEqual(vals['tray_ids'], [(0, 0, {
+        self.assertItemsEqual(vals['input_tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
+        }), (0, 0, {
+            'name': 'Tray 1',
+            'system_name': 'Tray1',
+        })])
+        self.assertItemsEqual(vals['output_tray_ids'], [(0, 0, {
+            'name': 'Default',
+            'system_name': 'Default',
         }), (0, 0, {
             'name': 'Tray 1',
             'system_name': 'Tray1',
@@ -224,7 +264,7 @@ class TestPrintingPrinter(TransactionCase):
         Check that calling the method twice doesn't create the trays multiple
         times
         """
-        self.mock_cups_ppd(cups, input_slots=[
+        self.mock_cups_ppd(cups, trays=[
             {'name': 'Tray1', 'text': 'Tray 1'},
         ])
 
@@ -232,12 +272,17 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         # Create a tray which is in the PPD file
-        self.new_tray({'system_name': 'Tray1'})
+        self.new_tray('input', {'system_name': 'Tray1'})
+        self.new_tray('output', {'system_name': 'Tray1'})
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
+        })])
+        self.assertEqual(vals['output_tray_ids'], [(0, 0, {
+            'name': 'Default',
+            'system_name': 'Default',
         })])
 
     @mock.patch('%s.cups' % server_model)
@@ -251,10 +296,15 @@ class TestPrintingPrinter(TransactionCase):
         cups_printer = connection.getPrinters()[self.printer.system_name]
 
         # Create a tray which is absent from the PPD file
-        tray = self.new_tray()
+        input_tray = self.new_tray()
+        output_tray = self.new_tray('output')
 
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertEqual(vals['tray_ids'], [(0, 0, {
+        self.assertEqual(vals['input_tray_ids'], [(0, 0, {
             'name': 'Auto (Default)',
             'system_name': 'Auto',
-        }), (2, tray.id)])
+        }), (2, input_tray.id)])
+        self.assertEqual(vals['output_tray_ids'], [(0, 0, {
+            'name': 'Default',
+            'system_name': 'Default',
+        }), (2, output_tray.id)])

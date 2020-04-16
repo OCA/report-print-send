@@ -4,7 +4,7 @@
 from odoo import fields, models
 
 
-class PrinterTray(models.Model):
+class PrinterTray(models.AbstractModel):
     _name = 'printing.tray'
     _description = 'Printer Tray'
 
@@ -19,3 +19,13 @@ class PrinterTray(models.Model):
         readonly=True,
         ondelete='cascade',
     )
+
+
+class PrinterInputTray(models.Model):
+    _name = 'printing.tray.input'
+    _inherit = 'printing.tray'
+
+
+class PrinterOutputTray(models.Model):
+    _name = 'printing.tray.output'
+    _inherit = 'printing.tray'

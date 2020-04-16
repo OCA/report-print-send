@@ -43,11 +43,11 @@ class TestIrActionsReportXml(TransactionCase):
             'uri': 'URI',
         })
 
-    def new_tray(self, vals=None, defaults=None):
+    def new_tray(self, tray_type='input', vals=None, defaults=None):
         values = dict(defaults)
         if vals is not None:
             values.update(vals)
-        return self.env['printing.tray'].create(values)
+        return self.env['printing.tray.' + tray_type].create(values)
 
     def test_print_action_for_report_name_gets_report(self):
         """ It should get report by name """
@@ -92,9 +92,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': self.env['printing.printer'],
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_behaviour_user_values(self):
         """ It should return the action and printer from user """
@@ -104,9 +104,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': self.env.user.printing_printer_id,
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_behaviour_report_values(self):
         """ It should return the action and printer from report """
@@ -117,9 +117,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': report.property_printing_action_id.action_type,
             'printer': report.printing_printer_id,
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_behaviour_user_action(self):
         """ It should return the action and printer from user action"""
@@ -129,9 +129,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': report.printing_printer_id,
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_behaviour_printing_action_on_wrong_user(self):
         """ It should return the action and printer ignoring printing action
@@ -145,9 +145,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': report.printing_printer_id,
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_behaviour_printing_action_on_wrong_report(self):
         """ It should return the action and printer ignoring printing action
@@ -162,9 +162,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': report.printing_printer_id,
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_behaviour_printing_action_with_no_printer(self):
         """ It should return the action from printing action and printer from other
@@ -177,9 +177,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': printing_action.action,
             'printer': report.printing_printer_id,
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_behaviour_printing_action_with_printer(self):
         """ It should return the action and printer from printing action """
@@ -191,9 +191,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': printing_action.action,
             'printer': printing_action.printer_id,
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_behaviour_printing_action_user_defaults(self):
         """ It should return the action and printer from user with printing action
@@ -206,9 +206,9 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(report.behaviour(), {
             'action': 'client',
             'printer': report.printing_printer_id,
-            'tray': False,
-        },
-        )
+            'input_tray': False,
+            'output_tray': False,
+        })
 
     def test_print_tray_behaviour(self):
         """
@@ -226,57 +226,80 @@ class TestIrActionsReportXml(TransactionCase):
             'system_name': 'Tray',
             'printer_id': printer.id,
         }
-        user_tray = self.new_tray({'system_name': 'User tray'}, tray_vals)
-        report_tray = self.new_tray({'system_name': 'Report tray'}, tray_vals)
-        action_tray = self.new_tray({'system_name': 'Action tray'}, tray_vals)
+        user_tray_in = self.new_tray(
+            'input', {'system_name': 'User tray'}, tray_vals)
+        report_tray_in = self.new_tray(
+            'input', {'system_name': 'Report tray'}, tray_vals)
+        action_tray_in = self.new_tray(
+            'input', {'system_name': 'Action tray'}, tray_vals)
+        user_tray_out = self.new_tray(
+            'output', {'system_name': 'User tray'}, tray_vals)
+        report_tray_out = self.new_tray(
+            'output', {'system_name': 'Report tray'}, tray_vals)
+        action_tray_out = self.new_tray(
+            'output', {'system_name': 'Action tray'}, tray_vals)
 
         # No report passed
-        self.env.user.printer_tray_id = False
+        self._set_trays(report, action, 'input')
+        self._set_trays(report, action, 'output')
         options = printer.print_options()
         self.assertFalse('InputSlot' in options)
+        self.assertFalse('OutputBin' in options)
 
         # No tray defined
-        self.env.user.printer_tray_id = False
-        report.printer_tray_id = False
-        action.printer_tray_id = False
+        self._set_trays(report, action, 'input')
+        self._set_trays(report, action, 'output')
         options = report.behaviour()
-        self.assertTrue('tray' in options)
+        self.assertTrue('input_tray' in options)
+        self.assertTrue('output_tray' in options)
 
         # Only user tray is defined
-        self.env.user.printer_tray_id = user_tray
-        report.printer_tray_id = False
-        action.printer_tray_id = False
-        self.assertEqual('User tray', report.behaviour()['tray'])
+        self._set_trays(report, action, 'input', user_tray_in)
+        self._set_trays(report, action, 'output', user_tray_out)
+        self.assertEqual('User tray', report.behaviour()['input_tray'])
+        self.assertEqual('User tray', report.behaviour()['output_tray'])
 
         # Only report tray is defined
-        self.env.user.printer_tray_id = False
-        report.printer_tray_id = report_tray
-        action.printer_tray_id = False
-        self.assertEqual('Report tray', report.behaviour()['tray'])
+        self._set_trays(report, action, 'input', report_tray=report_tray_in)
+        self._set_trays(report, action, 'output', report_tray=report_tray_out)
+        self.assertEqual('Report tray', report.behaviour()['input_tray'])
+        self.assertEqual('Report tray', report.behaviour()['output_tray'])
 
         # Only action tray is defined
-        self.env.user.printer_tray_id = False
-        report.printer_tray_id = False
-        action.printer_tray_id = action_tray
-        self.assertEqual('Action tray', report.behaviour()['tray'])
+        self._set_trays(report, action, 'input', action_tray=action_tray_in)
+        self._set_trays(report, action, 'output', action_tray=action_tray_out)
+        self.assertEqual('Action tray', report.behaviour()['input_tray'])
+        self.assertEqual('Action tray', report.behaviour()['output_tray'])
 
         # User and report tray defined
-        self.env.user.printer_tray_id = user_tray
-        report.printer_tray_id = report_tray
-        action.printer_tray_id = False
-        self.assertEqual('Report tray', report.behaviour()['tray'])
+        self._set_trays(report, action, 'input', user_tray_in, report_tray_in)
+        self._set_trays(report, action, 'output', user_tray_out, report_tray_out)
+        self.assertEqual('Report tray', report.behaviour()['input_tray'])
+        self.assertEqual('Report tray', report.behaviour()['output_tray'])
 
         # All trays are defined
-        self.env.user.printer_tray_id = user_tray
-        report.printer_tray_id = report_tray
-        action.printer_tray_id = action_tray
-        self.assertEqual('Action tray', report.behaviour()['tray'])
+        self._set_trays(
+            report, action, 'input', user_tray_in, report_tray_in, action_tray_in)
+        self._set_trays(
+            report, action, 'output', user_tray_out, report_tray_out, action_tray_out)
+        self.assertEqual('Action tray', report.behaviour()['input_tray'])
+        self.assertEqual('Action tray', report.behaviour()['output_tray'])
+
+    def _set_trays(self, report, action, tray_type='input', user_tray=False,
+                   report_tray=False, action_tray=False):
+        attr = 'printer_' + tray_type + '_tray_id'
+        setattr(self.env.user, attr, user_tray)
+        setattr(report, attr, report_tray)
+        setattr(action, attr, action_tray)
 
     def test_onchange_printer_tray_id_empty(self):
-        action = self.env['ir.actions.report'].new(
-            {'printer_tray_id': False})
+        action = self.env['ir.actions.report'].new({
+            'printer_input_tray_id': False,
+            'printer_output_tray_id': False,
+        })
         action.onchange_printing_printer_id()
-        self.assertFalse(action.printer_tray_id)
+        self.assertFalse(action.printer_input_tray_id)
+        self.assertFalse(action.printer_output_tray_id)
 
     def test_onchange_printer_tray_id_not_empty(self):
         server = self.env['printing.server'].create({})
@@ -291,14 +314,23 @@ class TestIrActionsReportXml(TransactionCase):
             'location': 'Location',
             'uri': 'URI',
         })
-        tray = self.env['printing.tray'].create({
+        input_tray = self.env['printing.tray.input'].create({
+            'name': 'Tray',
+            'system_name': 'TrayName',
+            'printer_id': printer.id,
+        })
+        output_tray = self.env['printing.tray.output'].create({
             'name': 'Tray',
             'system_name': 'TrayName',
             'printer_id': printer.id,
         })
 
-        action = self.env['ir.actions.report'].new(
-            {'printer_tray_id': tray.id})
-        self.assertEqual(action.printer_tray_id, tray)
+        action = self.env['ir.actions.report'].new({
+            'printer_input_tray_id': input_tray.id,
+            'printer_output_tray_id': output_tray.id,
+        })
+        self.assertEqual(action.printer_input_tray_id, input_tray)
+        self.assertEqual(action.printer_output_tray_id, output_tray)
         action.onchange_printing_printer_id()
-        self.assertFalse(action.printer_tray_id)
+        self.assertFalse(action.printer_input_tray_id)
+        self.assertFalse(action.printer_output_tray_id)

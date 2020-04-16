@@ -11,7 +11,10 @@
                     <group>
                         <field name="property_printing_action_id"/>
                         <field name="printing_printer_id"/>
-                        <field name="printer_tray_id"/>
+                        <field name="printer_input_tray_id"
+                               attrs="{'invisible':[('printing_printer_id', '=', False)]}"/>
+                        <field name="printer_output_tray_id"
+                               attrs="{'invisible':[('printing_printer_id', '=', False)]}"/>
                     </group>
 
                     <separator string="Specific actions per user"/>

@@ -20,9 +20,15 @@ class IrActionsReport(models.Model):
         comodel_name='printing.printer',
         string='Default Printer'
     )
-    printer_tray_id = fields.Many2one(
-        comodel_name='printing.tray',
+    printer_input_tray_id = fields.Many2one(
+        comodel_name='printing.tray.input',
         string='Paper Source',
+        domain="[('printer_id', '=', printing_printer_id)]",
+        oldname='printer_tray_id',
+    )
+    printer_output_tray_id = fields.Many2one(
+        comodel_name='printing.tray.output',
+        string='Output Bin',
         domain="[('printer_id', '=', printing_printer_id)]",
     )
     printing_action_ids = fields.One2many(
@@ -36,7 +42,8 @@ class IrActionsReport(models.Model):
     @api.onchange('printing_printer_id')
     def onchange_printing_printer_id(self):
         """ Reset the tray when the printer is changed """
-        self.printer_tray_id = False
+        self.printer_input_tray_id = False
+        self.printer_output_tray_id = False
 
     @api.model
     def print_action_for_report_name(self, report_name):
@@ -61,8 +68,10 @@ class IrActionsReport(models.Model):
         return dict(
             action=user.printing_action or 'client',
             printer=user.printing_printer_id or printer_obj.get_default(),
-            tray=str(user.printer_tray_id.system_name) if
-            user.printer_tray_id else False
+            input_tray=str(user.printer_input_tray_id.system_name) if
+            user.printer_input_tray_id else False,
+            output_tray=str(user.printer_output_tray_id.system_name) if
+            user.printer_output_tray_id else False,
         )
 
     @api.multi
@@ -73,8 +82,10 @@ class IrActionsReport(models.Model):
             result['action'] = report_action.action_type
         if self.printing_printer_id:
             result['printer'] = self.printing_printer_id
-        if self.printer_tray_id:
-            result['tray'] = self.printer_tray_id.system_name
+        if self.printer_input_tray_id:
+            result['input_tray'] = self.printer_input_tray_id.system_name
+        if self.printer_output_tray_id:
+            result['output_tray'] = self.printer_output_tray_id.system_name
         return result
 
     @api.multi

@@ -11,7 +11,6 @@ class TestPrintingTray(TransactionCase):
 
     def setUp(self):
         super(TestPrintingTray, self).setUp()
-        self.Model = self.env['printing.tray']
         self.server = self.env['printing.server'].create({})
         self.printer = self.env['printing.printer'].create({
             'name': 'Printer',
@@ -30,8 +29,8 @@ class TestPrintingTray(TransactionCase):
             'printer_id': self.printer.id,
         }
 
-    def new_tray(self):
-        return self.env['printing.tray'].create(self.tray_vals)
+    def new_tray(self, tray_type='input'):
+        return self.env['printing.tray.' + tray_type].create(self.tray_vals)
 
     def test_report_behaviour(self):
         """ It should add the selected tray in the report data """
@@ -41,11 +40,17 @@ class TestPrintingTray(TransactionCase):
             'report_id': ir_report.id,
             'action': 'server',
         })
-        report.printer_tray_id = False
+        report.printer_input_tray_id = False
+        report.printer_output_tray_id = False
         behaviour = report.behaviour()
-        self.assertEqual(behaviour['tray'], False)
+        self.assertEqual(behaviour['input_tray'], False)
+        self.assertEqual(behaviour['output_tray'], False)
 
         # Check that we have te right value
-        report.printer_tray_id = self.new_tray()
+        report.printer_input_tray_id = self.new_tray()
+        report.printer_output_tray_id = self.new_tray('output')
         behaviour = report.behaviour()
-        self.assertEqual(behaviour['tray'], report.printer_tray_id.system_name)
+        self.assertEqual(
+            behaviour['input_tray'], report.printer_input_tray_id.system_name)
+        self.assertEqual(
+            behaviour['output_tray'], report.printer_output_tray_id.system_name)
