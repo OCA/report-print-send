@@ -13,7 +13,7 @@
             <field name="report_copies"/>
             <field name="printing_printer_id"/>
           </group>
-          <separator string="Specific actions per user"/>
+          <separator string="Specific actions per user/language"/>
           <field name="printing_action_ids"/>
         </page>
       </xpath>

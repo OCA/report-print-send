@@ -83,12 +83,12 @@ class IrActionsReportXml(models.Model):
             if report.printing_printer_id:
                 printer = report.printing_printer_id
 
-            # Retrieve report-user specific values
+            # Retrieve report-user/language specific values
             print_action = printing_act_obj.search(
                 [('report_id', '=', report.id),
-                 ('user_id', '=', self.env.uid),
-                 ('action', '!=', 'user_default')],
-                limit=1)
+                 '|', ('user_id', '=', self.env.uid),
+                 ('language_id.code', '=', self.env.lang),
+                 ('action', '!=', 'user_default')])
             if print_action:
                 user_action = print_action.behaviour()
                 action = user_action['action']
