@@ -90,31 +90,26 @@ class PrintingPrinter(models.Model):
             full_report = self.env['report']._get_report_from_name(report) \
                 if isinstance(report, basestring) else report
 
-            in_tray = full_report.printer_input_tray_id or \
-                self.env.user.printer_input_tray_id
+            in_tray = (full_report.printer_input_tray_id or
+                       self.env.user.printer_input_tray_id).system_name
 
-            out_tray = full_report.printer_output_tray_id or \
-                self.env.user.printer_output_tray_id
+            out_tray = (full_report.printer_output_tray_id or
+                        self.env.user.printer_output_tray_id).system_name
 
-            # Retrieve report-user specific values
-            action = printing_act_obj.search([
-                ('report_id', '=', full_report.id),
-                ('user_id', '=', self.env.uid),
-                ('action', '!=', 'user_default'),
-            ], limit=1)
-            if action.printer_input_tray_id:
-                in_tray = action.printer_input_tray_id
-            if action.printer_output_tray_id:
-                out_tray = action.printer_output_tray_id
+            # Retrieve report-user/language specific values
+            print_action = printing_act_obj.search(
+                [('report_id', '=', full_report.id),
+                 '|', ('user_id', '=', self.env.uid),
+                 ('language_id.code', '=', self.env.lang),
+                 ('action', '!=', 'user_default')])
+            if print_action:
+                user_action = print_action.behaviour()
+            if user_action.get('input_tray'):
+                in_tray = user_action['input_tray']
+            if user_action.get('output_tray'):
+                out_tray = user_action['output_tray']
 
-            if 'printer_input_tray_id' in self.env.context:
-                in_tray = self.env.context['printer_input_tray_id']
-            if 'printer_output_tray_id' in self.env.context:
-                out_tray = self.env.context['printer_output_tray_id']
-
-            if in_tray:
-                options['InputSlot'] = str(in_tray.system_name)
-            if out_tray:
-                options['OutputBin'] = str(out_tray.system_name)
+            options['InputSlot'] = in_tray
+            options['OutputBin'] = out_tray
 
         return options
