@@ -104,10 +104,10 @@ class PrintingPrinter(models.Model):
                  ('action', '!=', 'user_default')])
             if print_action:
                 user_action = print_action.behaviour()
-            if user_action.get('input_tray'):
-                in_tray = user_action['input_tray']
-            if user_action.get('output_tray'):
-                out_tray = user_action['output_tray']
+                if user_action.get('input_tray'):
+                    in_tray = user_action['input_tray']
+                if user_action.get('output_tray'):
+                    out_tray = user_action['output_tray']
 
             options['InputSlot'] = in_tray
             options['OutputBin'] = out_tray
