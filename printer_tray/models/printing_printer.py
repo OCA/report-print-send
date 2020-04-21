@@ -109,6 +109,12 @@ class PrintingPrinter(models.Model):
                 if user_action.get('output_tray'):
                     out_tray = user_action['output_tray']
 
+            # Add option to force trays from context
+            if 'printer_input_tray_id' in self.env.context:
+                in_tray = self.env.context['printer_input_tray_id'].system_name
+            if 'printer_output_tray_id' in self.env.context:
+                out_tray = self.env.context['printer_output_tray_id'].system_name
+
             if in_tray:
                 options['InputSlot'] = in_tray
             if out_tray:
