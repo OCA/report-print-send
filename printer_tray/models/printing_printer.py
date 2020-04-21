@@ -109,7 +109,9 @@ class PrintingPrinter(models.Model):
                 if user_action.get('output_tray'):
                     out_tray = user_action['output_tray']
 
-            options['InputSlot'] = in_tray
-            options['OutputBin'] = out_tray
+            if in_tray:
+                options['InputSlot'] = in_tray
+            if out_tray:
+                options['OutputBin'] = out_tray
 
         return options
