@@ -13,8 +13,8 @@ class PrintAttachment(models.TransientModel):
         comodel_name='printing.printer', string='Printer', required=True,
         help='Printer used to print the attachments.'
     )
-    attachment_line_ids = fields.Many2many(
-        comodel_name='wizard.print.attachment.line',
+    attachment_line_ids = fields.One2many(
+        'wizard.print.attachment.line', 'wizard_id',
         string='Attachments to print',
     )
 
@@ -38,6 +38,7 @@ class PrintAttachment(models.TransientModel):
     _name = 'wizard.print.attachment.line'
     _description = 'Print Attachment line'
 
+    wizard_id = fields.Many2one("wizard.print.attachment")
     attachment_id = fields.Many2one(
         'ir.attachment',
         domain="['|', ('mimetype', '=', 'application/pdf'), ('mimetype', '=', 'application/octet-stream')]"
