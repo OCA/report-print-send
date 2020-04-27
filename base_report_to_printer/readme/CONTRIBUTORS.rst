@@ -13,3 +13,4 @@
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Matias Peralta <mnp@adhoc.com.ar>
 * Hughes Damry <hughes.damry@acsone.eu>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
