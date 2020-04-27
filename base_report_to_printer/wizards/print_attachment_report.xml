@@ -37,17 +37,6 @@
                 </form>
             </field>
         </record>
-        <record id="wizard_print_attachment_line_tree" model="ir.ui.view">
-            <field name="name">wizard.print.attachment.line.tree</field>
-            <field name="model">wizard.print.attachment.line</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="attachment_id" create="0" />
-                    <field name="record_name" />
-                    <field name="copies" />
-                </tree>
-            </field>
-        </record>
         <record id="action_wizard_print_attachment" model="ir.actions.act_window" >
             <field name="name">Print Attachments</field>
             <field name="type">ir.actions.act_window</field>
