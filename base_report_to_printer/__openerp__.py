@@ -25,6 +25,7 @@
         'views/printing_report_view.xml',
         'views/res_users_view.xml',
         'views/ir_actions_report_xml_view.xml',
+        'wizards/print_attachment_report.xml',
         'wizards/printing_printer_update_wizard_view.xml',
     ],
     'installable': True,
