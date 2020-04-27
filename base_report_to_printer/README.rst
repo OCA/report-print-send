@@ -155,6 +155,7 @@ Contributors
 * Rod Schouteden <rod@schout-it.be>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Matias Peralta <mnp@adhoc.com.ar>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainers
 ~~~~~~~~~~~
