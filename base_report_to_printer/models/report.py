@@ -37,29 +37,21 @@ class Report(models.Model):
             return True
         return False
 
-    @api.v7
-    def get_pdf(self, cr, uid, ids, report_name, html=None,
-                data=None, context=None):
+    @api.model
+    def get_pdf(self, docids, report_name, html=None, data=None):
         """ Generate a PDF and returns it.
 
         If the action configured on the report is server, it prints the
         generated document as well.
         """
-        document = super(Report, self).get_pdf(cr, uid, ids, report_name,
-                                               html=html, data=data,
-                                               context=context)
-        report = self._get_report_from_name(cr, uid, report_name)
+        report = self._get_report_from_name(report_name)
+        docs = self.env[report.model].browse(docids)
+        document = super(Report, self).get_pdf(
+            docs, report_name, html=html, data=data
+        )
         behaviour = report.behaviour()[report.id]
         printer = behaviour['printer']
-        can_print_report = self._can_print_report(cr, uid, ids,
-                                                  behaviour, printer, document,
-                                                  context=context)
+        can_print_report = self._can_print_report(behaviour, printer, document)
         if can_print_report:
             printer.print_document(report, document, report.report_type)
         return document
-
-    @api.v8
-    def get_pdf(self, docs, report_name, html=None, data=None):
-        return self._model.get_pdf(self._cr, self._uid,
-                                   docs.ids, report_name,
-                                   html=html, data=data, context=self._context)
