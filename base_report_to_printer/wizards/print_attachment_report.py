@@ -34,7 +34,7 @@ class PrintAttachment(models.TransientModel):
         self.attachment_line_ids.unlink()
 
 
-class PrintAttachment(models.TransientModel):
+class PrintAttachmentLine(models.TransientModel):
     _name = 'wizard.print.attachment.line'
     _description = 'Print Attachment line'
 
