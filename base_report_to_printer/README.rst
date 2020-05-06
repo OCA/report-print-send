@@ -91,6 +91,7 @@ Contributors
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Dave Lasley <dave@laslabs.com>
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainer
 ----------
