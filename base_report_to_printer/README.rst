@@ -23,7 +23,7 @@ Report to printer
     :target: https://runbot.odoo-community.org/runbot/144/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows users to send reports to a printer attached to the server.
 
@@ -139,6 +139,7 @@ Contributors
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Graeme Gellatly <graeme@o4sb.com>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainers
 ~~~~~~~~~~~
