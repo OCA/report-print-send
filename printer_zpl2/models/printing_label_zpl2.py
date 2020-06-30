@@ -4,13 +4,16 @@
 import base64
 import datetime
 import io
+import itertools
 import logging
 import time
+from collections import defaultdict
 
 import requests
 from PIL import Image, ImageOps
 
 from odoo import _, api, exceptions, fields, models
+from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -63,15 +66,16 @@ class PrintingLabelZpl2(models.Model):
         default=True,
     )
     action_window_id = fields.Many2one(
-        comodel_name="ir.actions.act_window", string="Action", readonly=True
+        comodel_name="ir.actions.act_window", string="Action", readonly=True,
     )
     test_print_mode = fields.Boolean(string="Mode Print")
     test_labelary_mode = fields.Boolean(string="Mode Labelary")
     record_id = fields.Integer(string="Record ID", default=1)
     extra = fields.Text(string="Extra", default="{}")
     printer_id = fields.Many2one(comodel_name="printing.printer", string="Printer")
-    labelary_image = fields.Binary(string='Image from Labelary',
-                                   compute='_compute_labelary_image')
+    labelary_image = fields.Binary(
+        string="Image from Labelary", compute="_compute_labelary_image"
+    )
     labelary_dpmm = fields.Selection(
         selection=[
             ("6dpmm", "6dpmm (152 pdi)"),
@@ -85,15 +89,46 @@ class PrintingLabelZpl2(models.Model):
     )
     labelary_width = fields.Float(string="Width in mm", default=140)
     labelary_height = fields.Float(string="Height in mm", default=70)
-    data_type = fields.Selection(
-        string="Labels components data type",
-        selection=[("und", "Undefined")],
-        help="This allows to specify the type of the data encoded in label components",
-    )
 
-    @api.model
-    def _get_component_data(self, component, eval_args):
-        return safe_eval(component.data, eval_args) or ""
+    @api.constrains("component_ids")
+    def check_recursion(self):
+        cr = self._cr
+        self.flush(["component_ids"])
+        query = (  # pylint: disable=E8103
+            'SELECT "{}", "{}" FROM "{}" '
+            'WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
+                "label_id",
+                "sublabel_id",
+                "printing_label_zpl2_component",
+                "label_id",
+                "sublabel_id",
+            )
+        )
+
+        succs = defaultdict(set)  # transitive closure of successors
+        preds = defaultdict(set)  # transitive closure of predecessors
+        todo, done = set(self.ids), set()
+        while todo:
+            cr.execute(query, [tuple(todo)])
+            done.update(todo)
+            todo.clear()
+            for id1, id2 in cr.fetchall():
+                for x, y in itertools.product(
+                    [id1] + list(preds[id1]), [id2] + list(succs[id2])
+                ):
+                    if x == y:
+                        raise ValidationError(_("You can not create recursive labels."))
+                    succs[x].add(y)
+                    preds[y].add(x)
+                if id2 not in done:
+                    todo.add(id2)
+
+    def _get_component_data(self, record, component, eval_args):
+        if component.data_autofill:
+            data = component.autofill_data(record, eval_args)
+        else:
+            data = component.data
+        return safe_eval(str(data), eval_args) or ""
 
     def _get_to_data_to_print(
         self,
@@ -116,8 +151,8 @@ class PrintingLabelZpl2(models.Model):
                     "datetime": datetime,
                 }
             )
-            data = self._get_component_data(component, eval_args)
-            if data == "component_not_show":
+            data = self._get_component_data(record, component, eval_args)
+            if isinstance(data, str) and data == "component_not_show":
                 continue
 
             # Generate a list of elements if the component is repeatable
@@ -157,10 +192,6 @@ class PrintingLabelZpl2(models.Model):
         label_offset_y=0,
         **extra
     ):
-        self.ensure_one()
-
-        # Add all elements to print in a list of tuples :
-        #   [(component, data, offset_x, offset_y)]
         to_print = self._get_to_data_to_print(
             record, page_number, page_count, label_offset_x, label_offset_y, **extra
         )
@@ -259,7 +290,7 @@ class PrintingLabelZpl2(models.Model):
                 component_offset_y += component.sublabel_id.origin_y
                 component.sublabel_id._generate_zpl2_components_data(
                     label_data,
-                    data,
+                    data if isinstance(data, models.BaseModel) else record,
                     label_offset_x=component_offset_x,
                     label_offset_y=component_offset_y,
                 )
@@ -325,55 +356,70 @@ class PrintingLabelZpl2(models.Model):
 
         return label_data.output()
 
-    def fill_component(self, line):
-        for component in self.component_ids:
-            json = {
-                "product_barcode": line.product_barcode,
-                "lot_barcode": line.lot_barcode,
-                "uom": str(line.product_qty) + " " + line.product_id.uom_id.name,
-                "package_barcode": line.package_barcode,
-                "product_qty": line.product_qty,
-            }
-            component.data = json
-
     def print_label(self, printer, record, page_count=1, **extra):
         for label in self:
             if record._name != label.model_id.model:
                 raise exceptions.UserError(
                     _("This label cannot be used on {model}").format(model=record._name)
                 )
-            if label.data_type == "und":
-                for component in self.component_ids:
-                    eval_args = extra
-                    eval_args.update(
-                        {"object": record, "time": time, "datetime": datetime}
-                    )
-                    data = safe_eval(component.data, eval_args) or ""
-                    if data == "component_not_show":
-                        continue
-                # Send the label to printer
-                label_contents = label._generate_zpl2_data(
-                    record, page_count=1, **extra
-                )
-                printer.print_document(
-                    report=None, content=label_contents, doc_format="raw"
-                )
-
+            # Send the label to printer
+            label_contents = label._generate_zpl2_data(
+                record, page_count=page_count, **extra
+            )
+            printer.print_document(
+                report=None, content=label_contents, doc_format="raw"
+            )
         return True
 
-    def create_action(self):
-        for label in self.filtered(lambda record: not record.action_window_id):
-            label.action_window_id = self.env["ir.actions.act_window"].create(
-                {
-                    "name": _("Print Label"),
-                    "binding_model_id": label.model_id.id,
-                    "res_model": "wizard.print.record.label",
-                    "view_mode": "form",
-                    "target": "new",
-                    "binding_type": "action",
-                }
-            )
+    @api.model
+    def new_action(self, model_id):
+        return self.env["ir.actions.act_window"].create(
+            {
+                "name": _("Print Label"),
+                "binding_model_id": model_id,
+                "res_model": "wizard.print.record.label",
+                "view_mode": "form",
+                "target": "new",
+                "binding_type": "action",
+                "context": "{'default_active_model_id': %s}" % model_id,
+            }
+        )
 
+    @api.model
+    def add_action(self, model_id):
+        action = self.env["ir.actions.act_window"].search(
+            [
+                ("binding_model_id", "=", model_id),
+                ("res_model", "=", "wizard.print.record.label"),
+                ("view_mode", "=", "form"),
+                ("binding_type", "=", "action"),
+            ]
+        )
+        if not action:
+            action = self.new_action(model_id)
+        return action
+
+    def create_action(self):
+        models = self.filtered(lambda record: not record.action_window_id).mapped(
+            "model_id"
+        )
+        labels = self.with_context(active_test=False).search(
+            [("model_id", "in", models.ids), ("action_window_id", "=", False)]
+        )
+        actions = self.env["ir.actions.act_window"].search(
+            [
+                ("binding_model_id", "in", models.ids),
+                ("res_model", "=", "wizard.print.record.label"),
+                ("view_mode", "=", "form"),
+                ("binding_type", "=", "action"),
+            ]
+        )
+        for model in models:
+            action = actions.filtered(lambda a: a.binding_model_id == model)
+            if not action:
+                action = self.new_action(model.id)
+            for label in labels.filtered(lambda l: l.model_id == model):
+                label.action_window_id = action
         return True
 
     def unlink_action(self):
@@ -382,7 +428,6 @@ class PrintingLabelZpl2(models.Model):
     def import_zpl2(self):
         self.ensure_one()
         return {
-            "view_type": "form",
             "view_mode": "form",
             "res_model": "wizard.import.zpl2",
             "type": "ir.actions.act_window",
@@ -409,8 +454,15 @@ class PrintingLabelZpl2(models.Model):
                     label.print_label(label.printer_id, record, **extra)
 
     @api.depends(
-        'record_id', 'labelary_dpmm', 'labelary_width', 'labelary_height',
-        'component_ids', 'origin_x', 'origin_y', 'test_labelary_mode')
+        "record_id",
+        "labelary_dpmm",
+        "labelary_width",
+        "labelary_height",
+        "component_ids",
+        "origin_x",
+        "origin_y",
+        "test_labelary_mode",
+    )
     def _compute_labelary_image(self):
         for label in self:
             label.labelary_image = label._generate_labelary_image()
@@ -456,8 +508,8 @@ class PrintingLabelZpl2(models.Model):
                     return base64.b64encode(imgByteArr.getvalue())
                 else:
                     _logger.warning(
-                        _(
-                            "Error with Labelary API. %s") % response.status_code)
+                        _("Error with Labelary API. %s") % response.status_code
+                    )
 
             except Exception as e:
                 _logger.warning(_("Error with Labelary API. %s") % e)

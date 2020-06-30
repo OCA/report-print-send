@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
     Copyright 2016 SYLEAM
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -11,7 +11,11 @@
             <form string="Print Label">
                 <group>
                     <field name="printer_id" />
-                    <field name="label_id" />
+                    <field
+                        name="label_id"
+                        context="{'default_model_id': active_model_id}"
+                    />
+                    <field name="active_model_id" invisible="1" />
                 </group>
                 <footer>
                     <button type="special" special="cancel" string="Cancel" />
