@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -13,12 +13,12 @@ except ImportError:
     _logger.debug("Cannot `import zpl2`.")
 
 DEFAULT_PYTHON_CODE = """# Python One-Liners
-#  - object: record on which the action is triggered; may be be void
+#  - object: %s record on which the action is triggered; may be void
 #  - page_number: Current Page
 #  - page_count: Total Page
 #  - time, datetime: Python libraries
-#  - return 'component_not_show' to don't show this component
-#  Exemple : object.name
+#  - write instead 'component_not_show' to don't show this component
+#  Example: object.name
 
 
 ""
@@ -114,6 +114,10 @@ class PrintingLabelZpl2Component(models.Model):
         default=str(zpl2.DIAGONAL_ORIENTATION_LEFT),
         help="Orientation of the diagonal line.",
     )
+    data_autofill = fields.Boolean(
+        string="Autofill Data",
+        help="Change 'data' with dictionary of the object information.",
+    )
     check_digits = fields.Boolean(
         help="Check if you want to compute and print the check digit."
     )
@@ -165,8 +169,11 @@ class PrintingLabelZpl2Component(models.Model):
         help="Error correction for some barcode types like QR Code.",
     )
     mask_value = fields.Integer(default=7, help="Mask Value, from 0 to 7.")
+    model_id = fields.Many2one(
+        comodel_name="ir.model", compute="_compute_model_id", string="Record's model"
+    )
     data = fields.Text(
-        default=DEFAULT_PYTHON_CODE,
+        default=lambda self: self._compute_default_data(),
         required=True,
         help="Data to print on this component. Resource values can be "
         "inserted with %(object.field_name)s.",
@@ -232,6 +239,44 @@ class PrintingLabelZpl2Component(models.Model):
         help="This field holds a static image to print. "
         "If not set, the data field is evaluated.",
     )
+
+    def process_model(self, model):
+        # Used for expansions of this module
+        return model
+
+    @api.depends("label_id.model_id")
+    def _compute_model_id(self):
+        # it's 'compute' instead of 'related' because is easier to expand it
+        for component in self:
+            component.model_id = self.process_model(component.label_id.model_id)
+
+    def _compute_default_data(self):
+        model_id = self.env.context.get("default_model_id") or self.model_id.id
+        model = self.env["ir.model"].browse(model_id)
+        model = self.process_model(model)
+        return DEFAULT_PYTHON_CODE % (model.model or "")
+
+    @api.onchange("model_id", "data")
+    def _onchange_data(self):
+        for component in self.filtered(lambda c: not c.data):
+            component.data = component._compute_default_data()
+
+    @api.onchange("component_type")
+    def _onchange_component_type(self):
+        for component in self:
+            if component.component_type == "qr_code":
+                component.data_autofill = True
+            else:
+                component.data_autofill = False
+
+    @api.model
+    def autofill_data(self, record, eval_args):
+        data = {}
+        usual_fields = ["id", "create_date", record.display_name]
+        for field in usual_fields:
+            if hasattr(record, field):
+                data[field] = getattr(record, field)
+        return data
 
     def action_plus_origin_x(self):
         self.ensure_one()
