@@ -5,9 +5,10 @@
     "name": "Printer ZPL II",
     "version": "13.0.1.0.0",
     "category": "Printer",
+    "summary": "Add a ZPL II label printing feature",
     "author": "SUBTENO-IT, FLorent de Labarre, "
     "Apertoso NV, Odoo Community Association (OCA)",
-    "website": "http://www.syleam.fr/",
+    "website": "https://github.com/OCA/report-print-send",
     "license": "AGPL-3",
     "external_dependencies": {"python": ["zpl2"]},
     "depends": ["base_report_to_printer"],
