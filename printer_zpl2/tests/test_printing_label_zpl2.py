@@ -67,11 +67,8 @@ class TestPrintingLabelZpl2(TransactionCase):
     def test_print_empty_label(self, cups):
         """ Check that printing an empty label works """
         label = self.new_label()
-        file_name = "test.zpl"
         label.print_label(self.printer, self.printer)
-        cups.Connection().printFile.assert_called_once_with(
-            self.printer.system_name, file_name, file_name, options={}
-        )
+        cups.Connection().printFile.assert_called_once()
 
     def test_empty_label_contents(self):
         """ Check contents of an empty label """
