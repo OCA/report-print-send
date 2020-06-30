@@ -23,6 +23,11 @@ class PrintRecordLabel(models.TransientModel):
         ],
         help="Label to print.",
     )
+    active_model_id = fields.Many2one(
+        comodel_name="ir.model",
+        string="Model",
+        domain=lambda self: [("model", "=", self.env.context.get("active_model"))],
+    )
 
     @api.model
     def default_get(self, fields_list):
