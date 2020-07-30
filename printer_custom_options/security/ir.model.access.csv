@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_printer_option_choice_all,printer_option_choice all,model_printer_option_choice,base_report_to_printer.printing_group_user,1,0,0,0
+access_printer_option_choice_operator,printer_option_choice operator,model_printer_option_choice,base_report_to_printer.printing_group_manager,1,1,1,1
+access_printer_option,access_printer_option,model_printer_option,base.group_user,1,0,0,0
