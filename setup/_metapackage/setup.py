@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo11-addon-base_report_to_printer',
+        'odoo11-addon-printer_custom_options',
         'odoo11-addon-printer_zpl2',
         'odoo11-addon-remote_report_to_printer',
         'odoo11-addon-stock_picking_auto_print',
