@@ -4,7 +4,7 @@
 # pylint: disable=C8101
 {
     'name': 'Report to printer - Custom Printer Options',
-    'version': '11.0.0.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Printer',
     'author': 'Compassion CH, OCA',
     'website': 'https://github.com/OCA/report-print-send',
