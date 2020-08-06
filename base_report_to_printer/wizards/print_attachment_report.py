@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 import base64
 
-from openerp import _, api, fields, models
+from odoo import _, fields, models
 
 
 class PrintAttachment(models.TransientModel):
@@ -21,7 +21,6 @@ class PrintAttachment(models.TransientModel):
         string="Attachments to print",
     )
 
-    @api.multi
     def print_attachments(self):
         """Prints a label per selected record"""
         self.ensure_one()
@@ -67,7 +66,6 @@ class PrintAttachmentLine(models.TransientModel):
     record_name = fields.Char(related="attachment_id.res_name", readonly=True)
     copies = fields.Integer(default=1)
 
-    @api.multi
     def get_format(self):
         self.ensure_one()
         mimetype = self.attachment_id.mimetype
