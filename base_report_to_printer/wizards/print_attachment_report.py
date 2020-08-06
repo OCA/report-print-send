@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 import base64
 
-from openerp import _, models, api, fields
+from odoo import _, models, api, fields
 
 
 class PrintAttachment(models.TransientModel):
@@ -59,7 +58,10 @@ class PrintAttachmentLine(models.TransientModel):
     attachment_id = fields.Many2one(
         'ir.attachment',
         required=True,
-        domain="['|', ('mimetype', '=', 'application/pdf'), ('mimetype', '=', 'application/octet-stream')]"
+        domain=(
+            "['|', ('mimetype', '=', 'application/pdf'), "
+            "('mimetype', '=', 'application/octet-stream')]"
+        )
     )
     record_name = fields.Char(related="attachment_id.res_name", readonly=True)
     copies = fields.Integer(default=1)
