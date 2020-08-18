@@ -66,6 +66,11 @@ msgid "Being transformed into a different format"
 msgstr "Está siendo transformado a un formato diferente"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__cups-filter-crashed
+msgid "CUPS filter crashed"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups
 msgid "CUPS id for this job."
 msgstr "Id de CUPS para este trabajo."
@@ -127,7 +132,7 @@ msgid "Completed with some errors"
 msgstr "Completado con algunos errores"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-completed(with-warnings
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-completed-with-warnings
 msgid "Completed with some warnings"
 msgstr "Completado con algunos avisos"
 
