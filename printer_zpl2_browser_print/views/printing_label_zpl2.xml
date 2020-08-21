@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_printing_label_zpl2_form" model="ir.ui.view">
+        <field name="name">view_printing_label_zpl2_form</field>
+        <field name="model">printing.label.zpl2</field>
+        <field name="inherit_id" ref="printer_zpl2.view_printing_label_zpl2_form"/>
+        <field name="arch" type="xml">
+            <button name="unlink_action" position="after">
+                <field name="browser_print_action_window_id" invisible="1"/>
+                <button name="create_browser_print_action" string="Browser Print 'Action' menu" type="object"
+                        attrs="{'invisible':[('browser_print_action_window_id','!=',False)]}" icon="fa-plus-square"
+                        help="Display an option on related documents." class="oe_stat_button"/>
+                <button name="unlink_browser_print_action" string="Remove Browser Print Action" type="object"
+                        attrs="{'invisible':[('browser_print_action_window_id','=',False)]}" icon="fa-minus-square"
+                        help="Remove the contextual action." class="oe_stat_button"/>
+            </button>
+        </field>
+    </record>
+</odoo>

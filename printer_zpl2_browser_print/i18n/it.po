@@ -1,0 +1,134 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* printer_zpl2_browser_print
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-24 08:07+0000\n"
+"PO-Revision-Date: 2020-08-24 08:07+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: printer_zpl2_browser_print
+#: model_terms:ir.ui.view,arch_db:printer_zpl2_browser_print.view_printing_label_zpl2_form
+msgid "Browser Print 'Action' menu"
+msgstr "'Azione' stampa da browser"
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_printing_label_zpl2__browser_print_action_window_id
+msgid "Browser Print Action"
+msgstr "Azione stampa da browser"
+
+#. module: printer_zpl2_browser_print
+#: code:addons/printer_zpl2_browser_print/models/printing_label_zpl2.py:17
+#: model:ir.model,name:printer_zpl2_browser_print.model_wizard_browser_print_label
+#: model_terms:ir.ui.view,arch_db:printer_zpl2_browser_print.view_wizard_browser_print_label
+#, python-format
+msgid "Browser Print Label"
+msgstr "Stampare etichetta da browser"
+
+#. module: printer_zpl2_browser_print
+#: model_terms:ir.ui.view,arch_db:printer_zpl2_browser_print.view_wizard_browser_print_label
+msgid "Close"
+msgstr "Chiudere"
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_wizard_browser_print_label__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_wizard_browser_print_label__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_wizard_browser_print_label__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: printer_zpl2_browser_print
+#: model_terms:ir.ui.view,arch_db:printer_zpl2_browser_print.view_printing_label_zpl2_form
+msgid "Display an option on related documents."
+msgstr "Mostrare un'opzione sui relativi documenti"
+
+#. module: printer_zpl2_browser_print
+#. openerp-web
+#: code:addons/printer_zpl2_browser_print/static/src/js/zpl2_browser_print.js:98
+#: code:addons/printer_zpl2_browser_print/static/src/js/zpl2_browser_print.js:103
+#, python-format
+msgid "Error getting local devices"
+msgstr "Errore nell'ottenere i dispositivi locali"
+
+#. module: printer_zpl2_browser_print
+#. openerp-web
+#: code:addons/printer_zpl2_browser_print/static/src/js/zpl2_browser_print.js:57
+#, python-format
+msgid "Error: "
+msgstr "Errore: "
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_wizard_browser_print_label__id
+msgid "ID"
+msgstr ""
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_wizard_browser_print_label__label_id
+msgid "Label"
+msgstr "Etichetta"
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,help:printer_zpl2_browser_print.field_wizard_browser_print_label__label_id
+msgid "Label to print."
+msgstr "Etichetta da stampare."
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_wizard_browser_print_label____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_wizard_browser_print_label__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model.fields,field_description:printer_zpl2_browser_print.field_wizard_browser_print_label__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: printer_zpl2_browser_print
+#. openerp-web
+#: code:addons/printer_zpl2_browser_print/static/src/xml/browser_print.xml:11
+#, python-format
+msgid "Print"
+msgstr "Stampare"
+
+#. module: printer_zpl2_browser_print
+#. openerp-web
+#: code:addons/printer_zpl2_browser_print/static/src/xml/browser_print.xml:5
+#, python-format
+msgid "Printing Device:"
+msgstr "Dispositivo di stampa:"
+
+#. module: printer_zpl2_browser_print
+#: model_terms:ir.ui.view,arch_db:printer_zpl2_browser_print.view_printing_label_zpl2_form
+msgid "Remove Browser Print Action"
+msgstr "Rimuovere azione stampa da browser"
+
+#. module: printer_zpl2_browser_print
+#: model_terms:ir.ui.view,arch_db:printer_zpl2_browser_print.view_printing_label_zpl2_form
+msgid "Remove the contextual action."
+msgstr "Rimuovere l'azione contestuale."
+
+#. module: printer_zpl2_browser_print
+#: model:ir.model,name:printer_zpl2_browser_print.model_printing_label_zpl2
+msgid "ZPL II Label"
+msgstr "Etichetta ZPL II"
+

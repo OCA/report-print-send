@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_wizard_browser_print_label" model="ir.ui.view">
+        <field name="name">view_wizard_browser_print_label</field>
+        <field name="model">wizard.browser.print.label</field>
+        <field name="arch" type="xml">
+            <form string="Browser Print Label">
+                <group>
+                    <div>
+                        <label for="label_id"/>: <field name="label_id" nolabel="1" widget="selection"
+                                                        class="js_zpl2_browser_print_label_id"/>
+                    </div>
+                    <br/>
+                    <div>
+                        <widget name="zpl2_browser_print" />
+                    </div>
+                </group>
+                <footer>
+                    <button type="special" special="cancel" string="Close"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="zpl2 browser print assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/printer_zpl2_browser_print/static/lib/js/BrowserPrint-3.0.216.min.js"/>
+            <script type="text/javascript" src="/printer_zpl2_browser_print/static/src/js/zpl2_browser_print.js"/>
+        </xpath>
+    </template>
+</odoo>

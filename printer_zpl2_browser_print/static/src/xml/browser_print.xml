@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <div t-name="printer_zpl2_browser_print.BrowserPrint">
+        <div>
+            Printing Device: <select class="o_input o_field_widget o_required_modifier"
+                                     id="zpl2_browser_print_selected_device"/>
+        </div>
+        <br/>
+        <div>
+            <button type="button" class="btn btn-primary js_zpl2_browser_print_button"><span>Print</span></button>
+        </div>
+    </div>
+
+</templates>
