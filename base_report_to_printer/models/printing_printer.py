@@ -31,6 +31,7 @@ class PrintingPrinter(models.Model):
     _order = "name"
 
     name = fields.Char(required=True, index=True)
+    active = fields.Boolean(default=True)
     server_id = fields.Many2one(
         comodel_name="printing.server",
         string="Server",
