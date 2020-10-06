@@ -61,9 +61,8 @@ class PrintingServer(models.Model):
         servers = self
         if not self:
             servers = self.search(domain)
-
         res = True
-        for server in servers:
+        for server in servers.with_context(active_test=False):
             connection = server._open_connection(raise_on_error=raise_on_error)
             if not connection:
                 server.printer_ids.write({'status': 'server-error'})
