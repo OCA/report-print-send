@@ -20,37 +20,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,font:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__b
 msgid "11x7"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2,labelary_dpmm:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2__labelary_dpmm__12dpmm
 msgid "12dpmm (300 pdi)"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,font:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__d
 msgid "18x10"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,font:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__h
 msgid "21x13"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2,labelary_dpmm:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2__labelary_dpmm__24dpmm
 msgid "24dpmm (600 dpi)"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,font:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__f
 msgid "26x13"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,font:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__e
 msgid "28x15"
 msgstr ""
 
@@ -60,22 +60,22 @@ msgid "2D Barcode Arguments"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,font:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__g
 msgid "60x40"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2,labelary_dpmm:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2__labelary_dpmm__6dpmm
 msgid "6dpmm (152 pdi)"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2,labelary_dpmm:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2__labelary_dpmm__8dpmm
 msgid "8dpmm (203 dpi)"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,font:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__a
 msgid "9x5"
 msgstr ""
 
@@ -102,8 +102,14 @@ msgid ""
 msgstr ""
 
 #. module: printer_zpl2
+#: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_search
 msgid "Archived"
+msgstr ""
+
+#. module: printer_zpl2
+#: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__data_autofill
+msgid "Autofill Data"
 msgstr ""
 
 #. module: printer_zpl2
@@ -122,7 +128,7 @@ msgid "Barcode model, used by some barcode types like QR Code."
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,color:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__color__b
 msgid "Black"
 msgstr ""
 
@@ -148,8 +154,13 @@ msgid "Cancel"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,block_justify:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__block_justify__c
 msgid "Center"
+msgstr ""
+
+#. module: printer_zpl2
+#: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__data_autofill
+msgid "Change 'data' with dictionary of the object information."
 msgstr ""
 
 #. module: printer_zpl2
@@ -189,27 +200,27 @@ msgid "Choose how the text will be justified in the block."
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__circle
 msgid "Circle"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_11
 msgid "Code 11"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_128
 msgid "Code 128"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_39
 msgid "Code 39"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_49
 msgid "Code 49"
 msgstr ""
 
@@ -269,7 +280,7 @@ msgid ""
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,font:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__0
 msgid "Default"
 msgstr ""
 
@@ -284,7 +295,7 @@ msgid "Description"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__diagonal
 msgid "Diagonal Line"
 msgstr ""
 
@@ -307,12 +318,12 @@ msgid "Display an option on related documents."
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__ean-13
 msgid "EAN-13"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__ean-8
 msgid "EAN-8"
 msgstr ""
 
@@ -322,7 +333,7 @@ msgid "Emulation"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,model:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__model__2
 msgid "Enhanced"
 msgstr ""
 
@@ -337,9 +348,9 @@ msgid "Error correction for some barcode types like QR Code."
 msgstr ""
 
 #. module: printer_zpl2
-#: code:addons/printer_zpl2/models/printing_label_zpl2.py:356
+#: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #, python-format
-msgid "Error with Labelary API."
+msgid "Error with Labelary API. %s"
 msgstr ""
 
 #. module: printer_zpl2
@@ -364,7 +375,7 @@ msgid "Format"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__graphic
 msgid "Graphic"
 msgstr ""
 
@@ -386,12 +397,12 @@ msgid ""
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,error_correction:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__error_correction__l
 msgid "High Density Level"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,error_correction:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__error_correction__q
 msgid "High Reliability Level"
 msgstr ""
 
@@ -431,7 +442,7 @@ msgid "Import"
 msgstr ""
 
 #. module: printer_zpl2
-#: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:414
+#: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 #, python-format
 msgid "Import %s"
 msgstr ""
@@ -448,7 +459,7 @@ msgid "In Block"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__interleaved_2_of_5
 msgid "Interleaved 2 of 5"
 msgstr ""
 
@@ -463,12 +474,12 @@ msgid "Interpretation Line Above"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,orientation:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__orientation__i
 msgid "Inverted"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,block_justify:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__block_justify__j
 msgid "Justified"
 msgstr ""
 
@@ -534,12 +545,12 @@ msgid "Last Updated on"
 msgstr "Última actualización en"
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,block_justify:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__block_justify__l
 msgid "Left"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,diagonal_orientation:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__diagonal_orientation__l
 msgid "Left (\\)"
 msgstr ""
 
@@ -601,6 +612,7 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__model_id
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__model
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__active_model_id
 msgid "Model"
 msgstr ""
 
@@ -631,7 +643,7 @@ msgid "Name of the component."
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,orientation:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__orientation__n
 msgid "Normal"
 msgstr ""
 
@@ -660,6 +672,11 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__block_spaces
 msgid "Number of spaces added between lines in the block."
+msgstr ""
+
+#. module: printer_zpl2
+#: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__only_product_barcode
+msgid "Only product barcode data"
 msgstr ""
 
 #. module: printer_zpl2
@@ -715,17 +732,17 @@ msgid "Origin point of the contents in the label, Y coordinate."
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,model:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__model__1
 msgid "Original"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__pdf417
 msgid "PDF417"
 msgstr ""
 
 #. module: printer_zpl2
-#: code:addons/printer_zpl2/models/printing_label_zpl2.py:272
+#: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #: model:ir.actions.act_window,name:printer_zpl2.action_wizard_print_record_label_view
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_import_zpl2_form
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_print_product_label_form
@@ -766,7 +783,7 @@ msgid "Printer used to print the labels."
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__qr_code
 msgid "QR Code"
 msgstr ""
 
@@ -776,7 +793,7 @@ msgid "Ratio between wide bar and narrow bar."
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,orientation:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__orientation__b
 msgid "Read from Bottom up"
 msgstr ""
 
@@ -786,7 +803,12 @@ msgid "Record ID"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__model_id
+msgid "Record's model"
+msgstr ""
+
+#. module: printer_zpl2
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__rectangle
 msgid "Rectangle / Line"
 msgstr ""
 
@@ -846,17 +868,17 @@ msgid "Reverse Print"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,block_justify:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__block_justify__r
 msgid "Right"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,diagonal_orientation:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__diagonal_orientation__r
 msgid "Right (/)"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,orientation:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__orientation__r
 msgid "Rotated"
 msgstr ""
 
@@ -891,19 +913,13 @@ msgid "Sequence"
 msgstr ""
 
 #. module: printer_zpl2
-#: code:addons/printer_zpl2/models/printing_label_zpl2.py:363
-#, python-format
-msgid "Some thing is wrong."
-msgstr ""
-
-#. module: printer_zpl2
-#: selection:printing.label.zpl2.component,error_correction:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__error_correction__m
 msgid "Standard Level"
 msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__sublabel_id
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__sublabel
 msgid "Sublabel"
 msgstr ""
 
@@ -913,7 +929,7 @@ msgid "Test Mode"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__text
 msgid "Text"
 msgstr ""
 
@@ -940,7 +956,7 @@ msgid ""
 msgstr ""
 
 #. module: printer_zpl2
-#: code:addons/printer_zpl2/models/printing_label_zpl2.py:258
+#: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #, python-format
 msgid "This label cannot be used on {model}"
 msgstr ""
@@ -961,17 +977,17 @@ msgid "Type of content, simple text or barcode."
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,component_type:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__upc-e
 msgid "UPC-E"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,error_correction:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__error_correction__h
 msgid "Ultra-high Reliability Level"
 msgstr ""
 
 #. module: printer_zpl2
-#: selection:printing.label.zpl2.component,color:0
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__color__w
 msgid "White"
 msgstr ""
 
@@ -1016,6 +1032,12 @@ msgid ""
 msgstr ""
 
 #. module: printer_zpl2
+#: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
+#, python-format
+msgid "You can not create recursive labels."
+msgstr ""
+
+#. module: printer_zpl2
 #: model:ir.model,name:printer_zpl2.model_printing_label_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_search
@@ -1035,7 +1057,7 @@ msgid "ZPL II Labels"
 msgstr ""
 
 #. module: printer_zpl2
+#: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__zpl2_raw
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_import_zpl2_form
-#: selection:printing.label.zpl2.component,component_type:0
 msgid "ZPL2"
 msgstr ""
