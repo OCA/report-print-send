@@ -19,6 +19,7 @@ addons:
       - python-yaml
       - cups
       - libcups2-dev
+      - libdmtx0a
 
 env:
   global:
