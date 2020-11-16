@@ -6,88 +6,90 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-11-16 05:36+0000\n"
+"Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__b
 msgid "11x7"
-msgstr ""
+msgstr "11x7"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2__labelary_dpmm__12dpmm
 msgid "12dpmm (300 pdi)"
-msgstr ""
+msgstr "12dpmm (300 pdi)"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__d
 msgid "18x10"
-msgstr ""
+msgstr "18x10"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__h
 msgid "21x13"
-msgstr ""
+msgstr "21x13"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2__labelary_dpmm__24dpmm
 msgid "24dpmm (600 dpi)"
-msgstr ""
+msgstr "24dpmm (600 dpi)"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__f
 msgid "26x13"
-msgstr ""
+msgstr "26x13"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__e
 msgid "28x15"
-msgstr ""
+msgstr "28x15"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "2D Barcode Arguments"
-msgstr ""
+msgstr "Argumentos de Código de Barra 2D"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__g
 msgid "60x40"
-msgstr ""
+msgstr "60x40"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2__labelary_dpmm__6dpmm
 msgid "6dpmm (152 pdi)"
-msgstr ""
+msgstr "6dpmm (152 pdi)"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2__labelary_dpmm__8dpmm
 msgid "8dpmm (203 dpi)"
-msgstr ""
+msgstr "8dpmm (203 dpi)"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__a
 msgid "9x5"
-msgstr ""
+msgstr "9x5"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__action_window_id
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__active
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Add in the 'Action' menu"
-msgstr ""
+msgstr "Añadir en el menú 'Acción'"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__sublabel_id
@@ -95,79 +97,85 @@ msgid ""
 "Another label to include into this one as a component. This allows to define"
 " reusable labels parts."
 msgstr ""
+"Otra etiqueta para incluir en este como componente. Esto permite definir "
+"partes de etiquetas reutilizables."
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_search
 msgid "Archived"
-msgstr ""
+msgstr "Archivado"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__data_autofill
 msgid "Autofill Data"
-msgstr ""
+msgstr "Autocompletar Datos"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__bar_width_ratio
 msgid "Bar Width Ratio"
-msgstr ""
+msgstr "Relación de Ancho de Barra"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Barcode Format"
-msgstr ""
+msgstr "Formato del Código de Barras"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__model
 msgid "Barcode model, used by some barcode types like QR Code."
 msgstr ""
+"Modelo de Código de Barras, usados por alguns tipos de códigos como el "
+"Código QR."
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__color__b
 msgid "Black"
-msgstr ""
+msgstr "Negro"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__block_lines
 msgid "Block Lines"
-msgstr ""
+msgstr "Líneas de Bloque"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__block_spaces
 msgid "Block Spaces"
-msgstr ""
+msgstr "Espacios de Bloque"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__block_width
 msgid "Block Width"
-msgstr ""
+msgstr "Ancho del Bloque"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_import_zpl2_form
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_print_product_label_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__block_justify__c
 msgid "Center"
-msgstr ""
+msgstr "Centro"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__data_autofill
 msgid "Change 'data' with dictionary of the object information."
-msgstr ""
+msgstr "Cambiar 'datos' con el diccionario de la información del objeto."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__check_digits
 msgid "Check Digits"
-msgstr ""
+msgstr "Chequear Dígitos"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__interpretation_line_above
 msgid ""
 "Check if you want the interpretation line to be printed above the barcode."
 msgstr ""
+"Compruebe si desea que la línea de interpretación se imprima encima del "
+"código de barras."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__interpretation_line
