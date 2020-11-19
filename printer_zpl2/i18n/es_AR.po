@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-11-16 05:36+0000\n"
+"PO-Revision-Date: 2020-11-19 15:36+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -180,62 +180,62 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__interpretation_line
 msgid "Check if you want the interpretation line to be printed."
-msgstr ""
+msgstr "Marque si desea que se imprima la línea de interpretación."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__check_digits
 msgid "Check if you want to compute and print the check digit."
-msgstr ""
+msgstr "Marque si desea calcular e imprimir el dígito de control."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__truncate
 msgid "Check if you want to truncate the barcode."
-msgstr ""
+msgstr "Marque si desea truncar el código de barras."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__repeat
 msgid "Check this box to repeat this component on the label."
-msgstr ""
+msgstr "Marque esta casilla para repetir este componente en la etiqueta."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__block_justify
 msgid "Choose how the text will be justified in the block."
-msgstr ""
+msgstr "Elija cómo se justificará el texto en el bloque."
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__circle
 msgid "Circle"
-msgstr ""
+msgstr "Círculo"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_11
 msgid "Code 11"
-msgstr ""
+msgstr "Código 11"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_128
 msgid "Code 128"
-msgstr ""
+msgstr "Código 128"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_39
 msgid "Code 39"
-msgstr ""
+msgstr "Código 39"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_49
 msgid "Code 49"
-msgstr ""
+msgstr "Código 49"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__color
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__color
 msgid "Color of the line to draw."
-msgstr ""
+msgstr "Color de la línea a dibujar."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__columns_count
