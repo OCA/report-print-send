@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-11-19 15:36+0000\n"
+"PO-Revision-Date: 2020-11-20 01:36+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -240,17 +240,17 @@ msgstr "Color de la línea a dibujar."
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__columns_count
 msgid "Columns Count"
-msgstr ""
+msgstr "Cuenta de Columnas"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Components"
-msgstr ""
+msgstr "Componentes"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2__component_ids
 msgid "Components which will be printed on the label."
-msgstr ""
+msgstr "Componentes que se imprimirán en la etiqueta."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__create_uid
@@ -258,7 +258,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__create_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__create_date
@@ -266,14 +266,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__create_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__data
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__data
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Data"
-msgstr ""
+msgstr "Datos"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__data
@@ -281,31 +281,33 @@ msgid ""
 "Data to print on this component. Resource values can be inserted with "
 "%(object.field_name)s."
 msgstr ""
+"Datos para imprimir en este componente. Los valores de los recursos se "
+"pueden insertar con %(object.field_name)s."
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__0
 msgid "Default"
-msgstr ""
+msgstr "Por defecto"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__delete_component
 msgid "Delete existing components"
-msgstr ""
+msgstr "Eliminar componentes existentes"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__description
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__diagonal
 msgid "Diagonal Line"
-msgstr ""
+msgstr "Línea Diagonal"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__diagonal_orientation
 msgid "Diagonal Orientation"
-msgstr ""
+msgstr "Orientación Diagonal"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__display_name
@@ -313,85 +315,86 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__display_name
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre mostrado"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Display an option on related documents."
-msgstr ""
+msgstr "Mostrar una opción de documentos relacionados."
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__ean-13
 msgid "EAN-13"
-msgstr ""
+msgstr "EAN-13"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__ean-8
 msgid "EAN-8"
-msgstr ""
+msgstr "EAN-8"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Emulation"
-msgstr ""
+msgstr "Emulación"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__model__2
 msgid "Enhanced"
-msgstr ""
+msgstr "Mejorado"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__error_correction
 msgid "Error Correction"
-msgstr ""
+msgstr "Corrección de Error"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__error_correction
 msgid "Error correction for some barcode types like QR Code."
 msgstr ""
+"Corrección de errores para algunos tipos de códigos de barras como código QR."
 
 #. module: printer_zpl2
 #: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #, python-format
 msgid "Error with Labelary API. %s"
-msgstr ""
+msgstr "Error con API Labelary. %s"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__extra
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Extra"
-msgstr ""
+msgstr "Extra"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__font
 msgid "Font"
-msgstr ""
+msgstr "Fuente"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__font
 msgid "Font to use, for text only."
-msgstr ""
+msgstr "Fuente a usar, solo para texto."
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Format"
-msgstr ""
+msgstr "Formato"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__graphic
 msgid "Graphic"
-msgstr ""
+msgstr "Gráfico"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__height
 msgid "Height"
-msgstr ""
+msgstr "Altura"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__labelary_height
 msgid "Height in mm"
-msgstr ""
+msgstr "Altura en mm"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__height
@@ -399,16 +402,18 @@ msgid ""
 "Height of the printed component. For a text component, height of a single "
 "character."
 msgstr ""
+"Altura del componente impreso. Para un componente de texto, altura de un "
+"solo carácter."
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__error_correction__l
 msgid "High Density Level"
-msgstr ""
+msgstr "Alto Nivel de Densidad"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__error_correction__q
 msgid "High Reliability Level"
-msgstr ""
+msgstr "Alto Nivel de Confiabilidad"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__id
@@ -416,113 +421,115 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__id
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__reverse_print
 msgid ""
 "If checked, the data will be printed in the inverse color of the background."
-msgstr ""
+msgstr "Si está marcado, los datos se imprimirán en el color inverso del fondo."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__in_block
 msgid ""
 "If checked, the data will be restrected in a defined block on the label."
 msgstr ""
+"Si está marcado, los datos se restringirán en un bloque definido en la "
+"etiqueta."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__graphic_image
 msgid "Image"
-msgstr ""
+msgstr "Imagen"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__labelary_image
 msgid "Image from Labelary"
-msgstr ""
+msgstr "Imagen de Labelary"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_import_zpl2_form
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 #. module: printer_zpl2
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 #, python-format
 msgid "Import %s"
-msgstr ""
+msgstr "Importar %s"
 
 #. module: printer_zpl2
 #: model:ir.model,name:printer_zpl2.model_wizard_import_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Import ZPL2"
-msgstr ""
+msgstr "Importar ZPL2"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__in_block
 msgid "In Block"
-msgstr ""
+msgstr "En Bloque"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__interleaved_2_of_5
 msgid "Interleaved 2 of 5"
-msgstr ""
+msgstr "Intercalado 2 de 5"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__interpretation_line
 msgid "Interpretation Line"
-msgstr ""
+msgstr "Línea de Interpretación"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__interpretation_line_above
 msgid "Interpretation Line Above"
-msgstr ""
+msgstr "Línea de Interpretación Arriba"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__orientation__i
 msgid "Inverted"
-msgstr ""
+msgstr "Invertido"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__block_justify__j
 msgid "Justified"
-msgstr ""
+msgstr "Justificado"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__block_justify
 msgid "Justify"
-msgstr ""
+msgstr "Justificar"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__label_id
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__label_id
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__label_id
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Label Component"
-msgstr ""
+msgstr "Etiqueta del Componente"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__component_ids
 msgid "Label Components"
-msgstr ""
+msgstr "Etiqueta de los Componentes"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2__name
 msgid "Label Name."
-msgstr ""
+msgstr "Nombre de Etiqueta."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_wizard_print_record_label__label_id
 msgid "Label to print."
-msgstr ""
+msgstr "Etiqueta a imprimir."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__label_id
 msgid "Label using this component."
-msgstr ""
+msgstr "Etiqueta usando este componente."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2____last_update
@@ -530,7 +537,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2____last_update
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación el"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__write_uid
@@ -538,7 +545,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__write_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__write_date
@@ -546,110 +553,110 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__write_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización el"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__block_justify__l
 msgid "Left"
-msgstr ""
+msgstr "Izquierda"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__diagonal_orientation__l
 msgid "Left (\\)"
-msgstr ""
+msgstr "Izquierda (\\)"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__block_left_margin
 msgid "Left Margin"
-msgstr ""
+msgstr "Margen Izquierdo"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__block_left_margin
 msgid "Left margin for the second and other lines in the block."
-msgstr ""
+msgstr "Margen izquierdo para la segunda y otras líneas del bloque."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2__description
 msgid "Long description for this label."
-msgstr ""
+msgstr "Descripción larga de esta etiqueta."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__magnification_factor
 msgid "Magnification Factor"
-msgstr ""
+msgstr "Factor de Magnificación"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__magnification_factor
 msgid "Magnification Factor, from 1 to 10."
-msgstr ""
+msgstr "Factor de Magnificación, de 1 a 10."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__mask_value
 msgid "Mask Value"
-msgstr ""
+msgstr "Valor de Máscara"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__mask_value
 msgid "Mask Value, from 0 to 7."
-msgstr ""
+msgstr "Valor de Máscara, de 0 a 7."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__repeat_count
 msgid "Maximum count of repeats of the component."
-msgstr ""
+msgstr "Recuento máximo de repeticiones del componente."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__block_lines
 msgid "Maximum number of lines to print in the block."
-msgstr ""
+msgstr "Número máximo de líneas para imprimir en el bloque."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__test_labelary_mode
 msgid "Mode Labelary"
-msgstr ""
+msgstr "Modo Labelary"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__test_print_mode
 msgid "Mode Print"
-msgstr ""
+msgstr "Modo de Impresión"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__model_id
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__model
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__active_model_id
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2__model_id
 msgid "Model used to print this label."
-msgstr ""
+msgstr "Modelo utilizado para imprimir esta etiqueta."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__module_width
 msgid "Module Width"
-msgstr ""
+msgstr "Ancho del Módulo"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__module_width
 msgid "Module width for the barcode."
-msgstr ""
+msgstr "Ancho del módulo para el código de barras."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__name
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__name
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__name
 msgid "Name of the component."
-msgstr ""
+msgstr "Nombre del componente."
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__orientation__n
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
@@ -657,11 +664,13 @@ msgid ""
 "Note : It is an emulation from http://labelary.com/, the result on printer "
 "can be different."
 msgstr ""
+"Nota: Es una emulación de http://labelary.com/, el resultado en la impresora "
+"puede ser diferente."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__columns_count
 msgid "Number of data columns to encode."
-msgstr ""
+msgstr "Número de columnas de datos para codificar."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__repeat_offset
