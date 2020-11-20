@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="act_report_xml_view" model="ir.ui.view">
+        <field name="model">ir.actions.report</field>
+        <field name="inherit_id" ref="base.act_report_xml_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='advanced']/group" position="inside">
+                <field name="only_even_total_page"/>
+                <field name="even_total_page_behavior"/>
+            </xpath>
+       </field>
+    </record>
+
+</odoo>
