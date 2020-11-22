@@ -603,7 +603,6 @@ msgstr "Rapport"
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_ir_actions_report
 #, fuzzy
-#| msgid "Action"
 msgid "Report Action"
 msgstr "Actie"
 
