@@ -94,7 +94,7 @@ class PrintingLabelZpl2(models.Model):
     def check_recursion(self):
         cr = self._cr
         self.flush(["component_ids"])
-        query = (  # pylint: disable=E8103
+        query = (
             'SELECT "{}", "{}" FROM "{}" '
             'WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
                 "label_id",
@@ -109,7 +109,7 @@ class PrintingLabelZpl2(models.Model):
         preds = defaultdict(set)  # transitive closure of predecessors
         todo, done = set(self.ids), set()
         while todo:
-            cr.execute(query, [tuple(todo)])
+            cr.execute(query, [tuple(todo)])  # pylint: disable=E8103
             done.update(todo)
             todo.clear()
             for id1, id2 in cr.fetchall():
