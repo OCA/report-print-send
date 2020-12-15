@@ -31,6 +31,7 @@ class PrintingPrinter(models.Model):
     _order = "name"
 
     name = fields.Char(required=True, index=True)
+    active = fields.Boolean(default=True)
     server_id = fields.Many2one(
         comodel_name="printing.server",
         string="Server",
@@ -121,7 +122,7 @@ class PrintingPrinter(models.Model):
         return vals
 
     def print_document(self, report, content, **print_opts):
-        """ Print a file
+        """Print a file
         Format could be pdf, qweb-pdf, raw, ...
         """
         self.ensure_one()
@@ -168,8 +169,8 @@ class PrintingPrinter(models.Model):
         options = self.print_options(report=report, **print_opts)
 
         _logger.debug(
-            "Sending job to CUPS printer %s on %s"
-            % (self.system_name, self.server_id.address)
+            "Sending job to CUPS printer %s on %s with options %s"
+            % (self.system_name, self.server_id.address, options)
         )
         connection.printFile(self.system_name, file_name, file_name, options=options)
         _logger.info(
