@@ -135,9 +135,7 @@ class IrActionsReport(models.Model):
         If the action configured on the report is server, it prints the
         generated document as well.
         """
-        document, doc_format = super(IrActionsReport, self).render_qweb_pdf(
-            res_ids=res_ids, data=data
-        )
+        document, doc_format = super().render_qweb_pdf(res_ids=res_ids, data=data)
 
         behaviour = self.behaviour()
         printer = behaviour.pop("printer", None)
