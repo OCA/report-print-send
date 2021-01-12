@@ -2,14 +2,12 @@
 # Copyright 2017 Tecnativa - Jairo Llopis
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import mock
+from unittest import mock
 
 from odoo import exceptions
 from odoo.tests import common
 
 
-@common.at_install(False)
-@common.post_install(True)
 class TestReport(common.HttpCase):
     def setUp(self):
         super(TestReport, self).setUp()
@@ -20,21 +18,23 @@ class TestReport(common.HttpCase):
             "model": "ir.actions.report",
             "report_name": "Test Report",
         }
-        self.report_imd = self.env["ir.model.data"].create(
-            {"name": "test", "module": "base_report_to_printer", "model": "ir.ui.view"}
-        )
         self.report_view = self.env["ir.ui.view"].create(
             {
                 "name": "Test",
                 "type": "qweb",
-                "xml_id": "base_report_to_printer.test",
-                "model_data_id": self.report_imd.id,
                 "arch": """<t t-name="base_report_to_printer.test">
                 <div>Test</div>
             </t>""",
             }
         )
-        self.report_imd.res_id = self.report_view.id
+        self.report_imd = self.env["ir.model.data"].create(
+            {
+                "name": "test",
+                "module": "base_report_to_printer",
+                "model": "ir.ui.view",
+                "res_id": self.report_view.id,
+            }
+        )
         self.report = self.Model.create(
             {
                 "name": "Test",
@@ -88,7 +88,7 @@ class TestReport(common.HttpCase):
             "printing_printer.PrintingPrinter."
             "print_document"
         ) as print_document:
-            self.report.render_qweb_pdf(self.partners.ids)
+            self.report._render_qweb_pdf(self.partners.ids)
             print_document.assert_not_called()
 
     def test_render_qweb_pdf_printable(self):
@@ -100,7 +100,7 @@ class TestReport(common.HttpCase):
         ) as print_document:
             self.report.property_printing_action_id.action_type = "server"
             self.report.printing_printer_id = self.new_printer()
-            document = self.report.render_qweb_pdf(self.partners.ids)
+            document = self.report._render_qweb_pdf(self.partners.ids)
             print_document.assert_called_once_with(
                 self.report,
                 document[0],
