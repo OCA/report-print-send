@@ -169,8 +169,8 @@ class PrintingPrinter(models.Model):
         options = self.print_options(report=report, **print_opts)
 
         _logger.debug(
-            "Sending job to CUPS printer %s on %s"
-            % (self.system_name, self.server_id.address)
+            "Sending job to CUPS printer %s on %s with options %s"
+            % (self.system_name, self.server_id.address, options)
         )
         connection.printFile(self.system_name, file_name, file_name, options=options)
         _logger.info(
