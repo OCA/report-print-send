@@ -1,12 +1,13 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import mock
+from unittest import mock
 
 from odoo import fields
 from odoo.tests.common import TransactionCase
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
+model_base = "odoo.models.BaseModel"
 
 
 class TestPrintingServer(TransactionCase):
@@ -69,14 +70,14 @@ class TestPrintingServer(TransactionCase):
     @mock.patch("%s.cups" % model)
     def test_update_printers_search(self, cups):
         """ It should search all when no domain """
-        with mock.patch.object(self.Model, "search") as search:
+        with mock.patch("%s.search" % model_base) as search:
             self.Model.update_printers()
             search.assert_called_once_with([])
 
     @mock.patch("%s.cups" % model)
     def test_update_printers_search_domain(self, cups):
         """ It should use specific domain for search """
-        with mock.patch.object(self.Model, "search") as search:
+        with mock.patch("%s.search" % model_base) as search:
             expect = [("id", ">", 0)]
             self.Model.update_printers(expect)
             search.assert_called_once_with(expect)
@@ -88,6 +89,19 @@ class TestPrintingServer(TransactionCase):
         cups.Connection().getPrinters().get.return_value = False
         self.Model.action_update_printers()
         self.assertEqual("unavailable", rec_id.status)
+
+    @mock.patch("%s.cups" % model)
+    def test_update_archived_printers(self, cups):
+        """ It should update status even if printer is archived """
+        rec_id = self.new_printer()
+        rec_id.toggle_active()
+        self.server.refresh()
+        cups.Connection().getPrinters().get.return_value = False
+        self.Model.action_update_printers()
+        self.assertEqual(
+            "unavailable",
+            rec_id.status,
+        )
 
     @mock.patch("%s.cups" % model)
     def test_update_jobs_cron(self, cups):

@@ -3,8 +3,7 @@
 
 import errno
 import tempfile
-
-import mock
+from unittest import mock
 
 from odoo.tests.common import TransactionCase
 
