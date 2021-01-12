@@ -133,8 +133,7 @@ class TestIrActionsReportXml(TransactionCase):
         )
 
     def test_behaviour_printing_action_on_wrong_user(self):
-        """ It should return the action and printer ignoring printing action
-        """
+        """It should return the action and printer ignoring printing action"""
         report = self.Model.search([], limit=1)
         self.env.user.printing_action = "client"
         printing_action = self.new_printing_action()
@@ -147,8 +146,7 @@ class TestIrActionsReportXml(TransactionCase):
         )
 
     def test_behaviour_printing_action_on_wrong_report(self):
-        """ It should return the action and printer ignoring printing action
-        """
+        """It should return the action and printer ignoring printing action"""
         report = self.Model.search([], limit=1)
         self.env.user.printing_action = "client"
         printing_action = self.new_printing_action()
@@ -162,8 +160,8 @@ class TestIrActionsReportXml(TransactionCase):
         )
 
     def test_behaviour_printing_action_with_no_printer(self):
-        """ It should return the action from printing action and printer from
-            other
+        """It should return the action from printing action and printer from
+        other
         """
         report = self.Model.search([], limit=1)
         self.env.user.printing_action = "client"
@@ -196,8 +194,8 @@ class TestIrActionsReportXml(TransactionCase):
         )
 
     def test_behaviour_printing_action_user_defaults(self):
-        """ It should return the action and printer from user with printing
-            action
+        """It should return the action and printer from user with printing
+        action
         """
         report = self.Model.search([], limit=1)
         self.env.user.printing_action = "client"

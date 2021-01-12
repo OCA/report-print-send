@@ -122,7 +122,7 @@ class PrintingPrinter(models.Model):
         return vals
 
     def print_document(self, report, content, **print_opts):
-        """ Print a file
+        """Print a file
         Format could be pdf, qweb-pdf, raw, ...
         """
         self.ensure_one()
