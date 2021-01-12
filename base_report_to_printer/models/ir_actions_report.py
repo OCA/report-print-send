@@ -38,7 +38,7 @@ class IrActionsReport(models.Model):
 
     @api.model
     def print_action_for_report_name(self, report_name):
-        """ Returns if the action is a direct print or pdf
+        """Returns if the action is a direct print or pdf
 
         Called from js
         """
@@ -130,7 +130,7 @@ class IrActionsReport(models.Model):
         return res
 
     def render_qweb_pdf(self, res_ids=None, data=None):
-        """ Generate a PDF and returns it.
+        """Generate a PDF and returns it.
 
         If the action configured on the report is server, it prints the
         generated document as well.

@@ -82,8 +82,7 @@ class TestReport(common.HttpCase):
         self.assertFalse(res)
 
     def test_render_qweb_pdf_not_printable(self):
-        """ It should print the report, only if it is printable
-        """
+        """It should print the report, only if it is printable"""
         with mock.patch(
             "odoo.addons.base_report_to_printer.models."
             "printing_printer.PrintingPrinter."
@@ -93,8 +92,7 @@ class TestReport(common.HttpCase):
             print_document.assert_not_called()
 
     def test_render_qweb_pdf_printable(self):
-        """ It should print the report, only if it is printable
-        """
+        """It should print the report, only if it is printable"""
         with mock.patch(
             "odoo.addons.base_report_to_printer.models."
             "printing_printer.PrintingPrinter."
