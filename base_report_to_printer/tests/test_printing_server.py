@@ -98,7 +98,8 @@ class TestPrintingServer(TransactionCase):
         cups.Connection().getPrinters().get.return_value = False
         self.Model.action_update_printers()
         self.assertEqual(
-            "unavailable", rec_id.status,
+            "unavailable",
+            rec_id.status,
         )
 
     @mock.patch("%s.cups" % model)
