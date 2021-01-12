@@ -90,19 +90,6 @@ class TestPrintingServer(TransactionCase):
         self.assertEqual("unavailable", rec_id.status)
 
     @mock.patch("%s.cups" % model)
-    def test_update_archived_printers(self, cups):
-        """ It should update status even if printer is archived """
-        rec_id = self.new_printer()
-        rec_id.toggle_active()
-        self.server.refresh()
-        cups.Connection().getPrinters().get.return_value = False
-        self.Model.action_update_printers()
-        self.assertEqual(
-            "unavailable",
-            rec_id.status,
-        )
-
-    @mock.patch("%s.cups" % model)
     def test_update_jobs_cron(self, cups):
         """ It should get all jobs from CUPS server """
         self.new_printer()
