@@ -103,7 +103,6 @@
         <field eval="0" name="perm_write" />
         <field eval="0" name="perm_create" />
     </record>
-    <!--Ported from printing_tray -->
     <record id="access_printing_tray_all" model="ir.model.access">
         <field name="name">Printing Tray User</field>
         <field name="model_id" ref="model_printing_tray" />
@@ -116,6 +115,15 @@
     <record id="access_printing_tray_operator" model="ir.model.access">
         <field name="name">Printing Tray User</field>
         <field name="model_id" ref="model_printing_tray" />
+        <field name="group_id" ref="printing_group_manager" />
+        <field eval="1" name="perm_read" />
+        <field eval="1" name="perm_unlink" />
+        <field eval="1" name="perm_write" />
+        <field eval="1" name="perm_create" />
+    </record>
+    <record id="access_printing_printer_update_wizard" model="ir.model.access">
+        <field name="name">Update printer wizard</field>
+        <field name="model_id" ref="model_printing_printer_update_wizard" />
         <field name="group_id" ref="printing_group_manager" />
         <field eval="1" name="perm_read" />
         <field eval="1" name="perm_unlink" />
