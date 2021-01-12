@@ -5,7 +5,7 @@
         <field name="model">ir.actions.report</field>
         <field name="inherit_id" ref="base.act_report_xml_view" />
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='security']" position="before">
+            <page name="security" position="before">
                 <page string="Print" name="print">
                     <group>
                         <field name="property_printing_action_id" />
@@ -15,7 +15,7 @@
                     <separator string="Specific actions per user" />
                     <field name="printing_action_ids" />
                 </page>
-            </xpath>
+            </page>
         </field>
     </record>
 </odoo>
