@@ -1,7 +1,7 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import mock
+from unittest import mock
 
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
@@ -15,7 +15,7 @@ class StopTest(Exception):
 
 class TestPrintingPrinterWizard(TransactionCase):
     def setUp(self):
-        super(TestPrintingPrinterWizard, self).setUp()
+        super().setUp()
         self.Model = self.env["printing.printer.update.wizard"]
         self.server = self.env["printing.server"].create({})
         self.printer_vals = {

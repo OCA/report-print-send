@@ -61,7 +61,7 @@ class PrintingServer(models.Model):
             servers = self.search(domain)
 
         res = True
-        for server in servers:
+        for server in servers.with_context(active_test=False):
             connection = server._open_connection(raise_on_error=raise_on_error)
             if not connection:
                 server.printer_ids.write({"status": "server-error"})
@@ -71,8 +71,7 @@ class PrintingServer(models.Model):
             # Update Printers
             printers = connection.getPrinters()
             existing_printers = {
-                printer.system_name: printer
-                for printer in server.with_context(active_test=False).printer_ids
+                printer.system_name: printer for printer in server.printer_ids
             }
             updated_printers = []
             for name, printer_info in printers.items():
