@@ -9,8 +9,8 @@
                 <h2>Print Node</h2>
                 <div class="col-xs-12 col-md-6 o_setting_box" modifiers="{}">
                     <div class="o_setting_right_pane" modifiers="{}">
-                        <label string="Print Node Api Key" />
-                        <div lass="content-group" name="print_node">
+                        <label string="Print Node Api Key" for="" />
+                        <div class="content-group" name="print_node">
                             <div>
                                 <field name="print_node_api_key" class="oe_inline" />
                             </div>
