@@ -23,7 +23,7 @@
     "category": "Generic Modules/Base",
     "author": "ADHOC SA, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "depends": ["base_report_to_printer", "server_mode"],
+    "depends": ["base_report_to_printer"],
     "data": ["wizards/res_config_settings_view.xml"],
     "installable": True,
 }
