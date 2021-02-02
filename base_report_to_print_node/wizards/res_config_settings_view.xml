@@ -14,6 +14,7 @@
                             <div>
                                 <field name="print_node_api_key" class="oe_inline" />
                             </div>
+                            <button name="check_api_key" class="oe_inline" action="object" string="Check API Key" />
                         </div>
                     </div>
                 </div>
