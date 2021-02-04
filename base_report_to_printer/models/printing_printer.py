@@ -69,7 +69,7 @@ class PrintingPrinter(models.Model):
 
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
         mapping = {3: "available", 4: "printing", 5: "error"}
-        vals = {
+        cups_vals = {
             "name": cups_printer["printer-info"],
             "model": cups_printer.get("printer-make-and-model", False),
             "location": cups_printer.get("printer-location", False),
@@ -77,6 +77,14 @@ class PrintingPrinter(models.Model):
             "status": mapping.get(cups_printer.get("printer-state"), "unknown"),
             "status_message": cups_printer.get("printer-state-message", ""),
         }
+
+        # prevent write if the field didn't change
+        vals = {
+            fieldname: value
+            for fieldname, value in cups_vals.items()
+            if not self or value != self[fieldname]
+        }
+
         printer_uri = cups_printer["printer-uri-supported"]
         printer_system_name = printer_uri[printer_uri.rfind("/") + 1 :]
         ppd_info = cups_connection.getPPD3(printer_system_name)
@@ -96,13 +104,13 @@ class PrintingPrinter(models.Model):
         if not option:
             return vals
 
-        vals["tray_ids"] = []
+        tray_commands = []
         cups_trays = {
             tray_option["choice"]: tray_option["text"] for tray_option in option.choices
         }
 
         # Add new trays
-        vals["tray_ids"].extend(
+        tray_commands.extend(
             [
                 (0, 0, {"name": text, "system_name": choice})
                 for choice, text in cups_trays.items()
@@ -111,7 +119,7 @@ class PrintingPrinter(models.Model):
         )
 
         # Remove deleted trays
-        vals["tray_ids"].extend(
+        tray_commands.extend(
             [
                 (2, tray.id)
                 for tray in self.tray_ids.filtered(
@@ -119,6 +127,8 @@ class PrintingPrinter(models.Model):
                 )
             ]
         )
+        if tray_commands:
+            vals["tray_ids"] = tray_commands
         return vals
 
     def print_document(self, report, content, **print_opts):
