@@ -82,11 +82,14 @@ class PrintingServer(models.Model):
                 printer_values = printer._prepare_update_from_cups(
                     connection, printer_info
                 )
-                printer_values.update(system_name=name, server_id=server.id)
+                if server != printer.server_id:
+                    printer_values["server_id"] = server.id
+
                 updated_printers.append(name)
                 if not printer:
+                    printer_values["system_name"] = name
                     printer.create(printer_values)
-                else:
+                elif printer_values:
                     printer.write(printer_values)
 
             # Set printers not found as unavailable
@@ -172,26 +175,29 @@ class PrintingServer(models.Model):
                 jobs = job_obj.with_context(active_test=False).search(
                     [("job_id_cups", "=", cups_job_id), ("server_id", "=", server.id)]
                 )
-                job_values = {
+                cups_job_values = {
                     "name": job_data.get("job-name", ""),
                     "active": True,
-                    "job_id_cups": cups_job_id,
-                    "job_media_progress": job_data.get("job-media-progress", False),
+                    "job_media_progress": job_data.get("job-media-progress", 0),
                     "job_state": mapping.get(job_data.get("job-state"), "unknown"),
                     "job_state_reason": job_data.get("job-state-reasons", ""),
-                    "time_at_creation": fields.Datetime.to_string(
-                        datetime.fromtimestamp(job_data.get("time-at-creation", False))
+                    "time_at_creation": datetime.fromtimestamp(
+                        job_data.get("time-at-creation", 0)
                     ),
-                    "time_at_processing": job_data.get("time-at-processing", False)
-                    and fields.Datetime.to_string(
-                        datetime.fromtimestamp(
-                            job_data.get("time-at-processing", False)
-                        )
-                    ),
-                    "time_at_completed": job_data.get("time-at-completed", False)
-                    and fields.Datetime.to_string(
-                        datetime.fromtimestamp(job_data.get("time-at-completed", False))
-                    ),
+                }
+                if job_data.get("time-at-processing"):
+                    cups_job_values["time_at_processing"] = datetime.fromtimestamp(
+                        job_data["time-at-processing"]
+                    )
+                if job_data.get("time-at-completed"):
+                    cups_job_values["time_at_completed"] = datetime.fromtimestamp(
+                        job_data["time-at-completed"]
+                    )
+
+                job_values = {
+                    fieldname: value
+                    for fieldname, value in cups_job_values.items()
+                    if not jobs or value != jobs[fieldname]
                 }
 
                 # Search for the printer in Odoo
@@ -209,12 +215,14 @@ class PrintingServer(models.Model):
                 # discard here if not printer found
                 if not printer:
                     continue
-                job_values["printer_id"] = printer.id
+                if jobs.printer_id != printer:
+                    job_values["printer_id"] = printer.id
 
-                if jobs:
-                    jobs.write(job_values)
-                else:
+                if not jobs:
+                    job_values["job_id_cups"] = cups_job_id
                     job_obj.create(job_values)
+                elif job_values:
+                    jobs.write(job_values)
 
             # Deactive purged jobs
             if which == "all" and first_job_id == -1:
