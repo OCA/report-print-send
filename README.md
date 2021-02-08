@@ -19,7 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 14.0.1.0.0 | Report to printer
+[base_report_to_printer](base_report_to_printer/) | 14.0.1.0.1 | Report to printer
 
 [//]: # (end addons)
 
