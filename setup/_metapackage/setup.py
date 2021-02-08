@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo12-addon-base_report_to_printer',
         'odoo12-addon-base_report_to_printer_mail',
         'odoo12-addon-printer_zpl2',
+        'odoo12-addon-remote_report_to_printer',
     ],
     classifiers=[
         'Programming Language :: Python',
