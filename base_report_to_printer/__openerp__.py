@@ -31,6 +31,7 @@
     'license': 'AGPL-3',
     "depends": ['base',
                 'report',
+                'email_template',
                 ],
     'data': [
         'security/security.xml',
