@@ -36,6 +36,7 @@ class PrintingLabelZpl2(models.Model):
         comodel_name="ir.model",
         string="Model",
         required=True,
+        ondelete="cascade",
         help="Model used to print this label.",
     )
     origin_x = fields.Integer(
