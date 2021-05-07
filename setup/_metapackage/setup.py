@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-base_report_to_printer',
+        'odoo13-addon-base_report_to_printer_mail',
         'odoo13-addon-printer_zpl2',
         'odoo13-addon-stock_picking_auto_print',
     ],
