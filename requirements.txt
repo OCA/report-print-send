@@ -1,2 +1,6 @@
 zpl2>=1.1
 pycups==1.9.73
+setuptools
+models
+fields
+api
