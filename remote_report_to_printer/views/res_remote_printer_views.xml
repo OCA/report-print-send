@@ -7,11 +7,11 @@
             <form string="Remote Printer">
                 <sheet>
                     <group>
-                        <field name="printer_id"/>
-                        <field name="printer_tray_id"/>
-                        <field name="printer_usage"/>
-                        <field name="is_default"/>
-                        <field name="remote_id"/>
+                        <field name="printer_id" />
+                        <field name="printer_tray_id" />
+                        <field name="printer_usage" />
+                        <field name="is_default" />
+                        <field name="remote_id" />
                     </group>
                 </sheet>
             </form>
@@ -22,11 +22,11 @@
         <field name="model">res.remote.printer</field>
         <field name="arch" type="xml">
             <tree string="Remote Printers" editable="bottom">
-                <field name="printer_id"/>
-                <field name="printer_tray_id"/>
-                <field name="is_default"/>
-                <field name="printer_usage"/>
-                <field name="remote_id" invisible="1"/>
+                <field name="printer_id" />
+                <field name="printer_tray_id" />
+                <field name="is_default" />
+                <field name="printer_usage" />
+                <field name="remote_id" invisible="1" />
             </tree>
         </field>
     </record>
