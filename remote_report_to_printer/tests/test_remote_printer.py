@@ -18,7 +18,7 @@ class TestRemotePrinter(TransactionCase):
         self.remote = self.env["res.remote"].search([("name", "=", name)])
         if not self.remote:
             self.remote = self.env["res.remote"].create(
-                {"name": name, "ip": "127.0.0.1"}
+                {"name": name, "ip": "127.0.0.1", "in_network": True}
             )
         self.server = self.env["printing.server"].create(
             {"name": "Server", "address": "localhost", "port": 631}
@@ -49,7 +49,7 @@ class TestRemotePrinter(TransactionCase):
         )
 
     def test_constrain(self):
-        self.env["res.remote.printer"].sudo(self.printer_manager).create(
+        self.env["res.remote.printer"].with_user(self.printer_manager).create(
             {
                 "remote_id": self.remote.id,
                 "printer_id": self.printer_1.id,
@@ -68,7 +68,7 @@ class TestRemotePrinter(TransactionCase):
     def test_onchange_printer(self):
         remote_printer = (
             self.env["res.remote.printer"]
-            .sudo(self.printer_manager)
+            .with_user(self.printer_manager)
             .create(
                 {
                     "remote_id": self.remote.id,
@@ -85,7 +85,7 @@ class TestRemotePrinter(TransactionCase):
     def test_permissions_delete_manager(self):
         printer = (
             self.env["res.remote.printer"]
-            .sudo(self.printer_manager)
+            .with_user(self.printer_manager)
             .create(
                 {
                     "remote_id": self.remote.id,
@@ -94,7 +94,7 @@ class TestRemotePrinter(TransactionCase):
                 }
             )
         )
-        printer.sudo(self.printer_manager).unlink()
+        printer.with_user(self.printer_manager).unlink()
         printer = self.env["res.remote.printer"].search(
             [
                 ("remote_id", "=", self.remote.id),
@@ -107,7 +107,7 @@ class TestRemotePrinter(TransactionCase):
     def test_permissions_delete_user(self):
         printer = (
             self.env["res.remote.printer"]
-            .sudo(self.printer_manager)
+            .with_user(self.printer_manager)
             .create(
                 {
                     "remote_id": self.remote.id,
@@ -117,11 +117,11 @@ class TestRemotePrinter(TransactionCase):
             )
         )
         with self.assertRaises(AccessError):
-            printer.sudo(self.printer_user).unlink()
+            printer.with_user(self.printer_user).unlink()
 
     def test_permissions_create_user(self):
         with self.assertRaises(AccessError):
-            self.env["res.remote.printer"].sudo(self.printer_user).create(
+            self.env["res.remote.printer"].with_user(self.printer_user).create(
                 {
                     "remote_id": self.remote.id,
                     "printer_id": self.printer_1.id,
