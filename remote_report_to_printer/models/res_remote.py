@@ -1,6 +1,6 @@
 # Copyright (c) 2018 Creu Blanca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ResRemote(models.Model):
@@ -10,7 +10,6 @@ class ResRemote(models.Model):
         "res.remote.printer", inverse_name="remote_id",
     )
 
-    @api.multi
     def get_printer_behaviour(self):
         self.ensure_one()
         printer_usage = self.env.context.get("printer_usage", "standard")

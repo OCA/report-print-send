@@ -12,7 +12,7 @@ class TestRemotePrinter(TransactionCase):
         self.remote = self.env["res.remote"].search([("name", "=", name)])
         if not self.remote:
             self.remote = self.env["res.remote"].create(
-                {"name": name, "ip": "127.0.0.1"}
+                {"name": name, "ip": "127.0.0.1", "in_network": True}
             )
         self.server = self.env["printing.server"].create(
             {"name": "Server", "address": "localhost", "port": 631}
