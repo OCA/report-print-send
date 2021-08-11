@@ -1,13 +1,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import mock
+from unittest import mock
 
-from odoo.tests import common
+from odoo.tests.common import HttpCase
+
+test_xml_id = "base_report_to_printer.test"
 
 
-@common.at_install(False)
-@common.post_install(True)
-class TestMail(common.HttpCase):
+class TestMail(HttpCase):
+    at_install = False
+    post_install = True
+
     def setUp(self):
         super(TestMail, self).setUp()
         self.Model = self.env["ir.model"]
@@ -23,11 +26,12 @@ class TestMail(common.HttpCase):
             {
                 "name": "Test",
                 "type": "qweb",
-                "xml_id": "base_report_to_printer.test",
+                "xml_id": test_xml_id,
                 "model_data_id": self.report_imd.id,
-                "arch": """<t t-name="base_report_to_printer.test">
+                "arch": """<t t-name="%s">
                 <div>Test</div>
-            </t>""",
+            </t>"""
+                % test_xml_id,
             }
         )
         self.report_imd.res_id = self.report_view.id
@@ -36,7 +40,7 @@ class TestMail(common.HttpCase):
                 "name": "Test",
                 "report_type": "qweb-pdf",
                 "model": "res.partner",
-                "report_name": "base_report_to_printer.test",
+                "report_name": test_xml_id,
             }
         )
         self.test_partner = self.partner_obj.create(
@@ -77,12 +81,24 @@ class TestMail(common.HttpCase):
         It should NOT print the report,
         regardless of the defined behaviour
         """
+        self.assertEqual(self.report_view.xml_id, test_xml_id)
         self.report.property_printing_action_id.action_type = "server"
         self.report.printing_printer_id = self.new_printer()
+
         with mock.patch(
             "odoo.addons.base_report_to_printer.models."
             "printing_printer.PrintingPrinter."
             "print_document"
         ) as print_document:
-            self.email_template.generate_email(self.test_partner.id)
+            self.email_template.generate_email(
+                self.test_partner.id,
+                fields=[
+                    "name",
+                    "email_from",
+                    "email_to",
+                    "partner_to",
+                    "subject",
+                    "body_html",
+                ],
+            )
             print_document.assert_not_called()
