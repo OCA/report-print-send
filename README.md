@@ -17,9 +17,9 @@ TODO: add repo description.
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 14.0.1.0.1 | Report to printer
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[base_report_to_printer](base_report_to_printer/) | 14.0.1.0.1 |  | Report to printer
 
 [//]: # (end addons)
 
