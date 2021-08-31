@@ -66,6 +66,11 @@ msgid "Being transformed into a different format"
 msgstr ""
 
 #. module: base_report_to_printer
+#: selection:printing.job,job_state_reason:0
+msgid "CUPS filter crashed"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups
 msgid "CUPS id for this job."
 msgstr ""

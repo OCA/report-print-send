@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
 "PO-Revision-Date: 2021-03-14 22:45+0000\n"
 "Last-Translator: Marcel Savegnago <marcel.savegnago@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,6 +67,11 @@ msgstr "Disponível"
 #: selection:printing.job,job_state_reason:0
 msgid "Being transformed into a different format"
 msgstr "Sendo transformado em um formato diferente"
+
+#. module: base_report_to_printer
+#: selection:printing.job,job_state_reason:0
+msgid "CUPS filter crashed"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups

@@ -54,7 +54,8 @@ msgstr "Endereço"
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Are you sure to want to cancel all jobs of this printer?"
-msgstr "Tem certeza que de deseja cancelar todos os trabalhos desta impressora?"
+msgstr ""
+"Tem certeza que de deseja cancelar todos os trabalhos desta impressora?"
 
 #. module: base_report_to_printer
 #: selection:printing.printer,status:0
@@ -65,6 +66,11 @@ msgstr "Disponível"
 #: selection:printing.job,job_state_reason:0
 msgid "Being transformed into a different format"
 msgstr "A ser transformado num formato diferente"
+
+#. module: base_report_to_printer
+#: selection:printing.job,job_state_reason:0
+msgid "CUPS filter crashed"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups
