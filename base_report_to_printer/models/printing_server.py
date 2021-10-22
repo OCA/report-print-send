@@ -36,6 +36,8 @@ class PrintingServer(models.Model):
         self.ensure_one()
         connection = False
         try:
+            cups.setServer(self.address)
+            cups.setPort(self.port)
             connection = cups.Connection(host=self.address, port=self.port)
         except Exception:
             message = _(
