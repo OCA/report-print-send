@@ -9,3 +9,4 @@
 * Sylvain Garancher <sylvain.garancher@syleam.fr>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Graeme Gellatly <graeme@o4sb.com>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
