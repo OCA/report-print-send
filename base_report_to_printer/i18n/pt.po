@@ -58,6 +58,16 @@ msgstr ""
 "Tem certeza que de deseja cancelar todos os trabalhos desta impressora?"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__attachment_id
+msgid "Attachment"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__attachment_line_ids
+msgid "Attachments to print"
+msgstr ""
+
+#. module: base_report_to_printer
 #: selection:printing.printer,status:0
 msgid "Available"
 msgstr "Disponível"
@@ -85,6 +95,7 @@ msgstr "Pode ser reiniciado"
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -144,6 +155,11 @@ msgid "Compressed using an unknown algorithm"
 msgstr "Comprimido usando um algoritmo desconhecido"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__copies
+msgid "Copies"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_uid
@@ -151,6 +167,8 @@ msgstr "Comprimido usando um algoritmo desconhecido"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_uid
 msgid "Created by"
 msgstr "Criado por"
 
@@ -162,6 +180,8 @@ msgstr "Criado por"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
 msgstr "Criado em"
 
@@ -239,6 +259,8 @@ msgstr "Desativar"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__display_name
 msgid "Display Name"
 msgstr "Nome Exibido"
 
@@ -297,6 +319,15 @@ msgid "Files were not received in full"
 msgstr "Os arquivos não foram recebidos na íntegra"
 
 #. module: base_report_to_printer
+#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:45
+#, python-format
+msgid ""
+"Following attachments could not be printed:\n"
+"\n"
+"%s\n"
+msgstr ""
+
+#. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
 msgid "Held because the printer is offline"
 msgstr "Retido porque a impressora está offline"
@@ -309,6 +340,8 @@ msgstr "Retido porque a impressora está offline"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -357,6 +390,8 @@ msgstr "Trabalhos imprimidos nesta impressora."
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line____last_update
 msgid "Last Modified on"
 msgstr "Modificada pela última vez"
 
@@ -368,6 +403,8 @@ msgstr "Modificada pela última vez"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_uid
 msgid "Last Updated by"
 msgstr "Atualizado pela última vez por"
 
@@ -379,6 +416,8 @@ msgstr "Atualizado pela última vez por"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_date
 msgid "Last Updated on"
 msgstr "Atualizado pela última vez em"
 
@@ -475,8 +514,25 @@ msgstr "Porta do servidor."
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Print"
 msgstr "Imprimir"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment
+msgid "Print Attachment"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment_line
+msgid "Print Attachment line"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.action_wizard_print_attachment
+#: model:ir.ui.menu,name:base_report_to_printer.menu_action_wizard_print_attachment
+msgid "Print Attachments"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
@@ -484,10 +540,16 @@ msgid "Print Job Action"
 msgstr "Ação Imprimir Trabalho"
 
 #. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
+msgid "Print attachments"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__printer_id
 msgid "Printer"
 msgstr "Impressora"
 
@@ -515,6 +577,11 @@ msgstr "Motivo do estado da impressora definida como 'parada parcialmente'"
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__printer_id
 msgid "Printer used for this job."
 msgstr "Impressora usada para este trabalho."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_wizard_print_attachment__printer_id
+msgid "Printer used to print the attachments."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
@@ -622,6 +689,11 @@ msgstr "Ações de Impressão de Relatórios"
 #: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
 msgstr "Relatórios"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__record_name
+msgid "Resource Name"
+msgstr ""
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state_reason:0
@@ -809,6 +881,11 @@ msgstr "Utilizador"
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
 msgstr "Utilizadores"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__wizard_id
+msgid "Wizard"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
