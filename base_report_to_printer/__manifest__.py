@@ -14,7 +14,7 @@
     " Open for Small Business Ltd",
     "website": "https://github.com/OCA/report-print-send",
     "license": "AGPL-3",
-    "depends": ["web"],
+    "depends": ["mail", "web"],
     "data": [
         "data/printing_data.xml",
         "security/security.xml",
