@@ -32,12 +32,12 @@ class TestWizardImportZpl2(TransactionCase):
         )
 
     def test_open_wizard(self):
-        """ open wizard from label"""
+        """open wizard from label"""
         res = self.label.import_zpl2()
         self.assertEqual(res.get("context").get("default_label_id"), self.label.id)
 
     def test_wizard_import_zpl2(self):
-        """ Import ZPL2 from wizard """
+        """Import ZPL2 from wizard"""
         zpl_data = (
             "^XA\n"
             "^CI28\n"
@@ -76,7 +76,7 @@ class TestWizardImportZpl2(TransactionCase):
         self.assertEqual(18, len(self.label.component_ids))
 
     def test_wizard_import_zpl2_add(self):
-        """ Import ZPL2 from wizard ADD"""
+        """Import ZPL2 from wizard ADD"""
         self.env["printing.label.zpl2.component"].create(
             {
                 "name": "ZPL II Label",
