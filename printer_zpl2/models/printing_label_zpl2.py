@@ -2,11 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import base64
-import datetime
 import io
 import itertools
 import logging
-import time
 from collections import defaultdict
 
 import requests
@@ -14,7 +12,7 @@ from PIL import Image, ImageOps
 
 from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.safe_eval import safe_eval
+from odoo.tools.safe_eval import safe_eval, wrap_module
 
 _logger = logging.getLogger(__name__)
 
@@ -36,6 +34,7 @@ class PrintingLabelZpl2(models.Model):
         comodel_name="ir.model",
         string="Model",
         required=True,
+        ondelete="cascade",
         help="Model used to print this label.",
     )
     origin_x = fields.Integer(
@@ -149,8 +148,22 @@ class PrintingLabelZpl2(models.Model):
                     "object": record,
                     "page_number": str(page_number + 1),
                     "page_count": str(page_count),
-                    "time": time,
-                    "datetime": datetime,
+                    "time": wrap_module(
+                        __import__("time"), ["time", "strptime", "strftime"]
+                    ),
+                    "datetime": wrap_module(
+                        __import__("datetime"),
+                        [
+                            "date",
+                            "datetime",
+                            "time",
+                            "timedelta",
+                            "timezone",
+                            "tzinfo",
+                            "MAXYEAR",
+                            "MINYEAR",
+                        ],
+                    ),
                 }
             )
             data = self._get_component_data(record, component, eval_args)
