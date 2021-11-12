@@ -134,7 +134,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_repeatable_component_label_fixed_contents(self):
-        """ Check contents of a repeatable label component
+        """Check contents of a repeatable label component
 
         Check that a fixed value is repeated each time
         """
@@ -193,7 +193,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_repeatable_component_label_iterable_contents(self):
-        """ Check contents of a repeatable label component
+        """Check contents of a repeatable label component
 
         Check that an iterable contents (list, tuple, etc.) is browsed
         If the repeat_count is higher than the value length, all values are
@@ -247,7 +247,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_repeatable_component_label_iterable_offset(self):
-        """ Check contents of a repeatable label component with an offset
+        """Check contents of a repeatable label component with an offset
 
         Check that an iterable contents (list, tuple, etc.) is browsed
         If the repeat_count is higher than the value length, all values are
@@ -777,7 +777,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_code49_barcode_label_contents_with_above(self):
-        """ Check contents of a code 49 barconde label
+        """Check contents of a code 49 barconde label
         with interpretation line above
         """
         label = self.new_label()
