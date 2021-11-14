@@ -167,6 +167,7 @@ class PrintingPrinter(models.Model):
     def print_file(self, file_name, report=None, **print_opts):
         """ Print a file """
         self.ensure_one()
+        title = print_opts.pop("title", file_name)
         connection = self.server_id._open_connection(raise_on_error=True)
         options = self.print_options(report=report, **print_opts)
 
@@ -175,12 +176,16 @@ class PrintingPrinter(models.Model):
             % (self.system_name, self.server_id.address))
         connection.printFile(self.system_name,
                              file_name,
-                             file_name,
+                             title,
                              options=options)
         _logger.info("Printing job: '%s' on %s" % (
             file_name,
             self.server_id.address,
         ))
+        try:
+            os.remove(file_name)
+        except OSError as exc:
+            _logger.warning("Unable to remove temporary file %s: %s", file_name, exc)
         return True
 
     @api.multi

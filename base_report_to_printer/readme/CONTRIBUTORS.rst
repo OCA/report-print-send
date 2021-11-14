@@ -10,3 +10,4 @@
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Graeme Gellatly <graeme@o4sb.com>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
+* Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
