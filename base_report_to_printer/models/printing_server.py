@@ -36,6 +36,13 @@ class PrintingServer(models.Model):
         self.ensure_one()
         connection = False
         try:
+            # Sometimes connecting to printer servers outside of the local network
+            # can result in a weird error "cups.IPPError: (1030, 'The printer
+            # or class does not exist.')".
+            # An explicit call to `setServer` and `setPort` fixed the issue.
+            # (see https://github.com/OpenPrinting/pycups/issues/30)
+            cups.setServer(self.address)
+            cups.setPort(self.port)
             connection = cups.Connection(host=self.address, port=self.port)
         except Exception:
             message = _(
