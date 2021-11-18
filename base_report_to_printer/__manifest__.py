@@ -8,7 +8,7 @@
 
 {
     "name": "Report to printer",
-    "version": "14.0.1.0.1",
+    "version": "15.0.1.0.1",
     "category": "Generic Modules/Base",
     "author": "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
     " LasLabs, Camptocamp, Odoo Community Association (OCA),"
