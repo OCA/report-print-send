@@ -3,7 +3,7 @@
 
 {
     'name': 'Printer ZPL II',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'category': 'Printer',
     'author': 'SUBTENO-IT, FLorent de Labarre, '
               'Apertoso NV, Odoo Community Association (OCA)',
