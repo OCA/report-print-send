@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-base_report_to_printer',
+        'odoo14-addon-base_report_to_printer_mail',
         'odoo14-addon-printer_zpl2',
     ],
     classifiers=[
