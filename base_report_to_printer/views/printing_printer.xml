@@ -31,6 +31,12 @@
                         string="Cancel all running jobs"
                         confirm="Are you sure to want to cancel all jobs of this printer?"
                     />
+                    <button
+                        name="print_test_page"
+                        type="object"
+                        string="Print Test Page"
+                        confirm="Are you sure to want to print a test page?"
+                    />
                 </header>
                 <sheet>
                     <widget

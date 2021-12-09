@@ -242,3 +242,10 @@ class PrintingPrinter(models.Model):
         self.mapped("server_id").update_printers()
 
         return True
+
+    def print_test_page(self):
+        for printer in self:
+            connection = printer.server_id._open_connection()
+            connection.printTestPage(printer.system_name)
+
+        self.mapped("server_id").update_jobs(which="completed")
