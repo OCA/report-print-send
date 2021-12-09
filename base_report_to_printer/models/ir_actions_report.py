@@ -107,7 +107,7 @@ class IrActionsReport(models.Model):
         printer = behaviour.pop("printer", None)
 
         if not printer:
-            raise exceptions.Warning(_("No printer configured to print this report."))
+            raise exceptions.UserError(_("No printer configured to print this report."))
         if self.print_report_name:
             report_file_names = [
                 safe_eval(self.print_report_name, {"object": obj, "time": time})
