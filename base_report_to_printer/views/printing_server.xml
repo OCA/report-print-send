@@ -28,6 +28,11 @@
                         <field name="port" />
                     </group>
                     <group>
+                        <field name="user" />
+                        <field name="password" />
+                        <field name="encryption_policy" />
+                    </group>
+                    <group>
                         <separator string="Printers" colspan="2" />
                         <field name="printer_ids" nolabel="1" />
                     </group>
