@@ -24,6 +24,17 @@ class PrintingServer(models.Model):
         default="localhost", required=True, help="IP address or hostname of the server"
     )
     port = fields.Integer(default=631, required=True, help="Port of the server.")
+    user = fields.Char(help="User name to connect to the server. Empty by default.")
+    password = fields.Char(help="Password to connect to the server. Empty by default.")
+    encryption_policy = fields.Selection(
+        [
+            ("0", "HTTP_ENCRYPT_IF_REQUESTED"),
+            ("1", "HTTP_ENCRYPT_NEVER"),
+            ("2", "HTTP_ENCRYPT_REQUIRED"),
+            ("3", "HTTP_ENCRYPT_ALWAYS"),
+        ],
+        help="Encryption Policy to connect to the server. Empty by default.",
+    )
     active = fields.Boolean(default=True, help="If checked, this server is useable.")
     printer_ids = fields.One2many(
         comodel_name="printing.printer",
@@ -35,6 +46,13 @@ class PrintingServer(models.Model):
     def _open_connection(self, raise_on_error=False):
         self.ensure_one()
         connection = False
+
+        # Password callback
+        password = self.password
+
+        def pw_callback(prompt):
+            return password
+
         try:
             # Sometimes connecting to printer servers outside of the local network
             # can result in a weird error "cups.IPPError: (1030, 'The printer
@@ -43,6 +61,13 @@ class PrintingServer(models.Model):
             # (see https://github.com/OpenPrinting/pycups/issues/30)
             cups.setServer(self.address)
             cups.setPort(self.port)
+            if self.user:
+                cups.setUser(self.user)
+                if self.encryption_policy:
+                    cups.setEncryption(int(self.encryption_policy))
+                if self.password:
+                    cups.setPasswordCB(pw_callback)
+
             connection = cups.Connection(host=self.address, port=self.port)
         except Exception:
             message = _(
@@ -57,7 +82,7 @@ class PrintingServer(models.Model):
         return connection
 
     def action_update_printers(self):
-        return self.update_printers()
+        return self.update_printers(raise_on_error=True)
 
     def update_printers(self, domain=None, raise_on_error=False):
         if domain is None:
