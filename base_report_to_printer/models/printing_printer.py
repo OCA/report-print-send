@@ -246,6 +246,14 @@ class PrintingPrinter(models.Model):
     def print_test_page(self):
         for printer in self:
             connection = printer.server_id._open_connection()
-            connection.printTestPage(printer.system_name)
+            if printer.model == "Local Raw Printer":
+                fd, file_name = mkstemp()
+                try:
+                    os.write(fd, b"TEST")
+                finally:
+                    os.close(fd)
+                connection.printTestPage(printer.system_name, file=file_name)
+            else:
+                connection.printTestPage(printer.system_name)
 
         self.mapped("server_id").update_jobs(which="completed")
