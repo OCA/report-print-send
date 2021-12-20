@@ -161,3 +161,24 @@ class IrActionsReport(models.Model):
             )
 
         return document, doc_format
+
+    def _render_qweb_text(self, report_ref, docids, data=None):
+        """Generate a TEXT file and returns it.
+
+        If the action configured on the report is server, it prints the
+        generated document as well.
+        """
+        document, doc_format = super()._render_qweb_text(
+            report_ref, docids=docids, data=data
+        )
+
+        behaviour = self.behaviour()
+        printer = behaviour.pop("printer", None)
+        can_print_report = self._can_print_report(behaviour, printer, document)
+
+        if can_print_report:
+            printer.print_document(
+                self, document, doc_format=self.report_type, **behaviour
+            )
+
+        return document, doc_format
