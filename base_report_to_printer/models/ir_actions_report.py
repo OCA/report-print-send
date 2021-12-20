@@ -7,7 +7,7 @@
 import time
 
 from odoo import _, api, exceptions, fields, models
-from odoo.tools import safe_eval
+from odoo.tools.safe_eval import safe_eval
 
 
 class IrActionsReport(models.Model):
