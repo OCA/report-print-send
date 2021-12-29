@@ -9,7 +9,7 @@ odoo.define("base_report_to_printer.print", function (require) {
         _triggerDownload: function (action, options, type) {
             var self = this;
             var _super = this._super;
-            if (type === "pdf") {
+            if (type === "pdf" || "text") {
                 this._rpc({
                     model: "ir.actions.report",
                     method: "print_action_for_report_name",
@@ -49,9 +49,9 @@ odoo.define("base_report_to_printer.print", function (require) {
                         return _super.apply(self, [action, options, type]);
                     }
                 });
-            } else {
-                return _super.apply(self, [action, options, type]);
+                return Promise.reject();
             }
+            return _super.apply(self, [action, options, type]);
         },
     });
 });
