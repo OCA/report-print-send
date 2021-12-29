@@ -9,6 +9,8 @@ from time import time
 from odoo import _, api, exceptions, fields, models
 from odoo.tools.safe_eval import safe_eval
 
+REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
+
 
 class IrActionsReport(models.Model):
     _inherit = "ir.actions.report"
@@ -99,10 +101,17 @@ class IrActionsReport(models.Model):
         return result
 
     def print_document(self, record_ids, data=None):
-        """Print a document, do not return the document file"""
-        document, doc_format = self.with_context(
-            must_skip_send_to_printer=True
-        )._render_qweb_pdf(record_ids, data=data)
+        """ Print a document, do not return the document file """
+        report_type = REPORT_TYPES.get(self.report_type)
+        if not report_type:
+            raise exceptions.UserError(
+                _("This report type (%s) is not supported by direct printing!")
+                % str(self.report_type)
+            )
+        method_name = "_render_qweb_%s" % (report_type)
+        document, doc_format = getattr(
+            self.with_context(must_skip_send_to_printer=True), method_name
+        )(record_ids, data=data)
         behaviour = self.behaviour()
         printer = behaviour.pop("printer", None)
 
