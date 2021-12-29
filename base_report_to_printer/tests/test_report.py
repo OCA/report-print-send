@@ -47,6 +47,14 @@ class TestReport(common.HttpCase):
                 "report_name": "base_report_to_printer.test",
             }
         )
+        self.report_text = self.Model.create(
+            {
+                "name": "Test",
+                "report_type": "qweb-text",
+                "model": "res.partner",
+                "report_name": "base_report_to_printer.test",
+            }
+        )
         self.partners = self.env["res.partner"]
         for n in range(5):
             self.partners += self.env["res.partner"].create({"name": "Test %d" % n})
@@ -112,6 +120,26 @@ class TestReport(common.HttpCase):
                 document[0],
                 action="server",
                 doc_format="qweb-pdf",
+                tray=False,
+            )
+
+    def test_render_qweb_text_printable(self):
+        """It should print the report, only if it is printable"""
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models."
+            "printing_printer.PrintingPrinter."
+            "print_document"
+        ) as print_document:
+            self.report_text.property_printing_action_id.action_type = "server"
+            self.report_text.printing_printer_id = self.new_printer()
+            document = self.report_text._render_qweb_text(
+                self.report.report_name, self.partners.ids
+            )
+            print_document.assert_called_once_with(
+                self.report_text,
+                document[0],
+                action="server",
+                doc_format="qweb-text",
                 tray=False,
             )
 
