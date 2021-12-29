@@ -100,7 +100,7 @@ class IrActionsReport(models.Model):
         return result
 
     def print_document(self, record_ids, data=None):
-        """ Print a document, do not return the document file """
+        """Print a document, do not return the document file"""
         report_type = REPORT_TYPES.get(self.report_type)
         if not report_type:
             raise exceptions.UserError(
