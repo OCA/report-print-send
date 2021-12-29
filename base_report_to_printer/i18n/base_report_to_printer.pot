@@ -769,6 +769,12 @@ msgid ""
 msgstr ""
 
 #. module: base_report_to_printer
+#: code:addons/base_report_to_printer/models/ir_actions_report.py:0
+#, python-format
+msgid "This report type (%s) is not supported by direct printing!"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
 msgid "Time At Completed"
 msgstr ""
