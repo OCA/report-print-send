@@ -7,7 +7,8 @@ class ResRemote(models.Model):
     _inherit = "res.remote"
 
     remote_printer_ids = fields.One2many(
-        "res.remote.printer", inverse_name="remote_id",
+        "res.remote.printer",
+        inverse_name="remote_id",
     )
 
     def get_printer_behaviour(self):

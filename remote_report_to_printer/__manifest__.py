@@ -6,7 +6,7 @@
     "version": "13.0.1.0.0",
     "category": "Generic Modules/Base",
     "author": "Creu Blanca, Odoo Community Association (OCA)",
-    "website": "http://www.github.com/OCA/report-print-send",
+    "website": "https://github.com/OCA/report-print-send",
     "license": "AGPL-3",
     "depends": ["base_remote", "base_report_to_printer"],
     "data": [
