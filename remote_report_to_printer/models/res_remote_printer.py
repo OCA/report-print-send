@@ -8,10 +8,19 @@ class ResRemotePrinter(models.Model):
     _name = "res.remote.printer"
     _description = "Remote Printer"
 
-    remote_id = fields.Many2one("res.remote", ondelete="cascade", readonly=True,)
-    printer_id = fields.Many2one("printing.printer", ondelete="cascade",)
+    remote_id = fields.Many2one(
+        "res.remote",
+        ondelete="cascade",
+        readonly=True,
+    )
+    printer_id = fields.Many2one(
+        "printing.printer",
+        ondelete="cascade",
+    )
     printer_tray_id = fields.Many2one(
-        "printing.tray", ondelete="cascade", domain="[('printer_id', '=', printer_id)]",
+        "printing.tray",
+        ondelete="cascade",
+        domain="[('printer_id', '=', printer_id)]",
     )
     is_default = fields.Boolean(default=False)
     printer_usage = fields.Selection([("standard", "Standard")], default="standard")
