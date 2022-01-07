@@ -5,14 +5,16 @@ from odoo import models
 
 
 class PrintingServer(models.Model):
-    _name = 'printing.server'
-    _inherit = ['printing.server', 'server.env.mixin']
+    _name = "printing.server"
+    _inherit = ["printing.server", "server.env.mixin"]
 
     @property
     def _server_env_fields(self):
         base_fields = super()._server_env_fields
-        base_fields.update({
-            'address': {},
-            'port': {},
-        })
+        base_fields.update(
+            {
+                "address": {},
+                "port": {},
+            }
+        )
         return base_fields
