@@ -42,14 +42,12 @@ class PrintAttachment(models.TransientModel):
             )
         if errors:
             return {
-                "warning": _(
-                    "Following attachments could not be printed:\n\n%s"
-                    % "\n".join(
-                        [
-                            _("%s (%s copies)") % (err.record_name, err.copies)
-                            for err in errors
-                        ]
-                    )
+                "warning": _("Following attachments could not be printed:\n\n%s")
+                % "\n".join(
+                    [
+                        _("%s (%s copies)") % (err.record_name, err.copies)
+                        for err in errors
+                    ]
                 )
             }
 
