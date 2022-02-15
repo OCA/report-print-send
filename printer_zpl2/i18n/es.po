@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-12 02:40+0000\n"
-"PO-Revision-Date: 2018-11-14 22:21+0000\n"
-"Last-Translator: Enric Tobella <etobella@creublanca.es>\n"
+"PO-Revision-Date: 2022-02-15 11:16+0000\n"
+"Last-Translator: Olga Marco Puértolas <olga.marco@creublanca.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.2.2\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__b
@@ -112,42 +112,47 @@ msgstr "Archivado"
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__data_autofill
 msgid "Autofill Data"
-msgstr ""
+msgstr "Autocompletar datos"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__bar_width_ratio
 msgid "Bar Width Ratio"
-msgstr ""
+msgstr "Relación de ancho de barra"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
 msgid "Barcode Format"
-msgstr ""
+msgstr "Formato de código de barras"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__model
 msgid "Barcode model, used by some barcode types like QR Code."
 msgstr ""
+"Modelo de código de barras, utilizado por algunos tipos de códigos de barras "
+"como el código QR."
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__color__b
 msgid "Black"
-msgstr ""
+msgstr "Negro"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__block_lines
+#, fuzzy
 msgid "Block Lines"
-msgstr ""
+msgstr "Líneas de bloqueo"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__block_spaces
+#, fuzzy
 msgid "Block Spaces"
-msgstr ""
+msgstr "Bloquear espacios"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__block_width
+#, fuzzy
 msgid "Block Width"
-msgstr ""
+msgstr "Ancho de bloque"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_import_zpl2_form
