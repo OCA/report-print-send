@@ -38,6 +38,7 @@ msgstr "Acciones"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__active
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__active
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__active
 msgid "Active"
 msgstr "Activo"
@@ -48,9 +49,19 @@ msgid "Address"
 msgstr "Dirección"
 
 #. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
+msgid "Archived"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Are you sure to want to cancel all jobs of this printer?"
 msgstr "¿Estás seguro que quieres cancelar todos los trabajos de la impresora?"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Are you sure to want to print a test page?"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__available
@@ -227,6 +238,7 @@ msgid "Disable"
 msgstr "Deshabilitado"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__display_name
@@ -234,6 +246,7 @@ msgstr "Deshabilitado"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -275,8 +288,8 @@ msgstr "Error enviando el documento a la impresora "
 #: code:addons/base_report_to_printer/models/printing_server.py:0
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is"
-" running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
+"running and that you can reach it from the Odoo server."
 msgstr ""
 "Ha fallado la conexión al servidor CUPS %s:%s. Comprueba que el servidor "
 "CUPS está funcionando y que el servidor de Odoo puede comunicarse con él."
@@ -297,6 +310,7 @@ msgid "Held because the printer is offline"
 msgstr "Retenido por que la impresora está desconectada"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__id
@@ -304,6 +318,7 @@ msgstr "Retenido por que la impresora está desconectada"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__id
 msgid "ID"
 msgstr "ID"
 
@@ -344,6 +359,7 @@ msgid "Jobs printed on this printer."
 msgstr "Trabajos imprimidos por la impresora."
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer____last_update
@@ -351,6 +367,7 @@ msgstr "Trabajos imprimidos por la impresora."
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users____last_update
 msgid "Last Modified on"
 msgstr "Última modificación el"
 
@@ -478,6 +495,11 @@ msgid "Print Job Action"
 msgstr "Acción de Imprimir un Trabajo"
 
 #. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Print Test Page"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
@@ -527,7 +549,6 @@ msgstr "Lista de impresoras"
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__printing
 #: model:ir.ui.menu,name:base_report_to_printer.printing_menu
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_users_form
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_users_form_simple_modif
 msgid "Printing"
 msgstr "Imprimiendo"
 
@@ -593,7 +614,6 @@ msgstr "Motivo del estado actual del trabajo."
 
 #. module: base_report_to_printer
 #. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:0
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:0
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__report_id
 #, python-format
@@ -708,9 +728,8 @@ msgstr "Este campo permite configurar acción e impresora a nivel de usuario"
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid ""
-"This process will create all missing printers from the current CUPS server."
+"This process will create all missing printers from the current CUPS server.\""
 msgstr ""
-"Este proceso creará las impresoras no configurada del servidor CUPS actual."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
@@ -802,7 +821,12 @@ msgstr "Usuario"
 msgid "Users"
 msgstr "Usuarios"
 
-#. module: base_report_to_printer
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
-msgid "or"
-msgstr "o"
+#~ msgid ""
+#~ "This process will create all missing printers from the current CUPS "
+#~ "server."
+#~ msgstr ""
+#~ "Este proceso creará las impresoras no configurada del servidor CUPS "
+#~ "actual."
+
+#~ msgid "or"
+#~ msgstr "o"
