@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -29,11 +29,17 @@ msgid "Created on"
 msgstr ""
 
 #. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_action__display_name
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote__display_name
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_action__id
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote__id
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__id
 msgid "ID"
 msgstr ""
@@ -44,6 +50,9 @@ msgid "Is Default"
 msgstr ""
 
 #. module: remote_report_to_printer
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_ir_actions_report____last_update
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_action____last_update
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote____last_update
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer____last_update
 msgid "Last Modified on"
 msgstr ""
