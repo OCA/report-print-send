@@ -173,3 +173,10 @@ class TestPrintingPrinter(TransactionCase):
         printer = self.new_record()
         printer.disable()
         cups.Connection().disablePrinter.assert_called_once_with(printer.system_name)
+
+    @mock.patch("%s.cups" % server_model)
+    def test_print_test_page(self, cups):
+        """ It should print a test page """
+        printer = self.new_record()
+        printer.print_test_page()
+        cups.Connection().printTestPage.assert_called_once_with(printer.system_name)
