@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* server_env_printing_server
+# 	* server_env_printing_server
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,7 +14,26 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: server_env_printing_server
+#: model:ir.model.fields,field_description:server_env_printing_server.field_printing_server__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: server_env_printing_server
+#: model:ir.model.fields,field_description:server_env_printing_server.field_printing_server__id
+msgid "ID"
+msgstr ""
+
+#. module: server_env_printing_server
+#: model:ir.model.fields,field_description:server_env_printing_server.field_printing_server____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: server_env_printing_server
 #: model:ir.model,name:server_env_printing_server.model_printing_server
 msgid "Printing server"
 msgstr ""
 
+#. module: server_env_printing_server
+#: model:ir.model.fields,field_description:server_env_printing_server.field_printing_server__server_env_defaults
+msgid "Server Env Defaults"
+msgstr ""
