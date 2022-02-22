@@ -266,6 +266,16 @@ msgid "Enable"
 msgstr "Einschalten"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__encryption_policy
+msgid "Encryption Policy"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__encryption_policy
+msgid "Encryption Policy to connect to the server. Empty by default."
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__error
 msgid "Error"
 msgstr "Fehler"
@@ -307,6 +317,26 @@ msgstr "Dateien werden momentan empfangen"
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__submission-interrupted
 msgid "Files were not received in full"
 msgstr "Dateien wurden nicht vollständig erhalten"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__3
+msgid "HTTP_ENCRYPT_ALWAYS"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__0
+msgid "HTTP_ENCRYPT_IF_REQUESTED"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__1
+msgid "HTTP_ENCRYPT_NEVER"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__2
+msgid "HTTP_ENCRYPT_REQUIRED"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__service-off-line
@@ -462,6 +492,16 @@ msgstr "Papierquelle"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__tray_ids
 msgid "Paper Sources"
 msgstr "Papierquellen"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__password
+msgid "Password"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__password
+msgid "Password to connect to the server. Empty by default."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__pending
@@ -818,8 +858,14 @@ msgstr "Drucker von CUPS auffrischen"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__user_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__user
 msgid "User"
 msgstr "Anwender"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__user
+msgid "User name to connect to the server. Empty by default."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
