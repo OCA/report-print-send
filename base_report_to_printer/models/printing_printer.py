@@ -173,7 +173,7 @@ class PrintingPrinter(models.Model):
         return options
 
     def print_file(self, file_name, report=None, **print_opts):
-        """ Print a file """
+        """Print a file"""
         self.ensure_one()
         title = print_opts.pop("title", file_name)
         connection = self.server_id._open_connection(raise_on_error=True)
