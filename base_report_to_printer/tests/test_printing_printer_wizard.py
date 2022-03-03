@@ -38,7 +38,7 @@ class TestPrintingPrinterWizard(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_action_ok_inits_connection(self, cups):
-        """ It should initialize CUPS connection """
+        """It should initialize CUPS connection"""
         self.Model.action_ok()
         cups.Connection.assert_called_once_with(
             host=self.server.address, port=self.server.port
@@ -46,7 +46,7 @@ class TestPrintingPrinterWizard(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_action_ok_gets_printers(self, cups):
-        """ It should get printers from CUPS """
+        """It should get printers from CUPS"""
         cups.Connection().getPrinters.return_value = {"sys_name": self.printer_vals}
         cups.Connection().getPPD3.return_value = (200, 0, "")
         self.Model.action_ok()
@@ -54,14 +54,14 @@ class TestPrintingPrinterWizard(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_action_ok_raises_warning_on_error(self, cups):
-        """ It should raise Warning on any error """
+        """It should raise Warning on any error"""
         cups.Connection.side_effect = StopTest
         with self.assertRaises(UserError):
             self.Model.action_ok()
 
     @mock.patch("%s.cups" % model)
     def test_action_ok_creates_new_printer(self, cups):
-        """ It should create new printer w/ proper vals """
+        """It should create new printer w/ proper vals"""
         cups.Connection().getPrinters.return_value = {"sys_name": self.printer_vals}
         cups.Connection().getPPD3.return_value = (200, 0, "")
         self.Model.action_ok()
@@ -77,7 +77,7 @@ class TestPrintingPrinterWizard(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_action_ok_skips_existing_printer(self, cups):
-        """ It should not recreate existing printers """
+        """It should not recreate existing printers"""
         cups.Connection().getPrinters.return_value = {"sys_name": self.printer_vals}
         cups.Connection().getPPD3.return_value = (200, 0, "")
         self.env["printing.printer"].create(self._record_vals())
