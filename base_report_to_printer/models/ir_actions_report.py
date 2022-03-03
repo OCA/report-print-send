@@ -35,7 +35,7 @@ class IrActionsReport(models.Model):
 
     @api.onchange("printing_printer_id")
     def onchange_printing_printer_id(self):
-        """ Reset the tray when the printer is changed """
+        """Reset the tray when the printer is changed"""
         self.printer_tray_id = False
 
     @api.model
@@ -99,7 +99,7 @@ class IrActionsReport(models.Model):
         return result
 
     def print_document(self, record_ids, data=None):
-        """ Print a document, do not return the document file """
+        """Print a document, do not return the document file"""
         document, doc_format = self.with_context(
             must_skip_send_to_printer=True
         )._render_qweb_pdf(record_ids, data=data)

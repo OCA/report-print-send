@@ -44,7 +44,7 @@ class TestPrintingJob(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_cancel_job_error(self, cups):
-        """ It should catch any exception from CUPS and update status """
+        """It should catch any exception from CUPS and update status"""
         cups.Connection.side_effect = Exception
         printer = self.new_printer()
         job = self.new_job(printer, {"job_id_cups": 2})
@@ -54,7 +54,7 @@ class TestPrintingJob(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_cancel_job(self, cups):
-        """ It should catch any exception from CUPS and update status """
+        """It should catch any exception from CUPS and update status"""
         printer = self.new_printer()
         job = self.new_job(printer)
         job.cancel()

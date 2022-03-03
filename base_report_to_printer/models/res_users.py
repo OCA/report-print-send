@@ -38,5 +38,5 @@ class ResUsers(models.Model):
 
     @api.onchange("printing_printer_id")
     def onchange_printing_printer_id(self):
-        """ Reset the tray when the printer is changed """
+        """Reset the tray when the printer is changed"""
         self.printer_tray_id = False
