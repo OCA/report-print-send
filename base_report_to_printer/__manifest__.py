@@ -7,7 +7,7 @@
 
 {
     "name": "Report to printer",
-    "version": "14.0.2.0.0",
+    "version": "15.0.1.0.0",
     "category": "Generic Modules/Base",
     "author": "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
     " LasLabs, Camptocamp, Odoo Community Association (OCA),"
@@ -18,7 +18,6 @@
     "data": [
         "data/printing_data.xml",
         "security/security.xml",
-        "views/assets.xml",
         "views/printing_printer.xml",
         "views/printing_server.xml",
         "views/printing_job.xml",
@@ -27,6 +26,11 @@
         "views/ir_actions_report.xml",
         "wizards/printing_printer_update_wizard_view.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "/base_report_to_printer/static/src/js/qweb_action_manager.js",
+        ],
+    },
     "installable": True,
     "application": False,
     "external_dependencies": {"python": ["pycups"]},

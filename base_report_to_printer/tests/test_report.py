@@ -27,13 +27,17 @@ class TestReport(common.HttpCase):
             </t>""",
             }
         )
-        self.report_imd = self.env["ir.model.data"].create(
-            {
-                "name": "test",
-                "module": "base_report_to_printer",
-                "model": "ir.ui.view",
-                "res_id": self.report_view.id,
-            }
+        self.report_imd = (
+            self.env["ir.model.data"]
+            .sudo()
+            .create(
+                {
+                    "name": "test",
+                    "module": "base_report_to_printer",
+                    "model": "ir.ui.view",
+                    "res_id": self.report_view.id,
+                }
+            )
         )
         self.report = self.Model.create(
             {
