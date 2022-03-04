@@ -71,13 +71,16 @@ class PrintingServer(models.Model):
             connection = cups.Connection(host=self.address, port=self.port)
         except Exception:
             message = _(
-                "Failed to connect to the CUPS server on %s:%s. "
+                "Failed to connect to the CUPS server on %(address)s:%(port)s. "
                 "Check that the CUPS server is running and that "
                 "you can reach it from the Odoo server."
-            ) % (self.address, self.port)
+            ) % {
+                "address": self.address,
+                "port": self.port,
+            }
             _logger.warning(message)
             if raise_on_error:
-                raise exceptions.UserError(message)
+                raise exceptions.UserError(message) from Exception
 
         return connection
 
