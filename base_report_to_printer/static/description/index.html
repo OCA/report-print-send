@@ -432,7 +432,8 @@ rights to give users the ability to view the print menu.</li>
 of the report (truncated at 80 characters). By default this will not be
 displayed by CUPS web interface or in Odoo. To see this information, you need
 to change the configuration of your CUPS server and set the JobPrivateValue
-directive to “job-name”, and reload the server. See <cite>cupsd.conf(5)
+directive to “none” (or some other list of values which does not include
+“job-name”) , and reload the server. See <cite>cupsd.conf(5)
 &lt;https://www.cups.org/doc/man-cupsd.conf.html&gt;</cite> for details.</p>
 </div>
 <div class="section" id="usage">
