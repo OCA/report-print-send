@@ -22,18 +22,23 @@ class PrintAttachment(models.TransientModel):
     )
 
     def print_attachments(self):
-        """ Prints a label per selected record """
+        """Prints a label per selected record"""
         self.ensure_one()
         errors = []
         for att_line in self.attachment_line_ids:
             data = att_line.attachment_id.datas
+            title = att_line.attachment_id.store_fname
             if not data:
                 errors.append(att_line)
                 continue
             content = base64.b64decode(data)
             content_format = att_line.get_format()
             self.printer_id.print_document(
-                None, content=content, format=content_format, copies=att_line.copies
+                None,
+                content=content,
+                format=content_format,
+                copies=att_line.copies,
+                title=title,
             )
         if errors:
             return {
