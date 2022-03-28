@@ -319,7 +319,7 @@ msgid "Files were not received in full"
 msgstr "Os arquivos não foram recebidos na íntegra"
 
 #. module: base_report_to_printer
-#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:45
+#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:47
 #, python-format
 msgid ""
 "Following attachments could not be printed:\n"
