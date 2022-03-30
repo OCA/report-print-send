@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo10-addon-base_report_to_printer',
+        'odoo10-addon-pingen',
         'odoo10-addon-printer_tray',
         'odoo10-addon-printer_zpl2',
     ],
