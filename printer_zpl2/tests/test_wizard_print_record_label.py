@@ -37,7 +37,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_print_record_label(self, cups):
-        """ Check that printing a label using the generic wizard works """
+        """Check that printing a label using the generic wizard works"""
         wizard_obj = self.Model.with_context(
             active_model="printing.printer",
             active_id=self.printer.id,
