@@ -34,11 +34,11 @@ class TestWizardPrintRecordLabel(TransactionCase):
         )
 
     def test_create_action(self):
-        """ Check the creation of action """
+        """Check the creation of action"""
         self.label.create_action()
         self.assertTrue(self.label.action_window_id)
 
     def test_unlink_action(self):
-        """ Check the unlink of action """
+        """Check the unlink of action"""
         self.label.unlink_action()
         self.assertFalse(self.label.action_window_id)
