@@ -35,7 +35,7 @@ class ResRemotePrinter(models.Model):
 
     @api.onchange("printer_id")
     def _onchange_printing_printer_id(self):
-        """ Reset the tray when the printer is changed """
+        """Reset the tray when the printer is changed"""
         self.printer_tray_id = False
 
     @api.constrains("remote_id", "printer_usage", "is_default")

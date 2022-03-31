@@ -51,7 +51,7 @@ class PrintRecordLabel(models.TransientModel):
         return values
 
     def print_label(self):
-        """ Prints a label per selected record """
+        """Prints a label per selected record"""
         record_model = self.env.context["active_model"]
         for record_id in self.env.context["active_ids"]:
             record = self.env[record_model].browse(record_id)

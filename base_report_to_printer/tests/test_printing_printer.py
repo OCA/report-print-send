@@ -64,7 +64,7 @@ class TestPrintingPrinter(TransactionCase):
         self.assertEqual(self.Model._set_option_format(None, "pdf"), {})
 
     def test_print_options(self):
-        """ It should generate the right options dictionnary """
+        """It should generate the right options dictionnary"""
         # TODO: None here used as report - tests here should be merged
         # with tests in test_printing_printer_tray from when modules merged
         report = self.env["ir.actions.report"].search([], limit=1)
@@ -81,7 +81,7 @@ class TestPrintingPrinter(TransactionCase):
 
     @mock.patch("%s.cups" % server_model)
     def test_print_report(self, cups):
-        """ It should print a report through CUPS """
+        """It should print a report through CUPS"""
         fd, file_name = tempfile.mkstemp()
         with mock.patch("%s.mkstemp" % model) as mkstemp:
             mkstemp.return_value = fd, file_name
@@ -93,7 +93,7 @@ class TestPrintingPrinter(TransactionCase):
 
     @mock.patch("%s.cups" % server_model)
     def test_print_report_error(self, cups):
-        """ It should print a report through CUPS """
+        """It should print a report through CUPS"""
         cups.Connection.side_effect = Exception
         fd, file_name = tempfile.mkstemp()
         with mock.patch("%s.mkstemp" % model) as mkstemp:
@@ -106,7 +106,7 @@ class TestPrintingPrinter(TransactionCase):
 
     @mock.patch("%s.cups" % server_model)
     def test_print_file(self, cups):
-        """ It should print a file through CUPS """
+        """It should print a file through CUPS"""
         file_name = "file_name"
         printer = self.new_record()
         printer.print_file(file_name, "pdf")
@@ -116,7 +116,7 @@ class TestPrintingPrinter(TransactionCase):
 
     @mock.patch("%s.cups" % server_model)
     def test_print_file_error(self, cups):
-        """ It should print a file through CUPS """
+        """It should print a file through CUPS"""
         cups.Connection.side_effect = Exception
         file_name = "file_name"
         printer = self.new_record()
@@ -124,7 +124,7 @@ class TestPrintingPrinter(TransactionCase):
             printer.print_file(file_name)
 
     def test_set_default(self):
-        """ It should set a single record as default """
+        """It should set a single record as default"""
         printer = self.new_record()
         self.assertTrue(printer.default)
         other_printer = self.new_record()
@@ -136,7 +136,7 @@ class TestPrintingPrinter(TransactionCase):
         self.assertEqual(other_printer, self.Model.get_default())
 
     def test_unset_default(self):
-        """ It should unset the default state of the printer """
+        """It should unset the default state of the printer"""
         printer = self.new_record()
         self.assertTrue(printer.default)
         printer.unset_default()
@@ -144,7 +144,7 @@ class TestPrintingPrinter(TransactionCase):
 
     @mock.patch("%s.cups" % server_model)
     def test_cancel_all_jobs(self, cups):
-        """ It should cancel all jobs """
+        """It should cancel all jobs"""
         printer = self.new_record()
         printer.action_cancel_all_jobs()
         cups.Connection().cancelAllJobs.assert_called_once_with(
@@ -153,7 +153,7 @@ class TestPrintingPrinter(TransactionCase):
 
     @mock.patch("%s.cups" % server_model)
     def test_cancel_and_purge_all_jobs(self, cups):
-        """ It should cancel all jobs """
+        """It should cancel all jobs"""
         printer = self.new_record()
         printer.cancel_all_jobs(purge_jobs=True)
         cups.Connection().cancelAllJobs.assert_called_once_with(
@@ -162,21 +162,21 @@ class TestPrintingPrinter(TransactionCase):
 
     @mock.patch("%s.cups" % server_model)
     def test_enable_printer(self, cups):
-        """ It should enable the printer """
+        """It should enable the printer"""
         printer = self.new_record()
         printer.enable()
         cups.Connection().enablePrinter.assert_called_once_with(printer.system_name)
 
     @mock.patch("%s.cups" % server_model)
     def test_disable_printer(self, cups):
-        """ It should disable the printer """
+        """It should disable the printer"""
         printer = self.new_record()
         printer.disable()
         cups.Connection().disablePrinter.assert_called_once_with(printer.system_name)
 
     @mock.patch("%s.cups" % server_model)
     def test_print_test_page(self, cups):
-        """ It should print a test page """
+        """It should print a test page"""
         printer = self.new_record()
         printer.print_test_page()
         cups.Connection().printTestPage.assert_called_once_with(printer.system_name)
