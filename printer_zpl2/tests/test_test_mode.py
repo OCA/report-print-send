@@ -35,7 +35,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
         )
 
     def test_get_record(self):
-        """ Check if return a record """
+        """Check if return a record"""
         self.label.record_id = 10
         res = self.label._get_record()
 
@@ -47,7 +47,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_print_label_test(self, cups):
-        """ Check if print test """
+        """Check if print test"""
         self.label.test_print_mode = True
         self.label.printer_id = self.printer
         self.label.record_id = 10
@@ -55,12 +55,12 @@ class TestWizardPrintRecordLabel(TransactionCase):
         cups.Connection().printFile.assert_called_once()
 
     def test_emulation_without_params(self):
-        """ Check if not execute next if not in this mode """
+        """Check if not execute next if not in this mode"""
         self.label.test_labelary_mode = False
         self.assertIs(self.label.labelary_image, False)
 
     def test_emulation_with_bad_header(self):
-        """ Check if bad header """
+        """Check if bad header"""
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
         self.label.labelary_dpmm = "8dpmm"
@@ -71,7 +71,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.assertFalse(self.label.labelary_image)
 
     def test_emulation_with_bad_data_compute(self):
-        """ Check if bad data compute """
+        """Check if bad data compute"""
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
         self.label.labelary_height = 30
@@ -83,7 +83,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.assertIs(self.label.labelary_image, False)
 
     def test_emulation_with_good_data(self):
-        """ Check if ok """
+        """Check if ok"""
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
         self.label.labelary_height = 30
