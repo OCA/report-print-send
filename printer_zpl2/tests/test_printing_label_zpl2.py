@@ -58,20 +58,20 @@ class TestPrintingLabelZpl2(TransactionCase):
         return self.ComponentModel.create(values)
 
     def test_print_on_bad_model(self):
-        """ Check that printing on the bad model raises an exception """
+        """Check that printing on the bad model raises an exception"""
         label = self.new_label()
         with self.assertRaises(exceptions.UserError):
             label.print_label(self.printer, label)
 
     @mock.patch("%s.cups" % model)
     def test_print_empty_label(self, cups):
-        """ Check that printing an empty label works """
+        """Check that printing an empty label works"""
         label = self.new_label()
         label.print_label(self.printer, self.printer)
         cups.Connection().printFile.assert_called_once()
 
     def test_empty_label_contents(self):
-        """ Check contents of an empty label """
+        """Check contents of an empty label"""
         label = self.new_label()
         contents = label._generate_zpl2_data(self.printer).decode("utf-8")
         self.assertEqual(
@@ -91,7 +91,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_sublabel_label_contents(self):
-        """ Check contents of a sublabel label component """
+        """Check contents of a sublabel label component"""
         sublabel = self.new_label({"name": "Sublabel"})
         data = "Some text"
         self.new_component({"label_id": sublabel.id, "data": '"' + data + '"'})
@@ -309,7 +309,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_repeatable_sublabel_contents(self):
-        """ Check contents of a repeatable sublabel label component """
+        """Check contents of a repeatable sublabel label component"""
         sublabel = self.new_label(
             {
                 "name": "Sublabel",
@@ -407,7 +407,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_text_label_contents(self):
-        """ Check contents of a text label """
+        """Check contents of a text label"""
         label = self.new_label()
         data = "Some text"
         self.new_component({"label_id": label.id, "data": '"%s"' % data})
@@ -437,7 +437,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_reversed_text_label_contents(self):
-        """ Check contents of a text label """
+        """Check contents of a text label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -471,7 +471,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_block_text_label_contents(self):
-        """ Check contents of a text label """
+        """Check contents of a text label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -505,7 +505,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_rectangle_label_contents(self):
-        """ Check contents of a rectangle label """
+        """Check contents of a rectangle label"""
         label = self.new_label()
         self.new_component({"label_id": label.id, "component_type": "rectangle"})
         contents = label._generate_zpl2_data(self.printer).decode("utf-8")
@@ -532,7 +532,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_diagonal_line_label_contents(self):
-        """ Check contents of a diagonal line label """
+        """Check contents of a diagonal line label"""
         label = self.new_label()
         self.new_component({"label_id": label.id, "component_type": "diagonal"})
         contents = label._generate_zpl2_data(self.printer).decode("utf-8")
@@ -559,7 +559,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_circle_label_contents(self):
-        """ Check contents of a circle label """
+        """Check contents of a circle label"""
         label = self.new_label()
         self.new_component({"label_id": label.id, "component_type": "circle"})
         contents = label._generate_zpl2_data(self.printer).decode("utf-8")
@@ -586,7 +586,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_code11_barcode_label_contents(self):
-        """ Check contents of a code 11 barcode label """
+        """Check contents of a code 11 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -624,7 +624,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_2of5_barcode_label_contents(self):
-        """ Check contents of a interleaved 2 of 5 barcode label """
+        """Check contents of a interleaved 2 of 5 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -662,7 +662,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_code39_barcode_label_contents(self):
-        """ Check contents of a code 39 barcode label """
+        """Check contents of a code 39 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -700,7 +700,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_code49_barcode_label_contents(self):
-        """ Check contents of a code 49 barcode label """
+        """Check contents of a code 49 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -738,7 +738,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_code49_barcode_label_contents_line(self):
-        """ Check contents of a code 49 barcode label """
+        """Check contents of a code 49 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -819,7 +819,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_pdf417_barcode_label_contents(self):
-        """ Check contents of a pdf417 barcode label """
+        """Check contents of a pdf417 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -853,7 +853,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_ean8_barcode_label_contents(self):
-        """ Check contents of a ean-8 barcode label """
+        """Check contents of a ean-8 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -887,7 +887,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_upce_barcode_label_contents(self):
-        """ Check contents of a upc-e barcode label """
+        """Check contents of a upc-e barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -921,7 +921,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_code128_barcode_label_contents(self):
-        """ Check contents of a code 128 barcode label """
+        """Check contents of a code 128 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -959,7 +959,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_ean13_barcode_label_contents(self):
-        """ Check contents of a ean-13 barcode label """
+        """Check contents of a ean-13 barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -993,7 +993,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_qrcode_barcode_label_contents(self):
-        """ Check contents of a qr code barcode label """
+        """Check contents of a qr code barcode label"""
         label = self.new_label()
         data = "Some text"
         self.new_component(
@@ -1031,7 +1031,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_graphic_label_contents_blank(self):
-        """ Check contents of a image label """
+        """Check contents of a image label"""
         label = self.new_label()
         data = "R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
         self.new_component(
@@ -1054,7 +1054,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_graphic_label_contents_blank_rotated(self):
-        """ Check contents of image rotated label """
+        """Check contents of image rotated label"""
         label = self.new_label()
         data = "R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
         self.new_component(
@@ -1082,7 +1082,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_graphic_label_contents_blank_inverted(self):
-        """ Check contents of a image inverted label """
+        """Check contents of a image inverted label"""
         label = self.new_label()
         data = "R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
         self.new_component(
@@ -1106,7 +1106,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_graphic_label_contents_blank_bottom(self):
-        """ Check contents of a image bottom label """
+        """Check contents of a image bottom label"""
         label = self.new_label()
         data = "R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
         self.new_component(
@@ -1130,7 +1130,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_zpl2_raw_contents_blank(self):
-        """ Check contents of a image label """
+        """Check contents of a image label"""
         label = self.new_label()
         data = "^FO50,50^GB100,100,100^FS"
         self.new_component(
@@ -1153,7 +1153,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_zpl2_component_not_show(self):
-        """ Check to don't show no things """
+        """Check to don't show no things"""
         label = self.new_label()
         data = "component_not_show"
         self.new_component(
@@ -1169,7 +1169,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         )
 
     def test_zpl2_component_quick_move(self):
-        """ Check component quick move """
+        """Check component quick move"""
         label = self.new_label()
         component = self.new_component(
             {
