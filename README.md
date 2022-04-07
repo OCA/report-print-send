@@ -1,6 +1,7 @@
 
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/report-print-send&target_branch=14.0)
-[![Build Status](https://travis-ci.com/OCA/report-print-send.svg?branch=14.0)](https://travis-ci.com/OCA/report-print-send)
+[![Pre-commit Status](https://github.com/OCA/report-print-send/actions/workflows/pre-commit.yml/badge.svg?branch=14.0)](https://github.com/OCA/report-print-send/actions/workflows/pre-commit.yml?query=branch%3A14.0)
+[![Build Status](https://github.com/OCA/report-print-send/actions/workflows/test.yml/badge.svg?branch=14.0)](https://github.com/OCA/report-print-send/actions/workflows/test.yml?query=branch%3A14.0)
 [![codecov](https://codecov.io/gh/OCA/report-print-send/branch/14.0/graph/badge.svg)](https://codecov.io/gh/OCA/report-print-send)
 [![Translation Status](https://translation.odoo-community.org/widgets/report-print-send-14-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/report-print-send-14-0/?utm_source=widget)
 
