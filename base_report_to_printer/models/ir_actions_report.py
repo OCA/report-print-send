@@ -4,10 +4,12 @@
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import time
+from time import time
 
 from odoo import _, api, exceptions, fields, models
-from odoo.tools import safe_eval
+from odoo.tools.safe_eval import safe_eval
+
+REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
 
 
 class IrActionsReport(models.Model):
@@ -100,9 +102,16 @@ class IrActionsReport(models.Model):
 
     def print_document(self, record_ids, data=None):
         """Print a document, do not return the document file"""
-        document, doc_format = self.with_context(
-            must_skip_send_to_printer=True
-        )._render_qweb_pdf(record_ids, data=data)
+        report_type = REPORT_TYPES.get(self.report_type)
+        if not report_type:
+            raise exceptions.UserError(
+                _("This report type (%s) is not supported by direct printing!")
+                % str(self.report_type)
+            )
+        method_name = "_render_qweb_%s" % (report_type)
+        document, doc_format = getattr(
+            self.with_context(must_skip_send_to_printer=True), method_name
+        )(record_ids, data=data)
         behaviour = self.behaviour()
         printer = behaviour.pop("printer", None)
 
@@ -149,6 +158,25 @@ class IrActionsReport(models.Model):
         generated document as well.
         """
         document, doc_format = super()._render_qweb_pdf(res_ids=res_ids, data=data)
+
+        behaviour = self.behaviour()
+        printer = behaviour.pop("printer", None)
+        can_print_report = self._can_print_report(behaviour, printer, document)
+
+        if can_print_report:
+            printer.print_document(
+                self, document, doc_format=self.report_type, **behaviour
+            )
+
+        return document, doc_format
+
+    def _render_qweb_text(self, docids, data=None):
+        """Generate a TEXT file and returns it.
+
+        If the action configured on the report is server, it prints the
+        generated document as well.
+        """
+        document, doc_format = super()._render_qweb_text(docids=docids, data=data)
 
         behaviour = self.behaviour()
         printer = behaviour.pop("printer", None)
