@@ -18,6 +18,7 @@ repos:
     rev: 19.10b0
     hooks:
       - id: black
+        additional_dependencies: [regex == 2021.9.30]
   - repo: https://github.com/prettier/pre-commit
     rev: "v1.19.1"
     hooks:
@@ -82,11 +83,11 @@ repos:
         name: pylint with optional checks
         args: ["--rcfile=.pylintrc", "--exit-zero"]
         verbose: true
-        additional_dependencies: ["pylint-odoo==3.5.0"]
+        additional_dependencies: ["pylint-odoo==3.5.0", "lxml==4.6.3"]
       - id: pylint
         name: pylint with mandatory checks
         args: ["--rcfile=.pylintrc-mandatory"]
-        additional_dependencies: ["pylint-odoo==3.5.0"]
+        additional_dependencies: ["pylint-odoo==3.5.0", "lxml==4.6.3"]
   - repo: https://github.com/asottile/pyupgrade
     rev: v1.26.2
     hooks:
