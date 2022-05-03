@@ -13,7 +13,10 @@
                         <field name="printer_tray_id" />
                     </group>
                     <separator string="Specific actions per user" />
-                    <field name="printing_action_ids" />
+                    <field
+                        name="printing_action_ids"
+                        context="{'default_report_id': active_id}"
+                    />
                 </page>
             </xpath>
         </field>
