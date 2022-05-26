@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="printing_job_view_form">
+        <field name="name">printing.job.form (in base_report_to_printer)</field>
+        <field name="model">printing.job</field>
+        <field name="arch" type="xml">
+            <form string="Job">
+                <header>
+                    <button
+                        name="action_cancel"
+                        type="object"
+                        string="Cancel"
+                        attrs="{'invisible': [('job_state', 'in', ('canceled', 'aborted', 'completed'))]}"
+                    />
+                    <field name="job_state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="job_id_cups" />
+                            <field name="job_media_progress" widget="progressbar" />
+                            <field name="job_state_reason" />
+                        </group>
+                        <group>
+                            <field name="time_at_creation" />
+                            <field name="time_at_processing" />
+                            <field name="time_at_completed" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="printing_job_view_tree">
+        <field name="name">printing.job.tree (in base_report_to_printer)</field>
+        <field name="model">printing.job</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="job_id_cups" />
+                <field name="job_state" />
+            </tree>
+        </field>
+    </record>
+</odoo>
