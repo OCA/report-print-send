@@ -18,7 +18,6 @@
     "data": [
         "data/printing_data.xml",
         "security/security.xml",
-        "views/assets.xml",
         "views/printing_printer.xml",
         "views/printing_server.xml",
         "views/printing_job.xml",
@@ -27,6 +26,13 @@
         "views/ir_actions_report.xml",
         "wizards/printing_printer_update_wizard_view.xml",
     ],
+    'assets': {
+        'web._assets_primary_variables': [
+
+        ],
+        'web.assets_backend': [
+            "/base_report_to_printer/static/src/js/qweb_action_manager.js",
+        ]},
     "installable": True,
     "application": False,
     "external_dependencies": {"python": ["pycups"]},
