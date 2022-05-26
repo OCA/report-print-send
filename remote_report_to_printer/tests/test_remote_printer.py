@@ -36,7 +36,7 @@ class TestRemotePrinter(TransactionCase):
     def _create_user(self, name, group_ids):
         return (
             self.env["res.users"]
-            .with_context({"no_reset_password": True})
+            .with_context(**{"no_reset_password": True})
             .create(
                 {
                     "name": name,
@@ -102,7 +102,7 @@ class TestRemotePrinter(TransactionCase):
             ],
             limit=1,
         )
-        self.assertEquals(printer, self.env["res.remote.printer"])
+        self.assertEqual(printer, self.env["res.remote.printer"])
 
     def test_permissions_delete_user(self):
         printer = (
