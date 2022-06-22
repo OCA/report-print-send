@@ -50,10 +50,16 @@ class IrActionsReport(models.Model):
         if not report:
             return {}
         result = report.behaviour()
-        serializable_result = {
-            "action": result["action"],
-            "printer_name": result["printer"].name,
-        }
+        if self.env.context.get("must_skip_send_to_printer"):
+            serializable_result = {
+                "action": "client",
+                "printer_name": False,
+            }
+        else:
+            serializable_result = {
+                "action": result["action"],
+                "printer_name": result["printer"].name,
+            }
         return serializable_result
 
     def _get_user_default_print_behaviour(self):
