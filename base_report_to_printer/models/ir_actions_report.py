@@ -100,9 +100,14 @@ class IrActionsReport(models.Model):
 
     def print_document(self, record_ids, data=None):
         """ Print a document, do not return the document file """
-        document, doc_format = self.with_context(
-            must_skip_send_to_printer=True
-        ).render_qweb_pdf(record_ids, data=data)
+        if self.report_type == "qweb-text":
+            document, doc_format = self.with_context(
+                must_skip_send_to_printer=True
+            ).render_qweb_text(record_ids, data=data)
+        else:
+            document, doc_format = self.with_context(
+                must_skip_send_to_printer=True
+            ).render_qweb_pdf(record_ids, data=data)
         behaviour = self.behaviour()
         printer = behaviour.pop("printer", None)
 
