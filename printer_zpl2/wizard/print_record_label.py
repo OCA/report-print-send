@@ -28,6 +28,8 @@ class PrintRecordLabel(models.TransientModel):
         string="Model",
         domain=lambda self: [("model", "=", self.env.context.get("active_model"))],
     )
+    model = fields.Char(related="active_model_id.model", string="Model Name")
+    line_ids = fields.One2many("wizard.print.record.label.line", "label_header_id")
 
     @api.model
     def default_get(self, fields_list):
@@ -56,3 +58,11 @@ class PrintRecordLabel(models.TransientModel):
         for record_id in self.env.context["active_ids"]:
             record = self.env[record_model].browse(record_id)
             self.label_id.print_label(self.printer_id, record)
+
+
+class PrintRecordLabelLines(models.TransientModel):
+    _name = "wizard.print.record.label.line"
+    _description = "Print Record Label Line"
+
+    label_no = fields.Integer(string="# labels")
+    label_header_id = fields.Many2one(comodel_name="wizard.print.record.label")
