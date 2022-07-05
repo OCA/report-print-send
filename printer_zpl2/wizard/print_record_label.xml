@@ -17,6 +17,7 @@
                     />
                     <field name="active_model_id" invisible="1" />
                 </group>
+                <field name="model" invisible="1" />
                 <footer>
                     <button type="special" special="cancel" string="Cancel" />
                     <button
