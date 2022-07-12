@@ -27,7 +27,7 @@ class PrintAttachment(models.TransientModel):
         errors = []
         for att_line in self.attachment_line_ids:
             data = att_line.attachment_id.datas
-            title = att_line.attachment_id.store_fname
+            title = att_line.attachment_id.name
             if not data:
                 errors.append(att_line)
                 continue
