@@ -10,8 +10,8 @@
         <field name="name"/>
         <field name="datas_fname"/>
         <field name="pingen_send"/>
-        <field name="pingen_speed"/>
-        <field name="pingen_color"/>
+        <field name="pingen_delivery_product"/>
+        <field name="pingen_print_spectrum"/>
         <field name="state"/>
       </tree>
     </field>
@@ -39,8 +39,9 @@
             <newline />
             <group col="2" colspan="2">
               <field name="pingen_send" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"/>
-              <field name="pingen_speed" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])], 'required': [('pingen_send', '=', True)]}"/>
-              <field name="pingen_color" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"/>
+              <field name="pingen_delivery_product" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])], 'required': [('pingen_send', '=', True)]}"/>
+              <field name="pingen_print_spectrum" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"/>
+              <field name="pingen_print_mode" attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"/>
             </group>
 
             <separator string="Dates" colspan="4"/>

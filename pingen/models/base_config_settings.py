@@ -9,7 +9,5 @@ class BaseConfigSettings(models.TransientModel):
 
     pingen_clientid = fields.Char(related='company_id.pingen_clientid')
     pingen_client_secretid = fields.Char(related='company_id.pingen_client_secretid')
-    pingen_staging_clientid = fields.Char(related='company_id.pingen_staging_clientid')
-    pingen_staging_client_secretid = fields.Char(related='company_id.pingen_staging_client_secretid')
     pingen_organization = fields.Char(related='company_id.pingen_organization')
     pingen_staging = fields.Boolean(related='company_id.pingen_staging')

@@ -10,8 +10,9 @@
         <group string="Pingen info" groups="base.group_no_one">
           <field name="send_to_pingen"/>
           <field name="pingen_send" attrs="{'required': [('send_to_pingen', '=', True)]}"/>
-          <field name="pingen_speed" attrs="{'required': [('pingen_send', '=', True)]}"/>
-          <field name="pingen_color" />
+          <field name="pingen_delivery_product" attrs="{'required': [('pingen_send', '=', True)]}"/>
+          <field name="pingen_print_spectrum" />
+          <field name="pingen_print_mode" />
         </group>
       </xpath>
     </field>

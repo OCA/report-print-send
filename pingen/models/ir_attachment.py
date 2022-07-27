@@ -52,9 +52,10 @@ class IrAttachment(models.Model):
     )
     # TODO migrate field to pingen_print_spectrum
     pingen_color = fields.Selection([('0', 'B/W'), ('1', 'Color')],
-                                    '[DEPRECATED] Type of print (API v1)',
+                                    'Type of print', help='[DEPRECATED] (API v1)',
                                     default='0')
     pingen_print_spectrum = fields.Selection([("grayscale", "Grayscale"), ("color", "Color")], "Print Spectrum", default="grayscale")
+    pingen_print_mode = fields.Selection([("simplex", "Simplex"), ("duplex", "Duplex")], "Print mode", default="simplex")
 
     def _prepare_pingen_document_vals(self):
         return {'attachment_id': self.id,

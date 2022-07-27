@@ -5,7 +5,7 @@
 
 import logging
 from itertools import groupby
-from requests.exceptions import ConnectionError
+from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 from cStringIO import StringIO
 
 import odoo
@@ -87,11 +87,13 @@ class PingenDocument(models.Model):
                 StringIO(decoded_document),
                 self.pingen_send,
                 self.pingen_delivery_product,
-                self.pingen_print_spectrum)
-        except ConnectionError:
+                self.pingen_print_spectrum,
+                self.pingen_print_mode)
+        except OAuth2Error as e:
+            import pdb; pdb.set_trace()
             _logger.exception(
-                'Connection Error when pushing Pingen Document %s to %s.' %
-                (self.id, pingen.api_url))
+                'Connection Error when pushing Pingen Document with ID %s to %s: %s' %
+                (self.id, pingen.api_url, e.description))
             raise
         except APIError:
             _logger.error(
@@ -122,26 +124,22 @@ class PingenDocument(models.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
+        import pdb; pdb.set_trace()
         self.ensure_one()
         state = False
         error_msg = False
         try:
             session = self.company_id._get_pingen_client()
             self._push_to_pingen(pingen=session)
-        except ConnectionError as e:
+        except OAuth2Error as e:
             state = 'error'
-            error_msg = _('Connection Error when asking for '
-                          'sending the document %s to Pingen') % self.name
+            error_msg = _('Connection Error when pushing document %s to Pingen') % self.name
         except APIError as e:
             state = 'pingen_error'
-            error_msg = _('Error when asking Pingen to send the document %s: '
-                          '\n%s') % (self.name, e)
+            error_msg = _('Error when pushing the document %s to Pingen:\n%s') % (self.name, e)
         except Exception as e:
-            _logger.exception(
-                'Unexpected Error when updating the status of pingen.document '
-                '%s: ' % self.id)
-            error_msg = _('Unexpected Error when updating the '
-                          'status of Document %s') % self.name
+            error_msg = _('Unexpected Error when pushing the document %s to Pingen:\n'%s) % (self.name, e)
+            _logger.exception(error_msg)
         finally:
             if error_msg:
                 vals = {'last_error_message': error_msg}
@@ -179,7 +177,7 @@ class PingenDocument(models.Model):
                                 document._push_to_pingen(pingen=session)
                             elif document.state == 'pushed':
                                 document._ask_pingen_send(pingen=session)
-                        except ConnectionError as e:
+                        except OAuth2Error as e:
                             document.write({'last_error_message': e,
                                             'state': 'error'})
                         except APIError as e:
@@ -218,8 +216,9 @@ class PingenDocument(models.Model):
             post_id = pingen.send_document(
                 self.pingen_uuid,
                 self.pingen_delivery_product,
-                self.pingen_print_spectrum)
-        except ConnectionError:
+                self.pingen_print_spectrum,
+                self.pingen_print_mode)
+        except OAuth2Error():
             _logger.exception(
                 'Connection Error when asking for sending Pingen Document %s '
                 'to %s.' % (self.id, pingen.api_url))
@@ -247,7 +246,7 @@ class PingenDocument(models.Model):
         try:
             session = self.company_id._get_pingen_client()
             self._ask_pingen_send(pingen=session)
-        except ConnectionError as e:
+        except OAuth2Error as e:
             raise UserError(
                 _('Connection Error when asking for '
                   'sending the document %s to Pingen') % self.name)
@@ -275,7 +274,7 @@ class PingenDocument(models.Model):
             return
         try:
             post_infos = pingen.post_infos(self.pingen_uuid)
-        except ConnectionError:
+        except OAuth2Error:
             _logger.exception(
                 'Connection Error when asking for '
                 'sending Pingen Document %s to %s.' %
@@ -319,7 +318,7 @@ class PingenDocument(models.Model):
                     session = document.company_id._get_pingen_client()
                     try:
                         document._update_post_infos(pingen=session)
-                    except (ConnectionError, APIError):
+                    except (OAuth2Error, APIError):
                         # will be retried the next time
                         # In any case, the error has been
                         # logged by _update_post_infos
@@ -338,7 +337,7 @@ class PingenDocument(models.Model):
         try:
             session = self.company_id._get_pingen_client()
             self._update_post_infos(pingen=session)
-        except ConnectionError as e:
+        except OAuth2Error as e:
             raise UserError(
                 _('Connection Error when updating the status '
                   'of Document %s from Pingen') % self.name)

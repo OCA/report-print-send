@@ -159,7 +159,7 @@ class Pingen(object):
         if self._session:
             self._session.close()
 
-    def _send(self, method, endpoint, **kwargs):
+    def _send(self, method, endpoint, letter_id="", **kwargs):
         """ Send a request to the pingen API using requests
 
         Add necessary boilerplate to call pingen.com API
@@ -172,6 +172,7 @@ class Pingen(object):
 
         if self._is_token_expired():
             self._set_session_header_token()
+
         p_url = urlparse.urljoin(self.api_url, endpoint)
         
         if endpoint == 'document/get':
@@ -181,15 +182,12 @@ class Pingen(object):
                                                '/token/',
                                                self._token)
         else:
-            complete_url = p_url.format(organisationId=self.organization, letterId=kwargs.get("letter_id"))
-        
+            complete_url = p_url.format(organisationId=self.organization, letterId=letter_id)
+        import pdb; pdb.set_trace()
         response = method(complete_url, verify=self.verify, **kwargs)
-
-        if response.json().get('error'):
-            raise APIError(
-                "%s: %s" % (response.json()['errorcode'],
-                            response.json()['errormessage']))
-
+        errors = response.json().get('errors')
+        if errors:
+            raise APIError("\n".join(["%s: %s" % (err.get("title"), err.get("detail")) for err in errors]))
         return response
 
     def _get_file_upload(self):
@@ -206,7 +204,7 @@ class Pingen(object):
         return response
 
     def push_document(self, filename, filestream,
-                      send=None, delivery_product=None, print_spectrum=None):
+                      send=None, delivery_product=None, print_spectrum=None, print_mode=None):
         """ Upload a document to pingen.com and eventually ask to send it
 
         :param str filename: name of the file to push
@@ -246,7 +244,7 @@ class Pingen(object):
             'auto_send': send,
             'delivery_product': delivery_product,
             'print_spectrum': print_spectrum,
-            'print_mode': "simplex", 
+            'print_mode': print_mode, 
         }
 
         data = {
@@ -273,7 +271,7 @@ class Pingen(object):
 
         return document_id, False, item
 
-    def send_document(self, document_uuid, delivery_product=None, print_spectrum=None):
+    def send_document(self, document_uuid, delivery_product=None, print_spectrum=None, print_mode=None):
         """ Send a uploaded document to pingen.com
 
         :param str document_uuid: id of the document to send
@@ -283,11 +281,12 @@ class Pingen(object):
         """
         data_attributes = {
             "delivery_product": delivery_product,
-            "print_mode": "simplex",
+            "print_mode": print_mode,
             "print_spectrum": print_spectrum,
         }
         data = {
             "data": {
+                "id": document_uuid,
                 "type": "letters",
                 "attributes": data_attributes
             }
@@ -295,9 +294,9 @@ class Pingen(object):
         response = self._send(
             self.session.patch,
             "organisations/{organisationId}/letters/{letterId}/send",
-            headers={"Content-Type": "application/vnd.api+json"},
-            data={"data": json.dumps(data)},
             letter_id=document_uuid,
+            headers={"Content-Type": "application/vnd.api+json"},
+            data=json.dumps(data),
         )
         return response.json().get("data").get("attributes")
         # return response.json()['id']
