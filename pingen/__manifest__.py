@@ -13,8 +13,8 @@
     'complexity': 'easy',
     'depends': ['base_setup'],
     'external_dependencies': {
-        'python': ['requests'],
-        },
+        'python': ['requests_oauthlib'],
+    },
     'website': 'http://www.camptocamp.com',
     'data': [
         'views/ir_attachment_view.xml',

@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
+from itertools import groupby
 from requests.exceptions import ConnectionError
 from cStringIO import StringIO
 
@@ -44,21 +45,28 @@ class PingenDocument(models.Model):
     push_date = fields.Datetime('Push Date', readonly=True)
     # for `error` and `pingen_error` states when we push
     last_error_message = fields.Text('Error Message', readonly=True)
-    # pingen IDs
-    pingen_id = fields.Integer(
-        'Pingen ID', readonly=True,
-        help="ID of the document in the Pingen Documents")
-    post_id = fields.Integer(
-        'Pingen Post ID', readonly=True,
-        help="ID of the document in the Pingen Sendcenter")
+    # pingen API v2 fields
+    pingen_uuid = fields.Char()
+    pingen_status = fields.Selection([("pushed", "")])
     # sendcenter infos
-    post_status = fields.Char('Post Status', size=128, readonly=True)
     parsed_address = fields.Text('Parsed Address', readonly=True)
     cost = fields.Float('Cost', readonly=True)
     currency_id = fields.Many2one('res.currency', 'Currency', readonly=True)
     country_id = fields.Many2one('res.country', 'Country', readonly=True)
     send_date = fields.Datetime('Date of sending', readonly=True)
     pages = fields.Integer('Pages', readonly=True)
+    company_id = fields.Many2one(related="attachment_id.company_id")
+
+    # Deprecated fields
+    pingen_id = fields.Integer(
+        'Pingen ID', readonly=True,
+        help="[DEPRECATED] ID of the document in the Pingen Documents (API v1)"
+    )
+    post_id = fields.Integer(
+        'Pingen Post ID', readonly=True,
+        help="[DEPRECATED] ID of the document in the Pingen Sendcenter (API v1)"
+    )
+    post_status = fields.Char('Post Status', size=128, readonly=True, help="[DEPRECATED] (API v1)")
 
     _sql_constraints = [
         ('pingen_document_attachment_uniq',
@@ -66,50 +74,47 @@ class PingenDocument(models.Model):
          'Only one Pingen document is allowed per attachment.'),
     ]
 
-    def _get_pingen_session(self):
-        """ Returns a pingen session for a user """
-        return self.company_id._pingen()
-
     def _push_to_pingen(self, pingen=None):
         """ Push a document to pingen.com
         :param Pingen pingen: optional pingen object to reuse session
         """
         decoded_document = self.attachment_id._decoded_content()
         if pingen is None:
-            pingen = self._get_pingen_session()
+            pingen = self.company_id._get_pingen_client()
         try:
             doc_id, post_id, infos = pingen.push_document(
-                self.datas_fname,
+                self.name,
                 StringIO(decoded_document),
                 self.pingen_send,
-                self.pingen_speed,
-                self.pingen_color)
+                self.pingen_delivery_product,
+                self.pingen_print_spectrum)
         except ConnectionError:
             _logger.exception(
                 'Connection Error when pushing Pingen Document %s to %s.' %
-                (self.id, pingen.url))
+                (self.id, pingen.api_url))
             raise
         except APIError:
             _logger.error(
                 'API Error when pushing Pingen Document %s to %s.' %
-                (self.id, pingen.url))
+                (self.id, pingen.api_url))
             raise
         error = False
         state = 'pushed'
-        if post_id:
-            state = 'sendcenter'
-        elif infos['requirement_failure']:
-            state = 'pingen_error'
-            error = _('The document does not meet the Pingen requirements.')
-        push_date = pingen_datetime_to_utc(infos['date'])
+        # if post_id:
+        #     state = 'sendcenter'
+        # elif infos['requirement_failure']:
+        #     state = 'pingen_error'
+        #     error = _('The document does not meet the Pingen requirements.')
+        push_date = pingen_datetime_to_utc(infos['created_at'])
         self.write(
             {'last_error_message': error,
              'state': state,
              'push_date': fields.Datetime.to_string(push_date),
-             'pingen_id': doc_id,
-             'post_id': post_id},)
+             'pingen_uuid': doc_id,
+            #  'post_id': post_id
+             },)
         _logger.info(
-            'Pingen Document %s: pushed to %s' % (self.id, pingen.url))
+            'Pingen Document %s: pushed to %s' % (self.id, pingen.api_url))
 
     def push_to_pingen(self):
         """ Push a document to pingen.com
@@ -121,7 +126,7 @@ class PingenDocument(models.Model):
         state = False
         error_msg = False
         try:
-            session = self._get_pingen_session()
+            session = self.company_id._get_pingen_client()
             self._push_to_pingen(pingen=session)
         except ConnectionError as e:
             state = 'error'
@@ -162,32 +167,33 @@ class PingenDocument(models.Model):
                     new_cr, self.env.uid, self.env.context)
                 # Instead of raising, store the error in the pingen.document
                 self = self.with_env(new_env)
-                not_sent_docs = self.search([('state', '!=', 'sent')])
-                for document in not_sent_docs:
-                    session = document._get_pingen_session()
-                    if document.state == 'error':
-                        document._resolve_error()
-                        document.refresh()
-                    try:
-                        if document.state == 'pending':
-                            document._push_to_pingen(pingen=session)
-                        elif document.state == 'pushed':
-                            document._ask_pingen_send(pingen=session)
-                    except ConnectionError as e:
-                        document.write({'last_error_message': e,
-                                        'state': 'error'})
-                    except APIError as e:
-                        document.write({'last_error_message': e,
-                                        'state': 'pingen_error'})
-                    except BaseException as e:
-                        _logger.error('Unexpected error in pingen cron')
+                not_sent_docs = self.search([('state', '!=', 'sent')], order="company_id")
+                for company, documents in groupby(not_sent_docs, lambda d: d.company_id):
+                    session = company._get_pingen_client()
+                    for document in documents:
+                        if document.state == 'error':
+                            document._resolve_error()
+                            document.refresh()
+                        try:
+                            if document.state == 'pending':
+                                document._push_to_pingen(pingen=session)
+                            elif document.state == 'pushed':
+                                document._ask_pingen_send(pingen=session)
+                        except ConnectionError as e:
+                            document.write({'last_error_message': e,
+                                            'state': 'error'})
+                        except APIError as e:
+                            document.write({'last_error_message': e,
+                                            'state': 'pingen_error'})
+                        except BaseException as e:
+                            _logger.error('Unexpected error in pingen cron')
         return True
 
     def _resolve_error(self):
         """ A document as resolved, put in the correct state """
         if self.post_id:
             state = 'sendcenter'
-        elif self.pingen_id:
+        elif self.pingen_uuid:
             state = 'pushed'
         else:
             state = 'pending'
@@ -210,18 +216,18 @@ class PingenDocument(models.Model):
             self.write({'pingen_send': True})
         try:
             post_id = pingen.send_document(
-                self.pingen_id,
-                self.pingen_speed,
-                self.pingen_color)
+                self.pingen_uuid,
+                self.pingen_delivery_product,
+                self.pingen_print_spectrum)
         except ConnectionError:
             _logger.exception(
                 'Connection Error when asking for sending Pingen Document %s '
-                'to %s.' % (self.id, pingen.url))
+                'to %s.' % (self.id, pingen.api_url))
             raise
         except APIError:
             _logger.exception(
                 'API Error when asking for sending Pingen Document %s to %s.' %
-                (self.id, pingen.url))
+                (self.id, pingen.api_url))
             raise
         self.write(
             {'last_error_message': False,
@@ -229,7 +235,7 @@ class PingenDocument(models.Model):
              'post_id': post_id})
         _logger.info(
             'Pingen Document %s: asked for sending to %s' % (
-                self.id, pingen.url))
+                self.id, pingen.api_url))
         return True
 
     def ask_pingen_send(self):
@@ -239,7 +245,7 @@ class PingenDocument(models.Model):
         """
         self.ensure_one()
         try:
-            session = self._get_pingen_session()
+            session = self.company_id._get_pingen_client()
             self._ask_pingen_send(pingen=session)
         except ConnectionError as e:
             raise UserError(
@@ -265,20 +271,20 @@ class PingenDocument(models.Model):
         pingen of a document in the Sendcenter
         :param Pingen pingen: pingen object to reuse
         """
-        if not self.pingen_id:
+        if not self.pingen_uuid:
             return
         try:
-            post_infos = pingen.post_infos(self.pingen_id)
+            post_infos = pingen.post_infos(self.pingen_uuid)
         except ConnectionError:
             _logger.exception(
                 'Connection Error when asking for '
                 'sending Pingen Document %s to %s.' %
-                (self.id, pingen.url))
+                (self.id, pingen.api_url))
             raise
         except APIError:
             _logger.exception(
                 'API Error when asking for sending Pingen Document %s to %s.' %
-                (self.id, pingen.url))
+                (self.id, pingen.api_url))
             raise
         country = self.env['res.country'].search(
             [('code', '=', post_infos['country'])])
@@ -310,7 +316,7 @@ class PingenDocument(models.Model):
                 self = self.with_env(new_env)
                 pushed_docs = self.search([('state', '!=', 'sent')])
                 for document in pushed_docs:
-                    session = document._get_pingen_session()
+                    session = document.company_id._get_pingen_client()
                     try:
                         document._update_post_infos(pingen=session)
                     except (ConnectionError, APIError):
@@ -330,7 +336,7 @@ class PingenDocument(models.Model):
         """
         self.ensure_one()
         try:
-            session = self._get_pingen_session()
+            session = self.company_id._get_pingen_client()
             self._update_post_infos(pingen=session)
         except ConnectionError as e:
             raise UserError(

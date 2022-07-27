@@ -7,8 +7,12 @@
         <field name="arch" type="xml">
             <group name="report" position="before">
                 <group string="Pingen Integration">
-                      <field name="pingen_token" groups="base.group_system"/>
-                      <field name="pingen_staging" groups="base.group_system"/>
+                    <field name="pingen_clientid" groups="base.group_system"/>
+                    <field name="pingen_client_secretid" groups="base.group_system"/>
+                    <field name="pingen_staging_clientid" groups="base.group_system"/>
+                    <field name="pingen_staging_client_secretid" groups="base.group_system"/>
+                    <field name="pingen_organization" groups="base.group_system"/>
+                    <field name="pingen_staging" groups="base.group_system"/>
                 </group>
             </group>
         </field>

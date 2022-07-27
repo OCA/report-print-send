@@ -21,13 +21,40 @@ class IrAttachment(models.Model):
     pingen_send = fields.Boolean(
         'Send', help="Defines if a document is merely uploaded or also sent",
         default=True)
+    # TODO migrate field to pingen_delivery_product
     pingen_speed = fields.Selection(
         [('1', 'Priority'), ('2', 'Economy')],
         'Speed', default='2',
-        help='Defines the sending speed if the document is automatically sent')
+        help='[DEPRECATED] Defines the sending speed if the document is automatically sent (API v1)')
+    pingen_delivery_product = fields.Selection(
+        [
+            ("fast","fast"),
+            ("cheap","cheap"),
+            ("bulk","bulk"),
+            ("track","track"),
+            ("sign","sign"),
+            ("atpost_economy","atpost_economy"),
+            ("atpost_priority","atpost_priority"),
+            ("postag_a","postag_a"),
+            ("postag_b","postag_b"),
+            ("postag_b2","postag_b2"),
+            ("postag_registered","postag_registered"),
+            ("postag_aplus","postag_aplus"),
+            ("dpag_standard","dpag_standard"),
+            ("dpag_economy","dpag_economy"),
+            ("indpost_mail","indpost_mail"),
+            ("indpost_speedmail","indpost_speedmail"),
+            ("nlpost_priority","nlpost_priority"),
+            ("dhl_priority","dhl_priority"),
+        ],
+        "Delivery product",
+        default="cheap",
+    )
+    # TODO migrate field to pingen_print_spectrum
     pingen_color = fields.Selection([('0', 'B/W'), ('1', 'Color')],
-                                    'Type of print',
+                                    '[DEPRECATED] Type of print (API v1)',
                                     default='0')
+    pingen_print_spectrum = fields.Selection([("grayscale", "Grayscale"), ("color", "Color")], "Print Spectrum", default="grayscale")
 
     def _prepare_pingen_document_vals(self):
         return {'attachment_id': self.id,
