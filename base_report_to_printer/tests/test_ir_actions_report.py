@@ -6,7 +6,7 @@ from unittest import mock
 
 from odoo.tests.common import TransactionCase
 
-model = "odoo.addons.base.models.ir_actions_report.IrActionsReport"
+model = "odoo.addons.base_report_to_printer.models.ir_actions_report.IrActionsReport"
 
 
 class TestIrActionsReportXml(TransactionCase):
@@ -53,25 +53,25 @@ class TestIrActionsReportXml(TransactionCase):
             values.update(vals)
         return self.env["printing.tray"].create(values)
 
-    def test_print_action_for_report_name_gets_report(self):
-        """It should get report by name"""
-        with mock.patch("%s._get_report_from_name" % model) as mk:
+    def test_print_action_for_report_gets_report(self):
+        """It should get report by action"""
+        with mock.patch("%s._get_report_from_id" % model) as mk:
             expect = "test"
-            self.Model.print_action_for_report_name(expect)
+            self.Model.print_action_for_report(expect)
             mk.assert_called_once_with(expect)
 
-    def test_print_action_for_report_name_returns_if_no_report(self):
+    def test_print_action_for_report_returns_if_no_report(self):
         """It should return empty dict when no matching report"""
-        with mock.patch("%s._get_report_from_name" % model) as mk:
+        with mock.patch("%s._get_report_from_id" % model) as mk:
             expect = "test"
             mk.return_value = False
-            res = self.Model.print_action_for_report_name(expect)
+            res = self.Model.print_action_for_report(expect)
             self.assertDictEqual({}, res)
 
-    def test_print_action_for_report_name_returns_if_report(self):
+    def test_print_action_for_report_returns_if_report(self):
         """It should return correct serializable result for behaviour"""
-        with mock.patch("%s._get_report_from_name" % model) as mk:
-            res = self.Model.print_action_for_report_name("test")
+        with mock.patch("%s._get_report_from_id" % model) as mk:
+            res = self.Model.print_action_for_report("test")
             behaviour = mk().behaviour()
             expect = {
                 "action": behaviour["action"],
