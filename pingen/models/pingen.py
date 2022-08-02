@@ -69,7 +69,7 @@ class Pingen(object):
         return 'https://api.v2.pingen.com'
 
     @property
-    def indentity_url(self):
+    def identity_url(self):
         if self.staging:
             return 'https://identity-staging.pingen.com'
         return 'https://identity.pingen.com'
@@ -129,7 +129,7 @@ class Pingen(object):
 
     def _fetch_token(self):
         # TODO: Handle scope 'letter' only?
-        token_url = urlparse.urljoin(self.indentity_url, self.token_url)
+        token_url = urlparse.urljoin(self.identity_url, self.token_url)
         # FIXME: requests.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)
         #  without verify=False parameter on staging
         _logger.debug("Fetching new token from %s" % token_url)
@@ -184,7 +184,6 @@ class Pingen(object):
                                                self._token)
         else:
             complete_url = p_url.format(organisationId=self.organization, letterId=letter_id)
-        import pdb; pdb.set_trace()
         response = method(complete_url, verify=self.verify, **kwargs)
         errors = response.json().get('errors')
         if errors:
