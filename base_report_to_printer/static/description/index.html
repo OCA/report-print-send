@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.15.1: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils: http://docutils.sourceforge.net/" />
 <title>Report to printer</title>
 <style type="text/css">
 
@@ -432,7 +432,8 @@ rights to give users the ability to view the print menu.</li>
 of the report (truncated at 80 characters). By default this will not be
 displayed by CUPS web interface or in Odoo. To see this information, you need
 to change the configuration of your CUPS server and set the JobPrivateValue
-directive to “job-name”, and reload the server. See <cite>cupsd.conf(5)
+directive to “none” (or some other list of values which does not include
+“job-name”) , and reload the server. See <cite>cupsd.conf(5)
 &lt;https://www.cups.org/doc/man-cupsd.conf.html&gt;</cite> for details.</p>
 </div>
 <div class="section" id="usage">
@@ -505,6 +506,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <li>Graeme Gellatly &lt;<a class="reference external" href="mailto:graeme&#64;o4sb.com">graeme&#64;o4sb.com</a>&gt;</li>
 <li>Rod Schouteden &lt;<a class="reference external" href="mailto:rod&#64;schout-it.be">rod&#64;schout-it.be</a>&gt;</li>
 <li>Alexandre Fayolle &lt;<a class="reference external" href="mailto:alexandre.fayolle&#64;camptocamp.com">alexandre.fayolle&#64;camptocamp.com</a>&gt;</li>
+<li>Akim Juillerat &lt;<a class="reference external" href="mailto:akim.juillerat&#64;camptocamp.com">akim.juillerat&#64;camptocamp.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">

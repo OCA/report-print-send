@@ -11,3 +11,4 @@
 * Graeme Gellatly <graeme@o4sb.com>
 * Rod Schouteden <rod@schout-it.be>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
