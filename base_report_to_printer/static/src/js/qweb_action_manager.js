@@ -12,8 +12,8 @@ odoo.define("base_report_to_printer.print", function (require) {
             if (type === "pdf" || "text") {
                 this._rpc({
                     model: "ir.actions.report",
-                    method: "print_action_for_report_name",
-                    args: [action.report_name],
+                    method: "print_action_for_report_id",
+                    args: [action.id],
                 }).then(function (print_action) {
                     if (print_action && print_action.action === "server") {
                         self._rpc({

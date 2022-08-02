@@ -7,6 +7,9 @@ from unittest import mock
 from odoo.tests.common import TransactionCase
 
 model = "odoo.addons.base.models.ir_actions_report.IrActionsReport"
+base_report_to_printer_model = (
+    "odoo.addons.base_report_to_printer.models.ir_actions_report.IrActionsReport"
+)
 
 
 class TestIrActionsReportXml(TransactionCase):
@@ -78,6 +81,21 @@ class TestIrActionsReportXml(TransactionCase):
                 "printer_name": behaviour["printer"].name,
             }
             self.assertDictEqual(expect, res, "Expect {}, Got {}".format(expect, res))
+
+    def test_print_action_for_report_id_gets_report(self):
+        """It should get report by action id"""
+        with mock.patch("%s._get_report_for_id" % base_report_to_printer_model) as mk:
+            expect = "test"
+            self.Model.print_action_for_report_id(expect)
+            mk.assert_called_once_with(expect)
+
+    def test_print_action_for_report_returns_if_no_report_id(self):
+        """It should return empty dict when no matching report"""
+        with mock.patch("%s._get_report_for_id" % base_report_to_printer_model) as mk:
+            expect = "test"
+            mk.return_value = False
+            res = self.Model.print_action_for_report_id(expect)
+            self.assertDictEqual({}, res)
 
     def test_behaviour_default_values(self):
         """It should return the default action and printer"""
