@@ -17,46 +17,9 @@ class IrAttachment(models.Model):
     send_to_pingen = fields.Boolean("Send to Pingen.com")
     pingen_document_ids = fields.One2many(
         'pingen.document', 'attachment_id',
-        string='Pingen Document', readonly=True)
-    pingen_send = fields.Boolean(
-        'Send', help="Defines if a document is merely uploaded or also sent",
-        default=True)
-    # TODO migrate field to pingen_delivery_product
-    pingen_speed = fields.Selection(
-        [('1', 'Priority'), ('2', 'Economy')],
-        'Speed', default='2',
-        help='[DEPRECATED] Defines the sending speed if the document is automatically sent (API v1)')
-    pingen_delivery_product = fields.Selection(
-        [
-            ("fast","fast"),
-            ("cheap","cheap"),
-            ("bulk","bulk"),
-            ("track","track"),
-            ("sign","sign"),
-            ("atpost_economy","atpost_economy"),
-            ("atpost_priority","atpost_priority"),
-            ("postag_a","postag_a"),
-            ("postag_b","postag_b"),
-            ("postag_b2","postag_b2"),
-            ("postag_registered","postag_registered"),
-            ("postag_aplus","postag_aplus"),
-            ("dpag_standard","dpag_standard"),
-            ("dpag_economy","dpag_economy"),
-            ("indpost_mail","indpost_mail"),
-            ("indpost_speedmail","indpost_speedmail"),
-            ("nlpost_priority","nlpost_priority"),
-            ("dhl_priority","dhl_priority"),
-        ],
-        "Delivery product",
-        default="cheap",
+        string='Pingen Document', readonly=True
     )
-    # TODO migrate field to pingen_print_spectrum
-    pingen_color = fields.Selection([('0', 'B/W'), ('1', 'Color')],
-                                    'Type of print', help='[DEPRECATED] (API v1)',
-                                    default='0')
-    pingen_print_spectrum = fields.Selection([("grayscale", "Grayscale"), ("color", "Color")], "Print Spectrum", default="grayscale")
-    pingen_print_mode = fields.Selection([("simplex", "Simplex"), ("duplex", "Duplex")], "Print mode", default="simplex")
-
+    
     def _prepare_pingen_document_vals(self):
         return {'attachment_id': self.id,
                 'config': 'created from attachment'}

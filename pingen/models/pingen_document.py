@@ -42,12 +42,42 @@ class PingenDocument(models.Model):
          ('canceled', 'Canceled')],
         string='State', readonly=True,
         required=True, default='pending')
+    auto_send = fields.Boolean(
+        'Auto Send', help="Defines if a document is merely uploaded or also sent",
+        default=True)
+    delivery_product = fields.Selection(
+        [
+            ("fast","fast"),
+            ("cheap","cheap"),
+            ("bulk","bulk"),
+            ("track","track"),
+            ("sign","sign"),
+            ("atpost_economy","atpost_economy"),
+            ("atpost_priority","atpost_priority"),
+            ("postag_a","postag_a"),
+            ("postag_b","postag_b"),
+            ("postag_b2","postag_b2"),
+            ("postag_registered","postag_registered"),
+            ("postag_aplus","postag_aplus"),
+            ("dpag_standard","dpag_standard"),
+            ("dpag_economy","dpag_economy"),
+            ("indpost_mail","indpost_mail"),
+            ("indpost_speedmail","indpost_speedmail"),
+            ("nlpost_priority","nlpost_priority"),
+            ("dhl_priority","dhl_priority"),
+        ],
+        "Delivery product",
+        default="cheap",
+    )
+    print_spectrum = fields.Selection([("grayscale", "Grayscale"), ("color", "Color")], "Print Spectrum", default="grayscale")
+    print_mode = fields.Selection([("simplex", "Simplex"), ("duplex", "Duplex")], "Print mode", default="simplex")
+
     push_date = fields.Datetime('Push Date', readonly=True)
     # for `error` and `pingen_error` states when we push
     last_error_message = fields.Text('Error Message', readonly=True)
     # pingen API v2 fields
-    pingen_uuid = fields.Char()
-    pingen_status = fields.Selection([("pushed", "")])
+    pingen_uuid = fields.Char(readonly=True)
+    pingen_status = fields.Char()
     # sendcenter infos
     parsed_address = fields.Text('Parsed Address', readonly=True)
     cost = fields.Float('Cost', readonly=True)
@@ -85,12 +115,11 @@ class PingenDocument(models.Model):
             doc_id, post_id, infos = pingen.push_document(
                 self.name,
                 StringIO(decoded_document),
-                self.pingen_send,
-                self.pingen_delivery_product,
-                self.pingen_print_spectrum,
-                self.pingen_print_mode)
+                self.auto_send,
+                self.delivery_product,
+                self.print_spectrum,
+                self.print_mode)
         except OAuth2Error as e:
-            import pdb; pdb.set_trace()
             _logger.exception(
                 'Connection Error when pushing Pingen Document with ID %s to %s: %s' %
                 (self.id, pingen.api_url, e.description))
@@ -107,14 +136,16 @@ class PingenDocument(models.Model):
         # elif infos['requirement_failure']:
         #     state = 'pingen_error'
         #     error = _('The document does not meet the Pingen requirements.')
-        push_date = pingen_datetime_to_utc(infos['created_at'])
+        push_date = pingen_datetime_to_utc(infos.get('created_at'))
         self.write(
-            {'last_error_message': error,
-             'state': state,
-             'push_date': fields.Datetime.to_string(push_date),
-             'pingen_uuid': doc_id,
-            #  'post_id': post_id
-             },)
+            {
+                'last_error_message': error,
+                'state': state,
+                'push_date': fields.Datetime.to_string(push_date),
+                'pingen_uuid': doc_id,
+                'pingen_status': infos.get('status'),
+            }
+        )
         _logger.info(
             'Pingen Document %s: pushed to %s' % (self.id, pingen.api_url))
 
@@ -124,7 +155,6 @@ class PingenDocument(models.Model):
         Wrapper method for multiple ids (when triggered from button for
         instance) for public interface.
         """
-        import pdb; pdb.set_trace()
         self.ensure_one()
         state = False
         error_msg = False
@@ -207,18 +237,14 @@ class PingenDocument(models.Model):
         """ For a document already pushed to pingen, ask to send it.
         :param Pingen pingen: pingen object to reuse
         """
-        # sending has been explicitely asked so we change the option
-        # for consistency
-
-        if not self.pingen_send:
-            self.write({'pingen_send': True})
         try:
-            post_id = pingen.send_document(
+            infos = pingen.send_document(
                 self.pingen_uuid,
-                self.pingen_delivery_product,
-                self.pingen_print_spectrum,
-                self.pingen_print_mode)
-        except OAuth2Error():
+                self.delivery_product,
+                self.print_spectrum,
+                self.print_mode
+            )
+        except OAuth2Error:
             _logger.exception(
                 'Connection Error when asking for sending Pingen Document %s '
                 'to %s.' % (self.id, pingen.api_url))
@@ -229,9 +255,12 @@ class PingenDocument(models.Model):
                 (self.id, pingen.api_url))
             raise
         self.write(
-            {'last_error_message': False,
-             'state': 'sendcenter',
-             'post_id': post_id})
+            {
+                'last_error_message': False,
+                'state': 'sendcenter',
+                'pingen_status': infos.get('status'),
+            }
+        )
         _logger.info(
             'Pingen Document %s: asked for sending to %s' % (
                 self.id, pingen.api_url))
@@ -287,16 +316,26 @@ class PingenDocument(models.Model):
             raise
         country = self.env['res.country'].search(
             [('code', '=', post_infos['country'])])
-        send_date = pingen_datetime_to_utc(post_infos['date'])
+        currency = self.env["res.currency"].search(
+            [("name", "=", post_infos.get("price_currency"))]
+        )
+        is_posted = pingen.is_posted(post_infos)
+        if is_posted:
+            post_date = post_infos.get("submitted_at")
+            send_date = fields.Datetime.to_string(pingen_datetime_to_utc(post_date))
+        else:
+            send_date = False
         vals = {
-            'post_status': POST_SENDING_STATUS[post_infos['status']],
-            'parsed_address': post_infos['address'],
+            'pingen_status': post_infos.get('status'),
+            'parsed_address': post_infos.get("address"),
             'country_id': country.id,
-            'send_date': fields.Datetime.to_string(send_date),
-            'pages': post_infos['pages'],
+            'send_date': send_date,
+            'pages': post_infos.get("file_pages"),
             'last_error_message': False,
-            }
-        if pingen.is_posted(post_infos):
+            'cost': post_infos.get("price_value"),
+            'currency_id': currency.id
+        }
+        if is_posted:
             vals['state'] = 'sent'
         self.write(vals)
         _logger.info('Pingen Document %s: status updated' % self.id)

@@ -19,10 +19,11 @@ from requests.packages.urllib3.filepost import encode_multipart_formdata
 _logger = logging.getLogger(__name__)
 
 POST_SENDING_STATUS = {
-    100: 'Ready/Pending',
-    101: 'Processing',
+    "validating": "In validation",
+    "valid": 'Ready/Pending',
+    "submitted": 'Processing',
     102: 'Waiting for confirmation',
-    1: 'Sent',
+    "sent": 'Sent',
     300: 'Some error occured and object wasn\'t sent',
     400: 'Sending cancelled',
 }
@@ -187,13 +188,13 @@ class Pingen(object):
         response = method(complete_url, verify=self.verify, **kwargs)
         errors = response.json().get('errors')
         if errors:
-            raise APIError("\n".join(["%s: %s" % (err.get("title"), err.get("detail")) for err in errors]))
+            raise APIError("\n".join(["%s (%s): %s" % (err.get("code"), err.get("title"), err.get("detail")) for err in errors]))
         return response
 
     def _get_file_upload(self):
         _logger.debug("Getting new URL for file upload")
         response = self._send(self.session.get, self.file_upload_url)
-        json_response_attributes = response.json().get("data").get("attributes")
+        json_response_attributes = response.json().get("data", {}).get("attributes")
         url = json_response_attributes.get("url")
         url_signature = json_response_attributes.get("url_signature")
         return url, url_signature
@@ -260,7 +261,7 @@ class Pingen(object):
             headers={"Content-Type": "application/vnd.api+json"},
             data=json.dumps(data)
         )
-        rjson_data = response.json().get("data")
+        rjson_data = response.json().get("data", {})
         
         document_id = rjson_data.get('id')
         # if rjson.get('send'):
@@ -298,8 +299,7 @@ class Pingen(object):
             headers={"Content-Type": "application/vnd.api+json"},
             data=json.dumps(data),
         )
-        return response.json().get("data").get("attributes")
-        # return response.json()['id']
+        return response.json().get("data", {}).get("attributes")
 
     def post_infos(self, document_uuid):
         """ Return the information of a post
@@ -312,7 +312,7 @@ class Pingen(object):
             "organisations/{organisationId}/letters/{letterId}",
             letter_id=document_uuid,
         )
-        return response.json().get("data").get("attributes")
+        return response.json().get("data", {}).get("attributes")
         # return response.json()['item']
 
     @staticmethod
@@ -321,4 +321,4 @@ class Pingen(object):
 
         :param dict post_infos: post infos returned by `post_infos`
         """
-        return post_infos['status'] == 1
+        return post_infos.get("status") == "sent"
