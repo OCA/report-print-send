@@ -17,6 +17,12 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: base_report_to_printer
+#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
+#, python-format
+msgid "%s (%s copies)"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__aborted
 msgid "Aborted"
 msgstr "Avbruten"
@@ -64,6 +70,16 @@ msgid "Are you sure to want to print a test page?"
 msgstr ""
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__attachment_id
+msgid "Attachment"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__attachment_line_ids
+msgid "Attachments to print"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__available
 msgid "Available"
 msgstr "Tillgänglig"
@@ -91,6 +107,7 @@ msgstr "Kan startas om"
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -150,6 +167,11 @@ msgid "Compressed using an unknown algorithm"
 msgstr "Komprimerad med en okänd algoritm"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__copies
+msgid "Copies"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_uid
@@ -157,6 +179,8 @@ msgstr "Komprimerad med en okänd algoritm"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_uid
 msgid "Created by"
 msgstr "Skapad av"
 
@@ -168,6 +192,8 @@ msgstr "Skapad av"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
 msgstr "Skapad den"
 
@@ -247,6 +273,8 @@ msgstr "Inaktivera"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__display_name
 msgid "Display Name"
 msgstr "Visningsnamn"
 
@@ -315,6 +343,15 @@ msgid "Files were not received in full"
 msgstr "Filer mottogs inte i sin helhet"
 
 #. module: base_report_to_printer
+#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
+#, python-format
+msgid ""
+"Following attachments could not be printed:\n"
+"\n"
+"%s"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__3
 msgid "HTTP_ENCRYPT_ALWAYS"
 msgstr ""
@@ -349,6 +386,8 @@ msgstr "Hålls eftersom skrivaren är offline"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -398,6 +437,8 @@ msgstr "Jobb utskrivna på den här skrivaren."
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment____last_update
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line____last_update
 msgid "Last Modified on"
 msgstr "Senast ändrad den"
 
@@ -409,6 +450,8 @@ msgstr "Senast ändrad den"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_uid
 msgid "Last Updated by"
 msgstr "Senast uppdaterad av"
 
@@ -420,6 +463,8 @@ msgstr "Senast uppdaterad av"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_date
 msgid "Last Updated on"
 msgstr "Senast uppdaterad den"
 
@@ -526,8 +571,25 @@ msgstr "Serverns port."
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Print"
 msgstr "Skriv ut"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment
+msgid "Print Attachment"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment_line
+msgid "Print Attachment line"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.action_wizard_print_attachment
+#: model:ir.ui.menu,name:base_report_to_printer.menu_action_wizard_print_attachment
+msgid "Print Attachments"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
@@ -540,10 +602,16 @@ msgid "Print Test Page"
 msgstr ""
 
 #. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
+msgid "Print attachments"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__printer_id
 msgid "Printer"
 msgstr "Skrivare"
 
@@ -571,6 +639,11 @@ msgstr "Orsaken till skrivarens tillstånd inställd till \"stoppad-delvis\""
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__printer_id
 msgid "Printer used for this job."
 msgstr "Skrivare som används för det här jobbet."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_wizard_print_attachment__printer_id
+msgid "Printer used to print the attachments."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
@@ -674,6 +747,11 @@ msgstr ""
 #: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
 msgstr "Rapporter"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__record_name
+msgid "Resource Name"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__resources-are-not-ready
@@ -876,3 +954,8 @@ msgstr ""
 #: model:ir.model,name:base_report_to_printer.model_res_users
 msgid "Users"
 msgstr "Användare"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__wizard_id
+msgid "Wizard"
+msgstr ""
