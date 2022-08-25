@@ -28,7 +28,7 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "/base_report_to_printer/static/src/js/qweb_action_manager.js",
+            "/base_report_to_printer/static/src/js/qweb_action_manager.esm.js",
         ],
     },
     "installable": True,
