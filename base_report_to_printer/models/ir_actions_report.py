@@ -4,10 +4,9 @@
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import time
 
 from odoo import _, api, exceptions, fields, models
-from odoo.tools import safe_eval
+from odoo.tools.safe_eval import safe_eval, time
 
 
 class IrActionsReport(models.Model):
