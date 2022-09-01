@@ -34,7 +34,7 @@ class TestPrintingTray(TransactionCase):
         return self.env["printing.tray"].create(self.tray_vals)
 
     def test_report_behaviour(self):
-        """ It should add the selected tray in the report data """
+        """It should add the selected tray in the report data"""
         ir_report = self.env["ir.actions.report"].search([], limit=1)
         report = self.env["printing.report.xml.action"].create(
             {"user_id": self.env.user.id, "report_id": ir_report.id, "action": "server"}

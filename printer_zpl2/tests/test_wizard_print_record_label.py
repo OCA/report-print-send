@@ -37,7 +37,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_print_record_label(self, cups):
-        """ Check that printing a label using the generic wizard works """
+        """Check that printing a label using the generic wizard works"""
         wizard_obj = self.Model.with_context(
             active_model="printing.printer",
             active_id=self.printer.id,
@@ -51,7 +51,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
         cups.Connection().printFile.assert_called_once()
 
     def test_wizard_multiple_printers_and_labels(self):
-        """ Check that printer_id and label_id are not automatically filled
+        """Check that printer_id and label_id are not automatically filled
         when there are multiple possible values
         """
         self.env["printing.printer"].create(
@@ -85,7 +85,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.assertEqual(values.get("label_id", False), False)
 
     def test_wizard_multiple_labels_but_on_different_models(self):
-        """ Check that label_id is automatically filled when there are multiple
+        """Check that label_id is automatically filled when there are multiple
         labels, but only one on the right model
         """
         self.env["printing.label.zpl2"].create(

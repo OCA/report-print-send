@@ -68,8 +68,7 @@ class StockPikcing(TransactionCase):
         self.uom_unit = self.env.ref("uom.product_uom_unit")
 
     def test_stock_picking_auto_print(self):
-        """ Auto print when DO is ready or done
-        """
+        """Auto print when DO is ready or done"""
         self.env["stock.quant"]._update_available_quantity(
             self.product_A, self.stock_location, 2
         )

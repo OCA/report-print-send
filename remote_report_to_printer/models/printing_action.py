@@ -13,4 +13,6 @@ class PrintingAction(models.Model):
         res.append(("remote_default", "Use remote's default"))
         return res
 
-    action_type = fields.Selection(selection=_available_action_types,)
+    action_type = fields.Selection(
+        selection=_available_action_types,
+    )

@@ -8,10 +8,19 @@ class ResRemotePrinter(models.Model):
     _name = "res.remote.printer"
     _description = "Remote Printer"
 
-    remote_id = fields.Many2one("res.remote", ondelete="cascade", readonly=True,)
-    printer_id = fields.Many2one("printing.printer", ondelete="cascade",)
+    remote_id = fields.Many2one(
+        "res.remote",
+        ondelete="cascade",
+        readonly=True,
+    )
+    printer_id = fields.Many2one(
+        "printing.printer",
+        ondelete="cascade",
+    )
     printer_tray_id = fields.Many2one(
-        "printing.tray", ondelete="cascade", domain="[('printer_id', '=', printer_id)]",
+        "printing.tray",
+        ondelete="cascade",
+        domain="[('printer_id', '=', printer_id)]",
     )
     is_default = fields.Boolean(default=False)
     printer_usage = fields.Selection([("standard", "Standard")], default="standard")
@@ -26,7 +35,7 @@ class ResRemotePrinter(models.Model):
 
     @api.onchange("printer_id")
     def _onchange_printing_printer_id(self):
-        """ Reset the tray when the printer is changed """
+        """Reset the tray when the printer is changed"""
         self.printer_tray_id = False
 
     @api.constrains("remote_id", "printer_usage", "is_default")

@@ -44,7 +44,7 @@ class TestPrintingServer(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_update_printers_error(self, cups):
-        """ It should catch any exception from CUPS and update status """
+        """It should catch any exception from CUPS and update status"""
         cups.Connection.side_effect = Exception
         rec_id = self.new_printer()
         self.Model.update_printers()
@@ -52,7 +52,7 @@ class TestPrintingServer(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_update_printers_inits_cups(self, cups):
-        """ It should init CUPS connection """
+        """It should init CUPS connection"""
         self.new_printer()
         self.Model.update_printers()
         cups.Connection.assert_called_once_with(
@@ -61,21 +61,21 @@ class TestPrintingServer(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_update_printers_gets_all_printers(self, cups):
-        """ It should get all printers from CUPS server """
+        """It should get all printers from CUPS server"""
         self.new_printer()
         self.Model.update_printers()
         cups.Connection().getPrinters.assert_called_once_with()
 
     @mock.patch("%s.cups" % model)
     def test_update_printers_search(self, cups):
-        """ It should search all when no domain """
+        """It should search all when no domain"""
         with mock.patch.object(self.Model, "search") as search:
             self.Model.update_printers()
             search.assert_called_once_with([])
 
     @mock.patch("%s.cups" % model)
     def test_update_printers_search_domain(self, cups):
-        """ It should use specific domain for search """
+        """It should use specific domain for search"""
         with mock.patch.object(self.Model, "search") as search:
             expect = [("id", ">", 0)]
             self.Model.update_printers(expect)
@@ -83,7 +83,7 @@ class TestPrintingServer(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_update_printers_update_unavailable(self, cups):
-        """ It should update status when printer is unavailable """
+        """It should update status when printer is unavailable"""
         rec_id = self.new_printer()
         cups.Connection().getPrinters().get.return_value = False
         self.Model.action_update_printers()
@@ -91,19 +91,20 @@ class TestPrintingServer(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_update_archived_printers(self, cups):
-        """ It should update status even if printer is archived """
+        """It should update status even if printer is archived"""
         rec_id = self.new_printer()
         rec_id.toggle_active()
         self.server.refresh()
         cups.Connection().getPrinters().get.return_value = False
         self.Model.action_update_printers()
         self.assertEqual(
-            "unavailable", rec_id.status,
+            "unavailable",
+            rec_id.status,
         )
 
     @mock.patch("%s.cups" % model)
     def test_update_jobs_cron(self, cups):
-        """ It should get all jobs from CUPS server """
+        """It should get all jobs from CUPS server"""
         self.new_printer()
         self.Model.action_update_jobs()
         cups.Connection().getPrinters.assert_called_once_with()
@@ -125,7 +126,7 @@ class TestPrintingServer(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_update_jobs_button(self, cups):
-        """ It should get all jobs from CUPS server """
+        """It should get all jobs from CUPS server"""
         self.new_printer()
         self.server.action_update_jobs()
         cups.Connection().getPrinters.assert_called_once_with()
@@ -147,7 +148,7 @@ class TestPrintingServer(TransactionCase):
 
     @mock.patch("%s.cups" % model)
     def test_update_jobs_error(self, cups):
-        """ It should catch any exception from CUPS and update status """
+        """It should catch any exception from CUPS and update status"""
         cups.Connection.side_effect = Exception
         self.new_printer()
         self.server.update_jobs()
