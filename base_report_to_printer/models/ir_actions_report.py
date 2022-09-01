@@ -35,12 +35,12 @@ class IrActionsReport(models.Model):
 
     @api.onchange("printing_printer_id")
     def onchange_printing_printer_id(self):
-        """ Reset the tray when the printer is changed """
+        """Reset the tray when the printer is changed"""
         self.printer_tray_id = False
 
     @api.model
     def print_action_for_report_name(self, report_name):
-        """ Returns if the action is a direct print or pdf
+        """Returns if the action is a direct print or pdf
 
         Called from js
         """
@@ -99,7 +99,7 @@ class IrActionsReport(models.Model):
         return result
 
     def print_document(self, record_ids, data=None):
-        """ Print a document, do not return the document file """
+        """Print a document, do not return the document file"""
         document, doc_format = self.with_context(
             must_skip_send_to_printer=True
         ).render_qweb_pdf(record_ids, data=data)
@@ -143,7 +143,7 @@ class IrActionsReport(models.Model):
         return res
 
     def render_qweb_pdf(self, res_ids=None, data=None):
-        """ Generate a PDF and returns it.
+        """Generate a PDF and returns it.
 
         If the action configured on the report is server, it prints the
         generated document as well.
