@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 CreuBlanca
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="demo_escpo" model="printing.escpos">
+        <field name="name">Demo ESCPOS</field>
+        <field name="mode">arch</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="arch" type="xml">
+            <receipt>
+                <t t-foreach="docs" t-as="doc">
+                    <h1 t-esc="doc.name" />
+                    <div
+                        t-esc="'Bigger %s' % doc.name"
+                        width="3"
+                        height="3"
+                        custom_size="1"
+                    />
+                    <h2>Subtitle L2</h2>
+                    <h3>Subtitle L3</h3>
+                    <h4>Subtitle L4</h4>
+                    <h5>Subtitle L5</h5>
+                    <div>Text with font A</div>
+                    <div font="b">Text with font B</div>
+                    <div bold="1">Text in bold</div>
+                    <div underline="1">Text underlined</div>
+                    <line>
+                        <left>Product</left>
+                        <right>0.15€</right>
+                    </line>
+                    <hr />
+                    <line size='double-height'>
+                        <left>TOTAL</left>
+                        <right>0.15€</right>
+                    </line>
+                    <barcode encoding='ean13'>
+                        5449000000996
+                    </barcode>
+                    <qr qrsize="4" align="center">This is a QR</qr>
+                    <cashdraw />
+                    <cut />
+                </t>
+            </receipt>
+        </field>
+    </record>
+</odoo>
