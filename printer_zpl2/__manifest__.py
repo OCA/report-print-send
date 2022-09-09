@@ -10,7 +10,6 @@
     "Apertoso NV, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/report-print-send",
     "license": "AGPL-3",
-    "external_dependencies": {"python": ["zpl2"]},
     "depends": ["base_report_to_printer"],
     "data": [
         "security/ir.model.access.csv",
