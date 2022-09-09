@@ -11,12 +11,9 @@ from PIL import Image, ImageOps
 
 from odoo import _, fields, models
 
-_logger = logging.getLogger(__name__)
+from ..models import zpl2
 
-try:
-    import zpl2
-except ImportError:
-    _logger.debug("Cannot `import zpl2`.")
+_logger = logging.getLogger(__name__)
 
 
 def _compute_arg(data, arg):
