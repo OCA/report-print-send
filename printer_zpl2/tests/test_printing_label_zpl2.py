@@ -1,19 +1,12 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import logging
-
 import mock
 
 from odoo import exceptions
 from odoo.tests.common import TransactionCase
 
-_logger = logging.getLogger(__name__)
-
-try:
-    import zpl2
-except ImportError:
-    _logger.debug("Cannot `import zpl2`.")
+from ..models import zpl2
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
 

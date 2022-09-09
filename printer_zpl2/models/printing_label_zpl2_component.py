@@ -5,12 +5,10 @@ import logging
 
 from odoo import api, fields, models
 
+from . import zpl2
+
 _logger = logging.getLogger(__name__)
 
-try:
-    import zpl2
-except ImportError:
-    _logger.debug("Cannot `import zpl2`.")
 
 DEFAULT_PYTHON_CODE = """# Python One-Liners
 #  - object: %s record on which the action is triggered; may be void

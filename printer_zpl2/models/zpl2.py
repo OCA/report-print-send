@@ -8,15 +8,7 @@
 import binascii
 import math
 
-try:
-    from PIL import ImageOps
-except:
-    ImageOps = None
-
-try:
-    strcast = unicode
-except:
-    strcast = str
+from PIL import ImageOps
 
 # Constants for the printer configuration management
 CONF_RELOAD_FACTORY = "F"
@@ -136,7 +128,7 @@ class Zpl2(object):
 
     def _write_command(self, data):
         """Adds a complete command to buffer"""
-        self._buffer.append(strcast(data).encode(self.encoding))
+        self._buffer.append(str(data).encode(self.encoding))
 
     def _generate_arguments(self, arguments, kwargs):
         """Generate a zebra arguments from an argument names list and a dict of
@@ -492,12 +484,6 @@ class Zpl2(object):
 
     def graphic_field(self, right, down, pil_image):
         """Encode a PIL image into an ASCII string suitable for ZPL printers"""
-        if ImageOps is None:
-            # Importing ImageOps from PIL didn't work
-            raise Exception(
-                "You must install Pillow to be able to use the graphic"
-                " fields feature"
-            )
         width, height = pil_image.size
         rounded_width = int(math.ceil(width / 8.0) * 8)
         # Transform the image :
