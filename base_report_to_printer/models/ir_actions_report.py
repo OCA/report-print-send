@@ -94,7 +94,7 @@ class IrActionsReport(models.Model):
         if not print_action:
             result.update(self._get_report_default_print_behaviour())
 
-        elif print_action.action != 'user_default':
+        elif print_action.action != "user_default":
             result.update({k: v for k, v in print_action.behaviour().items() if v})
 
         return result
