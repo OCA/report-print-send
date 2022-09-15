@@ -80,22 +80,23 @@ class IrActionsReport(models.Model):
         self.ensure_one()
         printing_act_obj = self.env["printing.report.xml.action"]
 
-        result = self._get_user_default_print_behaviour()
-        result.update(self._get_report_default_print_behaviour())
-
         # Retrieve report-user specific values
         print_action = printing_act_obj.search(
             [
                 ("report_id", "=", self.id),
                 ("user_id", "=", self.env.uid),
-                ("action", "!=", "user_default"),
             ],
             limit=1,
         )
-        if print_action:
-            # For some reason design takes report defaults over
-            # False action entries so we must allow for that here
+
+        result = self._get_user_default_print_behaviour()
+
+        if not print_action:
+            result.update(self._get_report_default_print_behaviour())
+
+        elif print_action.action != 'user_default':
             result.update({k: v for k, v in print_action.behaviour().items() if v})
+
         return result
 
     def print_document(self, record_ids, data=None):
