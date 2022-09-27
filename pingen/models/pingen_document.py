@@ -310,33 +310,37 @@ class PingenDocument(models.Model):
             raise
         return post_infos
 
-    def _update_post_infos(self, post_infos):
-        self.ensure_one()
+    @api.model
+    def _prepare_values_from_post_infos(self, post_infos):
         country = self.env['res.country'].search(
             [('code', '=', post_infos.get('country'))]
         )
         currency = self.env["res.currency"].search(
             [("name", "=", post_infos.get("price_currency"))]
         )
-        is_posted = pingen.is_posted(post_infos)
-        if is_posted:
-            post_date = post_infos.get("submitted_at")
-            send_date = fields.Datetime.to_string(pingen_datetime_to_utc(post_date))
-        else:
-            send_date = False
         vals = {
             'pingen_status': post_infos.get('status'),
             'parsed_address': post_infos.get("address"),
             'country_id': country.id,
-            'send_date': send_date,
             'pages': post_infos.get("file_pages"),
             'last_error_message': False,
             'cost': post_infos.get("price_value"),
             'currency_id': currency.id
         }
+        is_posted = post_infos.get("status") == "sent"
         if is_posted:
-            vals['state'] = 'sent'
-        self.write(vals)
+            post_date = post_infos.get("submitted_at")
+            send_date = fields.Datetime.to_string(pingen_datetime_to_utc(post_date))
+            vals["state"] = "sent"
+        else:
+            send_date = False
+        vals['send_date'] = send_date
+        return vals
+
+    def _update_post_infos(self, post_infos):
+        self.ensure_one()
+        values = self._prepare_values_from_post_infos(post_infos)
+        self.write(values)
         _logger.info('Pingen Document %s: status updated' % self.id)
 
     def _update_post_infos_cron(self):

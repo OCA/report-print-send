@@ -313,11 +313,3 @@ class Pingen(object):
         )
         return response.json().get("data", {}).get("attributes")
         # return response.json()['item']
-
-    @staticmethod
-    def is_posted(post_infos):
-        """ return True if the post has been sent
-
-        :param dict post_infos: post infos returned by `post_infos`
-        """
-        return post_infos.get("status") == "sent"
