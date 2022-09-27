@@ -21,8 +21,10 @@ class IrAttachment(models.Model):
     )
     
     def _prepare_pingen_document_vals(self):
-        return {'attachment_id': self.id,
-                'config': 'created from attachment'}
+        return {
+            'attachment_id': self.id,
+            # 'config': 'created from attachment'
+        }
 
     def _handle_pingen_document(self):
         """ Reponsible of the related ``pingen.document``

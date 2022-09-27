@@ -10,4 +10,5 @@ class BaseConfigSettings(models.TransientModel):
     pingen_clientid = fields.Char(related='company_id.pingen_clientid')
     pingen_client_secretid = fields.Char(related='company_id.pingen_client_secretid')
     pingen_organization = fields.Char(related='company_id.pingen_organization')
+    pingen_webhook_secret = fields.Char(related='company_id.pingen_webhook_secret')
     pingen_staging = fields.Boolean(related='company_id.pingen_staging')

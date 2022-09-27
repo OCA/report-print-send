@@ -14,6 +14,7 @@ class ResCompany(models.Model):
     pingen_clientid = fields.Char('Pingen Client ID', size=20)
     pingen_client_secretid = fields.Char('Pingen Client Secret ID', size=80)
     pingen_organization = fields.Char('Pingen organization ID')
+    pingen_webhook_secret = fields.Char('Pingen Webhooks secret')
     pingen_staging = fields.Boolean('Pingen Staging')
 
     def _pingen(self):

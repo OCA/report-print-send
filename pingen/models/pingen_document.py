@@ -37,6 +37,7 @@ class PingenDocument(models.Model):
          ('pushed', 'Pushed'),
          ('sendcenter', 'In Sendcenter'),
          ('sent', 'Sent'),
+         ('error_undeliverable', 'Undeliverable'),
          ('error', 'Connection Error'),
          ('pingen_error', 'Pingen Error'),
          ('canceled', 'Canceled')],
@@ -77,7 +78,7 @@ class PingenDocument(models.Model):
     last_error_message = fields.Text('Error Message', readonly=True)
     # pingen API v2 fields
     pingen_uuid = fields.Char(readonly=True)
-    pingen_status = fields.Char()
+    pingen_status = fields.Char(readonly=True)
     # sendcenter infos
     parsed_address = fields.Text('Parsed Address', readonly=True)
     cost = fields.Float('Cost', readonly=True)
@@ -86,17 +87,6 @@ class PingenDocument(models.Model):
     send_date = fields.Datetime('Date of sending', readonly=True)
     pages = fields.Integer('Pages', readonly=True)
     company_id = fields.Many2one(related="attachment_id.company_id")
-
-    # Deprecated fields
-    pingen_id = fields.Integer(
-        'Pingen ID', readonly=True,
-        help="[DEPRECATED] ID of the document in the Pingen Documents (API v1)"
-    )
-    post_id = fields.Integer(
-        'Pingen Post ID', readonly=True,
-        help="[DEPRECATED] ID of the document in the Pingen Sendcenter (API v1)"
-    )
-    post_status = fields.Char('Post Status', size=128, readonly=True, help="[DEPRECATED] (API v1)")
 
     _sql_constraints = [
         ('pingen_document_attachment_uniq',
@@ -219,8 +209,8 @@ class PingenDocument(models.Model):
 
     def _resolve_error(self):
         """ A document as resolved, put in the correct state """
-        if self.post_id:
-            state = 'sendcenter'
+        if self.send_date:
+            state = "sent"
         elif self.pingen_uuid:
             state = 'pushed'
         else:
@@ -294,11 +284,15 @@ class PingenDocument(models.Model):
                   'of Document %s') % self.name)
         return True
 
-    def _update_post_infos(self, pingen):
+    def _get_and_update_post_infos(self, pingen):
         """ Update the informations from
         pingen of a document in the Sendcenter
         :param Pingen pingen: pingen object to reuse
         """
+        post_infos = self._get_post_infos(pingen)
+        self._update_post_infos(post_infos)
+
+    def _get_post_infos(self, pingen):
         if not self.pingen_uuid:
             return
         try:
@@ -314,8 +308,13 @@ class PingenDocument(models.Model):
                 'API Error when asking for sending Pingen Document %s to %s.' %
                 (self.id, pingen.api_url))
             raise
+        return post_infos
+
+    def _update_post_infos(self, post_infos):
+        self.ensure_one()
         country = self.env['res.country'].search(
-            [('code', '=', post_infos['country'])])
+            [('code', '=', post_infos.get('country'))]
+        )
         currency = self.env["res.currency"].search(
             [("name", "=", post_infos.get("price_currency"))]
         )
@@ -356,7 +355,7 @@ class PingenDocument(models.Model):
                 for document in pushed_docs:
                     session = document.company_id._get_pingen_client()
                     try:
-                        document._update_post_infos(pingen=session)
+                        document._get_and_update_post_infos(pingen=session)
                     except (OAuth2Error, APIError):
                         # will be retried the next time
                         # In any case, the error has been
@@ -375,7 +374,7 @@ class PingenDocument(models.Model):
         self.ensure_one()
         try:
             session = self.company_id._get_pingen_client()
-            self._update_post_infos(pingen=session)
+            self._get_and_update_post_infos(pingen=session)
         except OAuth2Error as e:
             raise UserError(
                 _('Connection Error when updating the status '

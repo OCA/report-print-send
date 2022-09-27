@@ -10,6 +10,7 @@
                     <field name="pingen_clientid" groups="base.group_system"/>
                     <field name="pingen_client_secretid" groups="base.group_system"/>
                     <field name="pingen_organization" groups="base.group_system"/>
+                    <field name="pingen_webhook_secret" groups="base.group_system"/>
                     <field name="pingen_staging" groups="base.group_system"/>
                 </group>
             </group>

@@ -20,9 +20,9 @@ _logger = logging.getLogger(__name__)
 
 POST_SENDING_STATUS = {
     "validating": "In validation",
+    "action_required": 'Action required',
     "valid": 'Ready/Pending',
     "submitted": 'Processing',
-    102: 'Waiting for confirmation',
     "sent": 'Sent',
     300: 'Some error occured and object wasn\'t sent',
     400: 'Sending cancelled',
