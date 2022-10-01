@@ -16,12 +16,9 @@ from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
 
-_logger = logging.getLogger(__name__)
+from . import zpl2
 
-try:
-    import zpl2
-except ImportError:
-    _logger.debug("Cannot `import zpl2`.")
+_logger = logging.getLogger(__name__)
 
 
 class PrintingLabelZpl2(models.Model):
