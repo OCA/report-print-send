@@ -9,7 +9,7 @@ odoo.define("base_report_to_printer.print", function (require) {
         _triggerDownload: function (action, options, type) {
             var self = this;
             var _super = this._super;
-            if (type === "pdf" || "text") {
+            if (type === "pdf" || type === "text") {
                 this._rpc({
                     model: "ir.actions.report",
                     method: "print_action_for_report_name",

@@ -12,3 +12,4 @@
 * Rod Schouteden <rod@schout-it.be>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
+* Fernando La Chica - GreenIce <fernandolachica@gmail.com>

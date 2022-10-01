@@ -69,15 +69,15 @@ class PrintingServer(models.Model):
                     cups.setPasswordCB(pw_callback)
 
             connection = cups.Connection(host=self.address, port=self.port)
-        except Exception:
+        except BaseException as err:
             message = _(
-                "Failed to connect to the CUPS server on %s:%s. "
+                "Failed to connect to the CUPS server on {}:{}. "
                 "Check that the CUPS server is running and that "
                 "you can reach it from the Odoo server."
-            ) % (self.address, self.port)
+            ).format(self.address, self.port)
             _logger.warning(message)
             if raise_on_error:
-                raise exceptions.UserError(message)
+                raise exceptions.UserError(message) from err
 
         return connection
 
