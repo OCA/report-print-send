@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-19 17:25+0000\n"
-"PO-Revision-Date: 2018-01-19 17:25+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2022-10-12 09:35+0000\n"
+"Last-Translator: Sylvain ALBASSER <sylvain.albasser@syentys.fr>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
@@ -27,7 +28,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__aborted
 msgid "Aborted"
-msgstr ""
+msgstr "Interrompu"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__aborted-by-system
