@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-19 17:25+0000\n"
-"PO-Revision-Date: 2022-10-12 09:35+0000\n"
+"PO-Revision-Date: 2022-10-13 12:35+0000\n"
 "Last-Translator: Sylvain ALBASSER <sylvain.albasser@syentys.fr>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
@@ -333,7 +333,7 @@ msgid ""
 "running and that you can reach it from the Odoo server."
 msgstr ""
 "La connexion au serveur CUPS %s:%s a échoué. Veuillez contrôler que le "
-"serveur soit démarré et qu'il soit atteignable depuis le serveur Odoo. "
+"serveur soit démarré et qu'il soit atteignable depuis le serveur Odoo."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-incoming
@@ -706,7 +706,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing
 msgid "Processing"
-msgstr ""
+msgstr "En cours de traitement"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing_stopped
@@ -750,12 +750,12 @@ msgstr "Actions d'impression de rapports"
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
-msgstr "Rapport"
+msgstr "Rapports"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__record_name
 msgid "Resource Name"
-msgstr ""
+msgstr "Nom de Ressource"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__resources-are-not-ready
@@ -766,7 +766,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__server_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__server_id
 msgid "Server"
-msgstr ""
+msgstr "Serveur"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__server-error
@@ -789,7 +789,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
 msgid "Servers"
-msgstr ""
+msgstr "Serveurs"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -824,7 +824,7 @@ msgstr "État"
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status_message
 msgid "Status Message"
-msgstr ""
+msgstr "Message de Statut"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__system_name
