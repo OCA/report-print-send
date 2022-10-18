@@ -18,16 +18,6 @@ from requests.packages.urllib3.filepost import encode_multipart_formdata
 
 _logger = logging.getLogger(__name__)
 
-POST_SENDING_STATUS = {
-    "validating": "In validation",
-    "action_required": 'Action required',
-    "valid": 'Ready/Pending',
-    "submitted": 'Processing',
-    "sent": 'Sent',
-    300: 'Some error occured and object wasn\'t sent',
-    400: 'Sending cancelled',
-}
-
 
 def pingen_datetime_to_utc(dt):
     """ Convert a date/time used by pingen.com to UTC timezone

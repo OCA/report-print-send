@@ -9,9 +9,9 @@ from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 from cStringIO import StringIO
 
 import odoo
-from odoo import models, fields, _
+from odoo import api, models, fields, _
 from odoo.exceptions import UserError
-from .pingen import APIError, pingen_datetime_to_utc, POST_SENDING_STATUS
+from .pingen import APIError, pingen_datetime_to_utc
 
 
 _logger = logging.getLogger(__name__)
