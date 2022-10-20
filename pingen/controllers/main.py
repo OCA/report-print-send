@@ -50,6 +50,9 @@ class PingenController(http.Controller):
                 return node.get("attributes", {})
         return {}
 
+    def _get_webhook_date(self,json_content):
+        return json_content.get("data",{}).get("attributes",{}).get("emmited_at",{})
+
     def _update_pingen_document(self, request_content, values):
         json_content = self._get_json_content(request_content)
         document_uuid = self._get_document_uuid(json_content)
@@ -71,6 +74,7 @@ class PingenController(http.Controller):
     def letter_issues(self, **post):
         _logger.info("Webhook call received on /pingen/letter_issues")
         request_content = self._get_request_content()
+        json_content = self._get_json_content(request_content)
         self._verify_signature(request_content)
         values = {
             "state": "pingen_error",
@@ -82,6 +86,7 @@ class PingenController(http.Controller):
     def sent_letters(self, **post):
         _logger.info("Webhook call received on /pingen/sent_letters")
         request_content = self._get_request_content()
+        json_content = self._get_json_content(request_content)
         self._verify_signature(request_content)
         values = {
             "state": "sent",
@@ -93,6 +98,7 @@ class PingenController(http.Controller):
     def undeliverable_letters(self, **post):
         _logger.info("Webhook call received on /pingen/undeliverable_letters")
         request_content = self._get_request_content()
+        json_content = self._get_json_content(request_content)
         self._verify_signature(request_content)
         values = {
             "state": "error_undeliverable",
