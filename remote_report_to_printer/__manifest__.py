@@ -10,6 +10,7 @@
     "license": "AGPL-3",
     "depends": ["base_remote", "base_report_to_printer"],
     "data": [
+        "views/printing_printer.xml",
         "data/printing_data.xml",
         "security/ir.model.access.csv",
         "views/res_remote_views.xml",
