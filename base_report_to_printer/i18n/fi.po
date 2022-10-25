@@ -152,6 +152,13 @@ msgid "Compressed using an unknown algorithm"
 msgstr ""
 
 #. module: base_report_to_printer
+#. openerp-web
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+#, python-format
+msgid "Could not sent to printer!"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_uid
@@ -240,7 +247,6 @@ msgid "Disable"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__display_name
@@ -248,16 +254,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__display_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__display_name
 msgid "Display Name"
 msgstr "Nimi"
-
-#. module: base_report_to_printer
-#. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:0
-#, python-format
-msgid "Document sent to the printer %s"
-msgstr ""
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -290,18 +288,11 @@ msgid "Error in the document"
 msgstr ""
 
 #. module: base_report_to_printer
-#. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:0
-#, python-format
-msgid "Error when sending the document to the printer "
-msgstr ""
-
-#. module: base_report_to_printer
 #: code:addons/base_report_to_printer/models/printing_server.py:0
 #, python-format
 msgid ""
-"Failed to connect to the CUPS server on %s:%s. Check that the CUPS server is "
-"running and that you can reach it from the Odoo server."
+"Failed to connect to the CUPS server on %(address)s:%(port)s. Check that the "
+"CUPS server is running and that you can reach it from the Odoo server."
 msgstr ""
 
 #. module: base_report_to_printer
@@ -340,7 +331,6 @@ msgid "Held because the printer is offline"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__id
@@ -348,7 +338,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__id
 msgid "ID"
 msgstr "ID"
 
@@ -389,7 +378,6 @@ msgid "Jobs printed on this printer."
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer____last_update
@@ -397,7 +385,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server____last_update
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users____last_update
 msgid "Last Modified on"
 msgstr "Viimeksi muokattu"
 
@@ -653,10 +640,7 @@ msgid "Reason for the current job state."
 msgstr ""
 
 #. module: base_report_to_printer
-#. openerp-web
-#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.js:0
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__report_id
-#, python-format
 msgid "Report"
 msgstr ""
 
@@ -742,6 +726,13 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status_message
 msgid "Status Message"
+msgstr ""
+
+#. module: base_report_to_printer
+#. openerp-web
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+#, python-format
+msgid "Successfully sent to printer!"
 msgstr ""
 
 #. module: base_report_to_printer
