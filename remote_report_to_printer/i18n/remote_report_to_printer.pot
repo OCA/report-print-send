@@ -70,6 +70,7 @@ msgid "Print Job Action"
 msgstr ""
 
 #. module: remote_report_to_printer
+#: model:ir.model,name:remote_report_to_printer.model_printing_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__printer_id
 msgid "Printer"
 msgstr ""
@@ -107,7 +108,14 @@ msgid "Remote Printers"
 msgstr ""
 
 #. module: remote_report_to_printer
+#: model:ir.model.fields,help:remote_report_to_printer.field_printing_printer__printer_remote_ids
+msgid "Remote that can use this printer."
+msgstr ""
+
+#. module: remote_report_to_printer
 #: model:ir.model,name:remote_report_to_printer.model_res_remote
+#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_printer__printer_remote_ids
+#: model_terms:ir.ui.view,arch_db:remote_report_to_printer.printing_printer_form_view
 msgid "Remotes"
 msgstr ""
 
