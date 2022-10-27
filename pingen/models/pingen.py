@@ -193,7 +193,7 @@ class Pingen(object):
         response = requests.put(url, data=multipart, headers={'Content-Type': content_type})
         return response
 
-    def push_document(self, filename, filestream,
+    def push_document(self, filename, filestream, content_type,
                       send=None, delivery_product=None, print_spectrum=None, print_mode=None):
         """ Upload a document to pingen.com and eventually ask to send it
 
@@ -214,16 +214,16 @@ class Pingen(object):
         # JSON-encoded data. We have to construct
         # the entire body and send it to `data`
         # https://github.com/kennethreitz/requests/issues/950
-        formdata = {
-            'file': (filename, filestream.read()),
-        }
+        # formdata = {
+        #     'file': (filename, filestream.read()),
+        # }
 
         url, url_signature = self._get_file_upload()
         # file_upload = self._get_file_upload()
 
-        multipart, content_type = encode_multipart_formdata(formdata)
+        # multipart, content_type = encode_multipart_formdata(formdata)
         
-        upload_response = self.upload_file(url, multipart, content_type)
+        upload_response = self.upload_file(url, filestream.read(), content_type)
 
         data_attributes = {
             "file_original_name": filename,
