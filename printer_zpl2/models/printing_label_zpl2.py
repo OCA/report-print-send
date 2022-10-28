@@ -69,7 +69,7 @@ class PrintingLabelZpl2(models.Model):
     test_print_mode = fields.Boolean(string="Mode Print")
     test_labelary_mode = fields.Boolean(string="Mode Labelary")
     record_id = fields.Integer(string="Record ID", default=1)
-    extra = fields.Text(string="Extra", default="{}")
+    extra = fields.Text(default="{}")
     printer_id = fields.Many2one(comodel_name="printing.printer", string="Printer")
     labelary_image = fields.Binary(
         string="Image from Labelary", compute="_compute_labelary_image"
@@ -123,10 +123,8 @@ class PrintingLabelZpl2(models.Model):
 
     def _get_component_data(self, record, component, eval_args):
         if component.data_autofill:
-            data = component.autofill_data(record, eval_args)
-        else:
-            data = component.data
-        return safe_eval(str(data), eval_args) or ""
+            return component.autofill_data(record, eval_args)
+        return safe_eval(str(component.data), eval_args) or ""
 
     def _get_to_data_to_print(
         self,
