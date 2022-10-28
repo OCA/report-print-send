@@ -1,7 +1,7 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import mock
+from unittest.mock import patch
 
 from odoo.tests.common import TransactionCase
 
@@ -35,7 +35,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
             }
         )
 
-    @mock.patch("%s.cups" % model)
+    @patch("%s.cups" % model)
     def test_print_record_label(self, cups):
         """Check that printing a label using the generic wizard works"""
         wizard_obj = self.Model.with_context(
