@@ -1,6 +1,6 @@
 # Copyright (C) 2018 Florent de Labarre (<https://github.com/fmdl>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-import mock
+from unittest.mock import patch
 
 from odoo.tests.common import TransactionCase
 
@@ -45,7 +45,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
             record = Obj.search([], limit=1, order="id desc")
         self.assertEqual(res, record)
 
-    @mock.patch("%s.cups" % model)
+    @patch("%s.cups" % model)
     def test_print_label_test(self, cups):
         """Check if print test"""
         self.label.test_print_mode = True
