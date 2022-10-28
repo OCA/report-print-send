@@ -1,9 +1,9 @@
-# Copyright (C) 2016 SUBTENO-IT (<https://subteno-it.fr>)
+# Copyright (C) 2016-2022 SUBTENO-IT (<https://subteno-it.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Printer ZPL II",
-    "version": "14.0.2.0.0",
+    "version": "15.0.1.0.0",
     "category": "Printer",
     "summary": "Add a ZPL II label printing feature",
     "author": "SUBTENO-IT, FLorent de Labarre, "
