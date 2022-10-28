@@ -1,7 +1,7 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import mock
+from unittest.mock import patch
 
 from odoo import exceptions
 from odoo.tests.common import TransactionCase
@@ -56,7 +56,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         with self.assertRaises(exceptions.UserError):
             label.print_label(self.printer, label)
 
-    @mock.patch("%s.cups" % model)
+    @patch("%s.cups" % model)
     def test_print_empty_label(self, cups):
         """Check that printing an empty label works"""
         label = self.new_label()
