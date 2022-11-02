@@ -73,10 +73,6 @@ class Pingen(object):
         return "file-upload"
     
     @property
-    def verify(self):
-        return not self.staging
-
-    @property
     def session(self):
         """ Build a requests session """
         if self._session is not None:
@@ -121,9 +117,9 @@ class Pingen(object):
         # TODO: Handle scope 'letter' only?
         token_url = urlparse.urljoin(self.identity_url, self.token_url)
         # FIXME: requests.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)
-        #  without verify=False parameter on staging
+        #  without verify=False parameter on prod/staging
         _logger.debug("Fetching new token from %s" % token_url)
-        return self._session.fetch_token(token_url=token_url, client_id=self.clientid, client_secret=self.secretid, verify=self.verify)
+        return self._session.fetch_token(token_url=token_url, client_id=self.clientid, client_secret=self.secretid, verify=False)
 
     def _set_session_header_token(self):
         if self._is_token_expired():
@@ -174,7 +170,7 @@ class Pingen(object):
                                                self._token)
         else:
             complete_url = p_url.format(organisationId=self.organization, letterId=letter_id)
-        response = method(complete_url, verify=self.verify, **kwargs)
+        response = method(complete_url, verify=False, **kwargs)
         errors = response.json().get('errors')
         if errors:
             raise APIError("\n".join(["%s (%s): %s" % (err.get("code"), err.get("title"), err.get("detail")) for err in errors]))
