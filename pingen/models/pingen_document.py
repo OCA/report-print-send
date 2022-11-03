@@ -196,7 +196,7 @@ class PingenDocument(models.Model):
                         try:
                             if document.state == 'pending':
                                 document._push_to_pingen(pingen=session)
-                            elif document.state == 'pushed':
+                            elif document.state == 'pushed' and not document.auto_send:
                                 document._ask_pingen_send(pingen=session)
                         except OAuth2Error as e:
                             document.write({'last_error_message': e,
