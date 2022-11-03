@@ -50,14 +50,14 @@ class PingenController(http.Controller):
                 return node.get("attributes", {})
         return {}
 
-    def _get_emmited_date(self, json_content):
-        emmited_date = ""
+    def _get_emitted_date(self, json_content):
+        emitted_at = ""
         for node in json_content.get("included",{}):
             if node.get("type") == "letters_events":
                 attributes = node.get("attributes",{})
                 if attributes.get("code") == "transferred_to_distributor":
-                    emmited_date = attributes.get("emmited_at",{})
-        return emmited_date
+                    emitted_at = attributes.get("emitted_at", "")
+        return pingen_datetime_to_utc(emitted_at.encode())
 
     def _update_pingen_document(self, request_content, values):
         json_content = self._get_json_content(request_content)
@@ -94,10 +94,12 @@ class PingenController(http.Controller):
         request_content = self._get_request_content()
         json_content = self._get_json_content(request_content)
         self._verify_signature(request_content)
+        emitted_date = self._get_emitted_date(json_content)
         values = {
             "state": "sent",
-            "send_date": fields.Datetime.to_string(self._get_webhook_date(json_content)),
         }
+        if emitted_date:
+            values["send_date"] = emitted_date
         self._update_pingen_document(request_content, values)
 
     @http.route('/pingen/undeliverable_letters', type='http', auth="none", methods=['POST'], csrf=False)
