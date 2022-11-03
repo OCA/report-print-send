@@ -29,8 +29,7 @@
           states="pending"
           string="Push to pingen.com" icon="fa-upload"/>
         <button name="ask_pingen_send" type="object"
-          states="pushed"
-          string="Ask pingen.com to send the document" icon="fa-share" attrs="{'invisible': [('auto_send', '=', True)]}"/>
+          string="Ask pingen.com to send the document" icon="fa-share" attrs="{'invisible': ['|', ('state', '!=', 'pushed'),('auto_send', '=', True)]}"/>
         <button name="resolve_error" type="object"
           states="error,pingen_error"
           string="Errors resolved" icon="fa-repeat"/>
