@@ -50,8 +50,14 @@ class PingenController(http.Controller):
                 return node.get("attributes", {})
         return {}
 
-    def _get_webhook_date(self,json_content):
-        return json_content.get("data",{}).get("attributes",{}).get("emmited_at",{})
+    def _get_emmited_date(self, json_content):
+        emmited_date = ""
+        for node in json_content.get("included",{}):
+            if node.get("type") == "letters_events":
+                attributes = node.get("attributes",{})
+                if attributes.get("code") == "transferred_to_distributor":
+                    emmited_date = attributes.get("emmited_at",{})
+        return emmited_date
 
     def _update_pingen_document(self, request_content, values):
         json_content = self._get_json_content(request_content)
