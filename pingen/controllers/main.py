@@ -57,6 +57,7 @@ class PingenController(http.Controller):
                 attributes = node.get("attributes",{})
                 if attributes.get("code") == "transferred_to_distributor":
                     emitted_at = attributes.get("emitted_at", "")
+                    break
         return pingen_datetime_to_utc(emitted_at.encode())
 
     def _update_pingen_document(self, request_content, values):
