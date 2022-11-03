@@ -7,12 +7,13 @@
     <field name="type">tree</field>
     <field name="arch" type="xml">
       <tree string="Pingen Document">
+        <field name="push_date" />
         <field name="name"/>
-        <field name="datas_fname"/>
         <field name="auto_send"/>
         <field name="delivery_product"/>
         <field name="print_spectrum"/>
         <field name="state"/>
+        <field name="pingen_status"/>
       </tree>
     </field>
   </record>

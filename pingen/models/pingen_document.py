@@ -27,6 +27,7 @@ class PingenDocument(models.Model):
 
     _name = 'pingen.document'
     _inherits = {'ir.attachment': 'attachment_id'}
+    _order = "push_date desc, id desc"
 
     attachment_id = fields.Many2one(
         'ir.attachment', 'Document',
