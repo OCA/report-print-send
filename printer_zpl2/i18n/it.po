@@ -19,6 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: printer_zpl2
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__label_no
+msgid "# labels"
+msgstr ""
+
+#. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__b
 msgid "11x7"
 msgstr ""
@@ -253,6 +258,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__create_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__create_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__create_uid
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__create_uid
 msgid "Created by"
 msgstr "Creato da"
 
@@ -261,6 +267,7 @@ msgstr "Creato da"
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__create_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__create_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__create_date
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__create_date
 msgid "Created on"
 msgstr "Creato il"
 
@@ -308,6 +315,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__display_name
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__display_name
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__display_name
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__display_name
 msgid "Display Name"
 msgstr "Nome da visualizzare"
 
@@ -410,6 +418,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__id
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__id
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__id
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -505,6 +514,11 @@ msgid "Label Components"
 msgstr ""
 
 #. module: printer_zpl2
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__label_header_id
+msgid "Label Header"
+msgstr ""
+
+#. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2__name
 msgid "Label Name."
 msgstr ""
@@ -524,6 +538,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component____last_update
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2____last_update
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label____last_update
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
@@ -532,6 +547,7 @@ msgstr "Ultima modifica il"
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__write_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__write_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__write_uid
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
 
@@ -540,6 +556,7 @@ msgstr "Ultimo aggiornamento di"
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__write_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__write_date
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__write_date
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__write_date
 msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
@@ -561,6 +578,11 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__block_left_margin
 msgid "Left margin for the second and other lines in the block."
+msgstr ""
+
+#. module: printer_zpl2
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__line_ids
+msgid "Line"
 msgstr ""
 
 #. module: printer_zpl2
@@ -614,6 +636,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__active_model_id
 msgid "Model"
 msgstr "Model"
+
+#. module: printer_zpl2
+#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label__model
+msgid "Model Name"
+msgstr ""
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2__model_id
@@ -752,6 +779,11 @@ msgstr ""
 #. module: printer_zpl2
 #: model:ir.model,name:printer_zpl2.model_wizard_print_record_label
 msgid "Print Record Label"
+msgstr ""
+
+#. module: printer_zpl2
+#: model:ir.model,name:printer_zpl2.model_wizard_print_record_label_line
+msgid "Print Record Label Line"
 msgstr ""
 
 #. module: printer_zpl2
