@@ -23,7 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_report_to_printer](base_report_to_printer/) | 13.0.1.3.0 |  | Report to printer
 [base_report_to_printer_mail](base_report_to_printer_mail/) | 13.0.1.0.0 |  | Report to printer - Mail extension
-[printer_zpl2](printer_zpl2/) | 13.0.2.0.0 |  | Add a ZPL II label printing feature
+[printer_zpl2](printer_zpl2/) | 13.0.2.1.0 |  | Add a ZPL II label printing feature
 [remote_report_to_printer](remote_report_to_printer/) | 13.0.1.1.0 |  | Report to printer on remotes
 [stock_picking_auto_print](stock_picking_auto_print/) | 13.0.1.0.0 | [![bodedra](https://github.com/bodedra.png?size=30px)](https://github.com/bodedra) | Auto print when DO is ready
 
