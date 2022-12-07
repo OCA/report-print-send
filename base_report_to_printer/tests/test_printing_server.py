@@ -95,7 +95,7 @@ class TestPrintingServer(TransactionCase):
         """It should update status even if printer is archived"""
         rec_id = self.new_printer()
         rec_id.toggle_active()
-        self.server.refresh()
+        self.server.invalidate_model()
         cups.Connection().getPrinters().get.return_value = False
         self.Model.action_update_printers()
         self.assertEqual(
