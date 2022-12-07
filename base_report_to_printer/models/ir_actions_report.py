@@ -101,7 +101,7 @@ class IrActionsReport(models.Model):
         """Print a document, do not return the document file"""
         document, doc_format = self.with_context(
             must_skip_send_to_printer=True
-        )._render_qweb_pdf(record_ids, data=data)
+        )._render_qweb_pdf(self.report_name, record_ids, data=data)
         behaviour = self.behaviour()
         printer = behaviour.pop("printer", None)
 
@@ -141,13 +141,15 @@ class IrActionsReport(models.Model):
             res["id"] = self.id
         return res
 
-    def _render_qweb_pdf(self, res_ids=None, data=None):
+    def _render_qweb_pdf(self, report_ref, res_ids=None, data=None):
         """Generate a PDF and returns it.
 
         If the action configured on the report is server, it prints the
         generated document as well.
         """
-        document, doc_format = super()._render_qweb_pdf(res_ids=res_ids, data=data)
+        document, doc_format = super()._render_qweb_pdf(
+            report_ref=report_ref, res_ids=res_ids, data=data
+        )
 
         behaviour = self.behaviour()
         printer = behaviour.pop("printer", None)
