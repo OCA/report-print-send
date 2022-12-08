@@ -12,4 +12,5 @@
     "depends": ["base_report_to_printer"],
     "data": ["views/res_users.xml"],
     "installable": True,
+    "pre_init_hook": "pre_init_hook",
 }
