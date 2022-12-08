@@ -9,7 +9,7 @@
 
 # report-print-send
 
-TODO: add repo description.
+This project aims to deal with the printing of documents on external devices.
 
 <!-- /!\ do not modify below this line -->
 
