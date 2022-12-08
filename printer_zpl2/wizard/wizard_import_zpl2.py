@@ -55,7 +55,7 @@ def _default_font_format(data):
         if vals.get(zpl2.ARG_HEIGHT, False) and not vals.get(zpl2.ARG_WIDTH, False):
             vals.update({zpl2.ARG_WIDTH: vals.get(zpl2.ARG_HEIGHT)})
         else:
-            vals.update({zpl2.ARG_HEIGHT: 10, zpl2.ARG_HEIGHT: 10})
+            vals.update({zpl2.ARG_HEIGHT: 10})
         return vals
     return {}
 
