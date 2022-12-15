@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 15.0.1.0.0 |  | Report to printer
+[base_report_to_printer](base_report_to_printer/) | 15.0.1.1.0 |  | Report to printer
 
 [//]: # (end addons)
 
