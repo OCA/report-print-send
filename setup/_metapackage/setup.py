@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-report-print-send Odoo addons",
     version=version,
     install_requires=[
+        'odoo14-addon-base_report_to_label_printer',
         'odoo14-addon-base_report_to_printer',
         'odoo14-addon-base_report_to_printer_mail',
         'odoo14-addon-printer_zpl2',
