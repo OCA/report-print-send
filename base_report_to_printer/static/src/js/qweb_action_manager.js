@@ -4,12 +4,14 @@ odoo.define("base_report_to_printer.print", function(require) {
     var ActionManager = require("web.ActionManager");
     var core = require("web.core");
     var _t = core._t;
+    var framework = require("web.framework");
 
     ActionManager.include({
         _triggerDownload: function(action, options, type) {
             var self = this;
             var _super = this._super;
             if (type === "pdf" || type === "text") {
+                framework.blockUI();
                 this._rpc({
                     model: "ir.actions.report",
                     method: "print_action_for_report_name",
@@ -32,6 +34,7 @@ odoo.define("base_report_to_printer.print", function(require) {
                                         print_action.printer_name
                                     )
                                 );
+                                framework.unblockUI();
                                 return self._executeReloadActionAfterPrint(
                                     action,
                                     options
@@ -48,6 +51,7 @@ odoo.define("base_report_to_printer.print", function(require) {
                                         print_action.printer_name
                                     )
                                 );
+                                framework.unblockUI();
                                 return self._executeReloadActionAfterPrint(
                                     action,
                                     options
@@ -55,6 +59,7 @@ odoo.define("base_report_to_printer.print", function(require) {
                             }
                         );
                     } else {
+                        framework.unblockUI();
                         return _super.apply(self, [action, options, type]);
                     }
                 });
