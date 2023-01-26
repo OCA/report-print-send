@@ -1,35 +1,34 @@
-# -*- coding: utf-8 -*-
 # Author: Guewen Baconnier
 # Copyright 2012-2017 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import requests
-import logging
-import urlparse
 import json
-import pytz
-
+import logging
 from datetime import datetime
+
+import pytz
+import requests
+import urlparse
 from requests.packages.urllib3.filepost import encode_multipart_formdata
 
 _logger = logging.getLogger(__name__)
 
 POST_SENDING_STATUS = {
-    100: 'Ready/Pending',
-    101: 'Processing',
-    102: 'Waiting for confirmation',
-    1: 'Sent',
-    300: 'Some error occured and object wasn\'t sent',
-    400: 'Sending cancelled',
+    100: "Ready/Pending",
+    101: "Processing",
+    102: "Waiting for confirmation",
+    1: "Sent",
+    300: "Some error occured and object wasn't sent",
+    400: "Sending cancelled",
 }
 
-DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'  # this is the format used by pingen API
+DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"  # this is the format used by pingen API
 
-TZ = pytz.timezone('Europe/Zurich')  # this is the timezone of the pingen API
+TZ = pytz.timezone("Europe/Zurich")  # this is the timezone of the pingen API
 
 
 def pingen_datetime_to_utc(dt):
-    """ Convert a date/time used by pingen.com to UTC timezone
+    """Convert a date/time used by pingen.com to UTC timezone
 
     :param dt: pingen date/time as string (as received from the API)
                to convert to UTC
@@ -51,7 +50,7 @@ class APIError(PingenException):
 
 
 class Pingen(object):
-    """ Interface to the pingen.com API """
+    """Interface to the pingen.com API"""
 
     def __init__(self, token, staging=True):
         self._token = token
@@ -62,16 +61,16 @@ class Pingen(object):
     @property
     def url(self):
         if self.staging:
-            return 'https://stage-api.pingen.com'
-        return 'https://api.pingen.com'
+            return "https://stage-api.pingen.com"
+        return "https://api.pingen.com"
 
     @property
     def session(self):
-        """ Build a requests session """
+        """Build a requests session"""
         if self._session is not None:
             return self._session
         self._session = requests.Session()
-        self._session.params = {'token': self._token}
+        self._session.params = {"token": self._token}
         self._session.verify = not self.staging
         return self._session
 
@@ -82,12 +81,12 @@ class Pingen(object):
         self.close()
 
     def close(self):
-        """Dispose of any internal state. """
+        """Dispose of any internal state."""
         if self._session:
             self._session.close()
 
     def _send(self, method, endpoint, **kwargs):
-        """ Send a request to the pingen API using requests
+        """Send a request to the pingen API using requests
 
         Add necessary boilerplate to call pingen.com API
         (authentication, configuration, ...)
@@ -99,29 +98,25 @@ class Pingen(object):
 
         p_url = urlparse.urljoin(self.url, endpoint)
 
-        if endpoint == 'document/get':
-            complete_url = '{}{}{}{}{}'.format(p_url,
-                                               '/id/',
-                                               kwargs['params']['id'],
-                                               '/token/',
-                                               self._token)
+        if endpoint == "document/get":
+            complete_url = "{}{}{}{}{}".format(
+                p_url, "/id/", kwargs["params"]["id"], "/token/", self._token
+            )
         else:
-            complete_url = '{}{}{}'.format(p_url,
-                                           '/token/',
-                                           self._token)
+            complete_url = "{}{}{}".format(p_url, "/token/", self._token)
 
         response = method(complete_url, **kwargs)
 
-        if response.json()['error']:
+        if response.json()["error"]:
             raise APIError(
-                "%s: %s" % (response.json()['errorcode'],
-                            response.json()['errormessage']))
+                "%s: %s"
+                % (response.json()["errorcode"], response.json()["errormessage"])
+            )
 
         return response
 
-    def push_document(self, filename, filestream,
-                      send=None, speed=None, color=None):
-        """ Upload a document to pingen.com and eventually ask to send it
+    def push_document(self, filename, filestream, send=None, speed=None, color=None):
+        """Upload a document to pingen.com and eventually ask to send it
 
         :param str filename: name of the file to push
         :param StringIO filestream: file to push
@@ -135,10 +130,10 @@ class Pingen(object):
                  3. dict of the created item on pingen (details)
         """
         data = {
-            'send': send,
-            'speed': speed,
-            'color': color,
-            }
+            "send": send,
+            "speed": speed,
+            "color": color,
+        }
 
         # we cannot use the `files` param alongside
         # with the `datas`param when data is a
@@ -146,30 +141,31 @@ class Pingen(object):
         # the entire body and send it to `data`
         # https://github.com/kennethreitz/requests/issues/950
         formdata = {
-            'file': (filename, filestream.read()),
-            'data': json.dumps(data),
-            }
+            "file": (filename, filestream.read()),
+            "data": json.dumps(data),
+        }
 
         multipart, content_type = encode_multipart_formdata(formdata)
 
         response = self._send(
             self.session.post,
-            'document/upload',
-            headers={'Content-Type': content_type},
-            data=multipart)
+            "document/upload",
+            headers={"Content-Type": content_type},
+            data=multipart,
+        )
 
         rjson = response.json()
 
-        document_id = rjson['id']
-        if rjson.get('send'):
+        document_id = rjson["id"]
+        if rjson.get("send"):
             # confusing name but send_id is the posted id
-            posted_id = rjson['send'][0]['send_id']
-        item = rjson['item']
+            posted_id = rjson["send"][0]["send_id"]
+        item = rjson["item"]
 
         return document_id, posted_id, item
 
     def send_document(self, document_id, speed=None, color=None):
-        """ Send a uploaded document to pingen.com
+        """Send a uploaded document to pingen.com
 
         :param int document_id: id of the document to send
         :param int/str speed: sending speed of the document if it is send
@@ -178,34 +174,32 @@ class Pingen(object):
         :return: id of the post on pingen.com
         """
         data = {
-            'speed': speed,
-            'color': color,
-            }
+            "speed": speed,
+            "color": color,
+        }
         response = self._send(
             self.session.post,
-            'document/send',
-            params={'id': document_id},
-            data={'data': json.dumps(data)})
+            "document/send",
+            params={"id": document_id},
+            data={"data": json.dumps(data)},
+        )
 
-        return response.json()['id']
+        return response.json()["id"]
 
     def post_infos(self, post_id):
-        """ Return the information of a post
+        """Return the information of a post
 
         :param int post_id: id of the document to send
         :return: dict of infos of the post
         """
-        response = self._send(
-            self.session.get,
-            'document/get',
-            params={'id': post_id})
+        response = self._send(self.session.get, "document/get", params={"id": post_id})
 
-        return response.json()['item']
+        return response.json()["item"]
 
     @staticmethod
     def is_posted(post_infos):
-        """ return True if the post has been sent
+        """return True if the post has been sent
 
         :param dict post_infos: post infos returned by `post_infos`
         """
-        return post_infos['status'] == 1
+        return post_infos["status"] == 1
