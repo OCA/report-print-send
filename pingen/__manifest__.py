@@ -1,18 +1,18 @@
 # Author: Guewen Baconnier
-# Copyright 2012-2017 Camptocamp SA
+# Copyright 2012-2023 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
     "name": "pingen.com integration",
-    "version": "10.0.2.0.0",
+    "version": "16.0.1.0.0",
     "author": "Camptocamp,Odoo Community Association (OCA)",
-    "maintainer": "Camptocamp",
+    "maintainers": ["ajaniszewska-dev", "grindtildeath"],
     "license": "AGPL-3",
     "category": "Reporting",
-    "complexity": "easy",
+    "maturity": "Production/Stable",
     "depends": ["base_setup"],
     "external_dependencies": {
-        "python": ["requests_oauthlib"],
+        "python": ["requests_oauthlib", "oauthlib"],
     },
     "website": "https://github.com/OCA/report-print-send",
     "data": [
@@ -22,8 +22,6 @@
         "views/base_config_settings.xml",
         "security/ir.model.access.csv",
     ],
-    "tests": [],
     "installable": True,
-    "auto_install": False,
     "application": True,
 }
