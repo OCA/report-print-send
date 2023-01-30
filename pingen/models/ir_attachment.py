@@ -18,23 +18,12 @@ class IrAttachment(models.Model):
     pingen_document_ids = fields.One2many(
         "pingen.document", "attachment_id", string="Pingen Document", readonly=True
     )
-    pingen_send = fields.Boolean(
-        "Send",
-        help="Defines if a document is merely uploaded or also sent",
-        default=True,
-    )
-    pingen_speed = fields.Selection(
-        [("1", "Priority"), ("2", "Economy")],
-        "Speed",
-        default="2",
-        help="Defines the sending speed if the document is automatically sent",
-    )
-    pingen_color = fields.Selection(
-        [("0", "B/W"), ("1", "Color")], "Type of print", default="0"
-    )
 
     def _prepare_pingen_document_vals(self):
-        return {"attachment_id": self.id, "config": "created from attachment"}
+        return {
+            "attachment_id": self.id,
+            # 'config': 'created from attachment'
+        }
 
     def _handle_pingen_document(self):
         """Reponsible of the related ``pingen.document``
