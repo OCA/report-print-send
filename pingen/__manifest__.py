@@ -4,7 +4,7 @@
 
 {
     "name": "pingen.com integration",
-    "version": "10.0.1.0.0",
+    "version": "10.0.2.0.0",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "maintainer": "Camptocamp",
     "license": "AGPL-3",
@@ -12,7 +12,7 @@
     "complexity": "easy",
     "depends": ["base_setup"],
     "external_dependencies": {
-        "python": ["requests"],
+        "python": ["requests_oauthlib"],
     },
     "website": "https://github.com/OCA/report-print-send",
     "data": [
