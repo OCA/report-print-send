@@ -17,12 +17,12 @@ _logger = logging.getLogger(__name__)
 class PingenController(http.Controller):
     def _verify_signature(self, request_content):
         webhook_signature = http.request.httprequest.headers.get("Signature")
-        companies = (
-            http.request.env["res.company"]
-            .sudo()
-            .search([("pingen_webhook_secret", "!=", False)])
-        )
+        companies = http.request.env["res.company"].sudo().search([])
         for company in companies:
+            # We could not search on `pingen_webhook_secret
+            # if this field is computed (e.g. env field)
+            if not company.pingen_webhook_secret:
+                continue
             secret_signature = hmac.new(
                 company.pingen_webhook_secret.encode("utf-8"),
                 request_content,

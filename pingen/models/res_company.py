@@ -1,5 +1,5 @@
 # Author: Guewen Baconnier
-# Copyright 2012-2017 Camptocamp SA
+# Copyright 2012-2023 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
@@ -11,11 +11,11 @@ class ResCompany(models.Model):
 
     _inherit = "res.company"
 
-    pingen_clientid = fields.Char("Pingen Client ID", size=20)
-    pingen_client_secretid = fields.Char("Pingen Client Secret ID", size=80)
+    pingen_clientid = fields.Char(size=20)
+    pingen_client_secretid = fields.Char(size=80)
     pingen_organization = fields.Char("Pingen organization ID")
-    pingen_webhook_secret = fields.Char("Pingen Webhooks secret")
-    pingen_staging = fields.Boolean("Pingen Staging")
+    pingen_webhook_secret = fields.Char()
+    pingen_staging = fields.Boolean()
 
     def _pingen(self):
         """Return a Pingen instance to work on"""

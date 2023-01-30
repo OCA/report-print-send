@@ -1,14 +1,14 @@
 # Author: Guewen Baconnier
-# Copyright 2012-2017 Camptocamp SA
+# Copyright 2012-2023 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
 import logging
 from datetime import datetime
+from urllib.parse import urljoin
 
 import pytz
 import requests
-import urlparse
 from dateutil import parser
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
@@ -111,8 +111,9 @@ class Pingen(object):
 
     def _fetch_token(self):
         # TODO: Handle scope 'letter' only?
-        token_url = urlparse.urljoin(self.identity_url, self.token_url)
-        # FIXME: requests.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)
+        token_url = urljoin(self.identity_url, self.token_url)
+        # FIXME: requests.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED]
+        # certificate verify failed (_ssl.c:581)
         #  without verify=False parameter on prod/staging
         _logger.debug("Fetching new token from %s" % token_url)
         return self._session.fetch_token(
@@ -161,7 +162,7 @@ class Pingen(object):
         if self._is_token_expired():
             self._set_session_header_token()
 
-        p_url = urlparse.urljoin(self.api_url, endpoint)
+        p_url = urljoin(self.api_url, endpoint)
 
         if endpoint == "document/get":
             complete_url = "{}{}{}{}{}".format(
@@ -196,7 +197,7 @@ class Pingen(object):
     def upload_file(self, url, multipart, content_type):
         _logger.debug("Uploading new file")
         response = requests.put(
-            url, data=multipart, headers={"Content-Type": content_type}
+            url, data=multipart, headers={"Content-Type": content_type}, timeout=30
         )
         return response
 
@@ -223,27 +224,13 @@ class Pingen(object):
                  3. dict of the created item on pingen (details)
         """
 
-        # we cannot use the `files` param alongside
-        # with the `datas`param when data is a
-        # JSON-encoded data. We have to construct
-        # the entire body and send it to `data`
-        # https://github.com/kennethreitz/requests/issues/950
-        # formdata = {
-        #     'file': (filename, filestream.read()),
-        # }
-
         url, url_signature = self._get_file_upload()
-        # file_upload = self._get_file_upload()
-
-        # multipart, content_type = encode_multipart_formdata(formdata)
-
         self.upload_file(url, filestream.read(), content_type)
 
         data_attributes = {
             "file_original_name": filename,
             "file_url": url,
             "file_url_signature": url_signature,
-            # TODO Use parameters and mapping
             "address_position": "left",
             "auto_send": send,
             "delivery_product": delivery_product,
@@ -262,10 +249,6 @@ class Pingen(object):
         rjson_data = response.json().get("data", {})
 
         document_id = rjson_data.get("id")
-        # if rjson.get('send'):
-        #     # confusing name but send_id is the posted id
-        #     posted_id = rjson['send'][0]['send_id']
-        # item = rjson['item']
         item = rjson_data.get("attributes")
 
         return document_id, False, item
@@ -313,4 +296,3 @@ class Pingen(object):
             letter_id=document_uuid,
         )
         return response.json().get("data", {}).get("attributes")
-        # return response.json()['item']

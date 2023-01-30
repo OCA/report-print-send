@@ -1,5 +1,5 @@
 # Author: Guewen Baconnier
-# Copyright 2012-2017 Camptocamp SA
+# Copyright 2012-2023 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import base64
@@ -22,7 +22,6 @@ class IrAttachment(models.Model):
     def _prepare_pingen_document_vals(self):
         return {
             "attachment_id": self.id,
-            # 'config': 'created from attachment'
         }
 
     def _handle_pingen_document(self):
@@ -67,7 +66,6 @@ class IrAttachment(models.Model):
             attachment._handle_pingen_document()
         return attachment
 
-    @api.multi
     def write(self, vals):
         res = super(IrAttachment, self).write(vals)
         if "send_to_pingen" in vals:
@@ -83,7 +81,7 @@ class IrAttachment(models.Model):
         if self.type == "binary":
             decoded_document = base64.b64decode(self.datas)
         elif self.type == "url":
-            response = requests.get(self.url)
+            response = requests.get(self.url, timeout=30)
             if response.ok:
                 decoded_document = requests.content
         else:
