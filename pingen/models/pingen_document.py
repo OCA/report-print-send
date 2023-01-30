@@ -1,11 +1,11 @@
 # Author: Guewen Baconnier
-# Copyright 2012-2017 Camptocamp SA
+# Copyright 2012-2023 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
+from io import BytesIO
 from itertools import groupby
 
-from cStringIO import StringIO
 from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 
 import odoo
@@ -26,6 +26,7 @@ class PingenDocument(models.Model):
     """
 
     _name = "pingen.document"
+    _description = "pingen.document"
     _inherits = {"ir.attachment": "attachment_id"}
     _order = "push_date desc, id desc"
 
@@ -43,13 +44,11 @@ class PingenDocument(models.Model):
             ("pingen_error", "Pingen Error"),
             ("canceled", "Canceled"),
         ],
-        string="State",
         readonly=True,
         required=True,
         default="pending",
     )
     auto_send = fields.Boolean(
-        "Auto Send",
         help="Defines if a document is merely uploaded or also sent",
         default=True,
     )
@@ -79,26 +78,25 @@ class PingenDocument(models.Model):
     )
     print_spectrum = fields.Selection(
         [("grayscale", "Grayscale"), ("color", "Color")],
-        "Print Spectrum",
         default="grayscale",
     )
     print_mode = fields.Selection(
         [("simplex", "Simplex"), ("duplex", "Duplex")], "Print mode", default="simplex"
     )
 
-    push_date = fields.Datetime("Push Date", readonly=True)
+    push_date = fields.Datetime(readonly=True)
     # for `error` and `pingen_error` states when we push
     last_error_message = fields.Text("Error Message", readonly=True)
     # pingen API v2 fields
     pingen_uuid = fields.Char(readonly=True)
     pingen_status = fields.Char(readonly=True)
     # sendcenter infos
-    parsed_address = fields.Text("Parsed Address", readonly=True)
-    cost = fields.Float("Cost", readonly=True)
+    parsed_address = fields.Text(readonly=True)
+    cost = fields.Float(readonly=True)
     currency_id = fields.Many2one("res.currency", "Currency", readonly=True)
     country_id = fields.Many2one("res.country", "Country", readonly=True)
     send_date = fields.Datetime("Date of sending", readonly=True)
-    pages = fields.Integer("Pages", readonly=True)
+    pages = fields.Integer(readonly=True)
     company_id = fields.Many2one(related="attachment_id.company_id")
 
     _sql_constraints = [
@@ -119,7 +117,7 @@ class PingenDocument(models.Model):
         try:
             doc_id, post_id, infos = pingen.push_document(
                 self.name,
-                StringIO(decoded_document),
+                BytesIO(decoded_document),
                 self.attachment_id.mimetype,
                 self.auto_send,
                 self.delivery_product,
@@ -140,11 +138,6 @@ class PingenDocument(models.Model):
             raise
         error = False
         state = "pushed"
-        # if post_id:
-        #     state = 'sendcenter'
-        # elif infos['requirement_failure']:
-        #     state = 'pingen_error'
-        #     error = _('The document does not meet the Pingen requirements.')
         push_date = pingen_datetime_to_utc(infos.get("created_at"))
         self.write(
             {
@@ -176,14 +169,16 @@ class PingenDocument(models.Model):
             )
         except APIError as e:
             state = "pingen_error"
-            error_msg = _("Error when pushing the document %s to Pingen:\n%s") % (
-                self.name,
-                e,
-            )
+            error_msg = _(
+                "Error when pushing the document %(name) to Pingen:\n%(exc)"
+            ) % {
+                "name": self.name,
+                "exc": e,
+            }
         except Exception as e:
             error_msg = _(
-                "Unexpected Error when pushing the document %s to Pingen:\n%s"
-            ) % (self.name, e)
+                "Unexpected Error when pushing the document %(name) to Pingen:\n%(exc)"
+            ) % {"name": self.name, "exc": e}
             _logger.exception(error_msg)
         finally:
             if error_msg:
@@ -296,22 +291,22 @@ class PingenDocument(models.Model):
         try:
             session = self.company_id._get_pingen_client()
             self._ask_pingen_send(pingen=session)
-        except OAuth2Error:
+        except OAuth2Error as e:
             raise UserError(
                 _(
                     "Connection Error when asking for "
                     "sending the document %s to Pingen"
                 )
                 % self.name
-            )
+            ) from e
 
         except APIError as e:
             raise UserError(
-                _("Error when asking Pingen to send the document %s: " "\n%s")
-                % (self.name, e)
-            )
+                _("Error when asking Pingen to send the document %(name): " "\n%(exc)")
+                % {"name": self.name, "exc": e}
+            ) from e
 
-        except BaseException:
+        except BaseException as e:
             _logger.exception(
                 "Unexpected Error when updating the status "
                 "of pingen.document %s: " % self.id
@@ -319,7 +314,7 @@ class PingenDocument(models.Model):
             raise UserError(
                 _("Unexpected Error when updating the status " "of Document %s")
                 % self.name
-            )
+            ) from e
         return True
 
     def _get_and_update_post_infos(self, pingen):
@@ -398,6 +393,8 @@ class PingenDocument(models.Model):
                     session = document.company_id._get_pingen_client()
                     try:
                         document._get_and_update_post_infos(pingen=session)
+                    # pylint: disable=W7938
+                    # pylint: disable=W8138
                     except (OAuth2Error, APIError):
                         # will be retried the next time
                         # In any case, the error has been
@@ -417,20 +414,23 @@ class PingenDocument(models.Model):
         try:
             session = self.company_id._get_pingen_client()
             self._get_and_update_post_infos(pingen=session)
-        except OAuth2Error:
+        except OAuth2Error as e:
             raise UserError(
                 _(
                     "Connection Error when updating the status "
                     "of Document %s from Pingen"
                 )
                 % self.name
-            )
+            ) from e
         except APIError as e:
             raise UserError(
-                _("Error when updating the status of Document %s from " "Pingen: \n%s")
-                % (self.name, e)
-            )
-        except BaseException:
+                _(
+                    "Error when updating the status of Document %(name) from "
+                    "Pingen: \n%(exc)"
+                )
+                % {"name": self.name, "exc": e}
+            ) from e
+        except BaseException as e:
             _logger.exception(
                 "Unexpected Error when updating the status "
                 "of pingen.document %s: " % self.id
@@ -438,5 +438,5 @@ class PingenDocument(models.Model):
             raise UserError(
                 _("Unexpected Error when updating the status " "of Document %s")
                 % self.name
-            )
+            ) from e
         return True

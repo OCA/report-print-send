@@ -14,12 +14,12 @@
     </field>
   </record>
 
-  <act_window
-        context="{'search_default_attachment_id': [active_id], 'default_attachment_id': active_id}"
-        id="act_attachment_to_pingen_document"
-        name="Pingen Document"
-        groups=""
-        res_model="pingen.document"
-        src_model="ir.attachment"
-    />
+  <record model="ir.actions.act_window" id="act_attachment_to_pingen_document">
+    <field
+            name="context"
+        >"{'search_default_attachment_id': [active_id], 'default_attachment_id': active_id}"</field>
+    <field name="name">Pingen Document</field>
+    <field name="res_model">pingen.document</field>
+    <field name="binding_model_id" ref="base.model_ir_attachment" />
+  </record>
 </odoo>
