@@ -9,35 +9,23 @@ from datetime import datetime
 import pytz
 import requests
 import urlparse
-from requests.packages.urllib3.filepost import encode_multipart_formdata
+from dateutil import parser
+from oauthlib.oauth2 import BackendApplicationClient
+from requests_oauthlib import OAuth2Session
 
 _logger = logging.getLogger(__name__)
-
-POST_SENDING_STATUS = {
-    100: "Ready/Pending",
-    101: "Processing",
-    102: "Waiting for confirmation",
-    1: "Sent",
-    300: "Some error occured and object wasn't sent",
-    400: "Sending cancelled",
-}
-
-DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"  # this is the format used by pingen API
-
-TZ = pytz.timezone("Europe/Zurich")  # this is the timezone of the pingen API
 
 
 def pingen_datetime_to_utc(dt):
     """Convert a date/time used by pingen.com to UTC timezone
 
-    :param dt: pingen date/time as string (as received from the API)
+    :param dt: pingen date/time iso string (as received from the API)
                to convert to UTC
-    :return: datetime in the UTC timezone
+    :return: TZ naive datetime in the UTC timezone
     """
     utc = pytz.utc
-    dt = datetime.strptime(dt, DATETIME_FORMAT)
-    localized_dt = TZ.localize(dt, is_dst=True)
-    return localized_dt.astimezone(utc)
+    localized_dt = parser.parse(dt)
+    return localized_dt.astimezone(utc).replace(tzinfo=None)
 
 
 class PingenException(RuntimeError):
@@ -52,27 +40,101 @@ class APIError(PingenException):
 class Pingen(object):
     """Interface to the pingen.com API"""
 
-    def __init__(self, token, staging=True):
-        self._token = token
+    def __init__(self, clientid, secretid, organization, staging=True):
+        self.clientid = clientid
+        self.secretid = secretid
+        self.organization = organization
         self.staging = staging
         self._session = None
+        self._init_token_registry()
         super(Pingen, self).__init__()
 
     @property
-    def url(self):
+    def api_url(self):
         if self.staging:
-            return "https://stage-api.pingen.com"
-        return "https://api.pingen.com"
+            return "https://api-staging.v2.pingen.com"
+        return "https://api.v2.pingen.com"
+
+    @property
+    def identity_url(self):
+        if self.staging:
+            return "https://identity-staging.pingen.com"
+        return "https://identity.pingen.com"
+
+    @property
+    def token_url(self):
+        return "auth/access-tokens"
+
+    @property
+    def file_upload_url(self):
+        return "file-upload"
 
     @property
     def session(self):
         """Build a requests session"""
         if self._session is not None:
             return self._session
-        self._session = requests.Session()
-        self._session.params = {"token": self._token}
-        self._session.verify = not self.staging
+        client = BackendApplicationClient(client_id=self.clientid)
+        self._session = OAuth2Session(client=client)
+        self._set_session_header_token()
         return self._session
+
+    @classmethod
+    def _init_token_registry(cls):
+        if hasattr(cls, "token_registry"):
+            return
+        cls.token_registry = {
+            "staging": {"token": "", "expiry": datetime.now()},
+            "prod": {"token": "", "expiry": datetime.now()},
+        }
+
+    @classmethod
+    def _get_token_infos(cls, staging):
+        if staging:
+            return cls.token_registry.get("staging")
+        else:
+            return cls.token_registry.get("prod")
+
+    @classmethod
+    def _set_token_data(cls, token_data, staging):
+        token_string = " ".join(
+            [token_data.get("token_type"), token_data.get("access_token")]
+        )
+        token_expiry = datetime.fromtimestamp(token_data.get("expires_at"))
+        if staging:
+            cls.token_registry["staging"] = {
+                "token": token_string,
+                "expiry": token_expiry,
+            }
+        else:
+            cls.token_registry["prod"] = {"token": token_string, "expiry": token_expiry}
+
+    def _fetch_token(self):
+        # TODO: Handle scope 'letter' only?
+        token_url = urlparse.urljoin(self.identity_url, self.token_url)
+        # FIXME: requests.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)
+        #  without verify=False parameter on prod/staging
+        _logger.debug("Fetching new token from %s" % token_url)
+        return self._session.fetch_token(
+            token_url=token_url,
+            client_id=self.clientid,
+            client_secret=self.secretid,
+            verify=False,
+        )
+
+    def _set_session_header_token(self):
+        if self._is_token_expired():
+            token_data = self._fetch_token()
+            self._set_token_data(token_data, self.staging)
+        token_infos = self._get_token_infos(self.staging)
+        self._session.headers["Authorization"] = token_infos.get("token")
+
+    def _is_token_expired(self):
+        token_infos = self._get_token_infos(self.staging)
+        expired = token_infos.get("expiry") <= datetime.now()
+        if expired:
+            _logger.debug("Pingen token is expired")
+        return expired
 
     def __enter__(self):
         return self
@@ -85,7 +147,7 @@ class Pingen(object):
         if self._session:
             self._session.close()
 
-    def _send(self, method, endpoint, **kwargs):
+    def _send(self, method, endpoint, letter_id="", **kwargs):
         """Send a request to the pingen API using requests
 
         Add necessary boilerplate to call pingen.com API
@@ -96,110 +158,159 @@ class Pingen(object):
         :param kwargs: additional arguments forwarded to the requests method
         """
 
-        p_url = urlparse.urljoin(self.url, endpoint)
+        if self._is_token_expired():
+            self._set_session_header_token()
+
+        p_url = urlparse.urljoin(self.api_url, endpoint)
 
         if endpoint == "document/get":
             complete_url = "{}{}{}{}{}".format(
                 p_url, "/id/", kwargs["params"]["id"], "/token/", self._token
             )
         else:
-            complete_url = "{}{}{}".format(p_url, "/token/", self._token)
-
-        response = method(complete_url, **kwargs)
-
-        if response.json()["error"]:
-            raise APIError(
-                "%s: %s"
-                % (response.json()["errorcode"], response.json()["errormessage"])
+            complete_url = p_url.format(
+                organisationId=self.organization, letterId=letter_id
             )
-
+        response = method(complete_url, verify=False, **kwargs)
+        errors = response.json().get("errors")
+        if errors:
+            raise APIError(
+                "\n".join(
+                    [
+                        "%s (%s): %s"
+                        % (err.get("code"), err.get("title"), err.get("detail"))
+                        for err in errors
+                    ]
+                )
+            )
         return response
 
-    def push_document(self, filename, filestream, send=None, speed=None, color=None):
+    def _get_file_upload(self):
+        _logger.debug("Getting new URL for file upload")
+        response = self._send(self.session.get, self.file_upload_url)
+        json_response_attributes = response.json().get("data", {}).get("attributes")
+        url = json_response_attributes.get("url")
+        url_signature = json_response_attributes.get("url_signature")
+        return url, url_signature
+
+    def upload_file(self, url, multipart, content_type):
+        _logger.debug("Uploading new file")
+        response = requests.put(
+            url, data=multipart, headers={"Content-Type": content_type}
+        )
+        return response
+
+    def push_document(
+        self,
+        filename,
+        filestream,
+        content_type,
+        send=None,
+        delivery_product=None,
+        print_spectrum=None,
+        print_mode=None,
+    ):
         """Upload a document to pingen.com and eventually ask to send it
 
         :param str filename: name of the file to push
         :param StringIO filestream: file to push
         :param boolean send: if True, the document will be sent by pingen.com
-        :param int/str speed: sending speed of the document if it is send
-                                1 = Priority, 2 = Economy
-        :param int/str color: type of print, 0 = B/W, 1 = Color
+        :param str delivery_product: sending product of the document if it is send
+        :param str print_spectrum: type of print, grayscale or color
         :return: tuple with 3 items:
                  1. document_id on pingen.com
                  2. post_id on pingen.com if it has been sent or None
                  3. dict of the created item on pingen (details)
         """
-        data = {
-            "send": send,
-            "speed": speed,
-            "color": color,
-        }
 
         # we cannot use the `files` param alongside
         # with the `datas`param when data is a
         # JSON-encoded data. We have to construct
         # the entire body and send it to `data`
         # https://github.com/kennethreitz/requests/issues/950
-        formdata = {
-            "file": (filename, filestream.read()),
-            "data": json.dumps(data),
+        # formdata = {
+        #     'file': (filename, filestream.read()),
+        # }
+
+        url, url_signature = self._get_file_upload()
+        # file_upload = self._get_file_upload()
+
+        # multipart, content_type = encode_multipart_formdata(formdata)
+
+        self.upload_file(url, filestream.read(), content_type)
+
+        data_attributes = {
+            "file_original_name": filename,
+            "file_url": url,
+            "file_url_signature": url_signature,
+            # TODO Use parameters and mapping
+            "address_position": "left",
+            "auto_send": send,
+            "delivery_product": delivery_product,
+            "print_spectrum": print_spectrum,
+            "print_mode": print_mode,
         }
 
-        multipart, content_type = encode_multipart_formdata(formdata)
+        data = {"data": {"type": "letters", "attributes": data_attributes}}
 
         response = self._send(
             self.session.post,
-            "document/upload",
-            headers={"Content-Type": content_type},
-            data=multipart,
+            "organisations/{organisationId}/letters",
+            headers={"Content-Type": "application/vnd.api+json"},
+            data=json.dumps(data),
         )
+        rjson_data = response.json().get("data", {})
 
-        rjson = response.json()
+        document_id = rjson_data.get("id")
+        # if rjson.get('send'):
+        #     # confusing name but send_id is the posted id
+        #     posted_id = rjson['send'][0]['send_id']
+        # item = rjson['item']
+        item = rjson_data.get("attributes")
 
-        document_id = rjson["id"]
-        if rjson.get("send"):
-            # confusing name but send_id is the posted id
-            posted_id = rjson["send"][0]["send_id"]
-        item = rjson["item"]
+        return document_id, False, item
 
-        return document_id, posted_id, item
-
-    def send_document(self, document_id, speed=None, color=None):
+    def send_document(
+        self, document_uuid, delivery_product=None, print_spectrum=None, print_mode=None
+    ):
         """Send a uploaded document to pingen.com
 
-        :param int document_id: id of the document to send
-        :param int/str speed: sending speed of the document if it is send
-                                1 = Priority, 2 = Economy
-        :param int/str color: type of print, 0 = B/W, 1 = Color
+        :param str document_uuid: id of the document to send
+        :param str delivery_product: sending product of the document
+        :param str print_spectrum: type of print, grayscale or color
         :return: id of the post on pingen.com
         """
+        data_attributes = {
+            "delivery_product": delivery_product,
+            "print_mode": print_mode,
+            "print_spectrum": print_spectrum,
+        }
         data = {
-            "speed": speed,
-            "color": color,
+            "data": {
+                "id": document_uuid,
+                "type": "letters",
+                "attributes": data_attributes,
+            }
         }
         response = self._send(
-            self.session.post,
-            "document/send",
-            params={"id": document_id},
-            data={"data": json.dumps(data)},
+            self.session.patch,
+            "organisations/{organisationId}/letters/{letterId}/send",
+            letter_id=document_uuid,
+            headers={"Content-Type": "application/vnd.api+json"},
+            data=json.dumps(data),
         )
+        return response.json().get("data", {}).get("attributes")
 
-        return response.json()["id"]
-
-    def post_infos(self, post_id):
+    def post_infos(self, document_uuid):
         """Return the information of a post
 
-        :param int post_id: id of the document to send
+        :param str document_uuid: id of the document to send
         :return: dict of infos of the post
         """
-        response = self._send(self.session.get, "document/get", params={"id": post_id})
-
-        return response.json()["item"]
-
-    @staticmethod
-    def is_posted(post_infos):
-        """return True if the post has been sent
-
-        :param dict post_infos: post infos returned by `post_infos`
-        """
-        return post_infos["status"] == 1
+        response = self._send(
+            self.session.get,
+            "organisations/{organisationId}/letters/{letterId}",
+            letter_id=document_uuid,
+        )
+        return response.json().get("data", {}).get("attributes")
+        # return response.json()['item']
