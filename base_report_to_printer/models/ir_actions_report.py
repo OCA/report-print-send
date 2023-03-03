@@ -157,16 +157,16 @@ class IrActionsReport(models.Model):
         generated document as well.
         """
         document, doc_format = super()._render_qweb_pdf(
-            report_ref=report_ref, res_ids=res_ids, data=data
+            report_ref, res_ids=res_ids, data=data
         )
-
-        behaviour = self.behaviour()
+        report = self._get_report(report_ref)
+        behaviour = report.behaviour()
         printer = behaviour.pop("printer", None)
-        can_print_report = self._can_print_report(behaviour, printer, document)
+        can_print_report = report._can_print_report(behaviour, printer, document)
 
         if can_print_report:
             printer.print_document(
-                self, document, doc_format=self.report_type, **behaviour
+                report, document, doc_format=report.report_type, **behaviour
             )
 
         return document, doc_format
@@ -180,14 +180,14 @@ class IrActionsReport(models.Model):
         document, doc_format = super()._render_qweb_text(
             report_ref, docids=docids, data=data
         )
-
-        behaviour = self.behaviour()
+        report = self._get_report(report_ref)
+        behaviour = report.behaviour()
         printer = behaviour.pop("printer", None)
-        can_print_report = self._can_print_report(behaviour, printer, document)
+        can_print_report = report._can_print_report(behaviour, printer, document)
 
         if can_print_report:
             printer.print_document(
-                self, document, doc_format=self.report_type, **behaviour
+                report, document, doc_format=report.report_type, **behaviour
             )
 
         return document, doc_format
