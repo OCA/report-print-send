@@ -359,9 +359,7 @@ class Zpl2(object):
     def _field_data(self, data):
         """Add data to the buffer, between start and stop commands"""
         command = "{start}{data}{stop}".format(
-            start=self._field_data_start(),
-            data=data,
-            stop=self._field_data_stop(),
+            start=self._field_data_start(), data=data, stop=self._field_data_stop(),
         )
         return command
 
@@ -500,11 +498,9 @@ class Zpl2(object):
         bytes_per_row = rounded_width / 8
         total_bytes = bytes_per_row * height
         graphic_image_command = (
-            "^GFA,{total_bytes},{total_bytes},{bytes_per_row},{ascii_data}".format(
-                total_bytes=total_bytes,
-                bytes_per_row=bytes_per_row,
-                ascii_data=ascii_data,
-            )
+            "^GFA,{total_bytes},{total_bytes},{bytes_per_row},{ascii_data}"
+        ).format(
+            total_bytes=total_bytes, bytes_per_row=bytes_per_row, ascii_data=ascii_data,
         )
         # Generate the ZPL II command
         command = "{origin}{data}{stop}".format(
