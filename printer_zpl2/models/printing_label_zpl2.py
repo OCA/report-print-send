@@ -63,9 +63,7 @@ class PrintingLabelZpl2(models.Model):
         default=True,
     )
     action_window_id = fields.Many2one(
-        comodel_name="ir.actions.act_window",
-        string="Action",
-        readonly=True,
+        comodel_name="ir.actions.act_window", string="Action", readonly=True,
     )
     test_print_mode = fields.Boolean(string="Mode Print")
     test_labelary_mode = fields.Boolean(string="Mode Labelary")

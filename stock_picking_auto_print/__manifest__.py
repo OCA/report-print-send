@@ -9,7 +9,7 @@
     "license": "AGPL-3",
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
     "category": "Generic Modules/Base",
-    "website": "http://www.opensourceintegrators.com",
+    "website": "https://github.com/OCA/report-print-send",
     "depends": ["sale_stock", "base_report_to_printer"],
     "data": ["views/ir_action_report_view.xml"],
     "maintainers": ["bodedra"],
