@@ -32,9 +32,8 @@
                         <field name="password" />
                         <field name="encryption_policy" />
                     </group>
-                    <group>
-                        <separator string="Printers" colspan="2" />
-                        <field name="printer_ids" nolabel="1" />
+                    <group name="printers" string="Printers">
+                        <field name="printer_ids" nolabel="1" colspan="2" />
                     </group>
                 </sheet>
             </form>
