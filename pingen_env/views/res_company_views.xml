@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.ui.view" id="pingen_env_settings_inherit">
+    <field name="model">base.config.settings</field>
+    <field name="inherit_id" ref="pingen.base_config_settings_inherit"/>
+    <field name="arch" type="xml">
+      <field name="pingen_clientid" position="attributes">
+        <attribute name="attrs" eval="False"/>
+      </field>
+      <field name="pingen_client_secretid" position="attributes">
+        <attribute name="attrs" eval="False"/>
+      </field>
+      <field name="pingen_organization" position="attributes">
+        <attribute name="attrs" eval="False"/>
+      </field>
+      <field name="pingen_webhook_secret" position="attributes">
+        <attribute name="attrs" eval="False"/>
+      </field>
+      <field name="pingen_staging" position="attributes">
+        <attribute name="attrs" eval="False"/>
+      </field>
+    </field>
+  </record>
+</odoo>
