@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <record model="ir.ui.view" id="pingen_env_settings_inherit">
+  <record model="ir.ui.view" id="base_config_settings_inherit">
     <field name="model">base.config.settings</field>
     <field name="inherit_id" ref="pingen.base_config_settings_inherit"/>
     <field name="arch" type="xml">

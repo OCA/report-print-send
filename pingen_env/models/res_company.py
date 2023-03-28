@@ -25,16 +25,13 @@ class ResCompany(models.Model):
 
     @api.depends()
     def _compute_pingen_env(self):
+        global_section_name = "pingen"
         for company in self:
-            global_section_name = "pingen"
-
             # default vals
             config_vals = {}
             if serv_config.has_section(global_section_name):
                 config_vals.update((serv_config.items(global_section_name)))
-
-            custom_section_name = '.'.join((global_section_name, company.name))
+            custom_section_name = global_section_name + "." + company.name
             if serv_config.has_section(custom_section_name):
                 config_vals.update(serv_config.items(custom_section_name))
-
             company.update(config_vals)
