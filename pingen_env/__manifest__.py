@@ -13,6 +13,7 @@
     'data': [
         "views/res_company_views.xml",
     ],
+    'post_init_hook': '_post_init_pingen_env',
     'installable': True,
     'auto_install': False,
     'application': True,
