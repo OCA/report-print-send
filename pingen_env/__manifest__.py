@@ -11,10 +11,10 @@
     'depends': ['pingen','server_environment','base_setup'],
     'website': 'https://github.com/OCA/report-print-send',
     'data': [
-        "views/res_company_views.xml",
+        "views/base_config_views.xml",
     ],
-    'post_init_hook': '_post_init_pingen_env',
+    'post_init_hook': 'post_init_hook',
     'installable': True,
     'auto_install': False,
-    'application': True,
+    'application': False,
 }
