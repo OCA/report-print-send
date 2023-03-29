@@ -1,1 +1,6 @@
 zpl2==1.0
+# TODO: move to manifests
+pycups==1.9.73
+PyPDF2==1.18
+requests
+
