@@ -1,0 +1,35 @@
+<odoo>
+
+    <record id="print_config1" model="print.config">
+        <field name="server">192.168.2.1</field>
+        <field name="port">633</field>
+    </record>
+    <record id="print_config2" model="print.config">
+        <field name="server">127.0.0.1</field>
+        <field name="port">8069</field>
+        <field name="company_id" ref="base.main_company" />
+    </record>
+
+    <record id="print_config1_print1" model="printer">
+        <field name="name">printer 1</field>
+        <field name="usage">small_label</field>
+        <field name="comment">Zebra Printer tiny</field>
+        <field name="config_id" ref="print_config1" />
+        <field name="warehouse_id" ref="stock.warehouse0" />
+        <field name="readonly">1</field>
+    </record>
+    <record id="print_config1_print2" model="printer">
+        <field name="name">GX420t</field>
+        <field name="usage">carrier_label</field>
+        <field name="comment">Zebra Printer large</field>
+        <field name="config_id" ref="print_config1" />
+        <field name="readonly">1</field>
+    </record>
+    <record id="print_config2_print1" model="printer">
+        <field name="name">other printer</field>
+        <field name="usage">misc</field>
+        <field name="comment">Zpl compatible</field>
+        <field name="config_id" ref="print_config2" />
+    </record>
+
+</odoo>
