@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_report_to_printer](base_report_to_printer/) | 16.0.1.1.2 |  | Report to printer
+[printing_simple_configuration](printing_simple_configuration/) | 16.0.1.0.0 |  | Allow to set printing configuration in company or in warehouse
 
 [//]: # (end addons)
 
