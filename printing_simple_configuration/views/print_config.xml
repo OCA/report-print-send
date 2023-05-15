@@ -1,0 +1,89 @@
+<odoo>
+
+<record id="print_config_form" model="ir.ui.view">
+    <field name="model">print.config</field>
+    <field name="arch" type="xml">
+        <form>
+            <header>
+            </header>
+            <sheet>
+                <div>
+                    <p>
+                    Ensure all informations here match with your own network configuration.
+                    </p>
+                </div>
+                <group name="main">
+                    <group name="left">
+                        <field name="server" placeholder="192.168.0.12" />
+                        <field name="port" />
+                    </group>
+                    <group name="right">
+                        <field name="company_id" />
+                    </group>
+                </group>
+                <group name="printers" string="🖨 Printers" col="1">
+                    <field name="printer_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="name" required="1" />
+                            <field
+                                    name="usage"
+                                    attrs="{'readonly': [('readonly','=', True)]}"
+                                />
+                            <field
+                                    name="comment"
+                                    attrs="{'readonly': [('readonly','=', True)]}"
+                                />
+                            <field name="warehouse_id" />
+                            <field name="config_id" invisible="1" />
+                            <field name="readonly" invisible="1" />
+                        </tree>
+                    </field>
+                </group>
+                <group col="2">
+                    <field name="comment" />
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" />
+                <field name="message_ids" widget="mail_thread" />
+            </div>
+        </form>
+    </field>
+</record>
+
+<record id='print_config_tree' model='ir.ui.view'>
+    <field name='model'>print.config</field>
+    <field name='arch' type='xml'>
+        <tree>
+            <field name="server" />
+            <field name="port" />
+            <field name="company_id" />
+        </tree>
+    </field>
+</record>
+
+<record id="print_config_search" model="ir.ui.view">
+    <field name="model">print.config</field>
+    <field name="arch" type="xml">
+        <search>
+            <filter name="server" />
+            <filter name="port" />
+            <filter name="company_id" />
+        </search>
+    </field>
+</record>
+
+<record id="print_config_action" model="ir.actions.act_window">
+    <field name="name">Printing Configuration</field>
+    <field name="res_model">print.config</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+        id="print_config_menu"
+        name="🖨"
+        groups="base.group_erp_manager"
+        parent="base.menu_administration"
+        action="print_config_action"
+    />
+</odoo>

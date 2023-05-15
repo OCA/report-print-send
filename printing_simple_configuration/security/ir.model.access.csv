@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"print_conf_user","print_conf_user","model_print_config",,1,0,0,0
+"print_conf_manager","print_conf_manager","model_print_config","base.group_system",1,1,1,1
+"printer_user","printer_user","model_printer",,1,0,0,0
+"printer_manager","printer_manager","model_printer","base.group_system",1,1,1,1
