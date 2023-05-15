@@ -1,7 +1,7 @@
 {
     "name": "Printing Simple Configuration",
     "summary": "Allow to set printing configuration in company or in warehouse",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Generic Modules/Base",
     "website": "https://github.com/OCA/report-print-send",
     "author": "Akretion,Odoo Community Association (OCA)",
