@@ -3,7 +3,7 @@
 
 {
     "name": "Report to label printer",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Generic Modules/Base",
     "author": "Raumschmiede GmbH - Christopher Hansen,"
     " Odoo Community Association (OCA)",
