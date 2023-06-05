@@ -18,7 +18,7 @@ msgstr ""
 #. module: base_report_to_label_printer
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_res_users__default_label_printer_id
 msgid "Default Label Printer"
-msgstr ""
+msgstr "Imprimante étiquettes par défaut"
 
 #. module: base_report_to_label_printer
 #: model:ir.model,name:base_report_to_label_printer.model_ir_actions_report
@@ -28,9 +28,9 @@ msgstr ""
 #. module: base_report_to_label_printer
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_ir_actions_report__label
 msgid "Report is a Label"
-msgstr ""
+msgstr "Le rapport est une étiquette"
 
 #. module: base_report_to_label_printer
 #: model:ir.model,name:base_report_to_label_printer.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
