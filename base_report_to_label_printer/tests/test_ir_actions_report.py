@@ -5,11 +5,13 @@ from odoo.tests.common import TransactionCase
 
 
 class TestIrActionsReport(TransactionCase):
-    def setUp(self):
-        super(TestIrActionsReport, self).setUp()
-        self.Model = self.env["ir.actions.report"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
-        self.server = self.env["printing.server"].create({})
+        cls.Model = cls.env["ir.actions.report"]
+        cls.server = cls.env["printing.server"].create({})
 
     def new_printer(self):
         return self.env["printing.printer"].create(
