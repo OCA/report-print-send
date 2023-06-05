@@ -4,8 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-05 17:00+0000\n"
+"PO-Revision-Date: 2023-06-05 17:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +18,7 @@ msgstr ""
 #. module: base_report_to_label_printer
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_res_users__default_label_printer_id
 msgid "Default Label Printer"
-msgstr ""
+msgstr "Imprimante étiquettes par défaut"
 
 #. module: base_report_to_label_printer
 #: model:ir.model,name:base_report_to_label_printer.model_ir_actions_report
@@ -26,9 +28,9 @@ msgstr ""
 #. module: base_report_to_label_printer
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_ir_actions_report__label
 msgid "Report is a Label"
-msgstr ""
+msgstr "Le rapport est une étiquette"
 
 #. module: base_report_to_label_printer
 #: model:ir.model,name:base_report_to_label_printer.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
