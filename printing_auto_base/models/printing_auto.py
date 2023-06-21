@@ -92,10 +92,12 @@ class PrintingAuto(models.Model):
         generate_data_func = getattr(
             self, f"_generate_data_from_{self.data_source}", None
         )
+        content = []
         if generate_data_func:
-            record = self._get_record(record)
-            return generate_data_func(record)
-        return []
+            records = self._get_record(record)
+            for record in records:
+                content.append(generate_data_func(record)[0])
+        return content
 
     def _prepare_attachment_domain(self, record):
         domain = safe_eval(self.attachment_domain)

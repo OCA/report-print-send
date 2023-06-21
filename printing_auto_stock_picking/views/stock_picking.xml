@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record id="view_picking_form" model="ir.ui.view">
+    <field name="name">printing.auto.stock.picking</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form" />
+    <field name="arch" type="xml">
+
+      <header position="after">
+        <div
+                    class="alert alert-warning"
+                    role="alert"
+                    style="margin-bottom:0px;"
+                    attrs="{'invisible': [('printing_auto_error', '=', False)]}"
+                >
+            Unable to print the documents: the CUPS server is maybe not available, or printers are not configured properly. Error:
+            <field name="printing_auto_error" nolabel="1" />
+        </div>
+      </header>
+
+      <header position="inside">
+        <button
+                    name="handle_print_auto"
+                    type="object"
+                    string="Print documents"
+                    states="done"
+                />
+      </header>
+
+    </field>
+  </record>
+</odoo>
