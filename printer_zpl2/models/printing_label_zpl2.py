@@ -504,7 +504,9 @@ class PrintingLabelZpl2(models.Model):
                 zpl_file = self._generate_zpl2_data(record, labelary_emul=True, **extra)
                 files = {"file": zpl_file}
                 headers = {"Accept": "image/png"}
-                response = requests.post(url, headers=headers, files=files, stream=True)
+                response = requests.post(
+                    url, headers=headers, files=files, stream=True, timeout=30
+                )
                 if response.status_code == 200:
                     # Add a padd
                     im = Image.open(io.BytesIO(response.content))
