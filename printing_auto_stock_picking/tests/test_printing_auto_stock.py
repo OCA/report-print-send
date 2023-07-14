@@ -5,6 +5,8 @@
 import logging
 from unittest import mock
 
+from odoo.exceptions import UserError
+
 from odoo.addons.printing_auto_base.tests.common import (
     PrintingPrinter,
     TestPrintingAutoCommon,
@@ -39,3 +41,8 @@ class TestAutoPrinting(TestPrintingAutoCommon):
     def test_action_done_printing_error(self):
         self.record._action_done()
         self.assertTrue(self.record.printing_auto_error)
+
+    def test_action_done_printing_error_raise(self):
+        self.printing_auto.action_on_error = "raise"
+        with self.assertRaises(UserError):
+            self.record._action_done()

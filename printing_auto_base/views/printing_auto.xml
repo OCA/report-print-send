@@ -24,6 +24,7 @@
                             domain="[('printer_id', '=', printer_id)]"
                         />
                         <field name="nbr_of_copies" />
+                        <field name="action_on_error" />
                     </group>
                 </sheet>
             </form>
@@ -44,6 +45,7 @@
                 <field name="printer_id" />
                 <field name="printer_tray_id" />
                 <field name="nbr_of_copies" />
+                <field name="action_on_error" />
             </tree>
         </field>
     </record>

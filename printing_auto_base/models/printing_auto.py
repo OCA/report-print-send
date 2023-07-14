@@ -53,6 +53,12 @@ class PrintingAuto(models.Model):
     printer_id = fields.Many2one("printing.printer", "Printer")
     printer_tray_id = fields.Many2one("printing.tray", "Tray")
     nbr_of_copies = fields.Integer("Number of Copies", default=1)
+    action_on_error = fields.Selection(
+        [("log", "Record an error"), ("raise", "Raise an Exception")],
+        "Action on error",
+        default="log",
+        required=True,
+    )
 
     @api.constrains("data_source", "report_id", "attachment_domain")
     def _check_data_source(self):

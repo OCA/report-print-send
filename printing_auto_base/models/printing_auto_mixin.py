@@ -37,14 +37,21 @@ class PrintingAutoMixin(models.AbstractModel):
     def _get_printing_auto(self):
         return self.auto_printing_ids
 
-    def _handle_print_auto(self, printing_auto):
+    def _do_print_auto(self, printing_auto):
         self.ensure_one()
         printing_auto.ensure_one()
+        printer, count = printing_auto.do_print(self)
+        if count:
+            self._on_printing_auto_done(printing_auto, printer, count)
+
+    def _handle_print_auto(self, printing_auto):
+        printing_auto.ensure_one()
+        if printing_auto.action_on_error == "raise":
+            self._do_print_auto(printing_auto)
+            return
         try:
             with self.env.cr.savepoint():
-                printer, count = printing_auto.do_print(self)
-                if count:
-                    self._on_printing_auto_done(printing_auto, printer, count)
+                self._do_print_auto(printing_auto)
         except Exception as e:
             _logger.exception(
                 "An error occurred while printing '%s' for record %s.",
