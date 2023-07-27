@@ -954,7 +954,7 @@ msgstr "Asistente"
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
 #, python-format
 msgid "{name} ({copies} copies)"
-msgstr "{name} ({copies} copies) :{nombre} ({copias} copias)"
+msgstr "{name} ({copies} copies) :{name} ({copies} copias)"
 
 #~ msgid "Users"
 #~ msgstr "Usuarios"
