@@ -78,8 +78,7 @@ msgstr "Nombre a Mostrar"
 
 #. module: printing_simple_configuration
 #: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
-msgid ""
-"Ensure all informations here match with your own network configuration."
+msgid "Ensure all informations here match with your own network configuration."
 msgstr ""
 "Asegúrese de que toda la información coincide con la configuración de su red."
 
@@ -116,7 +115,6 @@ msgstr "Si está marcada, nuevos mensajes requieren su atención."
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_has_error
-#: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "si está marcada, algunos mensajes tienen un error de entrega."
 
@@ -229,11 +227,6 @@ msgid "Readonly"
 msgstr "Sólo lectura"
 
 #. module: printing_simple_configuration
-#: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error en la entrega de SMS"
-
-#. module: printing_simple_configuration
 #: model:ir.model,name:printing_simple_configuration.model_print_config
 msgid "Simple Printing Configuration"
 msgstr "Configuración de impresión Simple"
@@ -272,3 +265,6 @@ msgstr "🖥 Servidor"
 #: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
 msgid "🖨 Printers"
 msgstr "🖨 Impresoras"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error en la entrega de SMS"
