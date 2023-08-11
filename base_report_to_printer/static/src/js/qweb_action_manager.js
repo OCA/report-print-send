@@ -5,6 +5,7 @@ odoo.define("base_report_to_printer.print", function(require) {
     var core = require("web.core");
     var _t = core._t;
     var framework = require("web.framework");
+    var session = require("web.session");
 
     ActionManager.include({
         _triggerDownload: function(action, options, type) {
@@ -60,7 +61,30 @@ odoo.define("base_report_to_printer.print", function(require) {
                         );
                     } else {
                         framework.unblockUI();
-                        return _super.apply(self, [action, options, type]);
+                        const forceClientActionKey = "printing_force_client_action";
+                        // Update user context with forceClientActionKey if it is present
+                        // in the action context
+                        if (action.context) {
+                            for (var key in action.context) {
+                                if (key === forceClientActionKey) {
+                                    session.user_context[key] = action.context[key];
+                                }
+                            }
+                        }
+                        return _super
+                            .apply(self, [action, options, type])
+                            .then(function() {
+                                // After the reporting action was called, we need to
+                                // remove the added context again. Otherwise it will
+                                // remain in the user context permanently
+                                if (
+                                    session.user_context.hasOwnProperty(
+                                        forceClientActionKey
+                                    )
+                                ) {
+                                    delete session.user_context[forceClientActionKey];
+                                }
+                            });
                     }
                 });
             } else {
