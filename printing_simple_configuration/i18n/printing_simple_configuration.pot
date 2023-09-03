@@ -177,7 +177,7 @@ msgstr ""
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: printing_simple_configuration
