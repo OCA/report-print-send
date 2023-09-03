@@ -187,8 +187,8 @@ msgstr "Número de errores"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Número de mensajes que requieren una acción"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,help:printing_simple_configuration.field_print_config__message_has_error_counter
@@ -265,6 +265,9 @@ msgstr "🖥 Servidor"
 #: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
 msgid "🖨 Printers"
 msgstr "🖨 Impresoras"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Número de mensajes que requieren una acción"
 
 #~ msgid "SMS Delivery error"
 #~ msgstr "Error en la entrega de SMS"
