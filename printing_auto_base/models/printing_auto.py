@@ -94,13 +94,13 @@ class PrintingAuto(models.Model):
         domain = safe_eval(self.condition, {"env": self.env})
         return record.filtered_domain(domain)
 
-    def _get_content(self, record):
+    def _get_content(self, records):
         generate_data_func = getattr(
             self, f"_generate_data_from_{self.data_source}", None
         )
         content = []
         if generate_data_func:
-            records = self._get_record(record)
+            records = self._get_record(records)
             for record in records:
                 content.append(generate_data_func(record)[0])
         return content
@@ -127,16 +127,16 @@ class PrintingAuto(models.Model):
         )
         return [data]
 
-    def do_print(self, record):
+    def do_print(self, records):
         self.ensure_one()
-        record.ensure_one()
 
         behaviour = self._get_behaviour()
         printer = behaviour["printer"]
 
         if self.nbr_of_copies <= 0:
             return (printer, 0)
-        if not self._check_condition(record):
+        records = self._check_condition(records)
+        if not records:
             return (printer, 0)
 
         if not printer:
@@ -145,7 +145,7 @@ class PrintingAuto(models.Model):
             )
 
         count = 0
-        for content in self._get_content(record):
+        for content in self._get_content(records):
             for _n in range(self.nbr_of_copies):
                 printer.print_document(report=None, content=content, **behaviour)
                 count += 1

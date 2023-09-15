@@ -7,10 +7,17 @@ from unittest import mock
 from odoo.exceptions import UserError, ValidationError
 
 from .common import PrintingPrinter, TestPrintingAutoCommon, print_document
+from .model_test import PrintingAutoTester, PrintingAutoTesterChild, setup_test_model
 
 
 @mock.patch.object(PrintingPrinter, "print_document", print_document)
 class TestPrintingAutoBase(TestPrintingAutoCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        setup_test_model(cls.env, PrintingAutoTesterChild)
+        setup_test_model(cls.env, PrintingAutoTester)
+
     def test_check_data_source(self):
         with self.assertRaises(UserError):
             self._create_printing_auto_report({"report_id": False})
@@ -90,3 +97,57 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
         printing_auto.condition = "[('name', '=', 'test_printing_auto')]"
         expected = (self.printer_1, 0)
         self.assertEqual(expected, printing_auto.do_print(self.record))
+
+    def test_do_not_print_multiple_time_the_same_record(self):
+        """Check the same record is not printed multiple times.
+
+        When the 'record_change' field is being used on the printing auto configuration
+        and 'handle_print_auto' is called from a recrodset.
+        The same record could be send for printing multiple times.
+
+        """
+        printing_auto = self._create_printing_auto_report(
+            vals={"record_change": "child_ids", "printer_id": self.printer_1.id}
+        )
+        child1 = self.env["printingauto.tester.child"].create({"name": "Child One"})
+        child2 = self.env["printingauto.tester.child"].create({"name": "Child Two"})
+        parent1 = self.env["printingauto.tester"].create(
+            {
+                "name": "Customer One",
+                "child_ids": [(4, child1.id, 0)],
+                "auto_printing_ids": [(4, printing_auto.id, 0)],
+            }
+        )
+        parent2 = self.env["printingauto.tester"].create(
+            {
+                "name": "Customer Two",
+                "child_ids": [(4, child1.id, 0)],
+                "auto_printing_ids": [(4, printing_auto.id, 0)],
+            }
+        )
+        parents = parent1 | parent2
+        generate_data_from = (
+            "odoo.addons.printing_auto_base.models.printing_auto."
+            "PrintingAuto._generate_data_from_report"
+        )
+        with mock.patch(generate_data_from) as generate_data_from:
+            # Both parents have the same child only print the child report once
+            parents.handle_print_auto()
+            self.assertEqual(generate_data_from.call_count, 1)
+            generate_data_from.assert_called_with(child1)
+            generate_data_from.reset_mock()
+            # Both parents have different childs, print both child reports
+            parent2.child_ids = [(6, 0, child2.ids)]
+            parents.handle_print_auto()
+            self.assertEqual(generate_data_from.call_count, 2)
+            generate_data_from.assert_has_calls(
+                [mock.call(child1), mock.call(child2)], any_order=True
+            )
+            generate_data_from.reset_mock()
+            # THe parents have one child in common and one parent has a 2nd child
+            parent2.child_ids = [(4, child1.id, 0)]
+            parents.handle_print_auto()
+            self.assertEqual(generate_data_from.call_count, 2)
+            generate_data_from.assert_has_calls(
+                [mock.call(child1), mock.call(child2)], any_order=True
+            )
