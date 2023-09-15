@@ -38,7 +38,6 @@ class PrintingAutoMixin(models.AbstractModel):
         return self.auto_printing_ids
 
     def _do_print_auto(self, printing_auto):
-        self.ensure_one()
         printing_auto.ensure_one()
         printer, count = printing_auto.do_print(self)
         if count:
@@ -63,6 +62,12 @@ class PrintingAutoMixin(models.AbstractModel):
     def handle_print_auto(self):
         """Print some report or attachment directly to the corresponding printer."""
         self._on_printing_auto_start()
+        to_print = {}
         for record in self:
             for printing_auto in record._get_printing_auto():
-                record._handle_print_auto(printing_auto)
+                if printing_auto not in to_print.keys():
+                    to_print[printing_auto] = record
+                else:
+                    to_print[printing_auto] |= record
+        for printing_auto, records in to_print.items():
+            records._handle_print_auto(printing_auto)
