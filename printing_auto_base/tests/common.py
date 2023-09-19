@@ -54,6 +54,7 @@ class TestPrintingAutoCommon(common.SavepointCase):
 
     @classmethod
     def _create_printing_auto(cls, vals):
+        vals.setdefault("model", "printing.auto")
         return cls.env["printing.auto"].create(vals)
 
     @classmethod

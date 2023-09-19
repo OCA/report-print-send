@@ -8,6 +8,7 @@
     "category": "Warehouse Management",
     "data": [
         "security/ir.model.access.csv",
+        "security/ir_rule.xml",
         "views/stock_picking.xml",
         "views/stock_picking_type.xml",
     ],

@@ -9,5 +9,7 @@ class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
     auto_printing_ids = fields.Many2many(
-        "printing.auto", string="Auto Printing Configuration"
+        "printing.auto",
+        string="Auto Printing Configuration",
+        domain=[("model", "=", "stock.picking.type")],
     )
