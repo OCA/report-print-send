@@ -102,7 +102,7 @@ class PrintingAuto(models.Model):
         if generate_data_func:
             records = self._get_record(records)
             for record in records:
-                content.append(generate_data_func(record)[0])
+                content += generate_data_func(record)
         return content
 
     def _prepare_attachment_domain(self, record):
