@@ -71,7 +71,7 @@ class PrintingPrinter(models.Model):
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
         mapping = {3: "available", 4: "printing", 5: "error"}
         cups_vals = {
-            "name": cups_printer["printer-info"],
+            "name": self.name or cups_printer["printer-info"],
             "model": cups_printer.get("printer-make-and-model", False),
             "location": cups_printer.get("printer-location", False),
             "uri": cups_printer.get("device-uri", False),

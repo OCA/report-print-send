@@ -18,6 +18,7 @@
     "data": [
         "data/printing_data.xml",
         "security/security.xml",
+        "security/ir.model.access.csv",
         "views/printing_printer.xml",
         "views/printing_server.xml",
         "views/printing_job.xml",
