@@ -40,7 +40,7 @@ class TestPrintingPrinter(TransactionCase):
         self.server = self.env["printing.server"].create({})
         self.printer = self.env["printing.printer"].create(
             {
-                "name": "Printer",
+                "name": "",
                 "server_id": self.server.id,
                 "system_name": "Sys Name",
                 "default": True,
@@ -105,10 +105,11 @@ class TestPrintingPrinter(TransactionCase):
         Check that the update_printers method calls _prepare_update_from_cups
         """
         self.mock_cups_ppd(cups, file_name=False)
-
-        self.assertEqual(self.printer.name, "Printer")
         self.ServerModel.update_printers()
         self.assertEqual(self.printer.name, "info")
+        self.printer.name = "My custom name"
+        self.ServerModel.update_printers()
+        self.assertEqual(self.printer.name, "My custom name")
 
     @mock.patch("%s.cups" % server_model)
     def test_prepare_update_from_cups_no_ppd(self, cups):
