@@ -121,6 +121,11 @@ class PrintingServer(models.Model):
                     printer_values["server_id"] = server.id
 
                 updated_printers.append(name)
+                # We want to keep any existing customized name over existing printer
+                # We want also to rely in the system name as a fallback to avoid
+                # empty names.
+                if not printer_values.get("name") and not printer.name:
+                    printer_values["name"] = name
                 if not printer:
                     printer_values["system_name"] = name
                     printer.create(printer_values)
