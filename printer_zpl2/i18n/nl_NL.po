@@ -356,6 +356,7 @@ msgid "Error correction for some barcode types like QR Code."
 msgstr ""
 
 #. module: printer_zpl2
+#. odoo-python
 #: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #, python-format
 msgid "Error with Labelary API. %s"
@@ -452,6 +453,7 @@ msgid "Import"
 msgstr ""
 
 #. module: printer_zpl2
+#. odoo-python
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 #, python-format
 msgid "Import %s"
@@ -771,6 +773,7 @@ msgid "PDF417"
 msgstr ""
 
 #. module: printer_zpl2
+#. odoo-python
 #: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #: model:ir.actions.act_window,name:printer_zpl2.action_wizard_print_record_label_view
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_import_zpl2_form
@@ -993,6 +996,7 @@ msgid ""
 msgstr ""
 
 #. module: printer_zpl2
+#. odoo-python
 #: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #, python-format
 msgid "This label cannot be used on {model}"
@@ -1069,6 +1073,7 @@ msgid ""
 msgstr ""
 
 #. module: printer_zpl2
+#. odoo-python
 #: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 #, python-format
 msgid "You can not create recursive labels."
