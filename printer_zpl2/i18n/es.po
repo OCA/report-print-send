@@ -440,7 +440,8 @@ msgstr "ID"
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__reverse_print
 msgid ""
 "If checked, the data will be printed in the inverse color of the background."
-msgstr "Si está marcada, los datos se imprimirán en el color inverso del fondo."
+msgstr ""
+"Si está marcada, los datos se imprimirán en el color inverso del fondo."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__in_block
