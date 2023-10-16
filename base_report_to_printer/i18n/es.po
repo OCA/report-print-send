@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2023-09-20 19:54+0000\n"
-"Last-Translator: David Vidal <david.vidal@tecnativa.com>\n"
+"PO-Revision-Date: 2023-10-16 19:36+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -346,22 +346,22 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__3
 msgid "HTTP_ENCRYPT_ALWAYS"
-msgstr ""
+msgstr "HTTP_ENCRYPT_ALWAYS (ENCRIPTAR SIEMPRE)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__0
 msgid "HTTP_ENCRYPT_IF_REQUESTED"
-msgstr ""
+msgstr "HTTP_ENCRYPT_IF_REQUESTED (ENCRIPTAR SI SE SOLICITA)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__1
 msgid "HTTP_ENCRYPT_NEVER"
-msgstr ""
+msgstr "HTTP_ENCRYPT_NEVER ( ENCRIPTAR NUNCA)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__2
 msgid "HTTP_ENCRYPT_REQUIRED"
-msgstr ""
+msgstr "HTTP_ENCRYPT_REQUIRED (CIFRADO OBLIGATORIO)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__service-off-line
@@ -577,7 +577,7 @@ msgstr "Línea de impresión de adjuntos"
 #: model:ir.actions.act_window,name:base_report_to_printer.action_wizard_print_attachment
 #: model:ir.ui.menu,name:base_report_to_printer.menu_action_wizard_print_attachment
 msgid "Print Attachments"
-msgstr ""
+msgstr "Imprimir archivos adjuntos"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
@@ -587,7 +587,7 @@ msgstr "Acción de imprimir un trabajo"
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Print Test Page"
-msgstr ""
+msgstr "Imprimir página de prueba"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
@@ -720,9 +720,8 @@ msgstr "Informe"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_ir_actions_report
-#, fuzzy
 msgid "Report Action"
-msgstr "Acciones de impresión de informes"
+msgstr "Informar Acción"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_form
@@ -842,7 +841,7 @@ msgid ""
 "This process will create all missing printers from the current CUPS server.\""
 msgstr ""
 "Este proceso creará todas las impresoras que falten desde el servidor CUPS "
-"actual."
+"actual"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/models/ir_actions_report.py:0
@@ -955,7 +954,7 @@ msgstr "Asistente"
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
 #, python-format
 msgid "{name} ({copies} copies)"
-msgstr ""
+msgstr "{name} ({copies} copies) :{name} ({copies} copias)"
 
 #, python-format
 #~ msgid "Document sent to the printer %s"
