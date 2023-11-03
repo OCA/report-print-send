@@ -20,7 +20,7 @@ async function cupsReportActionHandler(action, options, env) {
             if (result) {
                 env.services.notification.add(_t("Successfully sent to printer!"));
             } else {
-                env.services.notification.add(_t("Could not sent to printer!"));
+                env.services.notification.add(_t("Could not send to printer!"));
             }
             return true;
         }
