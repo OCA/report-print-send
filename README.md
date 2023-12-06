@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 16.0.1.1.4 |  | Report to printer
+[base_report_to_printer](base_report_to_printer/) | 16.0.1.1.5 |  | Report to printer
 [printer_zpl2](printer_zpl2/) | 16.0.1.0.0 |  | Add a ZPL II label printing feature
 [printing_simple_configuration](printing_simple_configuration/) | 16.0.1.0.1 |  | Allow to set printing configuration in company or in warehouse
 
