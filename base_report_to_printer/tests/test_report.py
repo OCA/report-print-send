@@ -191,3 +191,13 @@ class TestReport(common.HttpCase):
         """It should raise an error"""
         with self.assertRaises(exceptions.UserError):
             self.report.print_document(self.partners.ids)
+
+    def test_print_document_string(self):
+        """Test string encoding"""
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models."
+            "printing_printer.PrintingPrinter."
+            "print_file"
+        ) as print_file:
+            self.new_printer().print_document("", "test")
+            print_file.assert_called_once()
