@@ -149,6 +149,7 @@
                                             widget="ace"
                                             options="{'mode': 'python'}"
                                             nolabel="1"
+                                            colspan="2"
                                         />
                                     </group>
                                     <notebook colspan="4">
@@ -302,6 +303,7 @@
                                     widget="ace"
                                     options="{'mode': 'python'}"
                                     attrs="{'invisible':[('test_print_mode', '=', False), ('test_labelary_mode', '=', False)]}"
+                                    colspan="2"
                                 />
                             </group>
                         </page>
