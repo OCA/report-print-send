@@ -4,6 +4,7 @@
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
+# Copyright (C) 2023 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import errno
@@ -137,6 +138,8 @@ class PrintingPrinter(models.Model):
         """
         self.ensure_one()
         fd, file_name = mkstemp()
+        if isinstance(content, str):
+            content = content.encode()
         try:
             os.write(fd, content)
         finally:
