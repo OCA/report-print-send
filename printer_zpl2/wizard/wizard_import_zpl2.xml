@@ -12,7 +12,7 @@
                     </group>
                 </group>
                 <group string="ZPL2">
-                    <field name="data" widget="ace" nolabel="1" />
+                    <field name="data" widget="ace" nolabel="1" colspan="2" />
                 </group>
                 <footer>
                     <button string="Cancel" class="btn-default" special="cancel" />
