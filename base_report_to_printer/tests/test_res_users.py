@@ -24,9 +24,15 @@ class TestResUsers(common.TransactionCase):
         self.assertTrue(self.new_record())
 
     def test_onchange_printer_tray_id_empty(self):
-        user = self.env["res.users"].new({"printer_tray_id": False})
+        user = self.env["res.users"].new(
+            {
+                "printer_input_tray_id": False,
+                "printer_output_tray_id": False,
+            }
+        )
         user.onchange_printing_printer_id()
-        self.assertFalse(user.printer_tray_id)
+        self.assertFalse(user.printer_input_tray_id)
+        self.assertFalse(user.printer_output_tray_id)
 
     def test_onchange_printer_tray_id_not_empty(self):
         server = self.env["printing.server"].create({})
@@ -43,11 +49,29 @@ class TestResUsers(common.TransactionCase):
                 "uri": "URI",
             }
         )
-        tray = self.env["printing.tray"].create(
-            {"name": "Tray", "system_name": "TrayName", "printer_id": printer.id}
+        input_tray = self.env["printing.tray.input"].create(
+            {
+                "name": "Tray",
+                "system_name": "TrayName",
+                "printer_id": printer.id,
+            }
+        )
+        output_tray = self.env["printing.tray.output"].create(
+            {
+                "name": "Tray",
+                "system_name": "TrayName",
+                "printer_id": printer.id,
+            }
         )
 
-        user = self.env["res.users"].new({"printer_tray_id": tray.id})
-        self.assertEqual(user.printer_tray_id, tray)
+        user = self.env["res.users"].new(
+            {
+                "printer_input_tray_id": input_tray.id,
+                "printer_output_tray_id": output_tray.id,
+            }
+        )
+        self.assertEqual(user.printer_input_tray_id, input_tray)
+        self.assertEqual(user.printer_output_tray_id, output_tray)
         user.onchange_printing_printer_id()
-        self.assertFalse(user.printer_tray_id)
+        self.assertFalse(user.printer_input_tray_id)
+        self.assertFalse(user.printer_output_tray_id)

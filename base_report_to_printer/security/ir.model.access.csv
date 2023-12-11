@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_update_cups,update printer from cups manager,base_report_to_printer.model_printing_printer_update_wizard,base_report_to_printer.printing_group_manager,1,1,1,1
+access_print_attachment,print attachment cups manager,base_report_to_printer.model_wizard_print_attachment,base_report_to_printer.printing_group_manager,1,1,1,1
+access_print_attachment_line,print attachment line cups manager,base_report_to_printer.model_wizard_print_attachment_line,base_report_to_printer.printing_group_manager,1,1,1,1

@@ -10,7 +10,14 @@
                     <group>
                         <field name="property_printing_action_id" />
                         <field name="printing_printer_id" />
-                        <field name="printer_tray_id" />
+                        <field
+                            name="printer_input_tray_id"
+                            invisible="not printing_printer_id"
+                        />
+                        <field
+                            name="printer_output_tray_id"
+                            invisible="not printing_printer_id"
+                        />
                     </group>
                     <separator string="Specific actions per user" />
                     <field name="printing_action_ids" />
