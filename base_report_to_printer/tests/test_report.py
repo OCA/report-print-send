@@ -143,7 +143,8 @@ class TestReport(common.HttpCase):
                 document[0],
                 action="server",
                 doc_format="qweb-pdf",
-                tray=False,
+                input_tray=False,
+                output_tray=False,
             )
 
     def test_render_qweb_text_printable(self):
@@ -163,7 +164,8 @@ class TestReport(common.HttpCase):
                 document[0],
                 action="server",
                 doc_format="qweb-text",
-                tray=False,
+                input_tray=False,
+                output_tray=False,
             )
 
     def test_print_document_not_printable(self):
