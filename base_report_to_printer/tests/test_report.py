@@ -147,7 +147,8 @@ class TestReport(common.HttpCase):
                 document[0],
                 action="server",
                 doc_format="qweb-pdf",
-                tray=False,
+                input_tray=False,
+                output_tray=False,
             )
             self.assertEqual(len(logs.records), 1)
             self.assertEqual(logs.records[0].levelno, logging.WARNING)
@@ -172,7 +173,8 @@ class TestReport(common.HttpCase):
                 document[0],
                 action="server",
                 doc_format="qweb-text",
-                tray=False,
+                input_tray=False,
+                output_tray=False,
             )
             self.assertEqual(len(logs.records), 1)
             self.assertEqual(logs.records[0].levelno, logging.WARNING)

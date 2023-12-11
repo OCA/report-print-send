@@ -39,9 +39,10 @@ class TestPrintingPrinter(TransactionCase):
         It should put the value in InputSlot
         """
         self.assertEqual(
-            self.Model._set_option_tray(None, "Test Tray"), {"InputSlot": "Test Tray"}
+            self.Model._set_option_input_tray(None, "Test Tray"),
+            {"InputSlot": "Test Tray"},
         )
-        self.assertEqual(self.Model._set_option_tray(None, False), {})
+        self.assertEqual(self.Model._set_option_input_tray(None, False), {})
 
     def test_option_noops(self):
         """
@@ -78,7 +79,9 @@ class TestPrintingPrinter(TransactionCase):
             self.Model.print_options(report, doc_format="raw", copies=2),
             {"raw": "True", "copies": "2"},
         )
-        self.assertTrue("InputSlot" in self.Model.print_options(report, tray="Test"))
+        self.assertTrue(
+            "InputSlot" in self.Model.print_options(report, input_tray="Test")
+        )
 
     @mock.patch(f"{server_model}.cups")
     def test_print_report(self, cups):
