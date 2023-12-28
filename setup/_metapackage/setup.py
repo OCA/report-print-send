@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-base_report_to_printer>=16.0dev,<16.1dev',
+        'odoo-addon-pingen>=16.0dev,<16.1dev',
         'odoo-addon-printer_zpl2>=16.0dev,<16.1dev',
         'odoo-addon-printing_simple_configuration>=16.0dev,<16.1dev',
     ],
