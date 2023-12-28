@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record id="view_attachment_form" model="ir.ui.view">
+    <field name="name">ir.attachment.pingen.view</field>
+    <field name="model">ir.attachment</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="base.view_attachment_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//group/group[2]" position="after">
+        <group string="Pingen info" groups="base.group_no_one">
+          <field name="send_to_pingen" />
+        </group>
+      </xpath>
+    </field>
+  </record>
+
+  <record model="ir.actions.act_window" id="act_attachment_to_pingen_document">
+    <field
+            name="context"
+        >"{'search_default_attachment_id': [active_id], 'default_attachment_id': active_id}"</field>
+    <field name="name">Pingen Document</field>
+    <field name="res_model">pingen.document</field>
+    <field name="binding_model_id" ref="base.model_ir_attachment" />
+  </record>
+</odoo>

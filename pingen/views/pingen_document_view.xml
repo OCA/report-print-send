@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <record id="view_pingen_document_tree" model="ir.ui.view">
+    <field name="name">pingen.document.tree</field>
+    <field name="model">pingen.document</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="push_date" />
+        <field name="name" />
+        <field name="auto_send" />
+        <field name="delivery_product" />
+        <field name="print_spectrum" />
+        <field name="state" />
+        <field name="pingen_status" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_pingen_document_form" model="ir.ui.view">
+    <field name="name">pingen.document.form</field>
+    <field name="model">pingen.document</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Pingen Document">
+        <header>
+        <button
+                        name="push_to_pingen"
+                        type="object"
+                        states="pending"
+                        string="Push to pingen.com"
+                        icon="fa-upload"
+                    />
+        <button
+                        name="ask_pingen_send"
+                        type="object"
+                        string="Ask pingen.com to send the document"
+                        icon="fa-share"
+                        attrs="{'invisible': ['|', ('state', '!=', 'pushed'),('auto_send', '=', True)]}"
+                    />
+        <button
+                        name="resolve_error"
+                        type="object"
+                        states="error,pingen_error"
+                        string="Errors resolved"
+                        icon="fa-repeat"
+                    />
+        <button
+                        name="update_post_infos"
+                        type="object"
+                        states="pushed,sendcenter,sent"
+                        string="Update the letter's informations"
+                        icon="fa-refresh"
+                    />
+        <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="pending,pushed,sent"
+                        statusbar_colors='{"error":"red","pingen_error":"red","canceled":"grey","pushed":"blue","sent":"green"}'
+                    />
+        </header>
+        <group>
+          <field name="name" readonly="True" />
+          <field name="type" readonly="True" />
+          <field
+                        name="company_id"
+                        readonly="True"
+                        groups="base.group_multi_company"
+                        widget="selection"
+                    />
+        </group>
+        <notebook>
+          <page string="Pingen.com">
+            <group>
+              <group>
+                <field name="pingen_uuid" />
+                <field name="pingen_status" />
+              </group>
+            </group>
+            <separator string="Options" />
+            <newline />
+            <group>
+              <group>
+                <field
+                                    name="auto_send"
+                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
+                                />
+                <field
+                                    name="delivery_product"
+                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])], 'required': [('auto_send', '=', True)]}"
+                                />
+                <field
+                                    name="print_spectrum"
+                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
+                                />
+                <field
+                                    name="print_mode"
+                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
+                                />
+              </group>
+            </group>
+            <separator string="Dates" />
+            <newline />
+            <group>
+              <field name="push_date" />
+            </group>
+            <group attrs="{'invisible': [('last_error_message', '=', False)]}">
+              <separator string="Errors" />
+              <newline />
+              <group>
+                <field nolabel="1" name="last_error_message" />
+              </group>
+            </group>
+
+            <group attrs="{'invisible': [('state', 'not in', ['sendcenter', 'sent'])]}">
+              <separator string="Sendcenter" colspan="4" />
+              <newline />
+              <group>
+                <label for="cost" />
+                <div>
+                <field name="cost" class="oe_inline" />
+                <field
+                                        name="currency_id"
+                                        class="oe_inline"
+                                        groups="base.group_multi_currency"
+                                    />
+                </div>
+                <newline />
+                <field name="parsed_address" />
+                <field name="country_id" />
+                <field name="send_date" />
+                <field name="pages" />
+              </group>
+            </group>
+          </page>
+          <page string="Attachment">
+            <group col="4" colspan="4">
+              <separator string="Data" colspan="4" />
+              <newline />
+              <group col="2" colspan="4" attrs="{'invisible':[('type','=','url')]}">
+                <field name="datas" filename="name" readonly="True" />
+                <field name="name" select="1" readonly="True" />
+              </group>
+              <group col="2" colspan="4" attrs="{'invisible':[('type','=','binary')]}">
+                <field name="url" widget="url" readonly="True" />
+              </group>
+            </group>
+            <group col="2" colspan="4">
+              <separator string="Attached To" colspan="2" />
+              <field name="attachment_id" />
+            </group>
+          </page>
+        </notebook>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_pingen_document_search" model="ir.ui.view">
+    <field name="name">pingen.document.search</field>
+    <field name="model">pingen.document</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <search>
+        <filter name="pending" string="Pending" domain="[('state','=','pending')]" />
+        <filter name="pushed" string="Pushed" domain="[('state','=','pushed')]" />
+        <filter
+                    name="in_sendcenter"
+                    string="In Sendcenter"
+                    domain="[('state','=','sendcenter')]"
+                />
+        <filter name="sent" string="Sent" domain="[('state','=','sent')]" />
+        <filter name="error" string="Error" domain="[('state','=','error')]" />
+        <filter
+                    name="error"
+                    string="Pingen Error"
+                    domain="[('state','=','pingen_error')]"
+                />
+        <filter
+                    name="cancelled"
+                    string="Canceled"
+                    domain="[('state','=','canceled')]"
+                />
+        <separator orientation="vertical" />
+        <field name="attachment_id" />
+      </search>
+    </field>
+  </record>
+
+  <record id="action_pingen_document" model="ir.actions.act_window">
+    <field name="name">Pingen Documents</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">pingen.document</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="view_pingen_document_search" />
+  </record>
+
+  <menuitem action="action_pingen_document" id="menu_pingen_document" />
+
+</odoo>

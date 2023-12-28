@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+
+  <record forcecreate="True" id="ir_cron_push_pingen" model="ir.cron">
+    <field name="name">Run Pingen Document Push</field>
+    <field eval="True" name="active" />
+    <field name="user_id" ref="base.user_root" />
+    <field name="interval_number">1</field>
+    <field name="interval_type">hours</field>
+    <field name="numbercall">-1</field>
+    <field eval="False" name="doall" />
+    <field name="model_id" ref="model_pingen_document" />
+    <field name="code">model._push_and_send_to_pingen_cron</field>
+  </record>
+
+  <record forcecreate="True" id="ir_cron_update_pingen" model="ir.cron">
+    <field name="name">Run Pingen Document Update</field>
+    <field eval="False" name="active" />
+    <field name="user_id" ref="base.user_root" />
+    <field name="interval_number">1</field>
+    <field name="interval_type">days</field>
+    <field name="numbercall">-1</field>
+    <field eval="False" name="doall" />
+    <field name="model_id" ref="model_pingen_document" />
+    <field name="code">model._update_post_infos_cron</field>
+  </record>
+
+
+</odoo>
