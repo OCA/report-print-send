@@ -6,61 +6,63 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-01-15 15:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: printing_simple_configuration
 #: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
 msgid "192.168.0.12"
-msgstr ""
+msgstr "192.168.0.12"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Azione richiesta"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Conteggio allegati"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__comment
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__comment
 msgid "Comment"
-msgstr ""
+msgstr "Commento"
 
 #. module: printing_simple_configuration
 #: model:ir.model,name:printing_simple_configuration.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__company_id
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__config_id
 msgid "Config"
-msgstr ""
+msgstr "Configurazione"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__create_uid
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__create_date
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,help:printing_simple_configuration.field_printer__usage
