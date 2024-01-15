@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 18:49+0000\n"
-"PO-Revision-Date: 2023-10-09 09:11+0000\n"
+"PO-Revision-Date: 2024-01-15 20:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -80,7 +80,7 @@ msgstr "Annulla"
 #. module: base_report_to_printer
 #: model:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Cancel all running jobs"
-msgstr "Elimina tutti i processi in corso"
+msgstr "Annulla tutti i processi in corso"
 
 #. module: base_report_to_printer
 #: selection:printing.job,job_state:0
@@ -669,7 +669,7 @@ msgstr ""
 msgid ""
 "This process will create all missing printers from the current CUPS server."
 msgstr ""
-"Questo processo creerà tutte le stampante mancanti dal server CUPS corrente"
+"Questo processo creerà tutte le stampanti mancanti dal server CUPS corrente."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job_time_at_completed
