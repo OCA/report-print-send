@@ -17,21 +17,15 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: base_report_to_printer_mail
-#: model:ir.model.fields,field_description:base_report_to_printer_mail.field_mail_template__display_name
-msgid "Display Name"
-msgstr "Visningsnamn"
-
-#. module: base_report_to_printer_mail
 #: model:ir.model,name:base_report_to_printer_mail.model_mail_template
 msgid "Email Templates"
 msgstr "E-postmallar"
 
-#. module: base_report_to_printer_mail
-#: model:ir.model.fields,field_description:base_report_to_printer_mail.field_mail_template__id
-msgid "ID"
-msgstr "ID"
+#~ msgid "Display Name"
+#~ msgstr "Visningsnamn"
 
-#. module: base_report_to_printer_mail
-#: model:ir.model.fields,field_description:base_report_to_printer_mail.field_mail_template____last_update
-msgid "Last Modified on"
-msgstr "Senast ändrad den"
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Senast ändrad den"
