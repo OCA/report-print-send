@@ -156,6 +156,11 @@ msgid "Completed with some warnings"
 msgstr "Slutförde med några varningar"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Completion Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-compression
 msgid "Compressed using an unknown algorithm"
 msgstr "Komprimerad med en okänd algoritm"
@@ -169,7 +174,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #, python-format
-msgid "Could not sent to printer!"
+msgid "Could not send to printer!"
 msgstr ""
 
 #. module: base_report_to_printer
@@ -197,6 +202,11 @@ msgstr "Skapad av"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
 msgstr "Skapad den"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Creation Date"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
@@ -230,8 +240,8 @@ msgstr "Datum och tid för slutförandet av det här jobbet."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Date and time of creation for this job."
-msgstr "Datum och tid då det här jobbet skapades."
+msgid "Date and time of creation of this job."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
@@ -688,6 +698,11 @@ msgid "Processing"
 msgstr "Bearbetar"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Processing Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing_stopped
 msgid "Processing Stopped"
 msgstr "Bearbetning har stoppats"
@@ -847,21 +862,6 @@ msgid "This report type (%s) is not supported by direct printing!"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
-msgid "Time At Completed"
-msgstr "Tid vid slutförd"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Time At Creation"
-msgstr "Tid vid skapad"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
-msgid "Time At Processing"
-msgstr "Tid vid bearbetar"
-
-#. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Trays"
 msgstr "Fack"
@@ -883,8 +883,8 @@ msgstr "Ej tillgänglig"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__active
-msgid "Unchecked if the job is purged from cups."
-msgstr "Ej ikryssad om jobbet har rensas från cups."
+msgid "Unchecked if the job is purged from CUPS."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__unknown
@@ -948,6 +948,21 @@ msgstr ""
 #, python-format
 msgid "{name} ({copies} copies)"
 msgstr ""
+
+#~ msgid "Date and time of creation for this job."
+#~ msgstr "Datum och tid då det här jobbet skapades."
+
+#~ msgid "Time At Completed"
+#~ msgstr "Tid vid slutförd"
+
+#~ msgid "Time At Creation"
+#~ msgstr "Tid vid skapad"
+
+#~ msgid "Time At Processing"
+#~ msgstr "Tid vid bearbetar"
+
+#~ msgid "Unchecked if the job is purged from cups."
+#~ msgstr "Ej ikryssad om jobbet har rensas från cups."
 
 #~ msgid "Users"
 #~ msgstr "Användare"

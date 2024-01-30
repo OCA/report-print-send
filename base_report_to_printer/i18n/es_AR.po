@@ -156,6 +156,11 @@ msgid "Completed with some warnings"
 msgstr "Completado con algunos avisos"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Completion Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-compression
 msgid "Compressed using an unknown algorithm"
 msgstr "Comprimido usando un algoritmo desconocido"
@@ -169,7 +174,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #, python-format
-msgid "Could not sent to printer!"
+msgid "Could not send to printer!"
 msgstr ""
 
 #. module: base_report_to_printer
@@ -197,6 +202,11 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
 msgstr "Creado en"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Creation Date"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
@@ -230,8 +240,8 @@ msgstr "Fecha y hora de finalización de este trabajo."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Date and time of creation for this job."
-msgstr "Fecha y hora de creación de este trabajo."
+msgid "Date and time of creation of this job."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
@@ -688,6 +698,11 @@ msgid "Processing"
 msgstr "Procesando"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Processing Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing_stopped
 msgid "Processing Stopped"
 msgstr "Procesamiento parado"
@@ -843,21 +858,6 @@ msgid "This report type (%s) is not supported by direct printing!"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
-msgid "Time At Completed"
-msgstr "Tiempo al finalizar"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Time At Creation"
-msgstr "Tiempo a la creacion"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
-msgid "Time At Processing"
-msgstr "Tiempo al procesar"
-
-#. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Trays"
 msgstr "Bandejas"
@@ -879,8 +879,8 @@ msgstr "No disponible"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__active
-msgid "Unchecked if the job is purged from cups."
-msgstr "Desmarcado si el trabajo se purga desde CUPS."
+msgid "Unchecked if the job is purged from CUPS."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__unknown
@@ -944,6 +944,21 @@ msgstr ""
 #, python-format
 msgid "{name} ({copies} copies)"
 msgstr ""
+
+#~ msgid "Date and time of creation for this job."
+#~ msgstr "Fecha y hora de creación de este trabajo."
+
+#~ msgid "Time At Completed"
+#~ msgstr "Tiempo al finalizar"
+
+#~ msgid "Time At Creation"
+#~ msgstr "Tiempo a la creacion"
+
+#~ msgid "Time At Processing"
+#~ msgstr "Tiempo al procesar"
+
+#~ msgid "Unchecked if the job is purged from cups."
+#~ msgstr "Desmarcado si el trabajo se purga desde CUPS."
 
 #~ msgid "Users"
 #~ msgstr "Usuarios"

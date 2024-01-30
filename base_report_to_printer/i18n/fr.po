@@ -160,6 +160,11 @@ msgid "Completed with some warnings"
 msgstr "Terminé avec des avertissements"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Completion Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-compression
 msgid "Compressed using an unknown algorithm"
 msgstr "Compressé à l'aide d'un algorithme inconnu"
@@ -173,8 +178,8 @@ msgstr "Copies"
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #, python-format
-msgid "Could not sent to printer!"
-msgstr "Impossible de l'envoyer à l'imprimante !"
+msgid "Could not send to printer!"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
@@ -201,6 +206,11 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
 msgstr "Créé le"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Creation Date"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
@@ -234,8 +244,8 @@ msgstr "Date et heure de fin de cette tâche."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Date and time of creation for this job."
-msgstr "Date et heure de création de cette tâche."
+msgid "Date and time of creation of this job."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
@@ -697,6 +707,11 @@ msgid "Processing"
 msgstr "En cours"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Processing Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing_stopped
 msgid "Processing Stopped"
 msgstr "Arrêté"
@@ -856,21 +871,6 @@ msgstr ""
 "Ce type de rapport (%s) n'est pas pris en charge par l'impression directe !"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
-msgid "Time At Completed"
-msgstr "Date de fin"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Time At Creation"
-msgstr "Date de création"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
-msgid "Time At Processing"
-msgstr "Date de traitement"
-
-#. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Trays"
 msgstr "Bacs"
@@ -892,8 +892,8 @@ msgstr "Non disponible"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__active
-msgid "Unchecked if the job is purged from cups."
-msgstr "Non coché si la tâche a été purgée de CUPS."
+msgid "Unchecked if the job is purged from CUPS."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__unknown
@@ -957,6 +957,25 @@ msgstr "Assistant"
 #, python-format
 msgid "{name} ({copies} copies)"
 msgstr "{name} ({copies} copies)"
+
+#, python-format
+#~ msgid "Could not sent to printer!"
+#~ msgstr "Impossible de l'envoyer à l'imprimante !"
+
+#~ msgid "Date and time of creation for this job."
+#~ msgstr "Date et heure de création de cette tâche."
+
+#~ msgid "Time At Completed"
+#~ msgstr "Date de fin"
+
+#~ msgid "Time At Creation"
+#~ msgstr "Date de création"
+
+#~ msgid "Time At Processing"
+#~ msgstr "Date de traitement"
+
+#~ msgid "Unchecked if the job is purged from cups."
+#~ msgstr "Non coché si la tâche a été purgée de CUPS."
 
 #~ msgid "Users"
 #~ msgstr "Utilisateurs"
