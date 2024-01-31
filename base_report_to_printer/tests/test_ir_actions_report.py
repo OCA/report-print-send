@@ -12,10 +12,12 @@ model = "odoo.addons.base.models.ir_actions_report.IrActionsReport"
 class TestIrActionsReportXml(TransactionCase):
     def setUp(self):
         super(TestIrActionsReportXml, self).setUp()
-        self.Model = self.env["ir.actions.report"]
+        self.Model = self.env["ir.actions.report"].with_context(
+            skip_printer_exception=True
+        )
         self.vals = {}
 
-        self.report = self.env["ir.actions.report"].search([], limit=1)
+        self.report = self.Model.search([], limit=1)
         self.server = self.env["printing.server"].create({})
 
     def new_action(self):
@@ -153,7 +155,7 @@ class TestIrActionsReportXml(TransactionCase):
         self.env.user.printing_action = "client"
         printing_action = self.new_printing_action()
         printing_action.user_id = self.env.user
-        printing_action.report_id = self.env["ir.actions.report"].search(
+        printing_action.report_id = self.Model.search(
             [("id", "!=", report.id)], limit=1
         )
         self.assertEqual(
@@ -213,7 +215,7 @@ class TestIrActionsReportXml(TransactionCase):
         """
         It should return the correct tray
         """
-        report = self.env["ir.actions.report"].search([], limit=1)
+        report = self.Model.search([], limit=1)
         action = self.env["printing.report.xml.action"].create(
             {"user_id": self.env.user.id, "report_id": report.id, "action": "server"}
         )
@@ -266,7 +268,7 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual("Action tray", report.behaviour()["tray"])
 
     def test_onchange_printer_tray_id_empty(self):
-        action = self.env["ir.actions.report"].new({"printer_tray_id": False})
+        action = self.Model.new({"printer_tray_id": False})
         action.onchange_printing_printer_id()
         self.assertFalse(action.printer_tray_id)
 
@@ -289,7 +291,7 @@ class TestIrActionsReportXml(TransactionCase):
             {"name": "Tray", "system_name": "TrayName", "printer_id": printer.id}
         )
 
-        action = self.env["ir.actions.report"].new({"printer_tray_id": tray.id})
+        action = self.Model.new({"printer_tray_id": tray.id})
         self.assertEqual(action.printer_tray_id, tray)
         action.onchange_printing_printer_id()
         self.assertFalse(action.printer_tray_id)
