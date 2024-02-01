@@ -1,14 +1,9 @@
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import logging
-
 from odoo import api, fields, models
 
 from . import zpl2
-
-_logger = logging.getLogger(__name__)
-
 
 DEFAULT_PYTHON_CODE = """# Python One-Liners
 #  - object: %s record on which the action is triggered; may be void

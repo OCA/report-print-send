@@ -5,6 +5,7 @@ import base64
 import io
 import itertools
 import logging
+import traceback
 from collections import defaultdict
 
 import requests
@@ -74,6 +75,7 @@ class PrintingLabelZpl2(models.Model):
     labelary_image = fields.Binary(
         string="Image from Labelary", compute="_compute_labelary_image"
     )
+    labelary_error = fields.Text(compute="_compute_labelary_image")
     labelary_dpmm = fields.Selection(
         selection=[
             ("6dpmm", "6dpmm (152 pdi)"),
@@ -91,7 +93,7 @@ class PrintingLabelZpl2(models.Model):
     @api.constrains("component_ids")
     def check_recursion(self):
         cr = self._cr
-        self.flush(["component_ids"])
+        self.flush_model(["component_ids"])
         query = (
             'SELECT "{}", "{}" FROM "{}" '
             'WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
@@ -124,7 +126,21 @@ class PrintingLabelZpl2(models.Model):
     def _get_component_data(self, record, component, eval_args):
         if component.data_autofill:
             return component.autofill_data(record, eval_args)
-        return safe_eval(str(component.data), eval_args) or ""
+        try:
+            return safe_eval(str(component.data), eval_args) or ""
+        except Exception as e:
+            raise exceptions.UserError(
+                _(
+                    "The syntax of this componant %s [%s]"
+                    " is wrong.\nRecord : %s.\n"
+                    "Please check the syntax.\n\n%s\n\n%s",
+                    component.display_name,
+                    component.label_id.display_name,
+                    record.display_name,
+                    e,
+                    traceback.format_exc(),
+                )
+            ) from e
 
     def _get_to_data_to_print(
         self,
@@ -172,7 +188,7 @@ class PrintingLabelZpl2(models.Model):
             ):
                 printed_data = data
                 # Pick the right value if data is a collection
-                if isinstance(data, (list, tuple, set, models.BaseModel)):
+                if isinstance(data, list | tuple | set | models.BaseModel):
                     # If we reached the end of data, quit the loop
                     if idx >= len(data):
                         break
@@ -409,6 +425,7 @@ class PrintingLabelZpl2(models.Model):
             action = self.new_action(model_id)
         return action
 
+    # ruff: noqa: B023
     def create_action(self):
         models = self.filtered(lambda record: not record.action_window_id).mapped(
             "model_id"
@@ -428,12 +445,12 @@ class PrintingLabelZpl2(models.Model):
             action = actions.filtered(lambda a: a.binding_model_id == model)
             if not action:
                 action = self.new_action(model.id)
-            for label in labels.filtered(lambda l: l.model_id == model):
+            for label in labels.filtered(lambda label: label.model_id == model):
                 label.action_window_id = action
         return True
 
     def unlink_action(self):
-        self.mapped("action_window_id").unlink()
+        self.action_window_id.unlink()
 
     def import_zpl2(self):
         self.ensure_one()
@@ -475,7 +492,14 @@ class PrintingLabelZpl2(models.Model):
     )
     def _compute_labelary_image(self):
         for label in self:
-            label.labelary_image = label._generate_labelary_image()
+            try:
+                label.labelary_image = label._generate_labelary_image()
+                label.labelary_error = False
+            except Exception as e:
+                error = _("Error durring rendering.\n\n%s", e)
+                _logger.warning(error)
+                label.labelary_error = error
+                label.labelary_image = False
 
     def _generate_labelary_image(self):
         self.ensure_one()
@@ -492,37 +516,31 @@ class PrintingLabelZpl2(models.Model):
         if record:
             # If case there an error (in the data field with the safe_eval
             # for exemple) the new component or the update is not lost.
-            try:
-                url = (
-                    "http://api.labelary.com/v1/printers/"
-                    "{dpmm}/labels/{width}x{height}/0/"
+            url = (
+                "http://api.labelary.com/v1/printers/"
+                "{dpmm}/labels/{width}x{height}/0/"
+            )
+            width = round(self.labelary_width / 25.4, 2)
+            height = round(self.labelary_height / 25.4, 2)
+            url = url.format(dpmm=self.labelary_dpmm, width=width, height=height)
+            extra = safe_eval(self.extra, {"env": self.env})
+            zpl_file = self._generate_zpl2_data(record, labelary_emul=True, **extra)
+            files = {"file": zpl_file}
+            headers = {"Accept": "image/png"}
+            response = requests.post(
+                url, headers=headers, files=files, stream=True, timeout=30
+            )
+            if response.status_code == 200:
+                # Add a padd
+                im = Image.open(io.BytesIO(response.content))
+                im_size = im.size
+                new_im = Image.new(
+                    "RGB", (im_size[0] + 2, im_size[1] + 2), (164, 164, 164)
                 )
-                width = round(self.labelary_width / 25.4, 2)
-                height = round(self.labelary_height / 25.4, 2)
-                url = url.format(dpmm=self.labelary_dpmm, width=width, height=height)
-                extra = safe_eval(self.extra, {"env": self.env})
-                zpl_file = self._generate_zpl2_data(record, labelary_emul=True, **extra)
-                files = {"file": zpl_file}
-                headers = {"Accept": "image/png"}
-                response = requests.post(
-                    url, headers=headers, files=files, stream=True, timeout=30
-                )
-                if response.status_code == 200:
-                    # Add a padd
-                    im = Image.open(io.BytesIO(response.content))
-                    im_size = im.size
-                    new_im = Image.new(
-                        "RGB", (im_size[0] + 2, im_size[1] + 2), (164, 164, 164)
-                    )
-                    new_im.paste(im, (1, 1))
-                    imgByteArr = io.BytesIO()
-                    new_im.save(imgByteArr, format="PNG")
-                    return base64.b64encode(imgByteArr.getvalue())
-                else:
-                    _logger.warning(
-                        _("Error with Labelary API. %s") % response.status_code
-                    )
-
-            except Exception as e:
-                _logger.warning(_("Error with Labelary API. %s") % e)
+                new_im.paste(im, (1, 1))
+                imgByteArr = io.BytesIO()
+                new_im.save(imgByteArr, format="PNG")
+                return base64.b64encode(imgByteArr.getvalue())
+            else:
+                raise Exception(_("Error with Labelary API. %s") % response.status_code)
         return False
