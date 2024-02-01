@@ -13,6 +13,7 @@
                     <field name="printer_id" />
                     <field
                         name="label_id"
+                        domain="[('model_id', '=', active_model_id)]"
                         context="{'default_model_id': active_model_id}"
                     />
                     <field name="active_model_id" invisible="1" />
