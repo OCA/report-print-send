@@ -117,13 +117,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Sublabel component format
             "^A0N,10,10"
             # Sublabel component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Sublabel component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_repeatable_component_label_fixed_contents(self):
@@ -160,7 +160,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # First component format
             "^A0N,10,10"
             # First component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # First component end
             "^FS\n"
             # Second component position
@@ -168,7 +168,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Second component format
             "^A0N,10,10"
             # Second component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Second component end
             "^FS\n"
             # Third component position
@@ -176,13 +176,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Third component format
             "^A0N,10,10"
             # Third component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Third component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_repeatable_component_label_iterable_contents(self):
@@ -222,7 +222,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # First component format
             "^A0N,10,10"
             # First component contents
-            "^FD{contents[1]}"
+            f"^FD{data[1]}"
             # First component end
             "^FS\n"
             # Second component position
@@ -230,13 +230,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Second component format
             "^A0N,10,10"
             # Second component contents
-            "^FD{contents[2]}"
+            f"^FD{data[2]}"
             # Second component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_repeatable_component_label_iterable_offset(self):
@@ -249,7 +249,7 @@ class TestPrintingLabelZpl2(TransactionCase):
         label = self.new_label(
             {"model_id": self.env.ref("printer_zpl2.model_printing_label_zpl2").id}
         )
-        data = ["Text {value}".format(value=ind) for ind in range(20)]
+        data = [f"Text {ind}" for ind in range(20)]
         self.new_component(
             {
                 "label_id": label.id,
@@ -276,7 +276,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # First component format
             "^A0N,10,10"
             # First component contents
-            "^FD{contents[10]}"
+            f"^FD{data[10]}"
             # First component end
             "^FS\n"
             # Second component position
@@ -284,7 +284,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Second component format
             "^A0N,10,10"
             # Second component contents
-            "^FD{contents[11]}"
+            f"^FD{data[11]}"
             # Second component end
             "^FS\n"
             # Third component position
@@ -292,13 +292,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Third component format
             "^A0N,10,10"
             # Third component contents
-            "^FD{contents[12]}"
+            f"^FD{data[12]}"
             # Third component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_repeatable_sublabel_contents(self):
@@ -358,7 +358,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Label name component format
             "^A0N,10,10"
             # Label name component contents
-            "^FD{label.name}"
+            f"^FD{label.name}"
             # Label name component end
             "^FS\n"
             # First component name component position
@@ -366,7 +366,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # First component name component format
             "^A0N,10,10"
             # First component name component contents
-            "^FD{label.component_ids[0].name}"
+            f"^FD{label.component_ids[0].name}"
             # First component name component end
             "^FS\n"
             # First component data component position
@@ -374,7 +374,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # First component data component format
             "^A0N,10,10"
             # First component data component contents
-            "^FD{label.component_ids[0].data}"
+            f"^FD{label.component_ids[0].data}"
             # First component data component end
             "^FS\n"
             # Second component name component position
@@ -382,7 +382,7 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Second component name component format
             "^A0N,10,10"
             # Second component name component contents
-            "^FD{label.component_ids[1].name}"
+            f"^FD{label.component_ids[1].name}"
             # Second component name component end
             "^FS\n"
             # Second component data component position
@@ -390,13 +390,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Second component data component format
             "^A0N,10,10"
             # Second component data component contents
-            "^FD{label.component_ids[1].data}"
+            f"^FD{label.component_ids[1].data}"
             # Second component data component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(label=label),
+            "^XZ",
         )
 
     def test_text_label_contents(self):
@@ -420,13 +420,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^A0N,10,10"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_reversed_text_label_contents(self):
@@ -454,13 +454,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Reverse print argument
             "^FR"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_block_text_label_contents(self):
@@ -488,13 +488,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Block definition
             "^FB0,1,0,L,0"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_rectangle_label_contents(self):
@@ -607,13 +607,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B1N,N,0,N,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_2of5_barcode_label_contents(self):
@@ -645,13 +645,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B2N,0,N,N,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_code39_barcode_label_contents(self):
@@ -683,13 +683,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B3N,N,0,N,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_code49_barcode_label_contents(self):
@@ -721,13 +721,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B4N,0,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_code49_barcode_label_contents_line(self):
@@ -760,13 +760,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B4N,0,B"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_code49_barcode_label_contents_with_above(self):
@@ -802,13 +802,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B4N,0,A"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_pdf417_barcode_label_contents(self):
@@ -836,13 +836,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B7N,0,0,0,0,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_ean8_barcode_label_contents(self):
@@ -870,13 +870,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B8N,0,N,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_upce_barcode_label_contents(self):
@@ -904,13 +904,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^B9N,0,N,N,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_code128_barcode_label_contents(self):
@@ -942,13 +942,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^BCN,0,N,N,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_ean13_barcode_label_contents(self):
@@ -976,13 +976,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^BEN,0,N,N"
             # Component contents
-            "^FD{contents}"
+            f"^FD{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_qrcode_barcode_label_contents(self):
@@ -1014,13 +1014,13 @@ class TestPrintingLabelZpl2(TransactionCase):
             # Component format
             "^BQN,2,1,Q,7"
             # Component contents
-            "^FDQA,{contents}"
+            f"^FDQA,{data}"
             # Component end
             "^FS\n"
             # Recall last saved parameters
             "^JUR\n"
             # Label end
-            "^XZ".format(contents=data),
+            "^XZ",
         )
 
     def test_graphic_label_contents_blank(self):
