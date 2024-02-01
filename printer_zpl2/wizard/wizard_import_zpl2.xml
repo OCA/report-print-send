@@ -11,9 +11,8 @@
                         <field name="delete_component" />
                     </group>
                 </group>
-                <group string="ZPL2">
-                    <field name="data" widget="ace" nolabel="1" />
-                </group>
+                <separator string="ZPL2" />
+                <field name="data" widget="ace" colspan="2" />
                 <footer>
                     <button string="Cancel" class="btn-default" special="cancel" />
                     <button

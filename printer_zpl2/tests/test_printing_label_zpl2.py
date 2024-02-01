@@ -13,7 +13,7 @@ model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 class TestPrintingLabelZpl2(TransactionCase):
     def setUp(self):
-        super(TestPrintingLabelZpl2, self).setUp()
+        super().setUp()
         self.Model = self.env["printing.label.zpl2"]
         self.ComponentModel = self.env["printing.label.zpl2.component"]
         self.server = self.env["printing.server"].create({})
