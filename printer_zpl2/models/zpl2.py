@@ -106,7 +106,7 @@ BARCODE_EAN_13 = "ean-13"
 BARCODE_QR_CODE = "qr_code"
 
 
-class Zpl2(object):
+class Zpl2:
     """ZPL II management class
     Allows to generate data for Zebra printers
     """
@@ -358,11 +358,7 @@ class Zpl2(object):
 
     def _field_data(self, data):
         """Add data to the buffer, between start and stop commands"""
-        command = "{start}{data}{stop}".format(
-            start=self._field_data_start(),
-            data=data,
-            stop=self._field_data_stop(),
-        )
+        command = f"{self._field_data_start()}{data}{self._field_data_stop()}"
         return command
 
     def font_data(self, right, down, field_format, data):
@@ -500,11 +496,7 @@ class Zpl2(object):
         bytes_per_row = rounded_width / 8
         total_bytes = bytes_per_row * height
         graphic_image_command = (
-            "^GFA,{total_bytes},{total_bytes},{bytes_per_row},{ascii_data}".format(
-                total_bytes=total_bytes,
-                bytes_per_row=bytes_per_row,
-                ascii_data=ascii_data,
-            )
+            f"^GFA,{total_bytes},{total_bytes},{bytes_per_row},{ascii_data}"
         )
         # Generate the ZPL II command
         command = "{origin}{data}{stop}".format(

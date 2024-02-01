@@ -133,7 +133,7 @@ class PrintingLabelZpl2(models.Model):
         page_count=1,
         label_offset_x=0,
         label_offset_y=0,
-        **extra
+        **extra,
     ):
         to_print = []
         for component in self.component_ids:
@@ -200,13 +200,13 @@ class PrintingLabelZpl2(models.Model):
         page_count=1,
         label_offset_x=0,
         label_offset_y=0,
-        **extra
+        **extra,
     ):
         to_print = self._get_to_data_to_print(
             record, page_number, page_count, label_offset_x, label_offset_y, **extra
         )
 
-        for (component, data, offset_x, offset_y) in to_print:
+        for component, data, offset_x, offset_y in to_print:
             component_offset_x = component.origin_x + offset_x
             component_offset_y = component.origin_y + offset_y
             if component.component_type == "text":
@@ -307,7 +307,7 @@ class PrintingLabelZpl2(models.Model):
             else:
                 if component.component_type == zpl2.BARCODE_QR_CODE:
                     # Adding Control Arguments to QRCode data Label
-                    data = "{}A,{}".format(component.error_correction, data)
+                    data = f"{component.error_correction}A,{data}"
 
                 barcode_arguments = {
                     field_name: component[field_name]
@@ -356,7 +356,7 @@ class PrintingLabelZpl2(models.Model):
                 record,
                 page_number=page_number,
                 page_count=page_count,
-                **extra
+                **extra,
             )
 
             # Restore printer's configuration and end the label
