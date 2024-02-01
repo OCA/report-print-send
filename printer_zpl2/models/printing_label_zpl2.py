@@ -5,6 +5,7 @@ import base64
 import io
 import itertools
 import logging
+import traceback
 from collections import defaultdict
 
 import requests
@@ -74,6 +75,7 @@ class PrintingLabelZpl2(models.Model):
     labelary_image = fields.Binary(
         string="Image from Labelary", compute="_compute_labelary_image"
     )
+    labelary_error = fields.Text(compute="_compute_labelary_image")
     labelary_dpmm = fields.Selection(
         selection=[
             ("6dpmm", "6dpmm (152 pdi)"),
@@ -91,7 +93,7 @@ class PrintingLabelZpl2(models.Model):
     @api.constrains("component_ids")
     def check_recursion(self):
         cr = self._cr
-        self.flush(["component_ids"])
+        self.flush_model(["component_ids"])
         query = (
             'SELECT "{}", "{}" FROM "{}" '
             'WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
@@ -124,7 +126,21 @@ class PrintingLabelZpl2(models.Model):
     def _get_component_data(self, record, component, eval_args):
         if component.data_autofill:
             return component.autofill_data(record, eval_args)
-        return safe_eval(str(component.data), eval_args) or ""
+        try:
+            return safe_eval(str(component.data), eval_args) or ""
+        except Exception as e:
+            raise exceptions.UserError(
+                _(
+                    "The syntax of this componant %s [%s]"
+                    " is wrong.\nRecord : %s.\n"
+                    "Please check the syntax.\n\n%s\n\n%s",
+                    component.display_name,
+                    component.label_id.display_name,
+                    record.display_name,
+                    e,
+                    traceback.format_exc(),
+                )
+            ) from e
 
     def _get_to_data_to_print(
         self,
@@ -133,11 +149,12 @@ class PrintingLabelZpl2(models.Model):
         page_count=1,
         label_offset_x=0,
         label_offset_y=0,
-        **extra,
+        extra=None,
     ):
         to_print = []
+        extra = extra or {}
         for component in self.component_ids:
-            eval_args = extra
+            eval_args = {}
             eval_args.update(
                 {
                     "object": record,
@@ -159,6 +176,7 @@ class PrintingLabelZpl2(models.Model):
                             "MINYEAR",
                         ],
                     ),
+                    "extra": extra,
                 }
             )
             data = self._get_component_data(record, component, eval_args)
@@ -172,7 +190,7 @@ class PrintingLabelZpl2(models.Model):
             ):
                 printed_data = data
                 # Pick the right value if data is a collection
-                if isinstance(data, (list, tuple, set, models.BaseModel)):
+                if isinstance(data, list | tuple | set | models.BaseModel):
                     # If we reached the end of data, quit the loop
                     if idx >= len(data):
                         break
@@ -200,10 +218,11 @@ class PrintingLabelZpl2(models.Model):
         page_count=1,
         label_offset_x=0,
         label_offset_y=0,
-        **extra,
+        extra=None,
     ):
+        extra = extra or {}
         to_print = self._get_to_data_to_print(
-            record, page_number, page_count, label_offset_x, label_offset_y, **extra
+            record, page_number, page_count, label_offset_x, label_offset_y, extra
         )
 
         for component, data, offset_x, offset_y in to_print:
@@ -337,8 +356,9 @@ class PrintingLabelZpl2(models.Model):
                     data,
                 )
 
-    def _generate_zpl2_data(self, record, page_count=1, **extra):
+    def _generate_zpl2_data(self, record, page_count=1, extra=None):
         self.ensure_one()
+        extra = extra or {}
         label_data = zpl2.Zpl2()
 
         labelary_emul = extra.get("labelary_emul", False)
@@ -356,7 +376,7 @@ class PrintingLabelZpl2(models.Model):
                 record,
                 page_number=page_number,
                 page_count=page_count,
-                **extra,
+                extra=extra,
             )
 
             # Restore printer's configuration and end the label
@@ -366,15 +386,15 @@ class PrintingLabelZpl2(models.Model):
 
         return label_data.output()
 
-    def print_label(self, printer, record, page_count=1, **extra):
+    def print_label(self, printer, record, page_count=1, extra=None):
         for label in self:
-            if record._name != label.model_id.model:
+            if record._name != label.model_id.sudo().model:
                 raise exceptions.UserError(
                     _("This label cannot be used on {model}").format(model=record._name)
                 )
             # Send the label to printer
             label_contents = label._generate_zpl2_data(
-                record, page_count=page_count, **extra
+                record, page_count=page_count, extra=extra
             )
             printer.print_document(
                 report=None, content=label_contents, doc_format="raw"
@@ -409,6 +429,7 @@ class PrintingLabelZpl2(models.Model):
             action = self.new_action(model_id)
         return action
 
+    # ruff: noqa: B023
     def create_action(self):
         models = self.filtered(lambda record: not record.action_window_id).mapped(
             "model_id"
@@ -428,12 +449,12 @@ class PrintingLabelZpl2(models.Model):
             action = actions.filtered(lambda a: a.binding_model_id == model)
             if not action:
                 action = self.new_action(model.id)
-            for label in labels.filtered(lambda l: l.model_id == model):
+            for label in labels.filtered(lambda label: label.model_id == model):
                 label.action_window_id = action
         return True
 
     def unlink_action(self):
-        self.mapped("action_window_id").unlink()
+        self.action_window_id.unlink()
 
     def import_zpl2(self):
         self.ensure_one()
@@ -461,7 +482,7 @@ class PrintingLabelZpl2(models.Model):
                 record = label._get_record()
                 extra = safe_eval(label.extra, {"env": self.env})
                 if record:
-                    label.print_label(label.printer_id, record, **extra)
+                    label.print_label(label.printer_id, record, extra=extra)
 
     @api.depends(
         "record_id",
@@ -475,7 +496,14 @@ class PrintingLabelZpl2(models.Model):
     )
     def _compute_labelary_image(self):
         for label in self:
-            label.labelary_image = label._generate_labelary_image()
+            try:
+                label.labelary_image = label._generate_labelary_image()
+                label.labelary_error = False
+            except Exception as e:
+                error = _("Error durring rendering.\n\n%s", e)
+                _logger.warning(error)
+                label.labelary_error = error
+                label.labelary_image = False
 
     def _generate_labelary_image(self):
         self.ensure_one()
@@ -492,37 +520,32 @@ class PrintingLabelZpl2(models.Model):
         if record:
             # If case there an error (in the data field with the safe_eval
             # for exemple) the new component or the update is not lost.
-            try:
-                url = (
-                    "http://api.labelary.com/v1/printers/"
-                    "{dpmm}/labels/{width}x{height}/0/"
+            url = (
+                "http://api.labelary.com/v1/printers/"
+                "{dpmm}/labels/{width}x{height}/0/"
+            )
+            width = round(self.labelary_width / 25.4, 2)
+            height = round(self.labelary_height / 25.4, 2)
+            url = url.format(dpmm=self.labelary_dpmm, width=width, height=height)
+            extra = safe_eval(self.extra, {"env": self.env})
+            extra['labelary_emul'] = True
+            zpl_file = self._generate_zpl2_data(record, extra=extra)
+            files = {"file": zpl_file}
+            headers = {"Accept": "image/png"}
+            response = requests.post(
+                url, headers=headers, files=files, stream=True, timeout=30
+            )
+            if response.status_code == 200:
+                # Add a padd
+                im = Image.open(io.BytesIO(response.content))
+                im_size = im.size
+                new_im = Image.new(
+                    "RGB", (im_size[0] + 2, im_size[1] + 2), (164, 164, 164)
                 )
-                width = round(self.labelary_width / 25.4, 2)
-                height = round(self.labelary_height / 25.4, 2)
-                url = url.format(dpmm=self.labelary_dpmm, width=width, height=height)
-                extra = safe_eval(self.extra, {"env": self.env})
-                zpl_file = self._generate_zpl2_data(record, labelary_emul=True, **extra)
-                files = {"file": zpl_file}
-                headers = {"Accept": "image/png"}
-                response = requests.post(
-                    url, headers=headers, files=files, stream=True, timeout=30
-                )
-                if response.status_code == 200:
-                    # Add a padd
-                    im = Image.open(io.BytesIO(response.content))
-                    im_size = im.size
-                    new_im = Image.new(
-                        "RGB", (im_size[0] + 2, im_size[1] + 2), (164, 164, 164)
-                    )
-                    new_im.paste(im, (1, 1))
-                    imgByteArr = io.BytesIO()
-                    new_im.save(imgByteArr, format="PNG")
-                    return base64.b64encode(imgByteArr.getvalue())
-                else:
-                    _logger.warning(
-                        _("Error with Labelary API. %s") % response.status_code
-                    )
-
-            except Exception as e:
-                _logger.warning(_("Error with Labelary API. %s") % e)
+                new_im.paste(im, (1, 1))
+                imgByteArr = io.BytesIO()
+                new_im.save(imgByteArr, format="PNG")
+                return base64.b64encode(imgByteArr.getvalue())
+            else:
+                raise Exception(_("Error with Labelary API. %s") % response.status_code)
         return False
