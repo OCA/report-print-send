@@ -52,8 +52,8 @@ class Pingen(object):
     @property
     def api_url(self):
         if self.staging:
-            return "https://api-staging.v2.pingen.com"
-        return "https://api.v2.pingen.com"
+            return "https://api-staging.pingen.com"
+        return "https://api.pingen.com"
 
     @property
     def identity_url(self):
