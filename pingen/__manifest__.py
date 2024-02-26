@@ -4,7 +4,7 @@
 
 {
     "name": "pingen.com integration",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "maintainers": ["ajaniszewska-dev", "grindtildeath"],
     "license": "AGPL-3",
