@@ -72,7 +72,7 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: GET
-    uri: https://api-staging.v2.pingen.com/file-upload
+    uri: https://api-staging.pingen.com/file-upload
   response:
     body:
       string: '{"data":{"type":"file_uploads","id":"f14144b8-a211-4514-8333-f4e09d8a16df","attributes":{"url":"https:\/\/pingen2-staging-transfer.objects.rma.cloudscale.ch\/f14144b8-a211-4514-8333-f4e09d8a16df_2023-05-23_19%3A16%3A45?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=Z3YMWIXX6Y1G0KHUQDZ7%2F20230523%2Fregion1%2Fs3%2Faws4_request&X-Amz-Date=20230523T165645Z&X-Amz-SignedHeaders=host&X-Amz-Expires=1200&X-Amz-Signature=ef959eb9ea0e53824005190a1b4f4f33e460c054e3f29865913945f29e4b1ec5","url_signature":"1fb811d0e1f010292d40bb672bfb1fde","expires_at":"2023-05-23T19:16:45+0200"}}}'
@@ -999,7 +999,7 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: POST
-    uri: https://api-staging.v2.pingen.com/organisations/4c08c24e-65f8-47cf-b280-518ee76e3437/letters
+    uri: https://api-staging.pingen.com/organisations/4c08c24e-65f8-47cf-b280-518ee76e3437/letters
   response:
     body:
       string: '{"data":{"type":"letters","id":"bc095d48-996a-4995-bfba-1b8d3d9ef851","attributes":{"status":"validating","file_original_name":"in_invoice_yourcompany_demo.pdf","file_pages":null,"address":null,"address_position":"left","country":null,"delivery_product":"cheap","print_mode":"simplex","print_spectrum":"grayscale","price_currency":null,"price_value":null,"paper_types":null,"fonts":null,"source":"api","tracking_number":null,"submitted_at":null,"created_at":"2023-05-23T18:56:45+0200","updated_at":"2023-05-23T18:56:45+0200"},"relationships":{"organisation":{"links":{"related":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437"},"data":{"type":"organisations","id":"4c08c24e-65f8-47cf-b280-518ee76e3437"}},"events":{"links":{"related":{"href":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437\/letters\/bc095d48-996a-4995-bfba-1b8d3d9ef851\/events","meta":{"count":1}}}},"batch":{"data":null}},"links":{"self":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437\/letters\/bc095d48-996a-4995-bfba-1b8d3d9ef851"},"meta":{"abilities":{"self":{"cancel":"state","delete":"state","submit":"state","send-simplex":"ok","edit":"state","get-pdf-raw":"state","get-pdf-validation":"state","change-paper-type":"state","change-window-position":"state","create-coverpage":"state","fix-overwrite-restricted-areas":"state","fix-coverpage":"state","fix-country":"state","fix-regular-paper":"state"}}}}}'
@@ -1108,7 +1108,7 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: GET
-    uri: https://api-staging.v2.pingen.com/file-upload
+    uri: https://api-staging.pingen.com/file-upload
   response:
     body:
       string: '{"data":{"type":"file_uploads","id":"640b2883-c576-4a35-87f9-1abf2801461f","attributes":{"url":"https:\/\/pingen2-staging-transfer.objects.rma.cloudscale.ch\/640b2883-c576-4a35-87f9-1abf2801461f_2023-10-05_10%3A09%3A01?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=Z3YMWIXX6Y1G0KHUQDZ7%2F20231005%2Fregion1%2Fs3%2Faws4_request&X-Amz-Date=20231005T074901Z&X-Amz-SignedHeaders=host&X-Amz-Expires=1200&X-Amz-Signature=fe7fce59939b3bd73b03124ecc3fba6abb3312690c0c54674bc95e1fb8b2bd1f","url_signature":"a29e61a0f8f9a11fc76e90ede9a5d7e6","expires_at":"2023-10-05T10:09:01+0200"}}}'
@@ -1207,7 +1207,7 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: POST
-    uri: https://api-staging.v2.pingen.com/organisations/4c08c24e-65f8-47cf-b280-518ee76e3437/letters
+    uri: https://api-staging.pingen.com/organisations/4c08c24e-65f8-47cf-b280-518ee76e3437/letters
   response:
     body:
       string: '{"data":{"type":"letters","id":"aa99abf2-8fb5-4f8d-9f06-f84fe6b752cf","attributes":{"status":"validating","file_original_name":"in_invoice_yourcompany_demo.pdf","file_pages":null,"address":null,"address_position":"left","country":null,"delivery_product":"cheap","print_mode":"simplex","print_spectrum":"grayscale","price_currency":null,"price_value":null,"paper_types":null,"fonts":null,"source":"api","tracking_number":null,"submitted_at":null,"created_at":"2023-10-05T09:49:02+0200","updated_at":"2023-10-05T09:49:02+0200"},"relationships":{"organisation":{"links":{"related":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437"},"data":{"type":"organisations","id":"4c08c24e-65f8-47cf-b280-518ee76e3437"}},"events":{"links":{"related":{"href":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437\/letters\/aa99abf2-8fb5-4f8d-9f06-f84fe6b752cf\/events","meta":{"count":1}}}},"batch":{"data":null}},"links":{"self":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437\/letters\/aa99abf2-8fb5-4f8d-9f06-f84fe6b752cf"},"meta":{"abilities":{"self":{"cancel":"state","delete":"state","submit":"state","send-simplex":"ok","edit":"state","get-pdf-raw":"state","get-pdf-validation":"state","change-paper-type":"state","change-window-position":"state","create-coverpage":"state","add-attachment":"state","fix-overwrite-restricted-areas":"state","fix-coverpage":"state","fix-country":"state","fix-regular-paper":"state","fix-address":"state"}}}}}'
@@ -1316,7 +1316,7 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: GET
-    uri: https://api-staging.v2.pingen.com/file-upload
+    uri: https://api-staging.pingen.com/file-upload
   response:
     body:
       string: '{"data":{"type":"file_uploads","id":"a52b11df-21cd-471c-9c4d-9e4022a78458","attributes":{"url":"https:\/\/pingen2-staging-transfer.objects.rma.cloudscale.ch\/a52b11df-21cd-471c-9c4d-9e4022a78458_2023-10-05_10%3A12%3A07?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=Z3YMWIXX6Y1G0KHUQDZ7%2F20231005%2Fregion1%2Fs3%2Faws4_request&X-Amz-Date=20231005T075207Z&X-Amz-SignedHeaders=host&X-Amz-Expires=1200&X-Amz-Signature=b6194ba3b382f4de472123c9a7a16aa96be42df54e504a7137d26117bf9332d9","url_signature":"99ab75a425865c7f563dbd6880bdc453","expires_at":"2023-10-05T10:12:07+0200"}}}'
@@ -1415,7 +1415,7 @@ interactions:
       User-Agent:
       - python-requests/2.28.1
     method: POST
-    uri: https://api-staging.v2.pingen.com/organisations/4c08c24e-65f8-47cf-b280-518ee76e3437/letters
+    uri: https://api-staging.pingen.com/organisations/4c08c24e-65f8-47cf-b280-518ee76e3437/letters
   response:
     body:
       string: '{"data":{"type":"letters","id":"2f826b9d-7325-4494-887a-77652817a2bd","attributes":{"status":"validating","file_original_name":"in_invoice_yourcompany_demo.pdf","file_pages":null,"address":null,"address_position":"left","country":null,"delivery_product":"cheap","print_mode":"simplex","print_spectrum":"grayscale","price_currency":null,"price_value":null,"paper_types":null,"fonts":null,"source":"api","tracking_number":null,"submitted_at":null,"created_at":"2023-10-05T09:52:09+0200","updated_at":"2023-10-05T09:52:09+0200"},"relationships":{"organisation":{"links":{"related":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437"},"data":{"type":"organisations","id":"4c08c24e-65f8-47cf-b280-518ee76e3437"}},"events":{"links":{"related":{"href":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437\/letters\/2f826b9d-7325-4494-887a-77652817a2bd\/events","meta":{"count":1}}}},"batch":{"data":null}},"links":{"self":"https:\/\/api-staging.v2.pingen.com\/organisations\/4c08c24e-65f8-47cf-b280-518ee76e3437\/letters\/2f826b9d-7325-4494-887a-77652817a2bd"},"meta":{"abilities":{"self":{"cancel":"state","delete":"state","submit":"state","send-simplex":"ok","edit":"state","get-pdf-raw":"state","get-pdf-validation":"state","change-paper-type":"state","change-window-position":"state","create-coverpage":"state","add-attachment":"state","fix-overwrite-restricted-areas":"state","fix-coverpage":"state","fix-country":"state","fix-regular-paper":"state","fix-address":"state"}}}}}'
