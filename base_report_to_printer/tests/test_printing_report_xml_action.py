@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestPrintingReportXmlAction(TransactionCase):
     def setUp(self):
-        super(TestPrintingReportXmlAction, self).setUp()
+        super().setUp()
         self.Model = self.env["printing.report.xml.action"]
 
         self.report = self.env["ir.actions.report"].search([], limit=1)

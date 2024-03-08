@@ -6,7 +6,7 @@ from odoo.tests import common
 
 class TestResUsers(common.TransactionCase):
     def setUp(self):
-        super(TestResUsers, self).setUp()
+        super().setUp()
         self.user_vals = {"name": "Test", "login": "login"}
 
     def new_record(self):

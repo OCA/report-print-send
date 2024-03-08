@@ -34,7 +34,7 @@ ppd_input_slot_footer = """
 
 class TestPrintingPrinter(TransactionCase):
     def setUp(self):
-        super(TestPrintingPrinter, self).setUp()
+        super().setUp()
         self.Model = self.env["printing.printer"]
         self.ServerModel = self.env["printing.server"]
         self.server = self.env["printing.server"].create({})

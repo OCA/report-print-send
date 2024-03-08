@@ -11,7 +11,7 @@ model = "odoo.addons.base.models.ir_actions_report.IrActionsReport"
 
 class TestIrActionsReportXml(TransactionCase):
     def setUp(self):
-        super(TestIrActionsReportXml, self).setUp()
+        super().setUp()
         self.Model = self.env["ir.actions.report"]
         self.vals = {}
 
@@ -77,7 +77,7 @@ class TestIrActionsReportXml(TransactionCase):
                 "action": behaviour["action"],
                 "printer_name": behaviour["printer"].name,
             }
-            self.assertDictEqual(expect, res, "Expect {}, Got {}".format(expect, res))
+            self.assertDictEqual(expect, res, f"Expect {expect}, Got {res}")
 
     def test_behaviour_default_values(self):
         """It should return the default action and printer"""
