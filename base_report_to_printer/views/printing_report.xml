@@ -1,12 +1,11 @@
 <?xml version="1.0" ?>
 <odoo>
     <record model="ir.ui.view" id="printing_report_xml_action_view_form">
-        <field
-            name="name"
-        >printing.report.xml.action.form (in base_report_to_printer)</field>
+        <field name="name">printing.report.xml.action.form (in base_report_to_printer)
+        </field>
         <field name="model">printing.report.xml.action</field>
         <field name="arch" type="xml">
-            <form string="Report Printing Actions">
+            <form>
                 <group col="2">
                     <field name="user_id" />
                     <field name="action" />
