@@ -11,19 +11,19 @@
         <field name="name">printing.printer.form (in base_report_to_printer)</field>
         <field name="model">printing.printer</field>
         <field name="arch" type="xml">
-            <form string="Printers">
+            <form>
                 <header>
                     <button
                         name="enable"
                         type="object"
                         string="Enable"
-                        attrs="{'invisible': [('status', 'in', ('available', 'printing'))]}"
+                        invisible="status in ['available','printing']"
                     />
                     <button
                         name="disable"
                         type="object"
                         string="Disable"
-                        attrs="{'invisible': [('status', '=', 'unavailable')]}"
+                        invisible="status == 'unavailable'"
                     />
                     <button
                         name="action_cancel_all_jobs"
@@ -43,7 +43,7 @@
                         name="web_ribbon"
                         text="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <field name="active" invisible="1" />
                     <div class="oe_title">
@@ -61,14 +61,14 @@
                             name="set_default"
                             string="Set Default"
                             type="object"
-                            attrs="{'invisible': [('default','=', True)]}"
+                            invisible="default"
                             colspan="2"
                         />
                         <button
                             name="unset_default"
                             string="Unset Default"
                             type="object"
-                            attrs="{'invisible': [('default','=', False)]}"
+                            invisible="not default"
                             colspan="2"
                         />
                     </group>

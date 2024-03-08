@@ -1,4 +1,5 @@
 /** @odoo-module */
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 
 async function cupsReportActionHandler(action, options, env) {
@@ -17,9 +18,9 @@ async function cupsReportActionHandler(action, options, env) {
                 action.data,
             ]);
             if (result) {
-                env.services.notification.add(env._t("Successfully sent to printer!"));
+                env.services.notification.add(_t("Successfully sent to printer!"));
             } else {
-                env.services.notification.add(env._t("Could not sent to printer!"));
+                env.services.notification.add(_t("Could not sent to printer!"));
             }
             return true;
         }

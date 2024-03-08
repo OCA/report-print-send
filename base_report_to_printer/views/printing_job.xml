@@ -4,13 +4,13 @@
         <field name="name">printing.job.form (in base_report_to_printer)</field>
         <field name="model">printing.job</field>
         <field name="arch" type="xml">
-            <form string="Job">
+            <form>
                 <header>
                     <button
                         name="action_cancel"
                         type="object"
                         string="Cancel"
-                        attrs="{'invisible': [('job_state', 'in', ('canceled', 'aborted', 'completed'))]}"
+                        invisible="job_state in ['canceled','aborted','completed']"
                     />
                     <field name="job_state" widget="statusbar" />
                 </header>
