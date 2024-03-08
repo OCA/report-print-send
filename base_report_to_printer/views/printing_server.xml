@@ -4,7 +4,7 @@
         <field name="name">printing.server.form (in base_report_to_printer)</field>
         <field name="model">printing.server</field>
         <field name="arch" type="xml">
-            <form string="Servers">
+            <form>
                 <header>
                     <button
                         name="action_update_printers"
@@ -24,17 +24,18 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="address" />
-                        <field name="port" />
+                        <group>
+                            <field name="address" />
+                            <field name="port" />
+                        </group>
+                        <group>
+                            <field name="user" />
+                            <field name="password" />
+                            <field name="encryption_policy" />
+                        </group>
                     </group>
-                    <group>
-                        <field name="user" />
-                        <field name="password" />
-                        <field name="encryption_policy" />
-                    </group>
-                    <group name="printers" string="Printers">
-                        <field name="printer_ids" nolabel="1" colspan="2" />
-                    </group>
+                    <separator name="printers" string="Printers" />
+                    <field name="printer_ids" />
                 </sheet>
             </form>
         </field>
