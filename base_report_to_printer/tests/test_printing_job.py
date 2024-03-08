@@ -11,7 +11,7 @@ model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 class TestPrintingJob(TransactionCase):
     def setUp(self):
-        super(TestPrintingJob, self).setUp()
+        super().setUp()
         self.Model = self.env["printing.server"]
         self.server = self.Model.create({})
         self.printer_vals = {
