@@ -394,11 +394,6 @@ msgid "If checked, this server is useable."
 msgstr "Si cette case est cochée, ce serveur est utilisable."
 
 #. module: base_report_to_printer
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
-msgid "Job"
-msgstr "Tâche"
-
-#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_id_cups
 msgid "Job ID"
 msgstr "ID de la tâche"
@@ -418,19 +413,6 @@ msgstr "Tâches"
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__job_ids
 msgid "Jobs printed on this printer."
 msgstr "Tâches imprimés sur cette imprimante."
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_uid
@@ -593,11 +575,6 @@ msgid "Print Test Page"
 msgstr "Imprimer la page de test"
 
 #. module: base_report_to_printer
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
-msgid "Print attachments"
-msgstr "Imprimer les pièces jointes"
-
-#. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
@@ -638,7 +615,6 @@ msgstr "Imprimante utilisée pour imprimer les pièces jointes."
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Printers"
@@ -727,11 +703,6 @@ msgid "Report Action"
 msgstr "Action du rapport"
 
 #. module: base_report_to_printer
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_form
-msgid "Report Printing Actions"
-msgstr "Actions d'impression du rapport"
-
-#. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
 msgstr "Rapports"
@@ -770,7 +741,6 @@ msgstr "Serveur qui traite cette tâche."
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_server_action
 #: model:ir.ui.menu,name:base_report_to_printer.printing_server_menu
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
 msgid "Servers"
 msgstr "Serveurs"
@@ -923,7 +893,6 @@ msgstr "Mise à jour des imprimantes"
 
 #. module: base_report_to_printer
 #: model:ir.actions.server,name:base_report_to_printer.ir_cron_update_printers_ir_actions_server
-#: model:ir.cron,cron_name:base_report_to_printer.ir_cron_update_printers
 msgid "Update Printers Jobs"
 msgstr "Mise à jour des tâches des imprimantes"
 
@@ -957,6 +926,18 @@ msgstr "Assistant"
 #, python-format
 msgid "{name} ({copies} copies)"
 msgstr "{name} ({copies} copies)"
+
+#~ msgid "Job"
+#~ msgstr "Tâche"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification le"
+
+#~ msgid "Print attachments"
+#~ msgstr "Imprimer les pièces jointes"
+
+#~ msgid "Report Printing Actions"
+#~ msgstr "Actions d'impression du rapport"
 
 #~ msgid "Users"
 #~ msgstr "Utilisateurs"

@@ -385,11 +385,6 @@ msgid "If checked, this server is useable."
 msgstr "Si está marcado, el servidor es utilizable."
 
 #. module: base_report_to_printer
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
-msgid "Job"
-msgstr "Trabajo"
-
-#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_id_cups
 msgid "Job ID"
 msgstr "ID de Trabajo"
@@ -409,19 +404,6 @@ msgstr "Trabajos"
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__job_ids
 msgid "Jobs printed on this printer."
 msgstr "Trabajos imprimidos por la impresora."
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment____last_update
-#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_uid
@@ -584,11 +566,6 @@ msgid "Print Test Page"
 msgstr ""
 
 #. module: base_report_to_printer
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
-msgid "Print attachments"
-msgstr ""
-
-#. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
@@ -629,7 +606,6 @@ msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Printers"
@@ -718,11 +694,6 @@ msgid "Report Action"
 msgstr "Acción del Informe"
 
 #. module: base_report_to_printer
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_form
-msgid "Report Printing Actions"
-msgstr "Acciones de impresión de informes"
-
-#. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
 msgstr "Informes"
@@ -761,7 +732,6 @@ msgstr "Servidor que contiene este trabajo."
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_server_action
 #: model:ir.ui.menu,name:base_report_to_printer.printing_server_menu
-#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
 msgid "Servers"
 msgstr "Servidores"
@@ -910,7 +880,6 @@ msgstr "Actualizar impresoras"
 
 #. module: base_report_to_printer
 #: model:ir.actions.server,name:base_report_to_printer.ir_cron_update_printers_ir_actions_server
-#: model:ir.cron,cron_name:base_report_to_printer.ir_cron_update_printers
 msgid "Update Printers Jobs"
 msgstr "Actualizar Trabajos de Impresión"
 
@@ -944,6 +913,15 @@ msgstr ""
 #, python-format
 msgid "{name} ({copies} copies)"
 msgstr ""
+
+#~ msgid "Job"
+#~ msgstr "Trabajo"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación el"
+
+#~ msgid "Report Printing Actions"
+#~ msgstr "Acciones de impresión de informes"
 
 #~ msgid "Users"
 #~ msgstr "Usuarios"
