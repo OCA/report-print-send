@@ -8,7 +8,6 @@ from odoo import _, exceptions, fields, models
 
 _logger = logging.getLogger(__name__)
 
-
 try:
     import cups
 except ImportError:
@@ -87,6 +86,7 @@ class PrintingServer(models.Model):
     def action_update_printers(self):
         return self.update_printers(raise_on_error=True)
 
+    # ruff: noqa: B023
     def update_printers(self, domain=None, raise_on_error=False):
         if domain is None:
             domain = []

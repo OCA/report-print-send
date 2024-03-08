@@ -10,7 +10,7 @@ from odoo.tests import common
 
 class TestReport(common.HttpCase):
     def setUp(self):
-        super(TestReport, self).setUp()
+        super().setUp()
         self.Model = self.env["ir.actions.report"]
         self.server = self.env["printing.server"].create({})
         self.report_vals = {
