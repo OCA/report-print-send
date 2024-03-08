@@ -12,7 +12,7 @@ model_base = "odoo.models.BaseModel"
 
 class TestPrintingServer(TransactionCase):
     def setUp(self):
-        super(TestPrintingServer, self).setUp()
+        super().setUp()
         self.Model = self.env["printing.server"]
         self.server = self.Model.create({})
         self.printer_vals = {
