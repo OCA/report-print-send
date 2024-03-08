@@ -4,7 +4,7 @@
         <field name="name">wizard.print.attachment</field>
         <field name="model">wizard.print.attachment</field>
         <field name="arch" type="xml">
-            <form string="Print attachments">
+            <form>
                 <group>
                     <field name="printer_id" />
                     <field name="attachment_line_ids">
