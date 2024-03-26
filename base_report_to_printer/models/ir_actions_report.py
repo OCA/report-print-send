@@ -4,9 +4,12 @@
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
 
 from odoo import _, api, exceptions, fields, models
 from odoo.tools.safe_eval import safe_eval, time
+
+_logger = logging.getLogger(__name__)
 
 REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
 
@@ -53,6 +56,10 @@ class IrActionsReport(models.Model):
             "action": result["action"],
             "printer_name": result["printer"].name,
         }
+        if result.get("printer_exception") and not self.env.context.get(
+            "skip_printer_exception"
+        ):
+            serializable_result["printer_exception"] = True
         return serializable_result
 
     def _get_user_default_print_behaviour(self):
@@ -97,6 +104,21 @@ class IrActionsReport(models.Model):
             # For some reason design takes report defaults over
             # False action entries so we must allow for that here
             result.update({k: v for k, v in print_action.behaviour().items() if v})
+        printer = result.get("printer")
+        if printer:
+            # When no printer is available we can fallback to the default behavior
+            # letting the user to manually print the reports.
+            try:
+                printer.server_id._open_connection(raise_on_error=True)
+                printer_exception = printer.status in [
+                    "error",
+                    "server-error",
+                    "unavailable",
+                ]
+            except Exception:
+                printer_exception = True
+            if printer_exception and not self.env.context.get("skip_printer_exception"):
+                result["printer_exception"] = True
         return result
 
     def print_document(self, record_ids, data=None):
@@ -140,7 +162,12 @@ class IrActionsReport(models.Model):
         """
         if self.env.context.get("must_skip_send_to_printer"):
             return False
-        if behaviour["action"] == "server" and printer and document:
+        if (
+            behaviour["action"] == "server"
+            and printer
+            and document
+            and not behaviour.get("printer_exception")
+        ):
             return True
         return False
 

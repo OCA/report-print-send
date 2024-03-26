@@ -10,7 +10,11 @@ async function cupsReportActionHandler(action, options, env) {
             "print_action_for_report_name",
             [action.report_name]
         );
-        if (print_action && print_action.action === "server") {
+        if (
+            print_action &&
+            print_action.action === "server" &&
+            !print_action.printer_exception
+        ) {
             const result = await orm.call("ir.actions.report", "print_document", [
                 action.id,
                 action.context.active_ids,
@@ -22,6 +26,15 @@ async function cupsReportActionHandler(action, options, env) {
                 env.services.notification.add(env._t("Could not sent to printer!"));
             }
             return true;
+        }
+        if (print_action.printer_exception) {
+            env.services.notification.add(
+                env._t("The printer couldn't be reached. Downloading document instead"),
+                {
+                    sticky: true,
+                    type: "warning",
+                }
+            );
         }
     }
 }
