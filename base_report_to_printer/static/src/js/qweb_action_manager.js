@@ -31,6 +31,17 @@ odoo.define("base_report_to_printer.print", function (require) {
                                         print_action.printer_name
                                     )
                                 );
+                                if (action.close_on_report_download) {
+                                    var closeAction = {
+                                        type: "ir.actions.act_window_close",
+                                    };
+                                    self.doAction(
+                                        closeAction,
+                                        _.pick(options, "on_close")
+                                    );
+                                } else {
+                                    options.on_close();
+                                }
                             },
                             function () {
                                 self.do_notify(
@@ -43,6 +54,17 @@ odoo.define("base_report_to_printer.print", function (require) {
                                         print_action.printer_name
                                     )
                                 );
+                                if (action.close_on_report_download) {
+                                    var closeAction = {
+                                        type: "ir.actions.act_window_close",
+                                    };
+                                    self.doAction(
+                                        closeAction,
+                                        _.pick(options, "on_close")
+                                    );
+                                } else {
+                                    options.on_close();
+                                }
                             }
                         );
                     } else {
