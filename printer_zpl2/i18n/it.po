@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-12 02:40+0000\n"
-"PO-Revision-Date: 2024-01-16 10:37+0000\n"
+"PO-Revision-Date: 2024-04-04 11:39+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -912,7 +912,7 @@ msgstr "Ripristina configurazione stampante"
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2__restore_saved_config
 msgid "Restore printer's saved configuration and end of each label "
 msgstr ""
-"Ripristina la configurazine salvata della stampante e fine di ogni "
+"Ripristina la configurazione salvata della stampante e fine di ogni "
 "etichetta. "
 
 #. module: printer_zpl2
