@@ -368,7 +368,7 @@ class PrintingLabelZpl2(models.Model):
 
     def print_label(self, printer, record, page_count=1, **extra):
         for label in self:
-            if record._name != label.model_id.model:
+            if record._name != label.model_id.sudo().model:
                 raise exceptions.UserError(
                     _("This label cannot be used on {model}").format(model=record._name)
                 )
