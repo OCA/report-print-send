@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2023-05-29 16:10+0000\n"
-"Last-Translator: FranciscoFactorLibre <francisco.santos@factorlibre.com>\n"
+"PO-Revision-Date: 2024-04-17 22:34+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -70,17 +70,17 @@ msgstr "¿Estás seguro que quieres cancelar todos los trabajos de la impresora?
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Are you sure to want to print a test page?"
-msgstr ""
+msgstr "¿Está seguro de querer imprimir una página de prueba?"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__attachment_id
 msgid "Attachment"
-msgstr ""
+msgstr "Adjunto"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__attachment_line_ids
 msgid "Attachments to print"
-msgstr ""
+msgstr "Adjuntos a imprimir"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__available
@@ -95,7 +95,7 @@ msgstr "Está siendo transformado a un formato diferente"
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__cups-filter-crashed
 msgid "CUPS filter crashed"
-msgstr ""
+msgstr "El filtro de CUPS ha fallado"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups
@@ -172,7 +172,7 @@ msgstr "Comprimido usando un algoritmo desconocido"
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__copies
 msgid "Copies"
-msgstr ""
+msgstr "Copias"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
@@ -296,12 +296,12 @@ msgstr "Habilitar"
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__encryption_policy
 msgid "Encryption Policy"
-msgstr ""
+msgstr "Política de cifrado"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__encryption_policy
 msgid "Encryption Policy to connect to the server. Empty by default."
-msgstr ""
+msgstr "Política de cifrado para conectar al servidor. Vacía por defecto."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__error
@@ -353,26 +353,29 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Los siguientes adjuntos no se pudieron imprimir:\n"
+"\n"
+"%s"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__3
 msgid "HTTP_ENCRYPT_ALWAYS"
-msgstr ""
+msgstr "HTTP_ENCRYPT_ALWAYS (ENCRIPTAR SIEMPRE)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__0
 msgid "HTTP_ENCRYPT_IF_REQUESTED"
-msgstr ""
+msgstr "HTTP_ENCRYPT_IF_REQUESTED (ENCRIPTAR SI SE SOLICITA)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__1
 msgid "HTTP_ENCRYPT_NEVER"
-msgstr ""
+msgstr "HTTP_ENCRYPT_NEVER ( ENCRIPTAR NUNCA)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__2
 msgid "HTTP_ENCRYPT_REQUIRED"
-msgstr ""
+msgstr "HTTP_ENCRYPT_REQUIRED (CIFRADO OBLIGATORIO)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__service-off-line
@@ -540,12 +543,12 @@ msgstr "Fuentes de papel"
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__password
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__password
 msgid "Password to connect to the server. Empty by default."
-msgstr ""
+msgstr "Contraseña para conectar al servidor. Vacía por defecto."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__pending
@@ -581,18 +584,18 @@ msgstr "Imprimir"
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment
 msgid "Print Attachment"
-msgstr ""
+msgstr "Impresión de adjunto"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment_line
 msgid "Print Attachment line"
-msgstr ""
+msgstr "Línea de impresión de adjuntos"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_wizard_print_attachment
 #: model:ir.ui.menu,name:base_report_to_printer.menu_action_wizard_print_attachment
 msgid "Print Attachments"
-msgstr ""
+msgstr "Imprimir archivos adjuntos"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
@@ -602,12 +605,12 @@ msgstr "Acción de imprimir un trabajo"
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Print Test Page"
-msgstr ""
+msgstr "Imprimir página de prueba"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Print attachments"
-msgstr ""
+msgstr "Imprimir archivos adjuntos"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
@@ -646,7 +649,7 @@ msgstr "Impresora usada para este trabajo."
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_wizard_print_attachment__printer_id
 msgid "Printer used to print the attachments."
-msgstr ""
+msgstr "Impresora utilizada para imprimir los adjuntos."
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
@@ -696,7 +699,7 @@ msgstr "Asistente de actualización de impresoras"
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
 msgid "Printing Report Printing Actions"
-msgstr ""
+msgstr "Imprimir Informe Acciones de impresión"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_server
@@ -738,9 +741,8 @@ msgstr "Informe"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_ir_actions_report
-#, fuzzy
 msgid "Report Action"
-msgstr "Acciones de impresión de informes"
+msgstr "Informar Acción"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_report_xml_action_view_form
@@ -755,7 +757,7 @@ msgstr "Informes"
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__record_name
 msgid "Resource Name"
-msgstr ""
+msgstr "Nombre del Recurso"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__resources-are-not-ready
@@ -852,12 +854,14 @@ msgstr "Este campo permite configurar acción e impresora a nivel de usuario"
 msgid ""
 "This process will create all missing printers from the current CUPS server.\""
 msgstr ""
+"Este proceso creará todas las impresoras que falten desde el servidor CUPS "
+"actual"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/models/ir_actions_report.py:0
 #, python-format
 msgid "This report type (%s) is not supported by direct printing!"
-msgstr ""
+msgstr "¡Este tipo de informe (%s) no tiene soporte para impresión directa!"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
@@ -948,7 +952,7 @@ msgstr "Usuario"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__user
 msgid "User name to connect to the server. Empty by default."
-msgstr ""
+msgstr "Nombre de usuario para conectar al servidor. Vacío por defecto."
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
@@ -958,7 +962,7 @@ msgstr "Usuarios"
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Asistente"
 
 #~ msgid ""
 #~ "This process will create all missing printers from the current CUPS "
