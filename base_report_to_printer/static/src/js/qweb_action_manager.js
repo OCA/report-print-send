@@ -87,6 +87,7 @@ odoo.define("base_report_to_printer.print", function(require) {
                             });
                     }
                 });
+                return Promise.reject();
             } else {
                 return _super.apply(self, [action, options, type]);
             }
