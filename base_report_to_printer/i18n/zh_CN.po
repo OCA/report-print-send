@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2017-12-19 03:38+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2024-06-13 10:19+0000\n"
+"Last-Translator: xtanuiha <feihu.zhang@live.com>\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/oca/teams/23907/"
 "zh_CN/)\n"
 "Language: zh_CN\n"
@@ -18,162 +18,163 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__aborted
 msgid "Aborted"
-msgstr ""
+msgstr "终止"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__aborted-by-system
 msgid "Aborted by the system"
-msgstr ""
+msgstr "被系统终止"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__action
 msgid "Action"
-msgstr ""
+msgstr "动作"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "Actions"
-msgstr ""
+msgstr "动作"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__active
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__active
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__active
 msgid "Active"
-msgstr ""
+msgstr "有效"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__address
 msgid "Address"
-msgstr ""
+msgstr "地址"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
 msgid "Archived"
-msgstr ""
+msgstr "已归档"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Are you sure to want to cancel all jobs of this printer?"
-msgstr ""
+msgstr "您确定要取消此打印机的所有作业吗？"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Are you sure to want to print a test page?"
-msgstr ""
+msgstr "您确定要打印测试页吗？"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__attachment_id
 msgid "Attachment"
-msgstr ""
+msgstr "附件"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__attachment_line_ids
 msgid "Attachments to print"
-msgstr ""
+msgstr "要打印的附件"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__available
 msgid "Available"
-msgstr ""
+msgstr "可用"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-transforming
 msgid "Being transformed into a different format"
-msgstr ""
+msgstr "正在转换成不同的格式"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__cups-filter-crashed
 msgid "CUPS filter crashed"
-msgstr ""
+msgstr "CUPS 过滤器已崩溃"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups
 msgid "CUPS id for this job."
-msgstr ""
+msgstr "此作业的 CUPS ID。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-restartable
 msgid "Can be restarted"
-msgstr ""
+msgstr "可重启"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Cancel all running jobs"
-msgstr ""
+msgstr "取消所有正在运行的作业"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__canceled
 msgid "Canceled"
-msgstr ""
+msgstr "已取消"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-canceled-at-device
 msgid "Cancelled at the device"
-msgstr ""
+msgstr "在设备上已取消"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-canceled-by-operator
 msgid "Cancelled by the printer operator"
-msgstr ""
+msgstr "被打印机操作员取消"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-canceled-by-user
 msgid "Cancelled by the user"
-msgstr ""
+msgstr "被用户取消"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__processing-to-stop-point
 msgid "Cancelled, but printing already processed pages"
-msgstr ""
+msgstr "已取消，但正在打印已处理的页面"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__completed
 msgid "Completed"
-msgstr ""
+msgstr "已完成"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-completed-successfully
 msgid "Completed successfully"
-msgstr ""
+msgstr "成功完成"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-completed-with-errors
 msgid "Completed with some errors"
-msgstr ""
+msgstr "已完成，但有错误"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-completed-with-warnings
 msgid "Completed with some warnings"
-msgstr ""
+msgstr "已完成，但有警告"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-compression
 msgid "Compressed using an unknown algorithm"
-msgstr ""
+msgstr "使用未知算法压缩"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__copies
 msgid "Copies"
-msgstr ""
+msgstr "副本"
 
 #. module: base_report_to_printer
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #, python-format
 msgid "Could not sent to printer!"
-msgstr ""
+msgstr "无法发送至打印机！"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
@@ -204,68 +205,68 @@ msgstr "创建时间"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
 msgid "Current state of the job."
-msgstr ""
+msgstr "作业的当前状态。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-interpreting
 msgid "Currently being interpreted"
-msgstr ""
+msgstr "正在解释中"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-outgoing
 msgid "Currently being sent to the printer"
-msgstr ""
+msgstr "正在发送至打印机"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-hold-until-specified
 msgid "Currently held"
-msgstr ""
+msgstr "当前保留"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-printing
 msgid "Currently printing"
-msgstr ""
+msgstr "正在打印"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_completed
 msgid "Date and time of completion for this job."
-msgstr ""
+msgstr "此作业的完成日期和时间。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
 msgid "Date and time of creation for this job."
-msgstr ""
+msgstr "此作业的创建日期和时间。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
 msgid "Date and time of process for this job."
-msgstr ""
+msgstr "此作业的处理日期和时间。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__default
 msgid "Default"
-msgstr ""
+msgstr "默认"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__property_printing_action_id
 msgid "Default Behaviour"
-msgstr ""
+msgstr "默认行为"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_printer_id
 msgid "Default Printer"
-msgstr ""
+msgstr "默认打印机"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_tray_id
 msgid "Default Printer Paper Source"
-msgstr ""
+msgstr "默认打印机纸张来源"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Disable"
-msgstr ""
+msgstr "禁用"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__display_name
@@ -278,37 +279,37 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "显示名称"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Enable"
-msgstr ""
+msgstr "启用"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__encryption_policy
 msgid "Encryption Policy"
-msgstr ""
+msgstr "加密策略"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__encryption_policy
 msgid "Encryption Policy to connect to the server. Empty by default."
-msgstr ""
+msgstr "连接到服务器的加密策略。默认为空。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__error
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__compression-error
 msgid "Error in the compressed data"
-msgstr ""
+msgstr "压缩数据中的错误"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__document-format-error
 msgid "Error in the document"
-msgstr ""
+msgstr "文档中的错误"
 
 #. module: base_report_to_printer
 #. odoo-python
@@ -318,16 +319,18 @@ msgid ""
 "Failed to connect to the CUPS server on %(address)s:%(port)s. Check that the "
 "CUPS server is running and that you can reach it from the Odoo server."
 msgstr ""
+"无法连接到位于 %(address)s:%(port)s 的 CUPS 服务器。检查 CUPS "
+"服务器是否正在运行，并确认您可以从 Odoo 服务器访问它。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-incoming
 msgid "Files are currently being received"
-msgstr ""
+msgstr "文件正在接收中"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__submission-interrupted
 msgid "Files were not received in full"
-msgstr ""
+msgstr "文件未完全接收"
 
 #. module: base_report_to_printer
 #. odoo-python
@@ -338,31 +341,34 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"以下附件无法打印：\n"
+"\n"
+"%s"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__3
 msgid "HTTP_ENCRYPT_ALWAYS"
-msgstr ""
+msgstr "HTTP_ENCRYPT_ALWAYS"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__0
 msgid "HTTP_ENCRYPT_IF_REQUESTED"
-msgstr ""
+msgstr "HTTP_ENCRYPT_IF_REQUESTED"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__1
 msgid "HTTP_ENCRYPT_NEVER"
-msgstr ""
+msgstr "HTTP_ENCRYPT_NEVER"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__2
 msgid "HTTP_ENCRYPT_REQUIRED"
-msgstr ""
+msgstr "HTTP_ENCRYPT_REQUIRED"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__service-off-line
 msgid "Held because the printer is offline"
-msgstr ""
+msgstr "由于打印机离线而被保留"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__id
@@ -380,33 +386,33 @@ msgstr "ID"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__address
 msgid "IP address or hostname of the server"
-msgstr ""
+msgstr "服务器的 IP 地址或主机名"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__active
 msgid "If checked, this server is useable."
-msgstr ""
+msgstr "如果勾选，此服务器可用。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_id_cups
 msgid "Job ID"
-msgstr ""
+msgstr "作业 ID"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__name
 msgid "Job name."
-msgstr ""
+msgstr "作业名称。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__job_ids
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Jobs"
-msgstr ""
+msgstr "作业"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__job_ids
 msgid "Jobs printed on this printer."
-msgstr ""
+msgstr "在此打印机上打印的作业。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_uid
@@ -437,22 +443,22 @@ msgstr "上次更新日期"
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__printer_ids
 msgid "List of printers available on this server."
-msgstr ""
+msgstr "在此服务器上可用的打印机列表。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__location
 msgid "Location"
-msgstr ""
+msgstr "位置"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_media_progress
 msgid "Media Progress"
-msgstr ""
+msgstr "媒体进度"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__model
 msgid "Model"
-msgstr ""
+msgstr "模型"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__name
@@ -461,112 +467,112 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__name
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__name
 msgid "Name of the server."
-msgstr ""
+msgstr "服务器名称。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-data-insufficient
 msgid "No data has been received"
-msgstr ""
+msgstr "没有接收到数据"
 
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/models/ir_actions_report.py:0
 #, python-format
 msgid "No printer configured to print this report."
-msgstr ""
+msgstr "没有配置打印机来打印此报告。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__none
 msgid "No reason"
-msgstr ""
+msgstr "无原因"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Ok"
-msgstr ""
+msgstr "确定"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_tray_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_tray_id
 msgid "Paper Source"
-msgstr ""
+msgstr "纸张来源"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__tray_ids
 msgid "Paper Sources"
-msgstr ""
+msgstr "纸张来源"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__password
 msgid "Password"
-msgstr ""
+msgstr "密码"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__password
 msgid "Password to connect to the server. Empty by default."
-msgstr ""
+msgstr "连接到服务器的密码。默认为空。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__pending
 msgid "Pending"
-msgstr ""
+msgstr "待处理"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__pending_held
 msgid "Pending Held"
-msgstr ""
+msgstr "待处理保留"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_media_progress
 msgid "Percentage of progress for this job."
-msgstr ""
+msgstr "此作业的进度百分比。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__port
 msgid "Port"
-msgstr ""
+msgstr "端口"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__port
 msgid "Port of the server."
-msgstr ""
+msgstr "服务器的端口。"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Print"
-msgstr ""
+msgstr "打印"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment
 msgid "Print Attachment"
-msgstr ""
+msgstr "打印附件"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment_line
 msgid "Print Attachment line"
-msgstr ""
+msgstr "打印附件行"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_wizard_print_attachment
 #: model:ir.ui.menu,name:base_report_to_printer.menu_action_wizard_print_attachment
 msgid "Print Attachments"
-msgstr ""
+msgstr "打印附件"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_action
 msgid "Print Job Action"
-msgstr ""
+msgstr "打印作业动作"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Print Test Page"
-msgstr ""
+msgstr "打印测试页"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer
@@ -575,344 +581,344 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__printer_id
 msgid "Printer"
-msgstr ""
+msgstr "打印机"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_tray
 msgid "Printer Tray"
-msgstr ""
+msgstr "打印机托盘"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__printer-stopped
 msgid "Printer is stopped"
-msgstr ""
+msgstr "打印机已停止"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-queued-for-marker
 msgid "Printer needs ink/marker/toner"
-msgstr ""
+msgstr "打印机需要墨水/标签/碳粉"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__printer-stopped-partly
 msgid "Printer state reason set to 'stopped-partly'"
-msgstr ""
+msgstr "打印机状态原因设置为“部分停止”"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__printer_id
 msgid "Printer used for this job."
-msgstr ""
+msgstr "此作业使用的打印机。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_wizard_print_attachment__printer_id
 msgid "Printer used to print the attachments."
-msgstr ""
+msgstr "用于打印附件的打印机。"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Printers"
-msgstr ""
+msgstr "打印机"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__printer_ids
 msgid "Printers List"
-msgstr ""
+msgstr "打印机列表"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__printing
 #: model:ir.ui.menu,name:base_report_to_printer.printing_menu
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_users_form
 msgid "Printing"
-msgstr ""
+msgstr "打印"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.printing_group_manager
 msgid "Printing / Print Manager"
-msgstr ""
+msgstr "打印 / 打印管理员"
 
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.printing_group_user
 msgid "Printing / Print User"
-msgstr ""
+msgstr "打印 / 打印用户"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_action
 msgid "Printing Action"
-msgstr ""
+msgstr "打印操作"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_job
 msgid "Printing Job"
-msgstr ""
+msgstr "打印作业"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_printer_update_wizard
 msgid "Printing Printer Update Wizard"
-msgstr ""
+msgstr "打印机更新向导"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
 msgid "Printing Report Printing Actions"
-msgstr ""
+msgstr "报告打印操作"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_server
 msgid "Printing server"
-msgstr ""
+msgstr "打印服务器"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing
 msgid "Processing"
-msgstr ""
+msgstr "处理中"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing_stopped
 msgid "Processing Stopped"
-msgstr ""
+msgstr "处理已停止"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__queued-in-device
 msgid "Queued at the output device"
-msgstr ""
+msgstr "在输出设备上排队"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-queued
 msgid "Queued for printing"
-msgstr ""
+msgstr "排队等待打印"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state_reason
 msgid "Reason for the current job state."
-msgstr ""
+msgstr "当前作业状态的原因。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__report_id
 msgid "Report"
-msgstr ""
+msgstr "报告"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "报告动作"
 
 #. module: base_report_to_printer
 #: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
 msgid "Reports"
-msgstr ""
+msgstr "报告"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__record_name
 msgid "Resource Name"
-msgstr ""
+msgstr "资源名称"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__resources-are-not-ready
 msgid "Resources not available to print the job"
-msgstr ""
+msgstr "打印作业所需的资源不可用"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__server_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__server_id
 msgid "Server"
-msgstr ""
+msgstr "服务器"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__server-error
 msgid "Server Error"
-msgstr ""
+msgstr "服务端错误"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__server_id
 msgid "Server used to access this printer."
-msgstr ""
+msgstr "用于访问此打印机的服务器。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__server_id
 msgid "Server which hosts this job."
-msgstr ""
+msgstr "托管此作业的服务器。"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_server_action
 #: model:ir.ui.menu,name:base_report_to_printer.printing_server_menu
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
 msgid "Servers"
-msgstr ""
+msgstr "服务器"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Set Default"
-msgstr ""
+msgstr "设为默认"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_printer_action
 msgid "Show Printers"
-msgstr ""
+msgstr "显示打印机"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 msgid "Specific actions per user"
-msgstr ""
+msgstr "每个用户的特定动作"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_state
 msgid "State"
-msgstr ""
+msgstr "状态"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_state_reason
 msgid "State Reason"
-msgstr ""
+msgstr "状态原因"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status
 msgid "Status"
-msgstr ""
+msgstr "状态"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status_message
 msgid "Status Message"
-msgstr ""
+msgstr "状态消息"
 
 #. module: base_report_to_printer
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #, python-format
 msgid "Successfully sent to printer!"
-msgstr ""
+msgstr "成功发送至打印机！"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__system_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__system_name
 msgid "System Name"
-msgstr ""
+msgstr "系统名称"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__document-access-error
 msgid "The URI cannot be accessed"
-msgstr ""
+msgstr "无法访问此URI"
 
 #. module: base_report_to_printer
 #: model:ir.model.constraint,message:base_report_to_printer.constraint_printing_job_job_id_cups_unique
 msgid "The id of the job must be unique per server !"
-msgstr ""
+msgstr "每个服务器的作业 ID 必须是唯一的！"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
-msgstr ""
+msgstr "此字段允许基于每个用户配置操作和打印机"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid ""
 "This process will create all missing printers from the current CUPS server.\""
-msgstr ""
+msgstr "此过程将从当前 CUPS 服务器创建所有缺失的打印机。\""
 
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/models/ir_actions_report.py:0
 #, python-format
 msgid "This report type (%s) is not supported by direct printing!"
-msgstr ""
+msgstr "直接打印不支持此报告类型 (%s)！"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
 msgid "Time At Completed"
-msgstr ""
+msgstr "完成时间"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
 msgid "Time At Creation"
-msgstr ""
+msgstr "创建时间"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
 msgid "Time At Processing"
-msgstr ""
+msgstr "处理时间"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Trays"
-msgstr ""
+msgstr "托盘"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__action_type
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__uri
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__unavailable
 msgid "Unavailable"
-msgstr ""
+msgstr "不可用"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__active
 msgid "Unchecked if the job is purged from cups."
-msgstr ""
+msgstr "未勾选表示作业已从CUPS中清除。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__unknown
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__unknown
 msgid "Unknown"
-msgstr ""
+msgstr "未知的"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Unset Default"
-msgstr ""
+msgstr "取消默认"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-document-format
 msgid "Unsupported format"
-msgstr ""
+msgstr "不支持的格式"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Update Jobs"
-msgstr ""
+msgstr "更新作业"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
 msgid "Update Printers"
-msgstr ""
+msgstr "更新打印机"
 
 #. module: base_report_to_printer
 #: model:ir.actions.server,name:base_report_to_printer.ir_cron_update_printers_ir_actions_server
 msgid "Update Printers Jobs"
-msgstr ""
+msgstr "更新打印机的作业"
 
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_printer_update_wizard
 #: model:ir.ui.menu,name:base_report_to_printer.menu_printer_update_wizard
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid "Update Printers from CUPS"
-msgstr ""
+msgstr "从 CUPS 更新打印机"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_res_users
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__user_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__user
 msgid "User"
-msgstr ""
+msgstr "用户"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__user
 msgid "User name to connect to the server. Empty by default."
-msgstr ""
+msgstr "连接到服务器的用户名。默认为空。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "向导"
 
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
 #, python-format
 msgid "{name} ({copies} copies)"
-msgstr ""
+msgstr "{name} ({copies} 副本)"
