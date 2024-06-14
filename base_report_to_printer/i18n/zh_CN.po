@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2024-06-13 10:19+0000\n"
+"PO-Revision-Date: 2024-06-14 03:25+0000\n"
 "Last-Translator: xtanuiha <feihu.zhang@live.com>\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/oca/teams/23907/"
 "zh_CN/)\n"
@@ -812,7 +812,7 @@ msgstr "此字段允许基于每个用户配置操作和打印机"
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 msgid ""
 "This process will create all missing printers from the current CUPS server.\""
-msgstr "此过程将从当前 CUPS 服务器创建所有缺失的打印机。\""
+msgstr "此过程将从当前 CUPS 服务器创建所有缺失的打印机。"
 
 #. module: base_report_to_printer
 #. odoo-python
