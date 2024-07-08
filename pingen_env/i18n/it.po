@@ -6,40 +6,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-07-08 14:58+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: pingen_env
 #: model:ir.model,name:pingen_env.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: pingen_env
 #: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_client_secretid
 msgid "Pingen Client Secretid"
-msgstr ""
+msgstr "ID segreto cliente Pingen"
 
 #. module: pingen_env
 #: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_clientid
 msgid "Pingen Clientid"
-msgstr ""
+msgstr "ID cliente Pingen"
 
 #. module: pingen_env
 #: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_staging
 msgid "Pingen Staging"
-msgstr ""
+msgstr "Fase Pingen"
 
 #. module: pingen_env
 #: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_webhook_secret
 msgid "Pingen Webhook Secret"
-msgstr ""
+msgstr "Webhook segreto Pingen"
 
 #. module: pingen_env
 #: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_organization
 msgid "Pingen organization ID"
-msgstr ""
+msgstr "ID organizzazione Pingen"
