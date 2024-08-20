@@ -15,6 +15,8 @@ class PrintingServer(models.Model):
             {
                 "address": {},
                 "port": {},
+                "user": {},
+                "password": {},
             }
         )
         return base_fields
