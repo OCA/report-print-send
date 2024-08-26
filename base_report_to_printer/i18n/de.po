@@ -826,6 +826,13 @@ msgid "The id of the job must be unique per server !"
 msgstr "Die ID eines Jobs muss je Server eindeutig sein."
 
 #. module: base_report_to_printer
+#. openerp-web
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+#, python-format
+msgid "The printer couldn't be reached. Downloading document instead"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
 msgstr "Dieses Feld ermöglicht die Aktion und Drucker pro Anwender vorzugeben"
