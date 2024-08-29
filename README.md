@@ -9,7 +9,7 @@
 
 # report-print-send
 
-TODO: add repo description.
+This project aims to deal with the printing of documents on external devices.
 
 <!-- /!\ do not modify below this line -->
 
@@ -19,15 +19,18 @@ TODO: add repo description.
 
 Available addons
 ----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[base_report_to_label_printer](base_report_to_label_printer/) | 16.0.1.0.0 |  | Report to label printer
-[base_report_to_printer](base_report_to_printer/) | 16.0.1.1.7 |  | Report to printer
-[base_report_to_printer_mail](base_report_to_printer_mail/) | 16.0.1.0.0 |  | Report to printer - Mail extension
+addon | version    | maintainers                                                                                                                                                                                                        | summary
+--- |------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ---
+[base_report_to_label_printer](base_report_to_label_printer/) | 16.0.1.0.0 |                                                                                                                                                                                                                    | Report to label printer
+[base_report_to_printer](base_report_to_printer/) | 16.0.1.1.7 |                                                                                                                                                                                                                    | Report to printer
+[base_report_to_printer_mail](base_report_to_printer_mail/) | 16.0.1.0.0 |                                                                                                                                                                                                                    | Report to printer - Mail extension
 [pingen](pingen/) | 16.0.1.0.1 | [![ajaniszewska-dev](https://github.com/ajaniszewska-dev.png?size=30px)](https://github.com/ajaniszewska-dev) [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | pingen.com integration
-[pingen_env](pingen_env/) | 16.0.1.0.0 | [![ajaniszewska-dev](https://github.com/ajaniszewska-dev.png?size=30px)](https://github.com/ajaniszewska-dev) | pingen.com server environment
-[printer_zpl2](printer_zpl2/) | 16.0.1.0.0 |  | Add a ZPL II label printing feature
-[printing_simple_configuration](printing_simple_configuration/) | 16.0.1.0.1 |  | Allow to set printing configuration in company or in warehouse
+[pingen_env](pingen_env/) | 16.0.1.0.0 | [![ajaniszewska-dev](https://github.com/ajaniszewska-dev.png?size=30px)](https://github.com/ajaniszewska-dev)                                                                                                      | pingen.com server environment
+[printer_zpl2](printer_zpl2/) | 16.0.1.0.0 |                                                                                                                                                                                                                    | Add a ZPL II label printing feature
+[printing_simple_configuration](printing_simple_configuration/) | 16.0.1.0.1 |                                                                                                                                                                                                                    | Allow to set printing configuration in company or in warehouse
+[zpl_printer](zpl_printer/) | 16.0.0.0.1 | [![mohs8421](https://github.com/mohs8421.png?size=30px)](https://github.com/mohs8421)                                                                                                                             | Directly connect label printers to Odoo
+[zpl_printer_mrp](zpl_printer_mrp/) | 16.0.0.0.1 | [![mohs8421](https://github.com/mohs8421.png?size=30px)](https://github.com/mohs8421)                                                                                                                              | Connects zpl_printer module with mrp module
+[zpl_printer_stock](zpl_printer_stock/) | 16.0.0.0.1 | [![mohs8421](https://github.com/mohs8421.png?size=30px)](https://github.com/mohs8421)                                                                                                                              | Connects zpl_printer module with mrp module, add option to specify printer on product
 
 [//]: # (end addons)
 

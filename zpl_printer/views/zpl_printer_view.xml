@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_zpl_printer_form" model="ir.ui.view">
+        <field name="name">zpl_printer.zpl_printer.form</field>
+        <field name="model">zpl_printer.zpl_printer</field>
+        <field name="arch" type="xml">
+            <form string="Label Printer">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" /></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="url" />
+                            <field name="resolution" />
+                            <field name="default" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tree_zpl_printer_tree" model="ir.ui.view">
+        <field name="name">view.zpl_printer.zpl_printer.tree11</field>
+        <field name="model">zpl_printer.zpl_printer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="url" />
+                <field name="resolution" />
+                <field name="default" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_zpl_printer" model="ir.actions.act_window">
+        <field name="name">Label-Printers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">zpl_printer.zpl_printer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.zpl_printer</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[hasclass('settings')]//div[@name='integration']"
+                position="inside"
+            >
+                <div class="col-12 col-lg-6 o_setting_box" id="zpl_printer">
+                    <div class="o_setting_right_pane">
+                        <div id="zpl-printers" class="mt8">
+                            <button
+                                name="%(zpl_printer.action_zpl_printer)d"
+                                icon="fa-arrow-right"
+                                type="action"
+                                string="Label-Printers"
+                                class="btn-link"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
