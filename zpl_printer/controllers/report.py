@@ -1,5 +1,4 @@
 import json
-import logging
 
 from werkzeug.urls import url_parse
 
@@ -10,7 +9,7 @@ from odoo.tools.safe_eval import safe_eval, time
 
 from odoo.addons.web.controllers.report import ReportController
 
-_logger = logging.getLogger(__name__)
+DEFAULT_RESOLUTION = "200"
 
 
 class ReportController(ReportController):
@@ -28,14 +27,13 @@ class ReportController(ReportController):
         :returns: Response with a filetoken cookie and an attachment header
         """
         requestcontent = json.loads(data)
-        url, report_type, resolution = (
-            requestcontent[0],
-            requestcontent[1],
-            requestcontent[2],
-        )
+        url, report_type = requestcontent[0], requestcontent[1]
         if "zpl" not in report_type:
             return super().report_download(data, context=context, token=token)
         try:
+            resolution = (
+                requestcontent[2] if len(requestcontent) == 3 else DEFAULT_RESOLUTION
+            )
             reportname = url.split("/report/zpl/")[1].split("?")[0]
             docids = None
             if "/" in reportname:
