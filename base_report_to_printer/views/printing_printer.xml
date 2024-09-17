@@ -77,6 +77,10 @@
                         <field name="status" />
                         <field name="status_message" />
                     </group>
+                    <group name="options">
+                        <field name="paperformat_id" />
+                        <field name="fit_to_page" />
+                    </group>
                     <group string="Trays" name="trays">
                         <field name="tray_ids" nolabel="1">
                             <form>

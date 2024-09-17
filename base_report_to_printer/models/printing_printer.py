@@ -63,6 +63,8 @@ class PrintingPrinter(models.Model):
     model = fields.Char(readonly=True)
     location = fields.Char(readonly=True)
     uri = fields.Char(string="URI", readonly=True)
+    paperformat_id = fields.Many2one("report.paperformat")
+    fit_to_page = fields.Boolean()
     tray_ids = fields.One2many(
         comodel_name="printing.tray", inverse_name="printer_id", string="Paper Sources"
     )
@@ -170,6 +172,13 @@ class PrintingPrinter(models.Model):
                 options.update(getattr(self, "_set_option_%s" % option)(report, value))
             except AttributeError:
                 options[option] = str(value)
+
+        if self.paperformat_id:
+            width = int(self.paperformat_id.print_page_width)
+            height = int(self.paperformat_id.print_page_height)
+            options["media"] = f"Custom.{width}x{height}mm"
+        if self.fit_to_page:
+            options["fit-to-page"] = ""
         return options
 
     def print_file(self, file_name, report=None, **print_opts):
