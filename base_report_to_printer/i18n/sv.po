@@ -921,7 +921,7 @@ msgstr "Guide"
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
 #, python-format
 msgid "{name} ({copies} copies)"
-msgstr "{namn} ({kopior} kopior)"
+msgstr "{name} ({copies} kopior)"
 
 #~ msgid "Job"
 #~ msgstr "Jobb"
