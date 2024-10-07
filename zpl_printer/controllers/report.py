@@ -21,6 +21,8 @@ class ReportController(ReportController):
     def report_download(self, data, context=None, token=None):
         """This function is used by 'zplactionmanager.js' in order to trigger
         the download of a zpl report.
+        The cors header has to be set to * as there has to be a call to the actual printer,
+        which is probably in the local network of the using client.
 
         :param data: a javascript array JSON.stringified containg report
         internal url ([0]) and type [1]

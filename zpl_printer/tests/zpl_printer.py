@@ -1,28 +1,35 @@
 from odoo.tests import common, tagged
 
-_DEFAULT_PRINTER_URL = "https://default_printer.my_company_network.internal"
+DEFAULT_PRINTER_URL = "https://default_printer.my_company_network.internal"
+OTHER_PRINTER_URL = "https://other_printer.my_company_network.internal"
 
 
-@tagged("zpl")
-class TestZplPrinter(common.TransactionCase):
+class TestZplPrinterBase(common.TransactionCase):
     def setUp(self):
-        super(TestZplPrinter, self).setUp()
+        super(TestZplPrinterBase, self).setUp()
+        # if the database has a default printer, disable it for this test
+        printer = self.env["zpl_printer.zpl_printer"].search([("default", "=", True)])
+        if len(printer) >= 1:
+            printer.default = False
         self.env["zpl_printer.zpl_printer"].create(
             [
                 {
                     "name": "default",
-                    "url": _DEFAULT_PRINTER_URL,
+                    "url": DEFAULT_PRINTER_URL,
                     "resolution": "200",
                     "default": True,
                 },
                 {
                     "name": "other_printer",
-                    "url": "https://other_printer.my_company_network.internal",
+                    "url": OTHER_PRINTER_URL,
                     "resolution": "300",
                 },
             ]
         )
 
+
+@tagged("zpl")
+class TestZplPrinter(TestZplPrinterBase):
     def test_write(self):
         """Changing the default flag of a printer should remove it from all other printers"""
         printer = self.env["zpl_printer.zpl_printer"].search(
@@ -42,4 +49,4 @@ class TestZplPrinter(common.TransactionCase):
         result = self.env["zpl_printer.zpl_printer"].get_label_printer_data(
             "unspecific_report_name", [1]
         )
-        self.assertEqual(result, {"url": _DEFAULT_PRINTER_URL, "resolution": "200"})
+        self.assertEqual(result, {"url": DEFAULT_PRINTER_URL, "resolution": "200"})
