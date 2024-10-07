@@ -1,5 +1,10 @@
-from odoo.tests import common, tagged
-from odoo.addons.zpl_printer.tests import TestZplPrinterBase, DEFAULT_PRINTER_URL, OTHER_PRINTER_URL
+from odoo.tests import tagged
+
+from odoo.addons.zpl_printer.tests.zpl_printer import (
+    DEFAULT_PRINTER_URL,
+    OTHER_PRINTER_URL,
+    TestZplPrinterBase,
+)
 
 
 @tagged("zpl")
@@ -9,8 +14,12 @@ class TestZplPrinterStock(TestZplPrinterBase):
 
     def setUp(self):
         super(TestZplPrinterStock, self).setUp()
-        second_printer = self.env["zpl_printer.zpl_printer"].search([("name", "=", "other_printer")])
-        (unspecific_product, other_printer_product) = self.env["product.product"].create(
+        second_printer = self.env["zpl_printer.zpl_printer"].search(
+            [("name", "=", "other_printer")]
+        )
+        (unspecific_product, other_printer_product) = self.env[
+            "product.product"
+        ].create(
             [
                 {
                     "name": "Unspecific Product",
