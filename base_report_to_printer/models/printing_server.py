@@ -43,6 +43,9 @@ class PrintingServer(models.Model):
         help="List of printers available on this server.",
     )
     multi_thread = fields.Boolean()
+    company_ids = fields.Many2many(
+        comodel_name="res.company",
+    )
 
     def _open_connection(self, raise_on_error=False):
         self.ensure_one()
