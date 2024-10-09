@@ -148,4 +148,25 @@
         <field eval="1" name="perm_write" />
         <field eval="1" name="perm_create" />
     </record>
+    <record id="printing_server_company_rule" model="ir.rule">
+        <field name="name">Printing Server multi-company</field>
+        <field name="model_id" ref="model_printing_server" />
+        <field name="domain_force">
+            ["|", ("company_ids", "=", False), ("company_ids", "in", company_ids)]
+        </field>
+    </record>
+    <record id="printer_company_rule" model="ir.rule">
+        <field name="name">Printer multi-company</field>
+        <field name="model_id" ref="model_printing_printer" />
+        <field name="domain_force">
+            ["|", ("server_id.company_ids", "=", False), ("server_id.company_ids", "in", company_ids)]
+        </field>
+    </record>
+    <record id="printing_job_company_rule" model="ir.rule">
+        <field name="name">Printing Job multi-company</field>
+        <field name="model_id" ref="model_printing_job" />
+        <field name="domain_force">
+            ["|", ("server_id.company_ids", "=", False), ("server_id.company_ids", "in", company_ids)]
+        </field>
+    </record>
 </odoo>
