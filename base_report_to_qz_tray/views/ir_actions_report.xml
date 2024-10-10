@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="act_report_xml_view">
+        <field name="name">ir.actions.report.form (in base_report_to_printer)</field>
+        <field name="model">ir.actions.report</field>
+        <field name="inherit_id" ref="base.act_report_xml_view" />
+        <field name="arch" type="xml">
+            <page name="security" position="before">
+                <page string="Print" name="print">
+                    <separator string="Specific printer per user" />
+                    <field name="printing_report_qz_tray_ids">
+                        <tree editable="bottom">
+                            <field name="user_id" />
+                            <field name="action" />
+                            <field name="qz_tray_printer" />
+                        </tree>
+                    </field>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>
