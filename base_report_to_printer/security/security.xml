@@ -128,6 +128,7 @@
          <field eval="1" name="perm_read" />
          <field eval="1" name="perm_unlink" />
          <field eval="1" name="perm_write" />
+         <field eval="1" name="perm_create" />
     </record>
     <record id="access_wizard_print_attachment_user" model="ir.model.access">
         <field name="name">Print Attachment User</field>

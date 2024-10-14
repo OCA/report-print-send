@@ -4,9 +4,10 @@
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from time import time
 
 from odoo import _, api, exceptions, fields, models
-from odoo.tools.safe_eval import safe_eval, time
+from odoo.tools.safe_eval import safe_eval
 
 REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
 
@@ -55,12 +56,16 @@ class IrActionsReport(models.Model):
         }
         return serializable_result
 
+    def _get_user_default_printer(self, user):
+        return user.printing_printer_id
+
     def _get_user_default_print_behaviour(self):
         printer_obj = self.env["printing.printer"]
         user = self.env.user
+        printer = self._get_user_default_printer(user)
         return dict(
             action=user.printing_action or "client",
-            printer=user.printing_printer_id or printer_obj.get_default(),
+            printer=printer or printer_obj.get_default(),
             tray=str(user.printer_tray_id.system_name)
             if user.printer_tray_id
             else False,
