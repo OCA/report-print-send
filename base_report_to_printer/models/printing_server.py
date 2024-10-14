@@ -42,6 +42,9 @@ class PrintingServer(models.Model):
         string="Printers List",
         help="List of printers available on this server.",
     )
+    company_ids = fields.Many2many(
+        comodel_name="res.company",
+    )
 
     def _open_connection(self, raise_on_error=False):
         self.ensure_one()
