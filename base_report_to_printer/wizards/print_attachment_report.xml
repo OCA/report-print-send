@@ -8,11 +8,11 @@
                 <group>
                     <field name="printer_id" />
                     <field name="attachment_line_ids">
-                        <tree editable="top">
+                        <list editable="top">
                             <field name="attachment_id" create="0" />
                             <field name="record_name" />
                             <field name="copies" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
                 <footer>

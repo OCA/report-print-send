@@ -178,7 +178,7 @@ class PrintingPrinter(models.Model):
         options = {}
         for option, value in print_opts.items():
             try:
-                options.update(getattr(self, "_set_option_%s" % option)(report, value))
+                options.update(getattr(self, f"_set_option_{option}")(report, value))
             except AttributeError:
                 options[option] = str(value)
         return options

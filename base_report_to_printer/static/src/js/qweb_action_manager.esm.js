@@ -1,5 +1,4 @@
-/** @odoo-module */
-import {Markup} from "web.utils";
+import {markup} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 
@@ -38,14 +37,14 @@ async function cupsReportActionHandler(action, options, env) {
             // Just so the translation engine detects them as it doesn't do it inside
             // template strings
             const terms = {
-                the_report: env._t("The report"),
-                couldnt_be_printed: env._t(
+                the_report: _t("The report"),
+                couldnt_be_printed: _t(
                     "couldn't be printed. Click on the button below to download it"
                 ),
-                issue_on: env._t("Issue on"),
+                issue_on: _t("Issue on"),
             };
             const notificationRemove = env.services.notification.add(
-                Markup(
+                markup(
                     `<p>${terms.the_report} <strong>${action.name}</strong> ${terms.couldnt_be_printed}</p>`
                 ),
                 {
@@ -55,7 +54,7 @@ async function cupsReportActionHandler(action, options, env) {
                     messageIsHtml: true,
                     buttons: [
                         {
-                            name: env._t("Print"),
+                            name: _t("Print"),
                             primary: true,
                             icon: "fa-print",
                             onClick: async () => {
