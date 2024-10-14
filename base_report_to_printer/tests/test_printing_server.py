@@ -1,6 +1,7 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
 from unittest import mock
 
 from odoo import fields
@@ -43,15 +44,20 @@ class TestPrintingServer(TransactionCase):
         values["printer_id"] = printer.id
         return self.env["printing.job"].create(values)
 
-    @mock.patch("%s.cups" % model)
-    def test_update_printers_error(self, cups):
+    def test_update_printers_error(self):
         """It should catch any exception from CUPS and update status"""
-        cups.Connection.side_effect = Exception
-        rec_id = self.new_printer()
-        self.Model.update_printers()
-        self.assertEqual("server-error", rec_id.status)
+        with (
+            mock.patch(f"{model}.cups") as cups,
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            cups.Connection.side_effect = Exception
+            rec_id = self.new_printer()
+            self.Model.update_printers()
+            self.assertEqual("server-error", rec_id.status)
+            self.assertEqual(len(logs.records), 1)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_printers_inits_cups(self, cups):
         """It should init CUPS connection"""
         self.new_printer()
@@ -60,29 +66,29 @@ class TestPrintingServer(TransactionCase):
             host=self.server.address, port=self.server.port
         )
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_printers_gets_all_printers(self, cups):
         """It should get all printers from CUPS server"""
         self.new_printer()
         self.Model.update_printers()
         cups.Connection().getPrinters.assert_called_once_with()
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_printers_search(self, cups):
         """It should search all when no domain"""
-        with mock.patch("%s.search" % model_base) as search:
+        with mock.patch(f"{model_base}.search") as search:
             self.Model.update_printers()
             search.assert_called_once_with([])
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_printers_search_domain(self, cups):
         """It should use specific domain for search"""
-        with mock.patch("%s.search" % model_base) as search:
+        with mock.patch(f"{model_base}.search") as search:
             expect = [("id", ">", 0)]
             self.Model.update_printers(expect)
             search.assert_called_once_with(expect)
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_printers_update_unavailable(self, cups):
         """It should update status when printer is unavailable"""
         rec_id = self.new_printer()
@@ -90,7 +96,7 @@ class TestPrintingServer(TransactionCase):
         self.Model.action_update_printers()
         self.assertEqual("unavailable", rec_id.status)
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_archived_printers(self, cups):
         """It should update status even if printer is archived"""
         rec_id = self.new_printer()
@@ -103,7 +109,7 @@ class TestPrintingServer(TransactionCase):
             rec_id.status,
         )
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_jobs_cron(self, cups):
         """It should get all jobs from CUPS server"""
         self.new_printer()
@@ -125,7 +131,7 @@ class TestPrintingServer(TransactionCase):
             ],
         )
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_jobs_button(self, cups):
         """It should get all jobs from CUPS server"""
         self.new_printer()
@@ -147,17 +153,22 @@ class TestPrintingServer(TransactionCase):
             ],
         )
 
-    @mock.patch("%s.cups" % model)
-    def test_update_jobs_error(self, cups):
+    def test_update_jobs_error(self):
         """It should catch any exception from CUPS and update status"""
-        cups.Connection.side_effect = Exception
-        self.new_printer()
-        self.server.update_jobs()
-        cups.Connection.assert_called_with(
-            host=self.server.address, port=self.server.port
-        )
+        with (
+            mock.patch(f"{model}.cups") as cups,
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            cups.Connection.side_effect = Exception
+            self.new_printer()
+            self.server.update_jobs()
+            cups.Connection.assert_called_with(
+                host=self.server.address, port=self.server.port
+            )
+            self.assertEqual(len(logs.records), 2)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_jobs_uncompleted(self, cups):
         """
         It should search which jobs have been completed since last update
@@ -182,7 +193,7 @@ class TestPrintingServer(TransactionCase):
             ],
         )
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_update_jobs(self, cups):
         """
         It should update all jobs, known or not

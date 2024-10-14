@@ -36,11 +36,11 @@
         <field name="name">printing.job.tree (in base_report_to_printer)</field>
         <field name="model">printing.job</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="job_id_cups" />
                 <field name="job_state" />
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

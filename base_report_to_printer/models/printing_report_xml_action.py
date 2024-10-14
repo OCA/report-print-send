@@ -22,7 +22,7 @@ class PrintingReportXmlAction(models.Model):
         comodel_name="res.users", string="User", required=True, ondelete="cascade"
     )
     action = fields.Selection(
-        selection=lambda s: s.env["printing.action"]._available_action_types(),
+        selection=lambda s: s.env["printing.action"]._available_action_types,
         required=True,
     )
     printer_id = fields.Many2one(comodel_name="printing.printer", string="Printer")

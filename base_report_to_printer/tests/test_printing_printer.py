@@ -1,6 +1,7 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
 import tempfile
 from unittest import mock
 
@@ -79,11 +80,11 @@ class TestPrintingPrinter(TransactionCase):
         )
         self.assertTrue("InputSlot" in self.Model.print_options(report, tray="Test"))
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_print_report(self, cups):
         """It should print a report through CUPS"""
         fd, file_name = tempfile.mkstemp()
-        with mock.patch("%s.mkstemp" % model) as mkstemp:
+        with mock.patch(f"{model}.mkstemp") as mkstemp:
             mkstemp.return_value = fd, file_name
             printer = self.new_record()
             printer.print_document(self.report, b"content to print", doc_format="pdf")
@@ -91,37 +92,52 @@ class TestPrintingPrinter(TransactionCase):
                 printer.system_name, file_name, file_name, options={}
             )
 
-    @mock.patch("%s.cups" % server_model)
-    def test_print_report_error(self, cups):
+    def test_print_report_error(self):
         """It should print a report through CUPS"""
-        cups.Connection.side_effect = Exception
-        fd, file_name = tempfile.mkstemp()
-        with mock.patch("%s.mkstemp" % model) as mkstemp:
-            mkstemp.return_value = fd, file_name
+        with (
+            mock.patch(f"{model}.cups") as cups,
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            cups.Connection.side_effect = Exception
+            fd, file_name = tempfile.mkstemp()
+            with mock.patch(f"{model}.mkstemp") as mkstemp:
+                mkstemp.return_value = fd, file_name
+                printer = self.new_record()
+                with self.assertRaises(UserError):
+                    printer.print_document(
+                        self.report, b"content to print", doc_format="pdf"
+                    )
+            self.assertEqual(len(logs.records), 1)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
+
+    def test_print_file(self):
+        """It should print a file through CUPS"""
+        with (
+            mock.patch(f"{server_model}.cups") as cups,
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            file_name = "file_name"
+            printer = self.new_record()
+            printer.print_file(file_name, "pdf")
+            cups.Connection().printFile.assert_called_once_with(
+                printer.system_name, file_name, file_name, options={}
+            )
+            self.assertEqual(len(logs.records), 1)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
+
+    def test_print_file_error(self):
+        """It should print a file through CUPS"""
+        with (
+            mock.patch(f"{server_model}.cups") as cups,
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            cups.Connection.side_effect = Exception
+            file_name = "file_name"
             printer = self.new_record()
             with self.assertRaises(UserError):
-                printer.print_document(
-                    self.report, b"content to print", doc_format="pdf"
-                )
-
-    @mock.patch("%s.cups" % server_model)
-    def test_print_file(self, cups):
-        """It should print a file through CUPS"""
-        file_name = "file_name"
-        printer = self.new_record()
-        printer.print_file(file_name, "pdf")
-        cups.Connection().printFile.assert_called_once_with(
-            printer.system_name, file_name, file_name, options={}
-        )
-
-    @mock.patch("%s.cups" % server_model)
-    def test_print_file_error(self, cups):
-        """It should print a file through CUPS"""
-        cups.Connection.side_effect = Exception
-        file_name = "file_name"
-        printer = self.new_record()
-        with self.assertRaises(UserError):
-            printer.print_file(file_name)
+                printer.print_file(file_name)
+            self.assertEqual(len(logs.records), 1)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
 
     def test_set_default(self):
         """It should set a single record as default"""
@@ -142,7 +158,7 @@ class TestPrintingPrinter(TransactionCase):
         printer.unset_default()
         self.assertFalse(printer.default)
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_cancel_all_jobs(self, cups):
         """It should cancel all jobs"""
         printer = self.new_record()
@@ -151,7 +167,7 @@ class TestPrintingPrinter(TransactionCase):
             name=printer.system_name, purge_jobs=False
         )
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_cancel_and_purge_all_jobs(self, cups):
         """It should cancel all jobs"""
         printer = self.new_record()
@@ -160,21 +176,21 @@ class TestPrintingPrinter(TransactionCase):
             name=printer.system_name, purge_jobs=True
         )
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_enable_printer(self, cups):
         """It should enable the printer"""
         printer = self.new_record()
         printer.enable()
         cups.Connection().enablePrinter.assert_called_once_with(printer.system_name)
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_disable_printer(self, cups):
         """It should disable the printer"""
         printer = self.new_record()
         printer.disable()
         cups.Connection().disablePrinter.assert_called_once_with(printer.system_name)
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_print_test_page(self, cups):
         """It should print a test page"""
         printer = self.new_record()

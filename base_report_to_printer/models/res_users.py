@@ -11,18 +11,26 @@ from odoo import api, fields, models
 class ResUsers(models.Model):
     _inherit = "res.users"
 
-    @api.model
+    @property
     def _user_available_action_types(self):
         return [
             (code, string)
-            for code, string in self.env["printing.action"]._available_action_types()
+            for code, string in self.env["printing.action"]._available_action_types
             if code != "user_default"
         ]
 
-    printing_action = fields.Selection(selection=_user_available_action_types)
+    printing_action = fields.Selection(
+        selection=lambda self: self._user_available_action_types
+    )
     printing_printer_id = fields.Many2one(
         comodel_name="printing.printer", string="Default Printer"
     )
+
+    @api.constrains("printing_action")
+    def _check_printing_action(self):
+        for rec in self:
+            if rec.printing_action == "user_default":
+                raise ValueError("user_default should not be available")
 
     @property
     def SELF_READABLE_FIELDS(self):

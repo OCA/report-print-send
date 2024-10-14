@@ -157,7 +157,7 @@ class IrActionsReport(models.Model):
                 _("This report type (%s) is not supported by direct printing!")
                 % str(self.report_type)
             )
-        method_name = "_render_qweb_%s" % (report_type)
+        method_name = f"_render_qweb_{report_type}"
         document, doc_format = getattr(
             self.with_context(must_skip_send_to_printer=True), method_name
         )(self.report_name, record_ids, data=data)
