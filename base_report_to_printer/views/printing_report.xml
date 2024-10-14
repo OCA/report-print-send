@@ -21,12 +21,12 @@
         >printing.report.xml.action.tree (in base_report_to_printer)</field>
         <field name="model">printing.report.xml.action</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="user_id" />
                 <field name="action" />
                 <field name="printer_id" />
                 <field name="printer_tray_id" />
-            </tree>
+            </list>
         </field>
     </record>
     <!-- Add a shorcut to "Actions/Report" in the Printing menu -->

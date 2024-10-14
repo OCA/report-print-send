@@ -55,14 +55,14 @@ class TestIrActionsReportXml(TransactionCase):
 
     def test_print_action_for_report_name_gets_report(self):
         """It should get report by name"""
-        with mock.patch("%s._get_report_from_name" % model) as mk:
+        with mock.patch(f"{model}._get_report_from_name") as mk:
             expect = "test"
             self.Model.print_action_for_report_name(expect)
             mk.assert_called_once_with(expect)
 
     def test_print_action_for_report_name_returns_if_no_report(self):
         """It should return empty dict when no matching report"""
-        with mock.patch("%s._get_report_from_name" % model) as mk:
+        with mock.patch(f"{model}._get_report_from_name") as mk:
             expect = "test"
             mk.return_value = False
             res = self.Model.print_action_for_report_name(expect)
@@ -70,7 +70,7 @@ class TestIrActionsReportXml(TransactionCase):
 
     def test_print_action_for_report_name_returns_if_report(self):
         """It should return correct serializable result for behaviour"""
-        with mock.patch("%s._get_report_from_name" % model) as mk:
+        with mock.patch(f"{model}._get_report_from_name") as mk:
             res = self.Model.print_action_for_report_name("test")
             behaviour = mk().behaviour()
             expect = {

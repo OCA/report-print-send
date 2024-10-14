@@ -36,7 +36,7 @@ class TestPrintingPrinterWizard(TransactionCase):
             "uri": self.printer_vals["device-uri"],
         }
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_action_ok_inits_connection(self, cups):
         """It should initialize CUPS connection"""
         self.Model.action_ok()
@@ -44,7 +44,7 @@ class TestPrintingPrinterWizard(TransactionCase):
             host=self.server.address, port=self.server.port
         )
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_action_ok_gets_printers(self, cups):
         """It should get printers from CUPS"""
         cups.Connection().getPrinters.return_value = {"sys_name": self.printer_vals}
@@ -52,14 +52,14 @@ class TestPrintingPrinterWizard(TransactionCase):
         self.Model.action_ok()
         cups.Connection().getPrinters.assert_called_once_with()
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_action_ok_raises_warning_on_error(self, cups):
         """It should raise Warning on any error"""
         cups.Connection.side_effect = StopTest
         with self.assertRaises(UserError):
             self.Model.action_ok()
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_action_ok_creates_new_printer(self, cups):
         """It should create new printer w/ proper vals"""
         cups.Connection().getPrinters.return_value = {"sys_name": self.printer_vals}
@@ -75,7 +75,7 @@ class TestPrintingPrinterWizard(TransactionCase):
 
             self.assertEqual(val, rec_id[key])
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_action_ok_skips_existing_printer(self, cups):
         """It should not recreate existing printers"""
         cups.Connection().getPrinters.return_value = {"sys_name": self.printer_vals}

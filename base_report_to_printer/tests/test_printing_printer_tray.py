@@ -99,7 +99,7 @@ class TestPrintingPrinter(TransactionCase):
             }
         }
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_update_printers(self, cups):
         """
         Check that the update_printers method calls _prepare_update_from_cups
@@ -110,7 +110,7 @@ class TestPrintingPrinter(TransactionCase):
         self.ServerModel.update_printers()
         self.assertEqual(self.printer.name, "info")
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_prepare_update_from_cups_no_ppd(self, cups):
         """
         Check that the tray_ids field has no value when no PPD is available
@@ -123,7 +123,7 @@ class TestPrintingPrinter(TransactionCase):
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertFalse("tray_ids" in vals)
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_prepare_update_from_cups_empty_ppd(self, cups):
         """
         Check that the tray_ids field has no value when the PPD file has
@@ -141,7 +141,7 @@ class TestPrintingPrinter(TransactionCase):
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertFalse("tray_ids" in vals)
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     @mock.patch("os.unlink")
     def test_prepare_update_from_cups_unlink_error(self, os_unlink, cups):
         """
@@ -158,7 +158,7 @@ class TestPrintingPrinter(TransactionCase):
         with self.assertRaises(OSError):
             self.printer._prepare_update_from_cups(connection, cups_printer)
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     @mock.patch("os.unlink")
     def test_prepare_update_from_cups_unlink_error_enoent(self, os_unlink, cups):
         """
@@ -180,7 +180,7 @@ class TestPrintingPrinter(TransactionCase):
             [(0, 0, {"name": "Auto (Default)", "system_name": "Auto"})],
         )
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_prepare_update_from_cups(self, cups):
         """
         Check the return value when adding a single tray
@@ -196,7 +196,7 @@ class TestPrintingPrinter(TransactionCase):
             [(0, 0, {"name": "Auto (Default)", "system_name": "Auto"})],
         )
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_prepare_update_from_cups_with_multiple_trays(self, cups):
         """
         Check the return value when adding multiple trays at once
@@ -215,7 +215,7 @@ class TestPrintingPrinter(TransactionCase):
             ],
         )
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_prepare_update_from_cups_already_known_trays(self, cups):
         """
         Check that calling the method twice doesn't create the trays multiple
@@ -235,7 +235,7 @@ class TestPrintingPrinter(TransactionCase):
             [(0, 0, {"name": "Auto (Default)", "system_name": "Auto"})],
         )
 
-    @mock.patch("%s.cups" % server_model)
+    @mock.patch(f"{server_model}.cups")
     def test_prepare_update_from_cups_unknown_trays(self, cups):
         """
         Check that trays which are not in the PPD file are removed from Odoo

@@ -9,25 +9,19 @@
         <field name="name">Send to Client</field>
         <field name="action_type">client</field>
     </record>
-    <!-- properties -->
-    <record forcecreate="True" id="property_printing_action_id" model="ir.property">
-        <field name="name">property_printing_action_id</field>
-        <field
-            name="fields_id"
-            search="[('model', '=', 'ir.actions.report'), ('name', '=', 'property_printing_action_id')]"
-        />
-        <field name="value" eval="'printing.action,' + str(printing_action_2)" />
-    </record>
     <record forcecreate="True" id="ir_cron_update_printers" model="ir.cron">
         <field name="name">Update Printers Jobs</field>
         <field name="active" eval="True" />
         <field name="user_id" ref="base.user_root" />
         <field name="interval_number">1</field>
         <field name="interval_type">minutes</field>
-        <field name="numbercall">-1</field>
-        <field name="doall" eval="False" />
         <field name="model_id" ref="base_report_to_printer.model_printing_server" />
         <field name="state">code</field>
         <field name="code">model.action_update_jobs()</field>
     </record>
+    <function
+        model="ir.default"
+        name="set"
+        eval="('ir.actions.report', 'property_printing_action_id', obj().env.ref('base_report_to_printer.printing_action_2').id)"
+    />
 </odoo>

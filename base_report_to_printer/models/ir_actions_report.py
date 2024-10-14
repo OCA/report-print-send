@@ -66,9 +66,9 @@ class IrActionsReport(models.Model):
         return dict(
             action=user.printing_action or "client",
             printer=printer or printer_obj.get_default(),
-            tray=str(user.printer_tray_id.system_name)
-            if user.printer_tray_id
-            else False,
+            tray=(
+                str(user.printer_tray_id.system_name) if user.printer_tray_id else False
+            ),
         )
 
     def _get_report_default_print_behaviour(self):
@@ -112,7 +112,7 @@ class IrActionsReport(models.Model):
                 _("This report type (%s) is not supported by direct printing!")
                 % str(self.report_type)
             )
-        method_name = "_render_qweb_%s" % (report_type)
+        method_name = f"_render_qweb_{report_type}"
         document, doc_format = getattr(
             self.with_context(must_skip_send_to_printer=True), method_name
         )(self.report_name, record_ids, data=data)

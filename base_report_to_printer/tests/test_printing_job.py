@@ -42,7 +42,7 @@ class TestPrintingJob(TransactionCase):
         values["printer_id"] = printer.id
         return self.env["printing.job"].create(values)
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_cancel_job_error(self, cups):
         """It should catch any exception from CUPS and update status"""
         cups.Connection.side_effect = Exception
@@ -52,7 +52,7 @@ class TestPrintingJob(TransactionCase):
         cups.Connection.side_effect = None
         self.assertEqual(cups.Connection().cancelJob.call_count, 0)
 
-    @mock.patch("%s.cups" % model)
+    @mock.patch(f"{model}.cups")
     def test_cancel_job(self, cups):
         """It should catch any exception from CUPS and update status"""
         printer = self.new_printer()

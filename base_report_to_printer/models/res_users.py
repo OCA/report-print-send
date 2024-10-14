@@ -7,19 +7,15 @@
 
 from odoo import api, fields, models
 
+from .printing_action import AVAILABLE_ACTION_TYPES
+
+action_types = [type for type in AVAILABLE_ACTION_TYPES if type[0] != "user_default"]
+
 
 class ResUsers(models.Model):
     _inherit = "res.users"
 
-    @api.model
-    def _user_available_action_types(self):
-        return [
-            (code, string)
-            for code, string in self.env["printing.action"]._available_action_types()
-            if code != "user_default"
-        ]
-
-    printing_action = fields.Selection(selection=_user_available_action_types)
+    printing_action = fields.Selection(selection=action_types)
     printing_printer_id = fields.Many2one(
         comodel_name="printing.printer", string="Default Printer"
     )
