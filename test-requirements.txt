@@ -1,0 +1,1 @@
+odoo-addon-report-print-send @ git+https://github.com/OCA/base_report_to_printer.git@refs/pull/371/head#subdirectory=report-print-send
