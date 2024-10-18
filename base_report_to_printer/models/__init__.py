@@ -1,4 +1,5 @@
 from . import ir_actions_report
+from . import mail_template
 from . import printing_action
 from . import printing_job
 from . import printing_printer

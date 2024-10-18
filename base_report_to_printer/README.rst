@@ -161,6 +161,11 @@ Contributors
 * Matias Peralta <mnp@adhoc.com.ar>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 
+* `Tecnativa <https://www.tecnativa.com>`_
+
+  * Sergio Teruel
+  * David Vidal
+
 Maintainers
 ~~~~~~~~~~~
 
