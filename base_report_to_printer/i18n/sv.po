@@ -1,0 +1,949 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_report_to_printer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-06-12 09:37+0000\n"
+"Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
+"Language-Team: none\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__aborted
+msgid "Aborted"
+msgstr "Avbruten"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__aborted-by-system
+msgid "Aborted by the system"
+msgstr "Avbruten av systemet"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__action
+msgid "Action"
+msgstr "Åtgärd"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_action_ids
+msgid "Actions"
+msgstr "Åtgärder"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__active
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__active
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__active
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__address
+msgid "Address"
+msgstr "Adress"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
+msgid "Archived"
+msgstr "Arkiverad"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Are you sure to want to cancel all jobs of this printer?"
+msgstr "Är du säker på att du vill avbryta alla jobb på den här skrivaren?"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Are you sure to want to print a test page?"
+msgstr "Är du säker på att du vill skriva ut en testsida?"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__attachment_id
+msgid "Attachment"
+msgstr "Bilaga"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__attachment_line_ids
+msgid "Attachments to print"
+msgstr "Bilagor att skriva ut"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__available
+msgid "Available"
+msgstr "Tillgänglig"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-transforming
+msgid "Being transformed into a different format"
+msgstr "Omvandlas till ett annat format"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__cups-filter-crashed
+msgid "CUPS filter crashed"
+msgstr "CUPS filter kraschade"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups
+msgid "CUPS id for this job."
+msgstr "CUPS-id för det här jobbet."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-restartable
+msgid "Can be restarted"
+msgstr "Kan startas om"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
+msgid "Cancel"
+msgstr "Avbryt"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Cancel all running jobs"
+msgstr "Avbryt alla pågående jobb"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__canceled
+msgid "Canceled"
+msgstr "Avbruten"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-canceled-at-device
+msgid "Cancelled at the device"
+msgstr "Avbruten på enheten"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-canceled-by-operator
+msgid "Cancelled by the printer operator"
+msgstr "Avbruten av skrivaroperatören"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-canceled-by-user
+msgid "Cancelled by the user"
+msgstr "Avbruten av användaren"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__processing-to-stop-point
+msgid "Cancelled, but printing already processed pages"
+msgstr "Avbruten, men skriver ut redan bearbetade sidor"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__completed
+msgid "Completed"
+msgstr "Slutförd"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-completed-successfully
+msgid "Completed successfully"
+msgstr "Slutförd framgångsrikt"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-completed-with-errors
+msgid "Completed with some errors"
+msgstr "Slutförd med några fel"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-completed-with-warnings
+msgid "Completed with some warnings"
+msgstr "Slutförde med några varningar"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-compression
+msgid "Compressed using an unknown algorithm"
+msgstr "Komprimerad med en okänd algoritm"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__copies
+msgid "Copies"
+msgstr "Kopior"
+
+#. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+#, python-format
+msgid "Could not sent to printer!"
+msgstr "Det gick inte att skicka till skrivaren!"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_uid
+msgid "Created by"
+msgstr "Skapad av"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
+msgid "Created on"
+msgstr "Skapad den"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
+msgid "Current state of the job."
+msgstr "Jobbets nuvarande status."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-interpreting
+msgid "Currently being interpreted"
+msgstr "Tolkning pågår för närvarande"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-outgoing
+msgid "Currently being sent to the printer"
+msgstr "Skickas för närvarande till skrivaren"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-hold-until-specified
+msgid "Currently held"
+msgstr "För närvarande innehas"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-printing
+msgid "Currently printing"
+msgstr "Utskrift pågår för närvarande"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Date and time of completion for this job."
+msgstr "Datum och tid för slutförandet av det här jobbet."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Date and time of creation for this job."
+msgstr "Datum och tid då det här jobbet skapades."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Date and time of process for this job."
+msgstr "Datum och tidpunkt för när det här jobbet processades."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__default
+msgid "Default"
+msgstr "Standard"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__property_printing_action_id
+msgid "Default Behaviour"
+msgstr "Standardbeteende"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_printer_id
+msgid "Default Printer"
+msgstr "Standardskrivare"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_tray_id
+msgid "Default Printer Paper Source"
+msgstr "Standardpapperskälla för skrivaren"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Disable"
+msgstr "Inaktivera"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__display_name
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Enable"
+msgstr "Aktivera"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__encryption_policy
+msgid "Encryption Policy"
+msgstr "Policy för kryptering"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__encryption_policy
+msgid "Encryption Policy to connect to the server. Empty by default."
+msgstr "Krypteringspolicy för anslutning till servern. Tom som standard."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__error
+msgid "Error"
+msgstr "Fel"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__compression-error
+msgid "Error in the compressed data"
+msgstr "Fel i den komprimerade datan"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__document-format-error
+msgid "Error in the document"
+msgstr "Fel i dokumentet"
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/models/printing_server.py:0
+#, python-format
+msgid ""
+"Failed to connect to the CUPS server on %(address)s:%(port)s. Check that the "
+"CUPS server is running and that you can reach it from the Odoo server."
+msgstr ""
+"Misslyckades med att ansluta till CUPS-servern på %(address)s:%(port)s. "
+"Kontrollera att CUPS-servern körs och att du kan nå den från Odoo-servern."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-incoming
+msgid "Files are currently being received"
+msgstr "Filer tas för närvarande emot"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__submission-interrupted
+msgid "Files were not received in full"
+msgstr "Filer mottogs inte i sin helhet"
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
+#, python-format
+msgid ""
+"Following attachments could not be printed:\n"
+"\n"
+"%s"
+msgstr ""
+"Följande bilagor kunde inte skrivas ut:\n"
+"\n"
+"%s"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__3
+msgid "HTTP_ENCRYPT_ALWAYS"
+msgstr "HTTP_KRYPTERA_ALLTID"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__0
+msgid "HTTP_ENCRYPT_IF_REQUESTED"
+msgstr "HTTP_ENCRYPT_IF_REQUESTED"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__1
+msgid "HTTP_ENCRYPT_NEVER"
+msgstr "HTTP_KRYPTERA_ALDRIG"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_server__encryption_policy__2
+msgid "HTTP_ENCRYPT_REQUIRED"
+msgstr "HTTP_ENCRYPT_KRÄVS"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__service-off-line
+msgid "Held because the printer is offline"
+msgstr "Hålls eftersom skrivaren är offline"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__address
+msgid "IP address or hostname of the server"
+msgstr "Serverns IP-adress eller värdnamn"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__active
+msgid "If checked, this server is useable."
+msgstr "Om rutan är ikryssad är servern användbar."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_id_cups
+msgid "Job ID"
+msgstr "Jobb-ID"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__name
+msgid "Job name."
+msgstr "Jobbnamn."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__job_ids
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Jobs"
+msgstr "Jobb"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__job_ids
+msgid "Jobs printed on this printer."
+msgstr "Jobb utskrivna på den här skrivaren."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_uid
+msgid "Last Updated by"
+msgstr "Senast uppdaterad av"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_date
+msgid "Last Updated on"
+msgstr "Senast uppdaterad den"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__printer_ids
+msgid "List of printers available on this server."
+msgstr "Lista över skrivare som är tillgängliga på den här servern."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__location
+msgid "Location"
+msgstr "Plats"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_media_progress
+msgid "Media Progress"
+msgstr "Medieframsteg"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__model
+msgid "Model"
+msgstr "Modell"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__name
+msgid "Name"
+msgstr "Namn"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__name
+msgid "Name of the server."
+msgstr "Serverns namn."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-data-insufficient
+msgid "No data has been received"
+msgstr "Ingen data har mottagits"
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/models/ir_actions_report.py:0
+#, python-format
+msgid "No printer configured to print this report."
+msgstr "Ingen skrivare har konfigurerats för att skriva ut den här rapporten."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__none
+msgid "No reason"
+msgstr "Ingen anledning"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+msgid "Ok"
+msgstr "Ok"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_tray_id
+msgid "Paper Source"
+msgstr "Papperskälla"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__tray_ids
+msgid "Paper Sources"
+msgstr "Papperskällor"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__password
+msgid "Password"
+msgstr "Lösenord"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__password
+msgid "Password to connect to the server. Empty by default."
+msgstr "Lösenord för att ansluta till servern. Tomt som standard."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__pending
+msgid "Pending"
+msgstr "Väntande"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__pending_held
+msgid "Pending Held"
+msgstr "Avvaktar Hålls"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_media_progress
+msgid "Percentage of progress for this job."
+msgstr "Procent av förloppet för det här jobbet."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__port
+msgid "Port"
+msgstr "Port"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__port
+msgid "Port of the server."
+msgstr "Serverns port."
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
+msgid "Print"
+msgstr "Skriv ut"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment
+msgid "Print Attachment"
+msgstr "Skriv ut bilaga"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment_line
+msgid "Print Attachment line"
+msgstr "Skriv ut Attachment line"
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.action_wizard_print_attachment
+#: model:ir.ui.menu,name:base_report_to_printer.menu_action_wizard_print_attachment
+msgid "Print Attachments"
+msgstr "Skriv ut bilagor"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_action
+msgid "Print Job Action"
+msgstr "Åtgärd för utskriftsjobb"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Print Test Page"
+msgstr "Skriv ut testsida"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__printer_id
+msgid "Printer"
+msgstr "Skrivare"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_tray
+msgid "Printer Tray"
+msgstr "Skrivarfack"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__printer-stopped
+msgid "Printer is stopped"
+msgstr "Skrivaren har stoppats"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-queued-for-marker
+msgid "Printer needs ink/marker/toner"
+msgstr "Skrivaren behöver bläck/markör/toner"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__printer-stopped-partly
+msgid "Printer state reason set to 'stopped-partly'"
+msgstr "Orsaken till skrivarens tillstånd inställd till \"stoppad-delvis\""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__printer_id
+msgid "Printer used for this job."
+msgstr "Skrivare som används för det här jobbet."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_wizard_print_attachment__printer_id
+msgid "Printer used to print the attachments."
+msgstr "Skrivare som används för att skriva ut bilagorna."
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
+msgid "Printers"
+msgstr "Skrivare"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__printer_ids
+msgid "Printers List"
+msgstr "Lista av skrivare"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__printing
+#: model:ir.ui.menu,name:base_report_to_printer.printing_menu
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_users_form
+msgid "Printing"
+msgstr "Utskrift"
+
+#. module: base_report_to_printer
+#: model:res.groups,name:base_report_to_printer.printing_group_manager
+msgid "Printing / Print Manager"
+msgstr "Utskrift / Utskriftsansvarig"
+
+#. module: base_report_to_printer
+#: model:res.groups,name:base_report_to_printer.printing_group_user
+msgid "Printing / Print User"
+msgstr "Utskrift / Utskriftsanvändare"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_action
+msgid "Printing Action"
+msgstr "Utskriftsåtgärd"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_job
+msgid "Printing Job"
+msgstr "Utskriftsjobb"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_printer_update_wizard
+msgid "Printing Printer Update Wizard"
+msgstr "Utskrift Guide för uppdatering av skrivare"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
+msgid "Printing Report Printing Actions"
+msgstr "Utskrift Rapport Utskrift Åtgärder"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_server
+msgid "Printing server"
+msgstr "Utskriftsserver"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing
+msgid "Processing"
+msgstr "Bearbetar"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing_stopped
+msgid "Processing Stopped"
+msgstr "Bearbetning har stoppats"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__queued-in-device
+msgid "Queued at the output device"
+msgstr "Köad på utmatningsenheten"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-queued
+msgid "Queued for printing"
+msgstr "Köad för utskrift"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state_reason
+msgid "Reason for the current job state."
+msgstr "Orsak till det aktuella jobbtillståndet."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__report_id
+msgid "Report"
+msgstr "Rapport"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_ir_actions_report
+msgid "Report Action"
+msgstr "Rapportera åtgärd"
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
+msgid "Reports"
+msgstr "Rapporter"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__record_name
+msgid "Resource Name"
+msgstr "Namn på resurs"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__resources-are-not-ready
+msgid "Resources not available to print the job"
+msgstr "Resurser saknas för att skriva ut jobbet"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__server_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__server_id
+msgid "Server"
+msgstr "Server"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__server-error
+msgid "Server Error"
+msgstr "Serverfel"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__server_id
+msgid "Server used to access this printer."
+msgstr "Server som används för att komma åt den här skrivaren."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__server_id
+msgid "Server which hosts this job."
+msgstr "Server som är värd för det här jobbet."
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.printing_server_action
+#: model:ir.ui.menu,name:base_report_to_printer.printing_server_menu
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_search
+msgid "Servers"
+msgstr "Servrar"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Set Default"
+msgstr "Ange som standard"
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.printing_printer_action
+msgid "Show Printers"
+msgstr "Visa skrivare"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
+msgid "Specific actions per user"
+msgstr "Specifika åtgärder per användare"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_state
+msgid "State"
+msgstr "Status"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_state_reason
+msgid "State Reason"
+msgstr "Anledning till status"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status
+msgid "Status"
+msgstr "Status"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status_message
+msgid "Status Message"
+msgstr "Statusmeddelande"
+
+#. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+#, python-format
+msgid "Successfully sent to printer!"
+msgstr "Framgångsrikt skickat till skrivaren!"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__system_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__system_name
+msgid "System Name"
+msgstr "Systemnamn"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__document-access-error
+msgid "The URI cannot be accessed"
+msgstr "URI:n kan inte kommas åt"
+
+#. module: base_report_to_printer
+#: model:ir.model.constraint,message:base_report_to_printer.constraint_printing_job_job_id_cups_unique
+msgid "The id of the job must be unique per server !"
+msgstr "Jobbets ID måste vara unikt per server !"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_ir_actions_report__printing_action_ids
+msgid "This field allows configuring action and printer on a per user basis"
+msgstr ""
+"Det här fältet gör det möjligt att konfigurera åtgärd och skrivare per "
+"användare"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+msgid ""
+"This process will create all missing printers from the current CUPS server.\""
+msgstr ""
+"Den här processen skapar alla skrivare som saknas från den aktuella CUPS-"
+"servern.\""
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/models/ir_actions_report.py:0
+#, python-format
+msgid "This report type (%s) is not supported by direct printing!"
+msgstr "Den här rapporttypen (%s) stöds inte av direktutskrift!"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Time At Completed"
+msgstr "Tid vid slutförd"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Time At Creation"
+msgstr "Tid vid skapad"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Time At Processing"
+msgstr "Tid vid bearbetar"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Trays"
+msgstr "Fack"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__action_type
+msgid "Type"
+msgstr "Typ"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__uri
+msgid "URI"
+msgstr "URI"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__unavailable
+msgid "Unavailable"
+msgstr "Ej tillgänglig"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__active
+msgid "Unchecked if the job is purged from cups."
+msgstr "Ej ikryssad om jobbet har rensas från cups."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__unknown
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__unknown
+msgid "Unknown"
+msgstr "Okänd"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
+msgid "Unset Default"
+msgstr "Ej inställd standard"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-document-format
+msgid "Unsupported format"
+msgstr "Format som inte stöds"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
+msgid "Update Jobs"
+msgstr "Uppdatera jobb"
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_server_view_form
+msgid "Update Printers"
+msgstr "Uppdatera skrivare"
+
+#. module: base_report_to_printer
+#: model:ir.actions.server,name:base_report_to_printer.ir_cron_update_printers_ir_actions_server
+msgid "Update Printers Jobs"
+msgstr "Uppdatera skrivares jobb"
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.action_printer_update_wizard
+#: model:ir.ui.menu,name:base_report_to_printer.menu_printer_update_wizard
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
+msgid "Update Printers from CUPS"
+msgstr "Uppdatera skrivare från CUPS"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_res_users
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__user_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__user
+msgid "User"
+msgstr "Användare"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_server__user
+msgid "User name to connect to the server. Empty by default."
+msgstr "Användarnamn för att ansluta till servern. Tomt som standard."
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__wizard_id
+msgid "Wizard"
+msgstr "Guide"
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
+#, python-format
+msgid "{name} ({copies} copies)"
+msgstr "{name} ({copies} kopior)"
+
+#~ msgid "Job"
+#~ msgstr "Jobb"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Senast ändrad den"
+
+#~ msgid "Users"
+#~ msgstr "Användare"
+
+#, python-format
+#~ msgid "Document sent to the printer %s"
+#~ msgstr "Dokument skickat till skrivaren %s"
+
+#, python-format
+#~ msgid "Error when sending the document to the printer "
+#~ msgstr "Fel när dokumentet skickas till skrivaren "
+
+#, python-format
+#~ msgid ""
+#~ "Failed to connect to the CUPS server on %s:%s. Check that the CUPS server "
+#~ "is running and that you can reach it from the Odoo server."
+#~ msgstr ""
+#~ "Det gick inte att ansluta till CUPS-servern på %s:%s. Kontrollera att "
+#~ "CUPS-servern körs och att du kan nå den från Odoo-servern."
