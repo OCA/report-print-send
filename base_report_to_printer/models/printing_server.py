@@ -41,6 +41,7 @@ class PrintingServer(models.Model):
         string="Printers List",
         help="List of printers available on this server.",
     )
+    multi_thread = fields.Boolean()
 
     def _open_connection(self, raise_on_error=False):
         self.ensure_one()

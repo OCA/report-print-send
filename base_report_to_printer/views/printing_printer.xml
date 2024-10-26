@@ -78,6 +78,7 @@
                         <field name="location" />
                         <field name="status" />
                         <field name="status_message" />
+                        <field name="multi_thread" />
                     </group>
                     <group string="Trays" name="trays">
                         <field name="tray_ids" nolabel="1" colspan="2">

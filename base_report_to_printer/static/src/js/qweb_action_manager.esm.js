@@ -16,11 +16,11 @@ async function cupsReportActionHandler(action, options, env) {
             print_action.action === "server" &&
             !print_action.printer_exception
         ) {
-            const result = await orm.call("ir.actions.report", "print_document", [
-                action.id,
-                action.context.active_ids,
-                action.data,
-            ]);
+            const result = await orm.call(
+                "ir.actions.report",
+                "print_document_client_action",
+                [action.id, action.context.active_ids, action.data]
+            );
             if (result) {
                 env.services.notification.add(_t("Successfully sent to printer!"), {
                     type: "success",

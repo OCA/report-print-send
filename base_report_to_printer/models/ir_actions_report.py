@@ -3,10 +3,12 @@
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# Copyright 2024 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import threading
 from time import time
 
-from odoo import _, api, exceptions, fields, models
+from odoo import _, api, exceptions, fields, models, registry
 from odoo.tools.safe_eval import safe_eval
 
 REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
@@ -66,9 +68,9 @@ class IrActionsReport(models.Model):
         return dict(
             action=user.printing_action or "client",
             printer=user.printing_printer_id or printer_obj.get_default(),
-            tray=str(user.printer_tray_id.system_name)
-            if user.printer_tray_id
-            else False,
+            tray=(
+                str(user.printer_tray_id.system_name) if user.printer_tray_id else False
+            ),
         )
 
     def _get_report_default_print_behaviour(self):
@@ -118,6 +120,29 @@ class IrActionsReport(models.Model):
             if printer_exception and not self.env.context.get("skip_printer_exception"):
                 result["printer_exception"] = True
         return result
+
+    def print_document_client_action(self, record_ids, data=None):
+        behaviour = self.behaviour()
+        printer = behaviour.pop("printer", None)
+        if printer.multi_thread:
+
+            @self.env.cr.postcommit.add
+            def _launch_print_thread():
+                threaded_calculation = threading.Thread(
+                    target=self.print_document_threaded,
+                    args=(self.id, record_ids, data),
+                )
+                threaded_calculation.start()
+
+            return True
+        else:
+            return self.print_document(record_ids, data=data)
+
+    def print_document_threaded(self, report_id, record_ids, data):
+        with registry(self._cr.dbname).cursor() as cr:
+            self = self.with_env(self.env(cr=cr))
+            report = self.env["ir.actions.report"].browse(report_id)
+            report.print_document(record_ids, data)
 
     def print_document(self, record_ids, data=None):
         """Print a document, do not return the document file"""
