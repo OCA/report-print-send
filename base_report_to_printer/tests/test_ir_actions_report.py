@@ -295,3 +295,21 @@ class TestIrActionsReportXml(TransactionCase):
         self.assertEqual(action.printer_tray_id, tray)
         action.onchange_printing_printer_id()
         self.assertFalse(action.printer_tray_id)
+
+    def test_print_in_new_thread(self):
+        """It should return the action and printer from printing action in other
+        thread"""
+        report = self.Model.search([], limit=1)
+        self.env.user.printing_action = "server"
+        printing_action = self.new_printing_action()
+        printing_action.user_id = self.env.user
+        printing_action.printer_id = self.new_printer()
+        printing_action.printer_id.multi_thread = True
+        self.assertEqual(
+            report.behaviour(),
+            {
+                "action": printing_action.action,
+                "printer": printing_action.printer_id,
+                "tray": False,
+            },
+        )

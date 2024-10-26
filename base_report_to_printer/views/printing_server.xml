@@ -32,6 +32,7 @@
                             <field name="user" />
                             <field name="password" />
                             <field name="encryption_policy" />
+                            <field name="multi_thread" />
                         </group>
                     </group>
                     <separator name="printers" string="Printers" />
