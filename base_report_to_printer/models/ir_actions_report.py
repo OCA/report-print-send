@@ -60,6 +60,8 @@ class IrActionsReport(models.Model):
             "skip_printer_exception"
         ):
             serializable_result["printer_exception"] = True
+        if self.env.context.get("force_print_to_client"):
+            serializable_result["action"] = "client"
         return serializable_result
 
     def _get_user_default_print_behaviour(self):
@@ -136,7 +138,10 @@ class IrActionsReport(models.Model):
 
             return True
         else:
-            return self.print_document(record_ids, data=data)
+            try:
+                return self.print_document(record_ids, data=data)
+            except Exception:
+                return
 
     def print_document_threaded(self, report_id, record_ids, data):
         with registry(self._cr.dbname).cursor() as cr:
@@ -172,6 +177,7 @@ class IrActionsReport(models.Model):
         else:
             title = self.report_name
         behaviour["title"] = title
+        behaviour["res_ids"] = record_ids
         # TODO should we use doc_format instead of report_type
         return printer.print_document(
             self, document, doc_format=self.report_type, **behaviour
