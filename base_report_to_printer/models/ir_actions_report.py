@@ -87,6 +87,8 @@ class IrActionsReport(models.Model):
 
     def behaviour(self):
         self.ensure_one()
+        # Parche adhoc por pr: https://github.com/OCA/report-print-send/pull/367
+        self = self.with_context(skip_printer_exception=True)
         printing_act_obj = self.env["printing.report.xml.action"]
 
         result = self._get_user_default_print_behaviour()
