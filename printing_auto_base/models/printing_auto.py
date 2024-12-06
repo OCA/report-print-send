@@ -19,6 +19,7 @@ class PrintingAuto(models.Model):
     _description = "Printing Auto"
 
     name = fields.Char(string="Name", required=True)
+    model = fields.Char(string="Related Document Model", required=True)
 
     data_source = fields.Selection(
         [
