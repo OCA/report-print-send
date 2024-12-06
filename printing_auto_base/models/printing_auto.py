@@ -65,11 +65,11 @@ class PrintingAuto(models.Model):
     def _check_data_source(self):
         for rec in self:
             if rec.data_source == "report" and not rec.report_id:
-                raise UserError(_("Report is not set"))
+                raise ValidationError(_("Report is not set"))
             if rec.data_source == "attachment" and (
                 not rec.attachment_domain or rec.attachment_domain == "[]"
             ):
-                raise UserError(_("Attachment domain is not set"))
+                raise ValidationError(_("Attachment domain is not set"))
 
     def _get_behaviour(self):
         if self.printer_id:
@@ -86,7 +86,7 @@ class PrintingAuto(models.Model):
             try:
                 return safe_eval(f"obj.{self.record_change}", {"obj": record})
             except Exception as e:
-                raise ValidationError(
+                raise UserError(
                     _("The Record change could not be applied because: %s") % str(e)
                 ) from e
         return record
@@ -118,7 +118,7 @@ class PrintingAuto(models.Model):
         domain = self._prepare_attachment_domain(record)
         attachments = self.env["ir.attachment"].search(domain)
         if not attachments:
-            raise ValidationError(_("No attachment was found."))
+            raise UserError(_("No attachment was found."))
         return [base64.b64decode(a.datas) for a in attachments]
 
     def _generate_data_from_report(self, record):

@@ -6,7 +6,7 @@ from unittest import mock
 
 from odoo_test_helper import FakeModelLoader
 
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 
 from odoo.addons.base_report_to_printer.models.printing_printer import PrintingPrinter
 
@@ -83,7 +83,7 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
         )
         attachment.unlink()
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(UserError):
             printing_auto_attachment._get_content(self.record)
 
     def test_do_print(self):
