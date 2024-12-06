@@ -4,10 +4,13 @@
 
 from unittest import mock
 
+from odoo_test_helper import FakeModelLoader
+
 from odoo.exceptions import UserError, ValidationError
 
-from .common import PrintingPrinter, TestPrintingAutoCommon, print_document
-from .model_test import PrintingAutoTester, PrintingAutoTesterChild, setup_test_model
+from odoo.addons.base_report_to_printer.models.printing_printer import PrintingPrinter
+
+from .common import TestPrintingAutoCommon, print_document
 
 
 @mock.patch.object(PrintingPrinter, "print_document", print_document)
@@ -15,8 +18,11 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        setup_test_model(cls.env, PrintingAutoTesterChild)
-        setup_test_model(cls.env, PrintingAutoTester)
+        cls.loader = FakeModelLoader(cls.env, cls.__module__)
+        cls.loader.backup_registry()
+        from .model_test import PrintingAutoTester, PrintingAutoTesterChild
+
+        cls.loader.update_registry((PrintingAutoTesterChild, PrintingAutoTester))
 
     def test_check_data_source(self):
         with self.assertRaises(UserError):
