@@ -1,6 +1,6 @@
 # Copyright (c) 2018 Creu Blanca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from mock import patch
+from unittest.mock import patch
 
 from odoo.tests.common import TransactionCase
 
@@ -36,7 +36,13 @@ class TestRemotePrinter(TransactionCase):
         with patch("odoo.addons.base_remote.models.base.Base.remote", new=self.remote):
             behaviour = report.behaviour()
         self.assertEqual(
-            behaviour, {"action": "client", "printer": self.printer_1, "tray": False}
+            behaviour,
+            {
+                "action": "client",
+                "printer": self.printer_1,
+                "tray": False,
+                "printer_exception": True,
+            },
         )
 
     def test_behaviour_report_values(self):
@@ -48,7 +54,13 @@ class TestRemotePrinter(TransactionCase):
         with patch("odoo.addons.base_remote.models.base.Base.remote", new=self.remote):
             behaviour = report.behaviour()
         self.assertDictEqual(
-            behaviour, {"action": "server", "printer": self.printer_1, "tray": False}
+            behaviour,
+            {
+                "action": "server",
+                "printer": self.printer_1,
+                "tray": False,
+                "printer_exception": True,
+            },
         )
 
     def test_behaviour_user_action(self):
@@ -60,7 +72,13 @@ class TestRemotePrinter(TransactionCase):
         with patch("odoo.addons.base_remote.models.base.Base.remote", new=self.remote):
             behaviour = report.behaviour()
         self.assertEqual(
-            behaviour, {"action": "server", "printer": self.printer_1, "tray": False}
+            behaviour,
+            {
+                "action": "server",
+                "printer": self.printer_1,
+                "tray": False,
+                "printer_exception": True,
+            },
         )
 
     def test_behaviour_default_action(self):
