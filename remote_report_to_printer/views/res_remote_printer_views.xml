@@ -21,7 +21,7 @@
         <field name="name">res.remote.printer.tree</field>
         <field name="model">res.remote.printer</field>
         <field name="arch" type="xml">
-            <tree string="Remote Printers" editable="bottom">
+            <tree editable="bottom">
                 <field name="printer_id" />
                 <field name="remote_id" invisible="1" />
                 <field name="printer_tray_id" />
