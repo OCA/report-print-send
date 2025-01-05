@@ -12,7 +12,7 @@ class TestMail(HttpCase):
     post_install = True
 
     def setUp(self):
-        super(TestMail, self).setUp()
+        super().setUp()
         self.Model = self.env["ir.model"]
         self.report_obj = self.env["ir.actions.report"]
         self.partner_obj = self.env["res.partner"]
@@ -28,10 +28,9 @@ class TestMail(HttpCase):
                 "type": "qweb",
                 "xml_id": test_xml_id,
                 "model_data_id": self.report_imd.id,
-                "arch": """<t t-name="%s">
+                "arch": f"""<t t-name="{test_xml_id}">
                 <div>Test</div>
-            </t>"""
-                % test_xml_id,
+            </t>""",
             }
         )
         self.report_imd.res_id = self.report_view.id
@@ -51,7 +50,7 @@ class TestMail(HttpCase):
                 "name": "TestTemplate",
                 "email_from": "myself@example.com",
                 "email_to": "brigitte@example.com",
-                "partner_to": "%s" % self.test_partner.id,
+                "partner_to": str(self.test_partner.id),
                 "model_id": self.res_partner_model.id,
                 "subject": "About ${object.name}",
                 "body_html": "<p>Dear ${object.name}, "
