@@ -30,19 +30,11 @@ msgid "Created on"
 msgstr ""
 
 #. module: remote_report_to_printer
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_ir_actions_report__display_name
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_action__display_name
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_printer__display_name
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote__display_name
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: remote_report_to_printer
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_ir_actions_report__id
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_action__id
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_printer__id
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote__id
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__id
 msgid "ID"
 msgstr ""
@@ -53,10 +45,6 @@ msgid "Is Default"
 msgstr ""
 
 #. module: remote_report_to_printer
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_ir_actions_report____last_update
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_action____last_update
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_printer____last_update
-#: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote____last_update
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -72,6 +60,7 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: remote_report_to_printer
+#. odoo-python
 #: code:addons/remote_report_to_printer/models/res_remote_printer.py:0
 #, python-format
 msgid "Only one default printer is allowed"
@@ -113,11 +102,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote__remote_printer_ids
 #: model_terms:ir.ui.view,arch_db:remote_report_to_printer.res_remote_printer_form
 msgid "Remote Printer"
-msgstr ""
-
-#. module: remote_report_to_printer
-#: model_terms:ir.ui.view,arch_db:remote_report_to_printer.res_remote_printer_tree
-msgid "Remote Printers"
 msgstr ""
 
 #. module: remote_report_to_printer
