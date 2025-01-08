@@ -6,127 +6,129 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2025-01-08 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: remote_report_to_printer
 #: model:ir.model.constraint,message:remote_report_to_printer.constraint_res_remote_printer_unique_printer_remote_usage
 msgid "A Remote cannot have the same printer for the same usage"
-msgstr ""
+msgstr "Un remoto non può avere la stessa stampante per lo stesso utilizzo"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__is_default
 msgid "Is Default"
-msgstr ""
+msgstr "È predefinito"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: remote_report_to_printer
 #. odoo-python
 #: code:addons/remote_report_to_printer/models/res_remote_printer.py:0
 #, python-format
 msgid "Only one default printer is allowed"
-msgstr ""
+msgstr "È consentita solo una stampante predefinita"
 
 #. module: remote_report_to_printer
 #: model:ir.model,name:remote_report_to_printer.model_printing_action
 msgid "Print Job Action"
-msgstr ""
+msgstr "Azione di stampa"
 
 #. module: remote_report_to_printer
 #: model:ir.model,name:remote_report_to_printer.model_printing_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__printer_id
 msgid "Printer"
-msgstr ""
+msgstr "Stampante"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__printer_tray_id
 msgid "Printer Tray"
-msgstr ""
+msgstr "Cassetto stampante"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__printer_usage
 msgid "Printer Usage"
-msgstr ""
+msgstr "Utilizzo stampante"
 
 #. module: remote_report_to_printer
 #: model_terms:ir.ui.view,arch_db:remote_report_to_printer.res_remote_form
 msgid "Printers"
-msgstr ""
+msgstr "Stampanti"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote_printer__remote_id
 msgid "Remote"
-msgstr ""
+msgstr "Remoto"
 
 #. module: remote_report_to_printer
 #: model:ir.model,name:remote_report_to_printer.model_res_remote_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_res_remote__remote_printer_ids
 #: model_terms:ir.ui.view,arch_db:remote_report_to_printer.res_remote_printer_form
 msgid "Remote Printer"
-msgstr ""
+msgstr "Stampante remota"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,help:remote_report_to_printer.field_printing_printer__printer_remote_ids
 msgid "Remote that can use this printer."
-msgstr ""
+msgstr "Remota può essere utilizzato in questa stampante."
 
 #. module: remote_report_to_printer
 #: model:ir.model,name:remote_report_to_printer.model_res_remote
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_printer__printer_remote_ids
 #: model_terms:ir.ui.view,arch_db:remote_report_to_printer.printing_printer_form_view
 msgid "Remotes"
-msgstr ""
+msgstr "Remoti"
 
 #. module: remote_report_to_printer
 #: model:ir.model,name:remote_report_to_printer.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "Azione resoconto"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields.selection,name:remote_report_to_printer.selection__res_remote_printer__printer_usage__standard
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #. module: remote_report_to_printer
 #: model:ir.model.fields,field_description:remote_report_to_printer.field_printing_action__action_type
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
