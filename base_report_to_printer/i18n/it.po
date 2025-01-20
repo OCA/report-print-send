@@ -159,6 +159,11 @@ msgid "Completed with some warnings"
 msgstr "Completata con alcuni avvisi"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Completion Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-compression
 msgid "Compressed using an unknown algorithm"
 msgstr "Compressa con un algoritmo sconosciuto"
@@ -171,7 +176,6 @@ msgstr "Copie"
 #. module: base_report_to_printer
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
-#, python-format
 msgid "Could not sent to printer!"
 msgstr "Imossibile inviare alla stmpante!"
 
@@ -200,6 +204,11 @@ msgstr "Creato da"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
 msgstr "Creato il"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Creation Date"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
@@ -233,8 +242,8 @@ msgstr "Data e ora di completamento di questo lavoro."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Date and time of creation for this job."
-msgstr "Data e ora di creazione di questo lavoro."
+msgid "Date and time of creation of this job."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
@@ -315,7 +324,6 @@ msgstr "Errore nel documento"
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/models/printing_server.py:0
-#, python-format
 msgid ""
 "Failed to connect to the CUPS server on %(address)s:%(port)s. Check that the "
 "CUPS server is running and that you can reach it from the Odoo server."
@@ -337,7 +345,6 @@ msgstr "I file non sono stati ricevuti completamente"
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
-#, python-format
 msgid ""
 "Following attachments could not be printed:\n"
 "\n"
@@ -394,6 +401,12 @@ msgstr "Indirizzo IP o nome host del server"
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__active
 msgid "If checked, this server is useable."
 msgstr "Se selezionata, il server è utilizzabile."
+
+#. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+msgid "Issue on"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_id_cups
@@ -463,6 +476,12 @@ msgid "Model"
 msgstr "Modello"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__multi_thread
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__multi_thread
+msgid "Multi Thread"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__name
@@ -484,7 +503,6 @@ msgstr "Nessun dato è stato ricevuto"
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/models/ir_actions_report.py:0
-#, python-format
 msgid "No printer configured to print this report."
 msgstr "Nessuna stampante configurata per stampare questo report."
 
@@ -545,6 +563,8 @@ msgid "Port of the server."
 msgstr "Porta del server."
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Print"
@@ -676,6 +696,11 @@ msgid "Processing"
 msgstr "Elaborazione"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Processing Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing_stopped
 msgid "Processing Stopped"
 msgstr "Elaborazione fermata"
@@ -786,7 +811,6 @@ msgstr "Messaggio stato"
 #. module: base_report_to_printer
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
-#, python-format
 msgid "Successfully sent to printer!"
 msgstr "Inviato correttamente alla stampante!"
 
@@ -807,6 +831,12 @@ msgid "The id of the job must be unique per server !"
 msgstr "L'ID del lavoro deve essere univoco per server!"
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+msgid "The report"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
 msgstr ""
@@ -824,24 +854,8 @@ msgstr ""
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/models/ir_actions_report.py:0
-#, python-format
 msgid "This report type (%s) is not supported by direct printing!"
 msgstr "Questo tipo di server (%s) non è supportato dalla stampa diretta!"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
-msgid "Time At Completed"
-msgstr "Tempo al completamento"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Time At Creation"
-msgstr "Tempo alla creazione"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
-msgid "Time At Processing"
-msgstr "Tempo all'elaborazione"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -865,8 +879,8 @@ msgstr "Non disponibile"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__active
-msgid "Unchecked if the job is purged from cups."
-msgstr "Deselezionato se il lavoro è ripulito da CUPS."
+msgid "Unchecked if the job is purged from CUPS."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__unknown
@@ -924,11 +938,31 @@ msgid "Wizard"
 msgstr "Procedura guidata"
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+msgid "couldn't be printed. Click on the button below to download it"
+msgstr ""
+
+#. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
-#, python-format
 msgid "{name} ({copies} copies)"
 msgstr "{name} ({copies} copie)"
+
+#~ msgid "Date and time of creation for this job."
+#~ msgstr "Data e ora di creazione di questo lavoro."
+
+#~ msgid "Time At Completed"
+#~ msgstr "Tempo al completamento"
+
+#~ msgid "Time At Creation"
+#~ msgstr "Tempo alla creazione"
+
+#~ msgid "Time At Processing"
+#~ msgstr "Tempo all'elaborazione"
+
+#~ msgid "Unchecked if the job is purged from cups."
+#~ msgstr "Deselezionato se il lavoro è ripulito da CUPS."
 
 #~ msgid "Job"
 #~ msgstr "Lavoro"

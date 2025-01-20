@@ -160,6 +160,11 @@ msgid "Completed with some warnings"
 msgstr "已完成，但有警告"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Completion Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__unsupported-compression
 msgid "Compressed using an unknown algorithm"
 msgstr "使用未知算法压缩"
@@ -172,7 +177,6 @@ msgstr "副本"
 #. module: base_report_to_printer
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
-#, python-format
 msgid "Could not sent to printer!"
 msgstr "无法发送至打印机！"
 
@@ -201,6 +205,11 @@ msgstr "创建者"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
 msgstr "创建时间"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Creation Date"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
@@ -234,8 +243,8 @@ msgstr "此作业的完成日期和时间。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Date and time of creation for this job."
-msgstr "此作业的创建日期和时间。"
+msgid "Date and time of creation of this job."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
@@ -314,13 +323,12 @@ msgstr "文档中的错误"
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/models/printing_server.py:0
-#, python-format
 msgid ""
 "Failed to connect to the CUPS server on %(address)s:%(port)s. Check that the "
 "CUPS server is running and that you can reach it from the Odoo server."
 msgstr ""
-"无法连接到位于 %(address)s:%(port)s 的 CUPS 服务器。检查 CUPS "
-"服务器是否正在运行，并确认您可以从 Odoo 服务器访问它。"
+"无法连接到位于 %(address)s:%(port)s 的 CUPS 服务器。检查 CUPS 服务器是否正在"
+"运行，并确认您可以从 Odoo 服务器访问它。"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-incoming
@@ -335,7 +343,6 @@ msgstr "文件未完全接收"
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
-#, python-format
 msgid ""
 "Following attachments could not be printed:\n"
 "\n"
@@ -392,6 +399,12 @@ msgstr "服务器的 IP 地址或主机名"
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_server__active
 msgid "If checked, this server is useable."
 msgstr "如果勾选，此服务器可用。"
+
+#. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+msgid "Issue on"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_id_cups
@@ -461,6 +474,12 @@ msgid "Model"
 msgstr "模型"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__multi_thread
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__multi_thread
+msgid "Multi Thread"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__name
@@ -482,7 +501,6 @@ msgstr "没有接收到数据"
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/models/ir_actions_report.py:0
-#, python-format
 msgid "No printer configured to print this report."
 msgstr "没有配置打印机来打印此报告。"
 
@@ -543,6 +561,8 @@ msgid "Port of the server."
 msgstr "服务器的端口。"
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Print"
@@ -673,6 +693,11 @@ msgid "Processing"
 msgstr "处理中"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Processing Date"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__processing_stopped
 msgid "Processing Stopped"
 msgstr "处理已停止"
@@ -783,7 +808,6 @@ msgstr "状态消息"
 #. module: base_report_to_printer
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
-#, python-format
 msgid "Successfully sent to printer!"
 msgstr "成功发送至打印机！"
 
@@ -804,6 +828,12 @@ msgid "The id of the job must be unique per server !"
 msgstr "每个服务器的作业 ID 必须是唯一的！"
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+msgid "The report"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
 msgstr "此字段允许基于每个用户配置操作和打印机"
@@ -817,24 +847,8 @@ msgstr "此过程将从当前 CUPS 服务器创建所有缺失的打印机。"
 #. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/models/ir_actions_report.py:0
-#, python-format
 msgid "This report type (%s) is not supported by direct printing!"
 msgstr "直接打印不支持此报告类型 (%s)！"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
-msgid "Time At Completed"
-msgstr "完成时间"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
-msgid "Time At Creation"
-msgstr "创建时间"
-
-#. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
-msgid "Time At Processing"
-msgstr "处理时间"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
@@ -858,8 +872,8 @@ msgstr "不可用"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__active
-msgid "Unchecked if the job is purged from cups."
-msgstr "未勾选表示作业已从CUPS中清除。"
+msgid "Unchecked if the job is purged from CUPS."
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__unknown
@@ -917,8 +931,28 @@ msgid "Wizard"
 msgstr "向导"
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+msgid "couldn't be printed. Click on the button below to download it"
+msgstr ""
+
+#. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
-#, python-format
 msgid "{name} ({copies} copies)"
 msgstr "{name} ({copies} 副本)"
+
+#~ msgid "Date and time of creation for this job."
+#~ msgstr "此作业的创建日期和时间。"
+
+#~ msgid "Time At Completed"
+#~ msgstr "完成时间"
+
+#~ msgid "Time At Creation"
+#~ msgstr "创建时间"
+
+#~ msgid "Time At Processing"
+#~ msgstr "处理时间"
+
+#~ msgid "Unchecked if the job is purged from cups."
+#~ msgstr "未勾选表示作业已从CUPS中清除。"
