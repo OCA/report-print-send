@@ -1,10 +1,12 @@
 # Copyright (C) 2022 Raumschmiede GmbH - Christopher Hansen (<https://www.raumschmiede.de>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+import logging
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestIrActionsReport(TransactionCase):
+class TestIrActionsReport(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -36,11 +38,16 @@ class TestIrActionsReport(TransactionCase):
         report.label = True
         self.env.user.printing_action = "client"
         self.env.user.default_label_printer_id = self.new_printer()
-        self.assertEqual(
-            report.behaviour(),
-            {
-                "action": "client",
-                "printer": self.env.user.default_label_printer_id,
-                "tray": False,
-            },
-        )
+        with (
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            self.assertEqual(
+                report.behaviour(),
+                {
+                    "action": "client",
+                    "printer": self.env.user.default_label_printer_id,
+                    "tray": False,
+                },
+            )
+            self.assertEqual(len(logs.records), 1)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
