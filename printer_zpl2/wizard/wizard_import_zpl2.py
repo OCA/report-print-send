@@ -9,7 +9,7 @@ import re
 
 from PIL import Image, ImageOps
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 from ..models import zpl2
 
@@ -395,7 +395,7 @@ class WizardImportZPl2(models.TransientModel):
                 seq = sequence + i * 10
                 vals.update(
                     {
-                        "name": _("Import %s") % seq,
+                        "name": self.env._("Import %s") % seq,
                         "sequence": seq,
                         "model": str(zpl2.MODEL_ENHANCED),
                         "label_id": self.label_id.id,

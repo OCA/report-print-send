@@ -10,7 +10,7 @@ from collections import defaultdict
 import requests
 from PIL import Image, ImageOps
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval, wrap_module
 
@@ -91,7 +91,7 @@ class PrintingLabelZpl2(models.Model):
     @api.constrains("component_ids")
     def check_recursion(self):
         cr = self._cr
-        self.flush(["component_ids"])
+        self.flush_recordset(["component_ids"])
         query = (
             'SELECT "{}", "{}" FROM "{}" '
             'WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
@@ -115,7 +115,9 @@ class PrintingLabelZpl2(models.Model):
                     [id1] + list(preds[id1]), [id2] + list(succs[id2])
                 ):
                     if x == y:
-                        raise ValidationError(_("You can not create recursive labels."))
+                        raise ValidationError(
+                            self.env._("You can not create recursive labels.")
+                        )
                     succs[x].add(y)
                     preds[y].add(x)
                 if id2 not in done:
@@ -370,7 +372,9 @@ class PrintingLabelZpl2(models.Model):
         for label in self:
             if record._name != label.model_id.model:
                 raise exceptions.UserError(
-                    _("This label cannot be used on {model}").format(model=record._name)
+                    self.env._("This label cannot be used on {model}").format(
+                        model=record._name
+                    )
                 )
             # Send the label to printer
             label_contents = label._generate_zpl2_data(
@@ -385,7 +389,7 @@ class PrintingLabelZpl2(models.Model):
     def new_action(self, model_id):
         return self.env["ir.actions.act_window"].create(
             {
-                "name": _("Print Label"),
+                "name": self.env._("Print Label"),
                 "binding_model_id": model_id,
                 "res_model": "wizard.print.record.label",
                 "view_mode": "form",
@@ -522,9 +526,9 @@ class PrintingLabelZpl2(models.Model):
                     return base64.b64encode(imgByteArr.getvalue())
                 else:
                     _logger.warning(
-                        _("Error with Labelary API. %s") % response.status_code
+                        self.env._("Error with Labelary API. %s") % response.status_code
                     )
 
             except Exception as e:
-                _logger.warning(_("Error with Labelary API. %s") % e)
+                _logger.warning(self.env._("Error with Labelary API. %s") % e)
         return False

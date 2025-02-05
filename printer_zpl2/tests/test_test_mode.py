@@ -2,37 +2,25 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from unittest.mock import patch
 
-from odoo.tests.common import TransactionCase
+import requests
+
+from odoo.tools import mute_logger
+
+from .common import PrinterZpl2Common
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 
-class TestWizardPrintRecordLabel(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.Model = self.env["wizard.print.record.label"]
-        self.server = self.env["printing.server"].create({})
-        self.printer = self.env["printing.printer"].create(
-            {
-                "name": "Printer",
-                "server_id": self.server.id,
-                "system_name": "Sys Name",
-                "default": True,
-                "status": "unknown",
-                "status_message": "Msg",
-                "model": "res.users",
-                "location": "Location",
-                "uri": "URI",
-            }
-        )
-        self.label = self.env["printing.label.zpl2"].create(
-            {
-                "name": "ZPL II Label",
-                "model_id": self.env.ref(
-                    "base_report_to_printer.model_printing_printer"
-                ).id,
-            }
-        )
+class TestWizardPrintRecordLabel(PrinterZpl2Common):
+    @classmethod
+    def setUpClass(cls):
+        cls._super_send = requests.Session.send
+        super().setUpClass()
+
+    @classmethod
+    def _request_handler(cls, s, r, /, **kw):
+        """Don't block external requests."""
+        return cls._super_send(s, r, **kw)
 
     def test_get_record(self):
         """Check if return a record"""
@@ -64,11 +52,15 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
         self.label.labelary_dpmm = "8dpmm"
+        # Maximum label size of 15 x 15 inches
         self.label.labelary_height = 10000000
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"Test"'}
         )
-        self.assertFalse(self.label.labelary_image)
+        # do not log expected warning "Error with Labelary API. 400"
+        # "ERROR: Label height is larger than 15.0 inches"
+        with mute_logger("odoo.addons.printer_zpl2.models.printing_label_zpl2"):
+            self.assertFalse(self.label.labelary_image)
 
     def test_emulation_with_bad_data_compute(self):
         """Check if bad data compute"""

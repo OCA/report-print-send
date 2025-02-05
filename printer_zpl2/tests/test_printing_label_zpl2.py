@@ -4,39 +4,18 @@
 from unittest.mock import patch
 
 from odoo import exceptions
-from odoo.tests.common import TransactionCase
 
 from ..models import zpl2
+from .common import PrinterZpl2Common
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 
-class TestPrintingLabelZpl2(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.Model = self.env["printing.label.zpl2"]
-        self.ComponentModel = self.env["printing.label.zpl2.component"]
-        self.server = self.env["printing.server"].create({})
-        self.printer = self.env["printing.printer"].create(
-            {
-                "name": "Printer",
-                "server_id": self.server.id,
-                "system_name": "Sys Name",
-                "default": True,
-                "status": "unknown",
-                "status_message": "Msg",
-                "model": "res.users",
-                "location": "Location",
-                "uri": "URI",
-            }
-        )
-        self.label_vals = {
-            "name": "ZPL II Label",
-            "model_id": self.env.ref(
-                "base_report_to_printer.model_printing_printer"
-            ).id,
-        }
-        self.component_vals = {"name": "ZPL II Label Component"}
+class TestPrintingLabelZpl2(PrinterZpl2Common):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.component_vals = {"name": "ZPL II Label Component"}
 
     def new_label(self, vals=None):
         values = self.label_vals.copy()
