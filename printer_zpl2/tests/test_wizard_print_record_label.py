@@ -3,42 +3,21 @@
 
 from unittest.mock import patch
 
-from odoo.tests.common import TransactionCase
+from .common import PrinterZpl2Common
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 
-class TestWizardPrintRecordLabel(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.Model = self.env["wizard.print.record.label"]
-        self.server = self.env["printing.server"].create({})
-        self.printer = self.env["printing.printer"].create(
-            {
-                "name": "Printer",
-                "server_id": self.server.id,
-                "system_name": "Sys Name",
-                "default": True,
-                "status": "unknown",
-                "status_message": "Msg",
-                "model": "res.users",
-                "location": "Location",
-                "uri": "URI",
-            }
-        )
-        self.label = self.env["printing.label.zpl2"].create(
-            {
-                "name": "ZPL II Label",
-                "model_id": self.env.ref(
-                    "base_report_to_printer.model_printing_printer"
-                ).id,
-            }
-        )
+class TestWizardPrintRecordLabel(PrinterZpl2Common):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.Wizard = cls.env["wizard.print.record.label"]
 
     @patch(f"{model}.cups")
     def test_print_record_label(self, cups):
         """Check that printing a label using the generic wizard works"""
-        wizard_obj = self.Model.with_context(
+        wizard_obj = self.Wizard.with_context(
             active_model="printing.printer",
             active_id=self.printer.id,
             active_ids=[self.printer.id],
@@ -75,7 +54,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
                 ).id,
             }
         )
-        wizard_obj = self.Model.with_context(
+        wizard_obj = self.Wizard.with_context(
             active_model="printing.printer",
             active_id=self.printer.id,
             active_ids=[self.printer.id],
@@ -94,7 +73,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
                 "model_id": self.env.ref("base.model_res_users").id,
             }
         )
-        wizard_obj = self.Model.with_context(
+        wizard_obj = self.Wizard.with_context(
             active_model="printing.printer",
             active_id=self.printer.id,
             active_ids=[self.printer.id],
