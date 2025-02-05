@@ -9,7 +9,7 @@ model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 class TestWizardPrintRecordLabel(TransactionCase):
     def setUp(self):
-        super(TestWizardPrintRecordLabel, self).setUp()
+        super().setUp()
         self.Model = self.env["wizard.print.record.label"]
         self.server = self.env["printing.server"].create({})
         self.printer = self.env["printing.printer"].create(
@@ -45,7 +45,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
             record = Obj.search([], limit=1, order="id desc")
         self.assertEqual(res, record)
 
-    @patch("%s.cups" % model)
+    @patch(f"{model}.cups")
     def test_print_label_test(self, cups):
         """Check if print test"""
         self.label.test_print_mode = True
