@@ -133,7 +133,7 @@ class PrintingLabelZpl2(models.Model):
         page_count=1,
         label_offset_x=0,
         label_offset_y=0,
-        **extra
+        **extra,
     ):
         to_print = []
         for component in self.component_ids:
@@ -172,7 +172,7 @@ class PrintingLabelZpl2(models.Model):
             ):
                 printed_data = data
                 # Pick the right value if data is a collection
-                if isinstance(data, (list, tuple, set, models.BaseModel)):
+                if isinstance(data, (list, tuple, set, models.BaseModel)):  # noqa: UP038
                     # If we reached the end of data, quit the loop
                     if idx >= len(data):
                         break
@@ -200,13 +200,13 @@ class PrintingLabelZpl2(models.Model):
         page_count=1,
         label_offset_x=0,
         label_offset_y=0,
-        **extra
+        **extra,
     ):
         to_print = self._get_to_data_to_print(
             record, page_number, page_count, label_offset_x, label_offset_y, **extra
         )
 
-        for (component, data, offset_x, offset_y) in to_print:
+        for component, data, offset_x, offset_y in to_print:
             component_offset_x = component.origin_x + offset_x
             component_offset_y = component.origin_y + offset_y
             if component.component_type == "text":
@@ -307,7 +307,7 @@ class PrintingLabelZpl2(models.Model):
             else:
                 if component.component_type == zpl2.BARCODE_QR_CODE:
                     # Adding Control Arguments to QRCode data Label
-                    data = "{}A,{}".format(component.error_correction, data)
+                    data = f"{component.error_correction}A,{data}"
 
                 barcode_arguments = {
                     field_name: component[field_name]
@@ -356,7 +356,7 @@ class PrintingLabelZpl2(models.Model):
                 record,
                 page_number=page_number,
                 page_count=page_count,
-                **extra
+                **extra,
             )
 
             # Restore printer's configuration and end the label
@@ -391,7 +391,7 @@ class PrintingLabelZpl2(models.Model):
                 "view_mode": "form",
                 "target": "new",
                 "binding_type": "action",
-                "context": "{'default_active_model_id': %s}" % model_id,
+                "context": f"{{'default_active_model_id': {model_id}}}",
             }
         )
 
@@ -425,10 +425,12 @@ class PrintingLabelZpl2(models.Model):
             ]
         )
         for model in models:
-            action = actions.filtered(lambda a: a.binding_model_id == model)
+            action = actions.filtered(
+                lambda act, mod=model: act.binding_model_id == mod
+            )
             if not action:
                 action = self.new_action(model.id)
-            for label in labels.filtered(lambda l: l.model_id == model):
+            for label in labels.filtered(lambda lab, mod=model: lab.model_id == mod):
                 label.action_window_id = action
         return True
 

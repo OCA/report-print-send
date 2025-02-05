@@ -298,7 +298,7 @@ def _graphic_field(data):
 
 def _get_data(data):
     if data[:2] == "FD":
-        return {"data": '"%s"' % data[2:]}
+        return {"data": f'"{data[2:]}"'}
     return {}
 
 

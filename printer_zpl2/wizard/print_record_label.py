@@ -33,7 +33,7 @@ class PrintRecordLabel(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        values = super(PrintRecordLabel, self).default_get(fields_list)
+        values = super().default_get(fields_list)
 
         # Automatically select the printer and label, if only one is available
         printers = self.env["printing.printer"].search(
