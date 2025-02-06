@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo-addon-pingen_env>=16.0dev,<16.1dev',
         'odoo-addon-printer_zpl2>=16.0dev,<16.1dev',
         'odoo-addon-printing_simple_configuration>=16.0dev,<16.1dev',
+        'odoo-addon-remote_report_to_printer>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',

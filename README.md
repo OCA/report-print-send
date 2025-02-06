@@ -31,6 +31,7 @@ addon | version    | maintainers                                                
 [zpl_printer](zpl_printer/) | 16.0.0.0.1 | [![mohs8421](https://github.com/mohs8421.png?size=30px)](https://github.com/mohs8421)                                                                                                                             | Directly connect label printers to Odoo
 [zpl_printer_mrp](zpl_printer_mrp/) | 16.0.0.0.1 | [![mohs8421](https://github.com/mohs8421.png?size=30px)](https://github.com/mohs8421)                                                                                                                              | Connects zpl_printer module with mrp module
 [zpl_printer_stock](zpl_printer_stock/) | 16.0.0.0.1 | [![mohs8421](https://github.com/mohs8421.png?size=30px)](https://github.com/mohs8421)                                                                                                                              | Connects zpl_printer module with mrp module, add option to specify printer on product
+[remote_report_to_printer](remote_report_to_printer/) | 16.0.1.0.0 |  | Report to printer on remotes
 
 [//]: # (end addons)
 

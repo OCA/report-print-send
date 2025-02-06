@@ -3,9 +3,11 @@
 # Copyright (C) 2011 Agile Business Group sagl (<http://www.agilebg.com>)
 # Copyright (C) 2011 Domsense srl (<http://www.domsense.com>)
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
+# Copyright 2024 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import threading
 
-from odoo import _, api, exceptions, fields, models
+from odoo import _, api, exceptions, fields, models, registry
 from odoo.tools.safe_eval import safe_eval, time
 
 REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
@@ -53,6 +55,12 @@ class IrActionsReport(models.Model):
             "action": result["action"],
             "printer_name": result["printer"].name,
         }
+        if result.get("printer_exception") and not self.env.context.get(
+            "skip_printer_exception"
+        ):
+            serializable_result["printer_exception"] = True
+        if self.env.context.get("force_print_to_client"):
+            serializable_result["action"] = "client"
         return serializable_result
 
     def _get_user_default_print_behaviour(self):
@@ -97,7 +105,48 @@ class IrActionsReport(models.Model):
             # For some reason design takes report defaults over
             # False action entries so we must allow for that here
             result.update({k: v for k, v in print_action.behaviour().items() if v})
+        printer = result.get("printer")
+        if printer:
+            # When no printer is available we can fallback to the default behavior
+            # letting the user to manually print the reports.
+            try:
+                printer.server_id._open_connection(raise_on_error=True)
+                printer_exception = printer.status in [
+                    "error",
+                    "server-error",
+                    "unavailable",
+                ]
+            except Exception:
+                printer_exception = True
+            if printer_exception and not self.env.context.get("skip_printer_exception"):
+                result["printer_exception"] = True
         return result
+
+    def print_document_client_action(self, record_ids, data=None):
+        behaviour = self.behaviour()
+        printer = behaviour.pop("printer", None)
+        if printer.multi_thread:
+
+            @self.env.cr.postcommit.add
+            def _launch_print_thread():
+                threaded_calculation = threading.Thread(
+                    target=self.print_document_threaded,
+                    args=(self.id, record_ids, data),
+                )
+                threaded_calculation.start()
+
+            return True
+        else:
+            try:
+                return self.print_document(record_ids, data=data)
+            except Exception:
+                return
+
+    def print_document_threaded(self, report_id, record_ids, data):
+        with registry(self._cr.dbname).cursor() as cr:
+            self = self.with_env(self.env(cr=cr))
+            report = self.env["ir.actions.report"].browse(report_id)
+            report.print_document(record_ids, data)
 
     def print_document(self, record_ids, data=None):
         """Print a document, do not return the document file"""
@@ -127,6 +176,7 @@ class IrActionsReport(models.Model):
         else:
             title = self.report_name
         behaviour["title"] = title
+        behaviour["res_ids"] = record_ids
         # TODO should we use doc_format instead of report_type
         return printer.print_document(
             self, document, doc_format=self.report_type, **behaviour
@@ -140,7 +190,12 @@ class IrActionsReport(models.Model):
         """
         if self.env.context.get("must_skip_send_to_printer"):
             return False
-        if behaviour["action"] == "server" and printer and document:
+        if (
+            behaviour["action"] == "server"
+            and printer
+            and document
+            and not behaviour.get("printer_exception")
+        ):
             return True
         return False
 

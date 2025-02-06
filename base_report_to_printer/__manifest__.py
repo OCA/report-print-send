@@ -7,7 +7,7 @@
 
 {
     "name": "Report to printer",
-    "version": "16.0.1.1.7",
+    "version": "16.0.1.2.0",
     "category": "Generic Modules/Base",
     "author": "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
     " LasLabs, Camptocamp, Odoo Community Association (OCA),"
@@ -18,6 +18,7 @@
     "data": [
         "data/printing_data.xml",
         "security/security.xml",
+        "security/ir.model.access.csv",
         "views/printing_printer.xml",
         "views/printing_server.xml",
         "views/printing_job.xml",
