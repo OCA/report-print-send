@@ -1,14 +1,10 @@
 from odoo.tests import tagged
 
-from odoo.addons.zpl_printer.tests.zpl_printer import (
-    DEFAULT_PRINTER_URL,
-    OTHER_PRINTER_URL,
-    TestZplPrinterBase,
-)
+from odoo.addons.zpl_printer.tests import zpl_printer
 
 
 @tagged("zpl")
-class TestZplPrinterStock(TestZplPrinterBase):
+class TestZplPrinterStock(zpl_printer.TestZplPrinterBase):
     _unspecific_lot_id = 0
     _other_printer_lot_id = 0
 
@@ -54,11 +50,15 @@ class TestZplPrinterStock(TestZplPrinterBase):
         result = self.env["zpl_printer.zpl_printer"].get_label_printer_data(
             "stock.label_lot_template_view", [self._unspecific_lot_id]
         )
-        self.assertEqual(result, {"url": DEFAULT_PRINTER_URL, "resolution": "200"})
+        self.assertEqual(
+            result, {"url": zpl_printer.DEFAULT_PRINTER_URL, "resolution": "200"}
+        )
 
     def test_get_label_printer_data_for_product_with_other_printer(self):
         """Unless otherwise specified through this method, the default should be returned"""
         result = self.env["zpl_printer.zpl_printer"].get_label_printer_data(
             "stock.label_lot_template_view", [self._other_printer_lot_id]
         )
-        self.assertEqual(result, {"url": OTHER_PRINTER_URL, "resolution": "300"})
+        self.assertEqual(
+            result, {"url": zpl_printer.OTHER_PRINTER_URL, "resolution": "300"}
+        )

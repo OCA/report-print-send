@@ -36,4 +36,36 @@
         <field name="binding_model_id" ref="stock.model_stock_picking_type" />
         <field name="binding_type">report</field>
     </record>
+    <record id="action_report_location_barcode_zpl" model="ir.actions.report">
+        <field name="name">Location Barcode (Send to ZPL-Printer)</field>
+        <field name="model">stock.location</field>
+        <field name="report_type">qweb-zpl</field>
+        <field name="report_name">zpl_printer_stock.report_location_barcode_zpl</field>
+        <field name="report_file">zpl_printer_stock.report_location_barcode_zpl</field>
+        <field name="print_report_name">'Location - %s' % object.name</field>
+        <field name="binding_model_id" ref="stock.model_stock_location" />
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.label_lot_template" model="ir.actions.report">
+        <field name="report_type">qweb-zpl</field>
+    </record>
+    <template id="report_location_barcode_zpl">
+        <t t-translation="off">
+            <t t-foreach="docs" t-as="location">
+                <t t-if="location.barcode">
+^XA
+^CI28
+^FO30,30
+    ^FB350,1,0,L,0
+    ^A0N,52,39
+    ^FD<t t-out="location.name" />^FS
+^FO30,100
+    ^BY<t t-if="len(location.barcode) > 15">2</t><t t-else="">3</t>,3,10
+    ^BCN,150,Y,N,N
+    ^FD<t t-esc="location.barcode" />^FS
+^XZ
+                </t>
+            </t>
+        </t>
+    </template>
 </odoo>
