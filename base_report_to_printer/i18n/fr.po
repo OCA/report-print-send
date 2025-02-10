@@ -178,8 +178,8 @@ msgstr "Copies"
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #, python-format
-msgid "Could not send to printer!"
-msgstr ""
+msgid "Could not sent to printer!"
+msgstr "Impossible de l'envoyer à l'imprimante !"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
@@ -404,6 +404,13 @@ msgid "If checked, this server is useable."
 msgstr "Si cette case est cochée, ce serveur est utilisable."
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+#, python-format
+msgid "Issue on"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
 msgid "Job"
 msgstr "Tâche"
@@ -489,6 +496,12 @@ msgid "Model"
 msgstr "Modèle"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__multi_thread
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__multi_thread
+msgid "Multi Thread"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__name
@@ -571,8 +584,11 @@ msgid "Port of the server."
 msgstr "Port du serveur."
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
+#, python-format
 msgid "Print"
 msgstr "Imprimer"
 
@@ -849,6 +865,13 @@ msgid "The id of the job must be unique per server !"
 msgstr "L'identifiant de la tâche doit être unique par serveur !"
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+#, python-format
+msgid "The report"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "This field allows configuring action and printer on a per user basis"
 msgstr ""
@@ -952,15 +975,18 @@ msgid "Wizard"
 msgstr "Assistant"
 
 #. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/js/qweb_action_manager.esm.js:0
+#, python-format
+msgid "couldn't be printed. Click on the button below to download it"
+msgstr ""
+
+#. module: base_report_to_printer
 #. odoo-python
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
 #, python-format
 msgid "{name} ({copies} copies)"
 msgstr "{name} ({copies} copies)"
-
-#, python-format
-#~ msgid "Could not sent to printer!"
-#~ msgstr "Impossible de l'envoyer à l'imprimante !"
 
 #~ msgid "Date and time of creation for this job."
 #~ msgstr "Date et heure de création de cette tâche."

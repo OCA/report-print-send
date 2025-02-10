@@ -11,7 +11,9 @@ from odoo.tests import common
 class TestReport(common.HttpCase):
     def setUp(self):
         super(TestReport, self).setUp()
-        self.Model = self.env["ir.actions.report"]
+        self.Model = self.env["ir.actions.report"].with_context(
+            skip_printer_exception=True
+        )
         self.server = self.env["printing.server"].create({})
         self.report_vals = {
             "name": "Test Report",

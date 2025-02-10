@@ -31,6 +31,7 @@
                         <field name="user" />
                         <field name="password" />
                         <field name="encryption_policy" />
+                        <field name="multi_thread" />
                     </group>
                     <group name="printers" string="Printers">
                         <field name="printer_ids" nolabel="1" colspan="2" />

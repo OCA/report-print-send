@@ -10,7 +10,9 @@ class TestIrActionsReport(TransactionCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
-        cls.Model = cls.env["ir.actions.report"]
+        cls.Model = cls.env["ir.actions.report"].with_context(
+            skip_printer_exception=True
+        )
         cls.server = cls.env["printing.server"].create({})
 
     def new_printer(self):

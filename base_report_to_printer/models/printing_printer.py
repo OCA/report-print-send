@@ -12,7 +12,7 @@ import logging
 import os
 from tempfile import mkstemp
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -67,11 +67,19 @@ class PrintingPrinter(models.Model):
     tray_ids = fields.One2many(
         comodel_name="printing.tray", inverse_name="printer_id", string="Paper Sources"
     )
+    multi_thread = fields.Boolean(
+        compute="_compute_multi_thread", readonly=False, store=True
+    )
+
+    @api.depends("server_id.multi_thread")
+    def _compute_multi_thread(self):
+        for printer in self:
+            printer.multi_thread = printer.server_id.multi_thread
 
     def _prepare_update_from_cups(self, cups_connection, cups_printer):
         mapping = {3: "available", 4: "printing", 5: "error"}
         cups_vals = {
-            "name": cups_printer["printer-info"],
+            "name": self.name or cups_printer["printer-info"],
             "model": cups_printer.get("printer-make-and-model", False),
             "location": cups_printer.get("printer-location", False),
             "uri": cups_printer.get("device-uri", False),

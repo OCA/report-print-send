@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_remote_printer_form" model="ir.ui.view">
+        <field name="name">res.remote.printer.form</field>
+        <field name="model">res.remote.printer</field>
+        <field name="arch" type="xml">
+            <form string="Remote Printer">
+                <sheet>
+                    <group>
+                        <field name="printer_id" />
+                        <field name="printer_tray_id" />
+                        <field name="printer_usage" />
+                        <field name="is_default" />
+                        <field name="remote_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="res_remote_printer_tree" model="ir.ui.view">
+        <field name="name">res.remote.printer.tree</field>
+        <field name="model">res.remote.printer</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="printer_id" />
+                <field name="remote_id" invisible="1" />
+                <field name="printer_tray_id" />
+                <field name="is_default" />
+                <field name="printer_usage" />
+            </tree>
+        </field>
+    </record>
+    <record id="res_remote_printer_remote_tree" model="ir.ui.view">
+        <field name="name">res.remote.printer.tree</field>
+        <field name="model">res.remote.printer</field>
+        <field name="priority">99</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="res_remote_printer_tree" />
+        <field name="arch" type="xml">
+            <field name="printer_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="remote_id" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

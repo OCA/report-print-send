@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-22 10:41+0000\n"
+"PO-Revision-Date: 2025-01-28 11:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: printing_simple_configuration
 #: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
@@ -44,6 +44,7 @@ msgstr "Aziende"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__company_id
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__company_id
 msgid "Company"
 msgstr "Azienda"
 
@@ -78,8 +79,7 @@ msgstr "Nome visualizzato"
 
 #. module: printing_simple_configuration
 #: model_terms:ir.ui.view,arch_db:printing_simple_configuration.print_config_form
-msgid ""
-"Ensure all informations here match with your own network configuration."
+msgid "Ensure all informations here match with your own network configuration."
 msgstr ""
 "Assicura che tutte le informazioni presenti corrispondano con la "
 "configurazione della tua rete."
@@ -225,12 +225,19 @@ msgstr "Configurazione stampaggio"
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__readonly
 msgid "Readonly"
-msgstr "Lola lettura"
+msgstr "Solo lettura"
 
 #. module: printing_simple_configuration
 #: model:ir.model,name:printing_simple_configuration.model_print_config
 msgid "Simple Printing Configuration"
 msgstr "Semplice configurazione stampaggio"
+
+#. module: printing_simple_configuration
+#. odoo-python
+#: code:addons/printing_simple_configuration/models/printer.py:0
+#, python-format
+msgid "There is no printer accessible to you in the company %s"
+msgstr "Non hai una stampante accessibile nell'azienda %s"
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__usage

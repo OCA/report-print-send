@@ -41,6 +41,7 @@ msgstr ""
 
 #. module: printing_simple_configuration
 #: model:ir.model.fields,field_description:printing_simple_configuration.field_print_config__company_id
+#: model:ir.model.fields,field_description:printing_simple_configuration.field_printer__company_id
 msgid "Company"
 msgstr ""
 
@@ -218,6 +219,13 @@ msgstr ""
 #. module: printing_simple_configuration
 #: model:ir.model,name:printing_simple_configuration.model_print_config
 msgid "Simple Printing Configuration"
+msgstr ""
+
+#. module: printing_simple_configuration
+#. odoo-python
+#: code:addons/printing_simple_configuration/models/printer.py:0
+#, python-format
+msgid "There is no printer accessible to you in the company %s"
 msgstr ""
 
 #. module: printing_simple_configuration
