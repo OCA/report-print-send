@@ -372,6 +372,11 @@ ul.auto-toc {
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/report-print-send/tree/16.0/printer_zpl2"><img alt="OCA/report-print-send" src="https://img.shields.io/badge/github-OCA%2Freport--print--send-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/report-print-send-16-0/report-print-send-16-0-printer_zpl2"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/report-print-send&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module extends the <strong>Report to printer</strong> (<tt class="docutils literal">base_report_to_printer</tt>)
 module to add a ZPL II label printing feature.</p>
+<p>Key features include:
+* Design labels with components like text, barcodes, boxes, lines and images
+* Support for GS1-128 barcodes with configurable Application Identifiers (AIs)
+* Automatic data formatting according to GS1 specifications
+* Unit of measure conversion for weight-based AIs</p>
 <p>This module is meant to be used as a base for module development, and does not provide a GUI on its own.
 See below for more details.</p>
 <p><strong>Table of contents</strong></p>
@@ -406,6 +411,65 @@ See below for more details.</p>
 <li>Import ZPL2 code</li>
 <li>Use the Test Mode tab during the creation</li>
 </ol>
+<p>For GS1-128 barcodes, you can configure:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Supported Application Identifiers (AIs):</dt>
+<dd><ul class="first last">
+<li><ol class="first arabic" start="0">
+<li>SSCC</li>
+</ol>
+</li>
+<li><ol class="first arabic">
+<li>GTIN</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="10">
+<li>Batch/Lot Number</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="11">
+<li>Production Date (YYMMDD)</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="13">
+<li>Packaging Date (YYMMDD)</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="15">
+<li>Best Before Date (YYMMDD)</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="17">
+<li>Expiration Date (YYMMDD)</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="21">
+<li>Serial Number</li>
+</ol>
+</li>
+<li><ol class="first arabic" start="30">
+<li>Count</li>
+</ol>
+</li>
+<li>(310n) Net Weight (kg)</li>
+<li>(320n) Net Weight (lbs)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>For each AI:</dt>
+<dd><ul class="first last">
+<li>Field path to get data from (e.g., “product_id.weight”)</li>
+<li>For weight fields, UoM field path for automatic conversion</li>
+<li>Sequence order in the final barcode</li>
+<li>For weight AIs, number of decimal places (0-5)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 <p>It’s also possible to add a label printing wizard on any model by creating a new <em>ir.actions.act_window</em> record.
 For example, to add the printing wizard on the <em>product.product</em> model</p>
 <pre class="literal-block">
@@ -427,6 +491,22 @@ self.env['printing.label.zpl2'].browse(label_id).print_label(
     self.env['printing.printer'].browse(printer_id),
     self.env['product.product'].browse(product_id))
 </pre>
+<p>For GS1-128 barcodes:</p>
+<ol class="arabic simple">
+<li>Create a new label component</li>
+<li>Set the component type to “GS1-128”</li>
+<li>Add Application Identifiers with their configurations:
+* Select the AI type (e.g., GTIN, Weight, Date)
+* Set the field path to get the data from
+* For weight fields, optionally set the UoM field path
+* Set the sequence to control AI order
+* For weight fields, set the decimal places</li>
+</ol>
+<p>The module will automatically:
+* Format the data according to GS1 specifications
+* Convert units of measure for weights
+* Combine multiple AIs with proper separators
+* Generate the final GS1-128 barcode</p>
 <p>You can also use the generic label printing wizard, if added on some models.</p>
 <a class="reference external image-reference" href="https://runbot.odoo-community.org/runbot/144/12.0">
 <img alt="Try me on Runbot" src="https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas" />
@@ -473,6 +553,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Miquel Raïch &lt;<a class="reference external" href="mailto:miquel.raich&#64;forgeflow.com">miquel.raich&#64;forgeflow.com</a>&gt;</li>
 <li>Lois Rilo &lt;<a class="reference external" href="mailto:lois.rilo&#64;forgeflow.com">lois.rilo&#64;forgeflow.com</a>&gt;</li>
 <li>Tran Quoc Duong &lt;<a class="reference external" href="mailto:duontq&#64;trobz.com">duontq&#64;trobz.com</a>&gt;</li>
+<li>Graeme Gellatly &lt;<a class="reference external" href="mailto:graeme&#64;moahub.nz">graeme&#64;moahub.nz</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">

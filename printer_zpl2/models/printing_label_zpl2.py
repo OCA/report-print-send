@@ -8,7 +8,7 @@ import logging
 from collections import defaultdict
 
 import requests
-from PIL import Image, ImageOps
+from PIL import Image
 
 from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import ValidationError
@@ -121,11 +121,6 @@ class PrintingLabelZpl2(models.Model):
                 if id2 not in done:
                     todo.add(id2)
 
-    def _get_component_data(self, record, component, eval_args):
-        if component.data_autofill:
-            return component.autofill_data(record, eval_args)
-        return safe_eval(str(component.data), eval_args) or ""
-
     def _get_to_data_to_print(
         self,
         record,
@@ -161,7 +156,7 @@ class PrintingLabelZpl2(models.Model):
                     ),
                 }
             )
-            data = self._get_component_data(record, component, eval_args)
+            data = component._get_data(record, eval_args)
             if isinstance(data, str) and data == "component_not_show":
                 continue
 
@@ -207,135 +202,11 @@ class PrintingLabelZpl2(models.Model):
         )
 
         for (component, data, offset_x, offset_y) in to_print:
-            component_offset_x = component.origin_x + offset_x
-            component_offset_y = component.origin_y + offset_y
-            if component.component_type == "text":
-                barcode_arguments = {
-                    field_name: component[field_name]
-                    for field_name in [
-                        zpl2.ARG_FONT,
-                        zpl2.ARG_ORIENTATION,
-                        zpl2.ARG_HEIGHT,
-                        zpl2.ARG_WIDTH,
-                        zpl2.ARG_REVERSE_PRINT,
-                        zpl2.ARG_IN_BLOCK,
-                        zpl2.ARG_BLOCK_WIDTH,
-                        zpl2.ARG_BLOCK_LINES,
-                        zpl2.ARG_BLOCK_SPACES,
-                        zpl2.ARG_BLOCK_JUSTIFY,
-                        zpl2.ARG_BLOCK_LEFT_MARGIN,
-                    ]
-                }
-                label_data.font_data(
-                    component_offset_x, component_offset_y, barcode_arguments, data
-                )
-            elif component.component_type == "zpl2_raw":
-                label_data._write_command(data)
-            elif component.component_type == "rectangle":
-                label_data.graphic_box(
-                    component_offset_x,
-                    component_offset_y,
-                    {
-                        zpl2.ARG_WIDTH: component.width,
-                        zpl2.ARG_HEIGHT: component.height,
-                        zpl2.ARG_THICKNESS: component.thickness,
-                        zpl2.ARG_COLOR: component.color,
-                        zpl2.ARG_ROUNDING: component.rounding,
-                    },
-                )
-            elif component.component_type == "diagonal":
-                label_data.graphic_diagonal_line(
-                    component_offset_x,
-                    component_offset_y,
-                    {
-                        zpl2.ARG_WIDTH: component.width,
-                        zpl2.ARG_HEIGHT: component.height,
-                        zpl2.ARG_THICKNESS: component.thickness,
-                        zpl2.ARG_COLOR: component.color,
-                        zpl2.ARG_DIAGONAL_ORIENTATION: component.diagonal_orientation,
-                    },
-                )
-            elif component.component_type == "graphic":
-                # During the on_change don't take the bin_size
-                image = (
-                    component.with_context(bin_size_graphic_image=False).graphic_image
-                    or data
-                )
-                try:
-                    pil_image = Image.open(io.BytesIO(base64.b64decode(image))).convert(
-                        "RGB"
-                    )
-                except Exception:
-                    continue
-                if component.width and component.height:
-                    pil_image = pil_image.resize((component.width, component.height))
-
-                # Invert the colors
-                if component.reverse_print:
-                    pil_image = ImageOps.invert(pil_image)
-
-                # Rotation (PIL rotates counter clockwise)
-                if component.orientation == zpl2.ORIENTATION_ROTATED:
-                    pil_image = pil_image.transpose(Image.ROTATE_270)
-                elif component.orientation == zpl2.ORIENTATION_INVERTED:
-                    pil_image = pil_image.transpose(Image.ROTATE_180)
-                elif component.orientation == zpl2.ORIENTATION_BOTTOM_UP:
-                    pil_image = pil_image.transpose(Image.ROTATE_90)
-
-                label_data.graphic_field(
-                    component_offset_x, component_offset_y, pil_image
-                )
-            elif component.component_type == "circle":
-                label_data.graphic_circle(
-                    component_offset_x,
-                    component_offset_y,
-                    {
-                        zpl2.ARG_DIAMETER: component.width,
-                        zpl2.ARG_THICKNESS: component.thickness,
-                        zpl2.ARG_COLOR: component.color,
-                    },
-                )
-            elif component.component_type == "sublabel":
-                component_offset_x += component.sublabel_id.origin_x
-                component_offset_y += component.sublabel_id.origin_y
-                component.sublabel_id._generate_zpl2_components_data(
-                    label_data,
-                    data if isinstance(data, models.BaseModel) else record,
-                    label_offset_x=component_offset_x,
-                    label_offset_y=component_offset_y,
-                )
-            else:
-                if component.component_type == zpl2.BARCODE_QR_CODE:
-                    # Adding Control Arguments to QRCode data Label
-                    data = "{}A,{}".format(component.error_correction, data)
-
-                barcode_arguments = {
-                    field_name: component[field_name]
-                    for field_name in [
-                        zpl2.ARG_ORIENTATION,
-                        zpl2.ARG_CHECK_DIGITS,
-                        zpl2.ARG_HEIGHT,
-                        zpl2.ARG_INTERPRETATION_LINE,
-                        zpl2.ARG_INTERPRETATION_LINE_ABOVE,
-                        zpl2.ARG_SECURITY_LEVEL,
-                        zpl2.ARG_COLUMNS_COUNT,
-                        zpl2.ARG_ROWS_COUNT,
-                        zpl2.ARG_TRUNCATE,
-                        zpl2.ARG_MODULE_WIDTH,
-                        zpl2.ARG_BAR_WIDTH_RATIO,
-                        zpl2.ARG_MODEL,
-                        zpl2.ARG_MAGNIFICATION_FACTOR,
-                        zpl2.ARG_ERROR_CORRECTION,
-                        zpl2.ARG_MASK_VALUE,
-                    ]
-                }
-                label_data.barcode_data(
-                    component.origin_x + offset_x,
-                    component.origin_y + offset_y,
-                    component.component_type,
-                    barcode_arguments,
-                    data,
-                )
+            getattr(
+                component,
+                "_process_type_%s" % component.component_type,
+                component._process_type_barcode,
+            )(label_data, data, offset_x, offset_y, record)
 
     def _generate_zpl2_data(self, record, page_count=1, **extra):
         self.ensure_one()

@@ -104,6 +104,7 @@ BARCODE_UPC_E = "upc-e"
 BARCODE_CODE_128 = "code_128"
 BARCODE_EAN_13 = "ean-13"
 BARCODE_QR_CODE = "qr_code"
+BARCODE_GS1_128 = "gs1_128"
 
 
 class Zpl2(object):
@@ -322,6 +323,22 @@ class Zpl2(object):
             ]
             return "Q" + self._generate_arguments(arguments, kwargs)
 
+        def _gs1_128(**kwargs):
+            arguments = [
+                ARG_ORIENTATION,
+                ARG_HEIGHT,
+                ARG_INTERPRETATION_LINE,
+                ARG_INTERPRETATION_LINE_ABOVE,
+                ARG_CHECK_DIGITS,
+                ARG_MODE,
+            ]
+            # GS1-128 uses the same command as Code 128
+            # mode 'D' limits characters to GS1 dataset and avoids need for
+            # setting character sets in the data string. It also allows
+            # the interpretation line to contain parentheses for AI's
+            kwargs[ARG_MODE] = "D"
+            return "C" + self._generate_arguments(arguments, kwargs)
+
         barcodeTypes = {
             BARCODE_CODE_11: _code11,
             BARCODE_INTERLEAVED_2_OF_5: _interleaved2of5,
@@ -333,6 +350,7 @@ class Zpl2(object):
             BARCODE_CODE_128: _code128,
             BARCODE_EAN_13: _ean13,
             BARCODE_QR_CODE: _qrcode,
+            BARCODE_GS1_128: _gs1_128,
         }
         return "^B" + barcodeTypes[barcodeType](**barcode_format)
 

@@ -31,6 +31,12 @@ Printer ZPL II
 This module extends the **Report to printer** (``base_report_to_printer``)
 module to add a ZPL II label printing feature.
 
+Key features include:
+* Design labels with components like text, barcodes, boxes, lines and images
+* Support for GS1-128 barcodes with configurable Application Identifiers (AIs)
+* Automatic data formatting according to GS1 specifications
+* Unit of measure conversion for weight-based AIs
+
 This module is meant to be used as a base for module development, and does not provide a GUI on its own.
 See below for more details.
 
@@ -54,6 +60,27 @@ To configure this module, you need to:
 #. Import ZPL2 code
 #. Use the Test Mode tab during the creation
 
+For GS1-128 barcodes, you can configure:
+
+* Supported Application Identifiers (AIs):
+    * (00) SSCC
+    * (01) GTIN
+    * (10) Batch/Lot Number
+    * (11) Production Date (YYMMDD)
+    * (13) Packaging Date (YYMMDD)
+    * (15) Best Before Date (YYMMDD)
+    * (17) Expiration Date (YYMMDD)
+    * (21) Serial Number
+    * (30) Count
+    * (310n) Net Weight (kg)
+    * (320n) Net Weight (lbs)
+
+* For each AI:
+    * Field path to get data from (e.g., "product_id.weight")
+    * For weight fields, UoM field path for automatic conversion
+    * Sequence order in the final barcode
+    * For weight AIs, number of decimal places (0-5)
+
 It's also possible to add a label printing wizard on any model by creating a new *ir.actions.act_window* record.
 For example, to add the printing wizard on the *product.product* model ::
 
@@ -75,6 +102,23 @@ Example : Print the label of a product ::
     self.env['printing.label.zpl2'].browse(label_id).print_label(
         self.env['printing.printer'].browse(printer_id),
         self.env['product.product'].browse(product_id))
+
+For GS1-128 barcodes:
+
+1. Create a new label component
+2. Set the component type to "GS1-128"
+3. Add Application Identifiers with their configurations:
+   * Select the AI type (e.g., GTIN, Weight, Date)
+   * Set the field path to get the data from
+   * For weight fields, optionally set the UoM field path
+   * Set the sequence to control AI order
+   * For weight fields, set the decimal places
+
+The module will automatically:
+* Format the data according to GS1 specifications
+* Convert units of measure for weights
+* Combine multiple AIs with proper separators
+* Generate the final GS1-128 barcode
 
 You can also use the generic label printing wizard, if added on some models.
 
@@ -124,6 +168,7 @@ Contributors
 * Miquel Raïch <miquel.raich@forgeflow.com>
 * Lois Rilo <lois.rilo@forgeflow.com>
 * Tran Quoc Duong <duontq@trobz.com>
+* Graeme Gellatly <graeme@moahub.nz>
 
 Maintainers
 ~~~~~~~~~~~

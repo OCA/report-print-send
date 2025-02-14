@@ -1,9 +1,14 @@
 # Copyright (C) 2016 SYLEAM (<http://www.syleam.fr>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import base64
+import io
 import logging
 
+from PIL import Image, ImageOps
+
 from odoo import api, fields, models
+from odoo.tools.safe_eval import safe_eval
 
 from . import zpl2
 
@@ -64,6 +69,7 @@ class PrintingLabelZpl2Component(models.Model):
             (str(zpl2.BARCODE_CODE_128), "Code 128"),
             (str(zpl2.BARCODE_EAN_13), "EAN-13"),
             (str(zpl2.BARCODE_QR_CODE), "QR Code"),
+            (str(zpl2.BARCODE_GS1_128), "GS1-128"),
             ("sublabel", "Sublabel"),
             ("zpl2_raw", "ZPL2"),
         ],
@@ -72,6 +78,13 @@ class PrintingLabelZpl2Component(models.Model):
         default="text",
         help="Type of content, simple text or barcode.",
     )
+
+    gs1_ai_ids = fields.One2many(
+        "printing.label.zpl2.gs1.ai",
+        "component_id",
+        string="GS1 Application Identifiers",
+    )
+
     font = fields.Selection(
         selection=[
             (str(zpl2.FONT_DEFAULT), "Default"),
@@ -267,6 +280,22 @@ class PrintingLabelZpl2Component(models.Model):
             else:
                 component.data_autofill = False
 
+    def _get_data(self, record, eval_args):
+        if self.data_autofill:
+            return self.autofill_data(record, eval_args)
+        data = safe_eval(str(self.data), eval_args) or ""
+        if hasattr(self, "_postprocess_data_%s" % self.component_type):
+            data = getattr(self, "_postprocess_data_%s" % self.component_type)(
+                data, record, eval_args
+            )
+        return data
+
+    def _postprocess_data_gs1_128(self, data, record, eval_args):
+        return self._generate_gs1_128_data(record)
+
+    def _postprocess_data_qr_code(self, data, record, eval_args):
+        return "{}A,{}".format(self.error_correction, data)
+
     @api.model
     def autofill_data(self, record, eval_args):
         data = {}
@@ -275,6 +304,147 @@ class PrintingLabelZpl2Component(models.Model):
             if hasattr(record, field):
                 data[field] = getattr(record, field)
         return data
+
+    def _generate_gs1_128_data(self, record):
+        data = []
+        for ai_config in self.gs1_ai_ids:
+            ai, value = ai_config._format_gs1_value(record)
+            if value:
+                data.append(f"({ai}){value}")
+        return ">8".join(data) if data else "component_not_show"
+
+    def _process_type_text(self, label_data, data, offset_x, offset_y, record):
+        component_offset_x = self.origin_x + offset_x
+        component_offset_y = self.origin_y + offset_y
+        format_arguments = {
+            field_name: self[field_name]
+            for field_name in [
+                zpl2.ARG_FONT,
+                zpl2.ARG_ORIENTATION,
+                zpl2.ARG_HEIGHT,
+                zpl2.ARG_WIDTH,
+                zpl2.ARG_REVERSE_PRINT,
+                zpl2.ARG_IN_BLOCK,
+                zpl2.ARG_BLOCK_WIDTH,
+                zpl2.ARG_BLOCK_LINES,
+                zpl2.ARG_BLOCK_SPACES,
+                zpl2.ARG_BLOCK_JUSTIFY,
+                zpl2.ARG_BLOCK_LEFT_MARGIN,
+            ]
+        }
+        label_data.font_data(
+            component_offset_x, component_offset_y, format_arguments, data
+        )
+
+    def _process_type_zpl2_raw(self, label_data, data, *args):
+        label_data._write_command(data)
+
+    def _process_type_rectangle(self, label_data, data, offset_x, offset_y, record):
+        label_data.graphic_box(
+            self.origin_x + offset_x,
+            self.origin_y + offset_y,
+            {
+                zpl2.ARG_WIDTH: self.width,
+                zpl2.ARG_HEIGHT: self.height,
+                zpl2.ARG_THICKNESS: self.thickness,
+                zpl2.ARG_COLOR: self.color,
+                zpl2.ARG_ROUNDING: self.rounding,
+            },
+        )
+
+    def _process_type_diagonal(self, label_data, data, offset_x, offset_y, record):
+        label_data.graphic_diagonal_line(
+            self.origin_x + offset_x,
+            self.origin_y + offset_y,
+            {
+                zpl2.ARG_WIDTH: self.width,
+                zpl2.ARG_HEIGHT: self.height,
+                zpl2.ARG_THICKNESS: self.thickness,
+                zpl2.ARG_COLOR: self.color,
+                zpl2.ARG_DIAGONAL_ORIENTATION: self.diagonal_orientation,
+            },
+        )
+
+    def _process_type_graphic(self, label_data, data, offset_x, offset_y, record):
+        image = self.with_context(bin_size_graphic_image=False).graphic_image or data
+        try:
+            pil_image = Image.open(io.BytesIO(base64.b64decode(image))).convert("RGB")
+        except Exception as e:
+            _logger.warning(
+                "Failed to process graphic component %s for record %s: %s",
+                self.name,
+                record.display_name,
+                str(e),
+            )
+            return
+        if self.width and self.height:
+            pil_image = pil_image.resize((self.width, self.height))
+
+        # Invert the colors
+        if self.reverse_print:
+            pil_image = ImageOps.invert(pil_image)
+
+        # Rotation (PIL rotates counter clockwise)
+        if self.orientation == zpl2.ORIENTATION_ROTATED:
+            pil_image = pil_image.transpose(Image.ROTATE_270)
+        elif self.orientation == zpl2.ORIENTATION_INVERTED:
+            pil_image = pil_image.transpose(Image.ROTATE_180)
+        elif self.orientation == zpl2.ORIENTATION_BOTTOM_UP:
+            pil_image = pil_image.transpose(Image.ROTATE_90)
+
+        label_data.graphic_field(
+            self.origin_x + offset_x, self.origin_y + offset_y, pil_image
+        )
+
+    def _process_type_circle(self, label_data, data, offset_x, offset_y, record):
+        label_data.graphic_circle(
+            self.origin_x + offset_x,
+            self.origin_y + offset_y,
+            {
+                zpl2.ARG_DIAMETER: self.width,
+                zpl2.ARG_THICKNESS: self.thickness,
+                zpl2.ARG_COLOR: self.color,
+            },
+        )
+
+    def _process_type_sublabel(self, label_data, data, offset_x, offset_y, record):
+        component_offset_x = self.origin_x + offset_x + self.sublabel_id.origin_x
+        component_offset_y = self.origin_y + offset_y + self.sublabel_id.origin_y
+        self.sublabel_id._generate_zpl2_components_data(
+            label_data,
+            data if isinstance(data, models.BaseModel) else record,
+            label_offset_x=component_offset_x,
+            label_offset_y=component_offset_y,
+        )
+
+    def _process_type_barcode(self, label_data, data, offset_x, offset_y, record):
+        barcode_arguments = {
+            field_name: self[field_name]
+            for field_name in [
+                zpl2.ARG_ORIENTATION,
+                zpl2.ARG_CHECK_DIGITS,
+                zpl2.ARG_HEIGHT,
+                zpl2.ARG_INTERPRETATION_LINE,
+                zpl2.ARG_INTERPRETATION_LINE_ABOVE,
+                zpl2.ARG_SECURITY_LEVEL,
+                zpl2.ARG_COLUMNS_COUNT,
+                zpl2.ARG_ROWS_COUNT,
+                zpl2.ARG_TRUNCATE,
+                zpl2.ARG_MODULE_WIDTH,
+                zpl2.ARG_BAR_WIDTH_RATIO,
+                zpl2.ARG_MODEL,
+                zpl2.ARG_MAGNIFICATION_FACTOR,
+                zpl2.ARG_ERROR_CORRECTION,
+                zpl2.ARG_MASK_VALUE,
+            ]
+        }
+        label_data.barcode_data(
+            self.origin_x + offset_x,
+            self.origin_y + offset_y,
+            self.component_type,
+            barcode_arguments,
+            data,
+        )
 
     def action_plus_origin_x(self):
         self.ensure_one()

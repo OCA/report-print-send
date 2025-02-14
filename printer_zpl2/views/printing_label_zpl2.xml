@@ -222,6 +222,33 @@
                                                 <field name="mask_value" />
                                             </group>
                                         </page>
+                                        <page
+                                            string="GS1-128"
+                                            attrs="{'invisible': [('component_type', '!=', 'gs1_128')]}"
+                                        >
+                                            <field
+                                                name="gs1_ai_ids"
+                                                colspan="4"
+                                                nolabel="1"
+                                            >
+                                                <tree editable="bottom">
+                                                    <field
+                                                        name="sequence"
+                                                        widget="handle"
+                                                    />
+                                                    <field name="ai" />
+                                                    <field name="field_name" />
+                                                    <field
+                                                        name="decimal_places"
+                                                        attrs="{'invisible': [('ai', 'not in', ['310n', '320n'])]}"
+                                                    />
+                                                    <field
+                                                        name="uom_field_name"
+                                                        attrs="{'invisible': [('ai', 'not in', ['310n', '320n'])]}"
+                                                    />
+                                                </tree>
+                                            </field>
+                                        </page>
                                         <!-- Text block specific arguments -->
                                         <page
                                             string="Text Block Format"
