@@ -21,6 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[base_report_to_label_printer](base_report_to_label_printer/) | 18.0.1.0.0 |  | Report to label printer
 [base_report_to_printer](base_report_to_printer/) | 18.0.1.0.0 |  | Report to printer
 
 [//]: # (end addons)
