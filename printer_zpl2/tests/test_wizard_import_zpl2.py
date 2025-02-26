@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestWizardImportZpl2(TransactionCase):
     def setUp(self):
-        super(TestWizardImportZpl2, self).setUp()
+        super().setUp()
         self.Model = self.env["wizard.print.record.label"]
         self.server = self.env["printing.server"].create({})
         self.printer = self.env["printing.printer"].create(
