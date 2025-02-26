@@ -91,7 +91,7 @@ class PrintingLabelZpl2(models.Model):
     @api.constrains("component_ids")
     def check_recursion(self):
         cr = self._cr
-        self.flush(["component_ids"])
+        self.flush_recordset(["component_ids"])
         query = (
             'SELECT "{}", "{}" FROM "{}" '
             'WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
