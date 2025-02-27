@@ -536,15 +536,6 @@ msgid "Label using this component."
 msgstr ""
 
 #. module: printer_zpl2
-#: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2____last_update
-#: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component____last_update
-#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2____last_update
-#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label____last_update
-#: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__write_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__write_uid
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__write_uid
