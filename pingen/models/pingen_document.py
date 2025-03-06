@@ -215,7 +215,7 @@ class PingenDocument(models.Model):
                     for document in documents:
                         if document.state == "error":
                             document._resolve_error()
-                            document.refresh()
+                            document.invalidate_recordset()
                         try:
                             if document.state == "pending":
                                 document._push_to_pingen(pingen=session)
