@@ -108,10 +108,13 @@ promote its widespread use.
 .. |maintainer-ajaniszewska-dev| image:: https://github.com/ajaniszewska-dev.png?size=40px
     :target: https://github.com/ajaniszewska-dev
     :alt: ajaniszewska-dev
+.. |maintainer-grindtildeath| image:: https://github.com/grindtildeath.png?size=40px
+    :target: https://github.com/grindtildeath
+    :alt: grindtildeath
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-ajaniszewska-dev| 
+|maintainer-ajaniszewska-dev| |maintainer-grindtildeath| 
 
 This module is part of the `OCA/report-print-send <https://github.com/OCA/report-print-send/tree/16.0/pingen_env>`_ project on GitHub.
 
