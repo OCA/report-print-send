@@ -3,7 +3,7 @@
 
 {
     "name": "Report to printer on remotes",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Generic Modules/Base",
     "author": "Creu Blanca, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/report-print-send",
