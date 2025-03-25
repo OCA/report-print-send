@@ -985,4 +985,4 @@ msgstr "yazdırılamadı. İndirmek için aşağıdaki butona tıklayın"
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
 #, python-format
 msgid "{name} ({copies} copies)"
-msgstr "{isim} ({kopyalar} kopyalar)"
+msgstr "{name} ({copies} kopyalar)"
