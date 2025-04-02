@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_user_default_printer_selector_form" model="ir.ui.view">
+        <field name="name">wiz.user.default.printer.selector.form</field>
+        <field name="model">wiz.user.default.printer.selector</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="printing_printer_id" widget="selection_badge" />
+                <footer>
+                    <button
+                        type="object"
+                        name="action_confirm"
+                        string="Confirm"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_user_default_printer_selector">
+        <field name="name">Select printer</field>
+        <field name="res_model">wiz.user.default.printer.selector</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

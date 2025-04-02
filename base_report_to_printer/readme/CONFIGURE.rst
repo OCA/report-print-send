@@ -11,3 +11,6 @@ to change the configuration of your CUPS server and set the JobPrivateValue
 directive to "none" (or some other list of values which does not include
 "job-name") , and reload the server. See `cupsd.conf(5)
 <https://www.cups.org/doc/man-cupsd.conf.html>` for details.
+
+If you want to see the button in the top bar to set the user's printer, you need
+to have the "Show printer button on navbar" group.

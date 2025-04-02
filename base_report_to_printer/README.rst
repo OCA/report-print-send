@@ -89,6 +89,9 @@ directive to "none" (or some other list of values which does not include
 "job-name") , and reload the server. See `cupsd.conf(5)
 <https://www.cups.org/doc/man-cupsd.conf.html>` for details.
 
+If you want to see the button in the top bar to set the user's printer, you need
+to have the "Show printer button on navbar" group.
+
 Usage
 =====
 
@@ -105,6 +108,9 @@ Guidelines for use:
 
 When no tray is configured for a report and a user, the
 default tray setup on the CUPS server is used.
+
+The users are able to change their default printer by using the button with the
+printer icon set on the navbar.
 
 Known issues / Roadmap
 ======================
@@ -172,6 +178,7 @@ Contributors
 
   * Sergio Teruel
   * David Vidal
+  * Carlos Roca
 
 Maintainers
 ~~~~~~~~~~~
