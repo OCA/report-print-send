@@ -11,3 +11,6 @@ Guidelines for use:
 
 When no tray is configured for a report and a user, the
 default tray setup on the CUPS server is used.
+
+The users are able to change their default printer by using the button with the
+printer icon set on the navbar.

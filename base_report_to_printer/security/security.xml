@@ -13,6 +13,10 @@
     <record id="base.group_erp_manager" model="res.groups">
         <field name="implied_ids" eval="[(4, ref('printing_group_manager'))]" />
     </record>
+    <record id="printer_button_group" model="res.groups">
+        <field name="name">Show printer button on navbar</field>
+        <field name="users" eval="[Command.link(ref('base.user_admin'))]" />
+    </record>
     <record id="printing_server_group_manager" model="ir.model.access">
         <field name="name">Printing Server Manager</field>
         <field name="model_id" ref="model_printing_server" />
