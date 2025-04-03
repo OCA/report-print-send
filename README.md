@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 15.0.1.2.1 |  | Report to printer
+[base_report_to_printer](base_report_to_printer/) | 15.0.1.3.0 |  | Report to printer
 [base_report_to_printer_mail](base_report_to_printer_mail/) | 15.0.1.0.0 |  | Report to printer - Mail extension
 [printer_zpl2](printer_zpl2/) | 15.0.1.0.0 |  | Add a ZPL II label printing feature
 
