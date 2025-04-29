@@ -9,7 +9,9 @@ class IrActionsReport(models.Model):
 
     label = fields.Boolean(string="Report is a Label")
 
-    def _get_user_default_printer(self, user):
+    def _get_user_default_print_behaviour(self):
+        result = super()._get_user_default_print_behaviour()
         if self.label:
-            return user.default_label_printer_id
-        return super()._get_user_default_printer(user)
+            user = self.env.user
+            result["printer"] = user.default_label_printer_id or result["printer"]
+        return result
