@@ -59,6 +59,13 @@ Contributors
 
 -  Raf Ven <raf.ven@dynapps.be>
 -  Tran Quoc Duong <duongtq@trobz.com>
+-  Khoi (Kien Kim) <khoikk@trobz.com>
+
+Other credits
+-------------
+
+The backport of this module from 18.0 to 17.0 was financially supported
+by Camptocamp.
 
 Maintainers
 -----------

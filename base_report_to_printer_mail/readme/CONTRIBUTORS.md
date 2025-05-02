@@ -1,2 +1,3 @@
 - Raf Ven \<<raf.ven@dynapps.be>\>
 - Tran Quoc Duong \<<duongtq@trobz.com>\>
+- Khoi (Kien Kim) \<<khoikk@trobz.com>\>
