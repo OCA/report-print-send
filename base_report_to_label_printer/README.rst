@@ -68,8 +68,8 @@ Contributors
 Other credits
 -------------
 
-The migration of this module from 16.0 to 18.0 was financially supported
-by:
+The migration of this module from 16.0 to 18.0 and backport from 18.0 to
+17.0 was financially supported by:
 
 -  Camptocamp.
 
