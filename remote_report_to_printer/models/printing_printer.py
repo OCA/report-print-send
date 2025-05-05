@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class PrintingPrinter(models.Model):
-
     _inherit = "printing.printer"
 
     printer_remote_ids = fields.One2many(
