@@ -42,7 +42,7 @@ class ResRemotePrinter(models.Model):
     def _check_remote_usage(self):
         for rec in self.filtered(lambda r: r.is_default):
             if rec.remote_id.remote_printer_ids.filtered(
-                lambda r: r != rec
+                lambda r, rec=rec: r != rec
                 and r.is_default
                 and r.printer_usage == rec.printer_usage
             ):
