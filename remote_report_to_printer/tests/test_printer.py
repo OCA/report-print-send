@@ -1,5 +1,6 @@
 # Copyright (c) 2018 Creu Blanca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
 from unittest.mock import patch
 
 from odoo.tests.common import TransactionCase
@@ -33,17 +34,24 @@ class TestRemotePrinter(TransactionCase):
     def test_behaviour_user_remote_values(self):
         report = self.Model.search([], limit=1)
         self.env.user.printing_action = "remote_default"
-        with patch("odoo.addons.base_remote.models.base.Base.remote", new=self.remote):
-            behaviour = report.behaviour()
-        self.assertEqual(
-            behaviour,
-            {
-                "action": "client",
-                "printer": self.printer_1,
-                "tray": False,
-                "printer_exception": True,
-            },
-        )
+        with (
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            with patch(
+                "odoo.addons.base_remote.models.base.Base.remote", new=self.remote
+            ):
+                behaviour = report.behaviour()
+            self.assertEqual(len(logs.records), 1)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
+            self.assertEqual(
+                behaviour,
+                {
+                    "action": "client",
+                    "printer": self.printer_1,
+                    "tray": False,
+                    "printer_exception": True,
+                },
+            )
 
     def test_behaviour_report_values(self):
         report = self.Model.search([], limit=1)
@@ -51,17 +59,24 @@ class TestRemotePrinter(TransactionCase):
         report.property_printing_action_id = self.browse_ref(
             "remote_report_to_printer.printing_action_remote"
         )
-        with patch("odoo.addons.base_remote.models.base.Base.remote", new=self.remote):
-            behaviour = report.behaviour()
-        self.assertDictEqual(
-            behaviour,
-            {
-                "action": "server",
-                "printer": self.printer_1,
-                "tray": False,
-                "printer_exception": True,
-            },
-        )
+        with (
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            with patch(
+                "odoo.addons.base_remote.models.base.Base.remote", new=self.remote
+            ):
+                behaviour = report.behaviour()
+            self.assertEqual(len(logs.records), 1)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
+            self.assertDictEqual(
+                behaviour,
+                {
+                    "action": "server",
+                    "printer": self.printer_1,
+                    "tray": False,
+                    "printer_exception": True,
+                },
+            )
 
     def test_behaviour_user_action(self):
         report = self.Model.search([], limit=1)
@@ -69,17 +84,24 @@ class TestRemotePrinter(TransactionCase):
         report.property_printing_action_id = self.browse_ref(
             "remote_report_to_printer.printing_action_3"
         )
-        with patch("odoo.addons.base_remote.models.base.Base.remote", new=self.remote):
-            behaviour = report.behaviour()
-        self.assertEqual(
-            behaviour,
-            {
-                "action": "server",
-                "printer": self.printer_1,
-                "tray": False,
-                "printer_exception": True,
-            },
-        )
+        with (
+            self.assertLogs(level=logging.WARNING) as logs,
+        ):
+            with patch(
+                "odoo.addons.base_remote.models.base.Base.remote", new=self.remote
+            ):
+                behaviour = report.behaviour()
+            self.assertEqual(len(logs.records), 1)
+            self.assertEqual(logs.records[0].levelno, logging.WARNING)
+            self.assertEqual(
+                behaviour,
+                {
+                    "action": "server",
+                    "printer": self.printer_1,
+                    "tray": False,
+                    "printer_exception": True,
+                },
+            )
 
     def test_behaviour_default_action(self):
         report = self.Model.search([], limit=1)

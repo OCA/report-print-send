@@ -17,7 +17,7 @@
                         readonly="1"
                         nolabel="1"
                         colspan="2"
-                        context="{'tree_view_ref':'remote_report_to_printer.res_remote_printer_remote_tree'}"
+                        context="{'list_view_ref':'remote_report_to_printer.res_remote_printer_remote_tree'}"
                     />
                 </group>
             </group>
