@@ -3,7 +3,7 @@
 
 {
     "name": "Server Environment for Printing Server",
-    "version": "18.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Generic Modules/Base",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/report-print-send",
