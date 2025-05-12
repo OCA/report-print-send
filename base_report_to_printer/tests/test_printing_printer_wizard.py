@@ -3,7 +3,6 @@
 
 from unittest import mock
 
-from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
@@ -53,11 +52,17 @@ class TestPrintingPrinterWizard(TransactionCase):
         cups.Connection().getPrinters.assert_called_once_with()
 
     @mock.patch("%s.cups" % model)
-    def test_action_ok_raises_warning_on_error(self, cups):
-        """It should raise Warning on any error"""
+    def test_action_ok_unavailable_printers_on_error(self, cups):
+        """It should set printers to unavailable on any error"""
         cups.Connection.side_effect = StopTest
-        with self.assertRaises(UserError):
-            self.Model.action_ok()
+        vals = self._record_vals()
+        vals["status"] = "available"
+        self.env["printing.printer"].create(vals)
+        self.Model.action_ok()
+        printer = self.env["printing.printer"].search(
+            [("system_name", "=", "sys_name")]
+        )
+        self.assertEqual(printer.status, "server-error")
 
     @mock.patch("%s.cups" % model)
     def test_action_ok_creates_new_printer(self, cups):

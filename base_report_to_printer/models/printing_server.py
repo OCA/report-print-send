@@ -98,45 +98,50 @@ class PrintingServer(models.Model):
 
         res = True
         for server in servers.with_context(active_test=False):
-            connection = server._open_connection(raise_on_error=raise_on_error)
-            if not connection:
-                server.printer_ids.write({"status": "server-error"})
-                res = False
-                continue
-
-            # Update Printers
-            printers = connection.getPrinters()
-            existing_printers = {
-                printer.system_name: printer for printer in server.printer_ids
-            }
             updated_printers = []
-            for name, printer_info in printers.items():
-                printer = self.env["printing.printer"]
-                if name in existing_printers:
-                    printer = existing_printers[name]
+            try:
+                connection = server._open_connection(raise_on_error=raise_on_error)
+                if not connection:
+                    server.printer_ids.write({"status": "server-error"})
+                    res = False
+                    continue
 
-                printer_values = printer._prepare_update_from_cups(
-                    connection, printer_info
+                # Update Printers
+                printers = connection.getPrinters()
+                existing_printers = {
+                    printer.system_name: printer for printer in server.printer_ids
+                }
+                for name, printer_info in printers.items():
+                    printer = self.env["printing.printer"]
+                    if name in existing_printers:
+                        printer = existing_printers[name]
+
+                    printer_values = printer._prepare_update_from_cups(
+                        connection, printer_info
+                    )
+                    if server != printer.server_id:
+                        printer_values["server_id"] = server.id
+
+                    updated_printers.append(name)
+                    # We want to keep any existing customized name over existing printer
+                    # We want also to rely in the system name as a fallback to avoid
+                    # empty names.
+                    if not printer_values.get("name") and not printer.name:
+                        printer_values["name"] = name
+                    if not printer:
+                        printer_values["system_name"] = name
+                        printer.create(printer_values)
+                    elif printer_values:
+                        printer.write(printer_values)
+                # Set printers not found as unavailable
+                server.printer_ids.filtered(
+                    lambda record: record.system_name not in updated_printers
+                ).write({"status": "unavailable"})
+            except Exception:
+                _logger.warning(
+                    _("Connection failed with printing server %s", server.name)
                 )
-                if server != printer.server_id:
-                    printer_values["server_id"] = server.id
-
-                updated_printers.append(name)
-                # We want to keep any existing customized name over existing printer
-                # We want also to rely in the system name as a fallback to avoid
-                # empty names.
-                if not printer_values.get("name") and not printer.name:
-                    printer_values["name"] = name
-                if not printer:
-                    printer_values["system_name"] = name
-                    printer.create(printer_values)
-                elif printer_values:
-                    printer.write(printer_values)
-
-            # Set printers not found as unavailable
-            server.printer_ids.filtered(
-                lambda record: record.system_name not in updated_printers
-            ).write({"status": "unavailable"})
+                server.printer_ids.write({"status": "server-error"})
 
         return res
 
