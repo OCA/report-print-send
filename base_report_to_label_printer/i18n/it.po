@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-14 15:06+0000\n"
+"PO-Revision-Date: 2025-05-20 10:26+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: base_report_to_label_printer
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_res_users__default_label_printer_id
 msgid "Default Label Printer"
-msgstr ""
+msgstr "Stampante etichetta predefinita"
 
 #. module: base_report_to_label_printer
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_ir_actions_report__display_name
@@ -31,25 +31,25 @@ msgstr "Nome visualizzato"
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_ir_actions_report__id
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_res_users__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: base_report_to_label_printer
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_ir_actions_report____last_update
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_res_users____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: base_report_to_label_printer
 #: model:ir.model,name:base_report_to_label_printer.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "Azione resoconto"
 
 #. module: base_report_to_label_printer
 #: model:ir.model.fields,field_description:base_report_to_label_printer.field_ir_actions_report__label
 msgid "Report is a Label"
-msgstr ""
+msgstr "Il resoconto è una etichetta"
 
 #. module: base_report_to_label_printer
 #: model:ir.model,name:base_report_to_label_printer.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utenti"
