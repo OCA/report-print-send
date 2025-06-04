@@ -24,10 +24,10 @@ addon | version | maintainers | summary
 [base_report_to_label_printer](base_report_to_label_printer/) | 16.0.1.0.1 |  | Report to label printer
 [base_report_to_printer](base_report_to_printer/) | 16.0.1.2.1 |  | Report to printer
 [base_report_to_printer_mail](base_report_to_printer_mail/) | 16.0.1.0.0 |  | Report to printer - Mail extension
-[pingen](pingen/) | 16.0.1.0.2 | [![ajaniszewska-dev](https://github.com/ajaniszewska-dev.png?size=30px)](https://github.com/ajaniszewska-dev) [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | pingen.com integration
-[pingen_env](pingen_env/) | 16.0.1.0.0 | [![ajaniszewska-dev](https://github.com/ajaniszewska-dev.png?size=30px)](https://github.com/ajaniszewska-dev) | pingen.com server environment
+[pingen](pingen/) | 16.0.1.0.2 | <a href='https://github.com/ajaniszewska-dev'><img src='https://github.com/ajaniszewska-dev.png' width='32' height='32' style='border-radius:50%;' alt='ajaniszewska-dev'/></a> <a href='https://github.com/grindtildeath'><img src='https://github.com/grindtildeath.png' width='32' height='32' style='border-radius:50%;' alt='grindtildeath'/></a> | pingen.com integration
+[pingen_env](pingen_env/) | 16.0.1.0.0 | <a href='https://github.com/ajaniszewska-dev'><img src='https://github.com/ajaniszewska-dev.png' width='32' height='32' style='border-radius:50%;' alt='ajaniszewska-dev'/></a> | pingen.com server environment
 [printer_zpl2](printer_zpl2/) | 16.0.1.1.1 |  | Add a ZPL II label printing feature
-[printing_simple_configuration](printing_simple_configuration/) | 16.0.1.1.0 | [![bealdav](https://github.com/bealdav.png?size=30px)](https://github.com/bealdav) | Allow to set printing configuration in company or in warehouse
+[printing_simple_configuration](printing_simple_configuration/) | 16.0.1.1.0 | <a href='https://github.com/bealdav'><img src='https://github.com/bealdav.png' width='32' height='32' style='border-radius:50%;' alt='bealdav'/></a> | Allow to set printing configuration in company or in warehouse
 [remote_report_to_printer](remote_report_to_printer/) | 16.0.1.0.1 |  | Report to printer on remotes
 
 [//]: # (end addons)
