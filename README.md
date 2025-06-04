@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_report_to_label_printer](base_report_to_label_printer/) | 18.0.1.0.0 |  | Report to label printer
 [base_report_to_printer](base_report_to_printer/) | 18.0.1.0.0 |  | Report to printer
+[base_report_to_printer_mail](base_report_to_printer_mail/) | 18.0.1.0.0 |  | Report to printer - Mail extension
 
 [//]: # (end addons)
 

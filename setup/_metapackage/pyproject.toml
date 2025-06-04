@@ -1,9 +1,10 @@
 [project]
 name = "odoo-addons-oca-report-print-send"
-version = "18.0.20250218.0"
+version = "18.0.20250604.0"
 dependencies = [
     "odoo-addon-base_report_to_label_printer==18.0.*",
     "odoo-addon-base_report_to_printer==18.0.*",
+    "odoo-addon-base_report_to_printer_mail==18.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
