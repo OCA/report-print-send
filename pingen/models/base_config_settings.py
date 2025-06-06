@@ -27,3 +27,8 @@ class ResConfigSettings(models.TransientModel):
     pingen_staging = fields.Boolean(
         string="Pingen Staging", related="company_id.pingen_staging", readonly=False
     )
+    pingen_ssl_verify = fields.Boolean(
+        string="Pingen SSL Verification",
+        related="company_id.pingen_ssl_verify",
+        readonly=False,
+    )

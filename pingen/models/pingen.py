@@ -40,11 +40,12 @@ class APIError(PingenException):
 class Pingen(object):
     """Interface to the pingen.com API"""
 
-    def __init__(self, clientid, secretid, organization, staging=True):
+    def __init__(self, clientid, secretid, organization, staging=True, verify=True):
         self.clientid = clientid
         self.secretid = secretid
         self.organization = organization
         self.staging = staging
+        self.verify = verify
         self._session = None
         self._init_token_registry()
         super(Pingen, self).__init__()
@@ -112,15 +113,12 @@ class Pingen(object):
     def _fetch_token(self):
         # TODO: Handle scope 'letter' only?
         token_url = urljoin(self.identity_url, self.token_url)
-        # FIXME: requests.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED]
-        # certificate verify failed (_ssl.c:581)
-        #  without verify=False parameter on prod/staging
         _logger.debug("Fetching new token from %s" % token_url)
         return self._session.fetch_token(
             token_url=token_url,
             client_id=self.clientid,
             client_secret=self.secretid,
-            verify=False,
+            verify=self.verify,
         )
 
     def _set_session_header_token(self):
@@ -172,7 +170,7 @@ class Pingen(object):
             complete_url = p_url.format(
                 organisationId=self.organization, letterId=letter_id
             )
-        response = method(complete_url, verify=False, **kwargs)
+        response = method(complete_url, verify=self.verify, **kwargs)
         errors = response.json().get("errors")
         if errors:
             raise APIError(
