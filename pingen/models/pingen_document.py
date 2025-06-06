@@ -130,10 +130,10 @@ class PingenDocument(models.Model):
                 % (self.id, pingen.api_url, e.description)
             )
             raise
-        except APIError:
+        except APIError as e:
             _logger.error(
-                "API Error when pushing Pingen Document %s to %s."
-                % (self.id, pingen.api_url)
+                "API Error when pushing Pingen Document %s to %s: %s"
+                % (self.id, pingen.api_url, str(e))
             )
             raise
         error = False
@@ -173,7 +173,7 @@ class PingenDocument(models.Model):
                 "Error when pushing the document %(name) to Pingen:\n%(exc)"
             ) % {
                 "name": self.name,
-                "exc": e,
+                "exc": str(e),
             }
         except Exception as e:
             error_msg = _(
