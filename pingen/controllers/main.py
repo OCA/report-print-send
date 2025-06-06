@@ -35,7 +35,7 @@ class PingenController(http.Controller):
         raise werkzeug.exceptions.Forbidden()
 
     def _get_request_content(self):
-        return http.request.httprequest.stream.read()
+        return http.request.httprequest.get_data()
 
     def _get_json_content(self, request_content):
         return json.loads(request_content)
