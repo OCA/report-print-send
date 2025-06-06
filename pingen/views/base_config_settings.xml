@@ -41,6 +41,10 @@
                             <label class="o_form_label col-3" for="pingen_staging" />
                             <field name="pingen_staging" />
                         </div>
+                        <div class="mt16 row">
+                            <label class="o_form_label col-3" for="pingen_ssl_verify" />
+                            <field name="pingen_ssl_verify" />
+                        </div>
                     </div>
                 </div>
             </xpath>
