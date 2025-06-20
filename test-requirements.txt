@@ -1,0 +1,2 @@
+odoo-addon-base_remote @ git+https://github.com/OCA/server-tools.git@refs/pull/3279/head#subdirectory=base_remote
+odoo-addon-base_report_to_label_printer @ git+https://github.com/OCA/report-print-send.git@refs/pull/401/head#subdirectory=base_report_to_label_printer
