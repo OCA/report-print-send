@@ -164,7 +164,7 @@ class PrintingPrinter(models.Model):
             context = self.env.context
             uid = self.env.uid
             printer_id = self.id
-            report_id = report.id
+            report_id = report.id if report else None
 
             @self.env.cr.postcommit.add
             def _launch_print_file():
