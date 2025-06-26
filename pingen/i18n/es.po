@@ -102,7 +102,8 @@ msgstr "Error de Conexión al enviar el documento %s a Pingen"
 #: code:addons/pingen/models/pingen_document.py:0
 #, python-format
 msgid "Connection Error when updating the status of Document %s from Pingen"
-msgstr "Error de Conexión al actualizar el estado del Documento %s desde Pingen"
+msgstr ""
+"Error de Conexión al actualizar el estado del Documento %s desde Pingen"
 
 #. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_pingen_document__cost
@@ -397,6 +398,16 @@ msgid "Pingen Error"
 msgstr "Error de Pingen"
 
 #. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_ssl_verify
+msgid "Pingen SSL Verification"
+msgstr ""
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_company__pingen_ssl_verify
+msgid "Pingen Ssl Verify"
+msgstr ""
+
+#. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_res_company__pingen_staging
 #: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_staging
 msgid "Pingen Staging"
@@ -562,7 +573,6 @@ msgstr ""
 
 #. module: pingen
 #. odoo-python
-#: code:addons/pingen/models/pingen_document.py:0
 #: code:addons/pingen/models/pingen_document.py:0
 #, python-format
 msgid "Unexpected Error when updating the status of Document %s"
