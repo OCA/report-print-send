@@ -388,6 +388,16 @@ msgid "Pingen Error"
 msgstr ""
 
 #. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_ssl_verify
+msgid "Pingen SSL Verification"
+msgstr ""
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_company__pingen_ssl_verify
+msgid "Pingen Ssl Verify"
+msgstr ""
+
+#. module: pingen
 #: model:ir.model.fields,field_description:pingen.field_res_company__pingen_staging
 #: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_staging
 msgid "Pingen Staging"
