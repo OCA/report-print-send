@@ -5,6 +5,7 @@
 # Copyright (C) 2013-2014 Camptocamp (<http://www.camptocamp.com>)
 # Copyright 2024 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
 import threading
 from time import time
 
@@ -12,6 +13,8 @@ from odoo import _, api, exceptions, fields, models, registry
 from odoo.tools.safe_eval import safe_eval
 
 REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
+
+_logger = logging.getLogger(__name__)
 
 
 class IrActionsReport(models.Model):
@@ -118,6 +121,8 @@ class IrActionsReport(models.Model):
                     "unavailable",
                 ]
             except Exception:
+                if not self.env.context.get("skip_printer_exception"):
+                    _logger.critical("Failed open connection", exc_info=True)
                 printer_exception = True
             if printer_exception and not self.env.context.get("skip_printer_exception"):
                 result["printer_exception"] = True
@@ -141,6 +146,8 @@ class IrActionsReport(models.Model):
             try:
                 return self.print_document(record_ids, data=data)
             except Exception:
+                if not self.env.context.get("skip_printer_exception"):
+                    _logger.critical("Failed open connection", exc_info=True)
                 return
 
     def print_document_threaded(self, report_id, record_ids, data):

@@ -1,5 +1,5 @@
-import {markup} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
+import {markup} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 
 async function cupsReportActionHandler(action, options, env) {
@@ -51,7 +51,6 @@ async function cupsReportActionHandler(action, options, env) {
                     title: `${terms.issue_on} ${print_action.printer_name}`,
                     type: "warning",
                     sticky: true,
-                    messageIsHtml: true,
                     buttons: [
                         {
                             name: _t("Print"),
