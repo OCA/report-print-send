@@ -8,12 +8,10 @@ from odoo_test_helper import FakeModelLoader
 
 from odoo.exceptions import UserError
 
-from odoo.addons.base_report_to_printer.models.printing_printer import PrintingPrinter
-
-from .common import TestPrintingAutoCommon, print_document
+from .common import TestPrintingAutoCommon, patch_print_document
 
 
-@mock.patch.object(PrintingPrinter, "print_document", print_document)
+@patch_print_document()
 class TestPrintingAutoBase(TestPrintingAutoCommon):
     @classmethod
     def setUpClass(cls):
@@ -23,6 +21,11 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
         from .model_test import PrintingAutoTester, PrintingAutoTesterChild
 
         cls.loader.update_registry((PrintingAutoTesterChild, PrintingAutoTester))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.loader.restore_registry()
+        return super().tearDownClass()
 
     def test_check_data_source(self):
         with self.assertRaises(UserError):
