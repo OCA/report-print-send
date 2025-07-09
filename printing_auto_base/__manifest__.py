@@ -7,12 +7,13 @@
     "maintainers": ["jbaudoux"],
     "category": "Warehouse Management",
     "data": [
+        "security/ir.model.access.csv",
         "views/printing_auto.xml",
     ],
     "depends": [
         "base_report_to_printer",
     ],
     "license": "AGPL-3",
-    "version": "14.0.1.0.0",
+    "version": "18.0.1.0.0",
     "website": "https://github.com/OCA/report-print-send",
 }

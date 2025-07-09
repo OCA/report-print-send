@@ -18,7 +18,7 @@ class PrintingAuto(models.Model):
     _name = "printing.auto"
     _description = "Printing Auto"
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
     model = fields.Char(string="Related Document Model", required=True)
 
     data_source = fields.Selection(
@@ -39,7 +39,6 @@ class PrintingAuto(models.Model):
     attachment_domain = fields.Char("Attachment domain", default="[]")
 
     condition = fields.Char(
-        "Condition",
         default="[]",
         help="Give a domain that must be valid for printing this",
     )
@@ -123,9 +122,9 @@ class PrintingAuto(models.Model):
 
     def _generate_data_from_report(self, record):
         self.ensure_one()
-        data, _ = self.report_id.with_context(must_skip_send_to_printer=True)._render(
-            record.id
-        )
+        report_ref = self.report_id.get_external_id()[self.report_id.id]
+        report_model = self.report_id[:0].with_context(must_skip_send_to_printer=True)
+        [data, __] = report_model._render(report_ref, record.id)
         return [data]
 
     def do_print(self, records):

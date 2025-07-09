@@ -3,7 +3,7 @@
         <field name="name">printing.auto.view.form</field>
         <field name="model">printing.auto</field>
         <field name="arch" type="xml">
-            <form string="">
+            <form>
                 <sheet>
                     <group>
                         <field name="name" />
@@ -11,11 +11,11 @@
                         <field name="record_change" />
                         <field
                             name="report_id"
-                            attrs="{'invisible':[('data_source', '=', 'attachment')]}"
+                            invisible="data_source == 'attachment'"
                         />
                         <field
                             name="attachment_domain"
-                            attrs="{'invisible':[('data_source', '=', 'report')]}"
+                            invisible="data_source == 'report'"
                         />
                         <field name="condition" />
                         <field name="printer_id" />
@@ -35,7 +35,7 @@
         <field name="name">printing.auto.view.tree</field>
         <field name="model">printing.auto</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="data_source" />
                 <field name="record_change" />
@@ -46,7 +46,7 @@
                 <field name="printer_tray_id" />
                 <field name="nbr_of_copies" />
                 <field name="action_on_error" />
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

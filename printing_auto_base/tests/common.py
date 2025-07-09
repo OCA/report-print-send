@@ -2,15 +2,22 @@
 # Copyright 2022 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from unittest import mock
 
 from odoo.tests import common
+
+from odoo.addons.base_report_to_printer.models.printing_printer import PrintingPrinter
+
+
+def patch_print_document():
+    return mock.patch.object(PrintingPrinter, "print_document", print_document)
 
 
 def print_document(cls, *args, **kwargs):
     return
 
 
-class TestPrintingAutoCommon(common.SavepointCase):
+class TestPrintingAutoCommon(common.TransactionCase):
     @classmethod
     def _create_printer(cls, name):
         return cls.env["printing.printer"].create(
@@ -29,8 +36,12 @@ class TestPrintingAutoCommon(common.SavepointCase):
 
     @classmethod
     def setUpReportAndRecord(cls):
-        cls.report = cls.env.ref("base.report_ir_model_overview")
+        cls.report_ref = "base.report_ir_model_overview"
         cls.record = cls.env.ref("base.model_res_partner")
+
+    @classmethod
+    def _render_report(cls):
+        return cls.env["ir.actions.report"]._render(cls.report_ref, cls.record.id)[0]
 
     @classmethod
     def setUpClass(cls):
@@ -46,7 +57,7 @@ class TestPrintingAutoCommon(common.SavepointCase):
             setattr(cls, tray_name, tray)
 
         cls.setUpReportAndRecord()
-        cls.data = cls.report._render(cls.record.id)[0]
+        cls.data = cls._render_report()
 
     @classmethod
     def _create_printing_auto(cls, vals):
@@ -68,7 +79,7 @@ class TestPrintingAutoCommon(common.SavepointCase):
     def _prepare_printing_auto_report_vals(cls):
         return {
             "data_source": "report",
-            "report_id": cls.report.id,
+            "report_id": cls.env.ref(cls.report_ref).id,
             "name": "Printing auto report",
         }
 
