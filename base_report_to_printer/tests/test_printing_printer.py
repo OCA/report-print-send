@@ -6,6 +6,7 @@ from unittest import mock
 
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
+from odoo.tools import mute_logger
 
 model = "odoo.addons.base_report_to_printer.models.printing_printer"
 server_model = "odoo.addons.base_report_to_printer.models.printing_server"
@@ -91,6 +92,7 @@ class TestPrintingPrinter(TransactionCase):
                 printer.system_name, file_name, file_name, options={}
             )
 
+    @mute_logger("odoo.addons.base_report_to_printer.models.printing_server")
     @mock.patch("%s.cups" % server_model)
     def test_print_report_error(self, cups):
         """It should print a report through CUPS"""
@@ -104,6 +106,7 @@ class TestPrintingPrinter(TransactionCase):
                     self.report, b"content to print", doc_format="pdf"
                 )
 
+    @mute_logger("odoo.addons.base_report_to_printer.models.printing_printer")
     @mock.patch("%s.cups" % server_model)
     def test_print_file(self, cups):
         """It should print a file through CUPS"""
@@ -114,6 +117,7 @@ class TestPrintingPrinter(TransactionCase):
             printer.system_name, file_name, file_name, options={}
         )
 
+    @mute_logger("odoo.addons.base_report_to_printer.models.printing_server")
     @mock.patch("%s.cups" % server_model)
     def test_print_file_error(self, cups):
         """It should print a file through CUPS"""
