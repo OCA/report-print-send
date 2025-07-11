@@ -102,7 +102,7 @@ class TestRemotePrinter(TransactionCase):
             ],
             limit=1,
         )
-        self.assertEquals(printer, self.env["res.remote.printer"])
+        self.assertEqual(printer, self.env["res.remote.printer"])
 
     def test_permissions_delete_user(self):
         printer = (

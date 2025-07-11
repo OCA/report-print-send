@@ -5,6 +5,7 @@ from unittest import mock
 
 from odoo import fields
 from odoo.tests.common import TransactionCase
+from odoo.tools import mute_logger
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
 model_base = "odoo.models.BaseModel"
@@ -43,6 +44,7 @@ class TestPrintingServer(TransactionCase):
         values["printer_id"] = printer.id
         return self.env["printing.job"].create(values)
 
+    @mute_logger("odoo.addons.base_report_to_printer.models.printing_server")
     @mock.patch("%s.cups" % model)
     def test_update_printers_error(self, cups):
         """It should catch any exception from CUPS and update status"""
@@ -147,6 +149,7 @@ class TestPrintingServer(TransactionCase):
             ],
         )
 
+    @mute_logger("odoo.addons.base_report_to_printer.models.printing_server")
     @mock.patch("%s.cups" % model)
     def test_update_jobs_error(self, cups):
         """It should catch any exception from CUPS and update status"""

@@ -7,6 +7,7 @@
     "maintainers": ["jbaudoux"],
     "category": "Warehouse Management",
     "data": [
+        "security/ir.model.access.csv",
         "views/printing_auto.xml",
     ],
     "depends": [

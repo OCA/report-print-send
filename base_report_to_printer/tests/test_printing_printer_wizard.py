@@ -5,6 +5,7 @@ from unittest import mock
 
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
+from odoo.tools import mute_logger
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
 
@@ -52,6 +53,7 @@ class TestPrintingPrinterWizard(TransactionCase):
         self.Model.action_ok()
         cups.Connection().getPrinters.assert_called_once_with()
 
+    @mute_logger("odoo.addons.base_report_to_printer.models.printing_server")
     @mock.patch("%s.cups" % model)
     def test_action_ok_raises_warning_on_error(self, cups):
         """It should raise Warning on any error"""

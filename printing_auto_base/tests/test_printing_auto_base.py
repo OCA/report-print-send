@@ -20,6 +20,7 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
         super().setUpClass()
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
+        cls.addClassCleanup(cls.loader.restore_registry)
         from .model_test import PrintingAutoTester, PrintingAutoTesterChild
 
         cls.loader.update_registry((PrintingAutoTesterChild, PrintingAutoTester))
