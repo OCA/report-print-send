@@ -1,0 +1,2 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_printing_auto,access_printing_auto,model_printing_auto,base.group_user,1,1,1,1

@@ -6,12 +6,14 @@ from odoo import fields, models
 
 class PrintingAutoTesterChild(models.Model):
     _name = "printingauto.tester.child"
+    _description = "Printing Auto Tester Child"
 
     name = fields.Char()
 
 
 class PrintingAutoTester(models.Model):
     _name = "printingauto.tester"
+    _description = "Printing Auto Tester"
     _inherit = "printing.auto.mixin"
 
     name = fields.Char()
