@@ -3,6 +3,7 @@
 import mock
 
 from odoo.tests.common import TransactionCase
+from odoo.tools import mute_logger
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
 
@@ -59,6 +60,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.label.test_labelary_mode = False
         self.assertIs(self.label.labelary_image, False)
 
+    @mute_logger("odoo.addons.printer_zpl2.models.printing_label_zpl2")
     def test_emulation_with_bad_header(self):
         """Check if bad header"""
         self.label.test_labelary_mode = True
