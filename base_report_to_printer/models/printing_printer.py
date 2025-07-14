@@ -174,6 +174,7 @@ class PrintingPrinter(models.Model):
                     report = env["ir.actions.report"].browse(report_id)
                     printer.print_file_and_clean(file_name, report=report, **print_opts)
 
+            return True
         else:
             return self.print_file_and_clean(file_name, report=report, **print_opts)
 
