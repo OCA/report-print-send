@@ -7,6 +7,8 @@ from unittest import mock
 from odoo import exceptions
 from odoo.tests import common
 
+REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
+
 
 class TestReport(common.HttpCase):
     def setUp(self):
@@ -217,3 +219,49 @@ class TestReport(common.HttpCase):
         ) as print_file:
             self.new_printer().print_document("", "test")
             print_file.assert_called_once()
+
+    def test_print_document_printable_quantity(self):
+        """It should print the report, regardless of the defined behaviour"""
+        self.report.property_printing_action_id.action_type = "server"
+        self.report.printing_printer_id = self.new_printer()
+        report_type = REPORT_TYPES.get(self.report.report_type)
+        behaviour = self.report.behaviour(**{"quantity": 3})
+        behaviour.pop("printer")
+        method_name = "_render_qweb_%s" % (report_type)
+        document, doc_format = getattr(
+            self.report.with_context(must_skip_send_to_printer=True), method_name
+        )(self.report.report_name, self.partners.ids, data=None)
+        behaviour["title"] = self.report.report_name
+        behaviour["res_ids"] = self.partners.ids
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models."
+            "printing_printer.PrintingPrinter."
+            "print_document"
+        ) as print_document:
+            self.report.print_document(self.partners.ids, **{"quantity": 3})
+            print_document.assert_called_once_with(
+                self.report, document, doc_format=self.report.report_type, **behaviour
+            )
+
+    def test_print_document_printable_unknown(self):
+        """It should print the report, regardless of the defined behaviour"""
+        self.report.property_printing_action_id.action_type = "server"
+        self.report.printing_printer_id = self.new_printer()
+        report_type = REPORT_TYPES.get(self.report.report_type)
+        behaviour = self.report.behaviour(**{"unknown": "test"})
+        behaviour.pop("printer")
+        method_name = "_render_qweb_%s" % (report_type)
+        document, doc_format = getattr(
+            self.report.with_context(must_skip_send_to_printer=True), method_name
+        )(self.report.report_name, self.partners.ids, data=None)
+        behaviour["title"] = self.report.report_name
+        behaviour["res_ids"] = self.partners.ids
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models."
+            "printing_printer.PrintingPrinter."
+            "print_document"
+        ) as print_document:
+            self.report.print_document(self.partners.ids, **{"unknown": "test"})
+            print_document.assert_called_once_with(
+                self.report, document, doc_format=self.report.report_type, **behaviour
+            )
