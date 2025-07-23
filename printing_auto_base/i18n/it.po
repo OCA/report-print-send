@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-21 10:26+0000\n"
+"PO-Revision-Date: 2025-07-23 14:25+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,28 +19,28 @@ msgstr ""
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__action_on_error
 msgid "Action on error"
-msgstr ""
+msgstr "Azione o errore"
 
 #. module: printing_auto_base
 #: model:ir.model.fields.selection,name:printing_auto_base.selection__printing_auto__data_source__attachment
 msgid "Attachment"
-msgstr ""
+msgstr "Allegato"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__attachment_domain
 msgid "Attachment domain"
-msgstr ""
+msgstr "Dominio allegato"
 
 #. module: printing_auto_base
 #: code:addons/printing_auto_base/models/printing_auto.py:0
 #, python-format
 msgid "Attachment domain is not set"
-msgstr ""
+msgstr "Il dominio allegato non è definito"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto_mixin__auto_printing_ids
 msgid "Auto Printing Configuration"
-msgstr ""
+msgstr "Configurazione stampa automatica"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,help:printing_auto_base.field_printing_auto__data_source
@@ -49,37 +49,40 @@ msgid ""
 "(useful for labels received from carriers that are recorded on the picking "
 "as an attachment)"
 msgstr ""
+"Scegliere se stampare il risultato di un resoconto Odoo o di un allegato "
+"preesistente (utile per le etichette ricevute dai corrieri che vengono "
+"registrate nel prelievo come allegato)"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__condition
 msgid "Condition"
-msgstr ""
+msgstr "Condizione"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__data_source
 msgid "Data source"
-msgstr ""
+msgstr "Origine dati"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__display_name
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto_mixin__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,help:printing_auto_base.field_printing_auto__condition
 msgid "Give a domain that must be valid for printing this"
-msgstr ""
+msgstr "Fornire un dominio che deve essere valido per stampare questo"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__id
@@ -91,91 +94,91 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto____last_update
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto_mixin____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: printing_auto_base
 #: code:addons/printing_auto_base/models/printing_auto.py:0
 #, python-format
 msgid "No attachment was found."
-msgstr ""
+msgstr "Nessun allegato trovato."
 
 #. module: printing_auto_base
 #: code:addons/printing_auto_base/models/printing_auto.py:0
 #, python-format
 msgid "No printer configured to print this {}."
-msgstr ""
+msgstr "Nessuna stampante configurata per stampare questo {}."
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__nbr_of_copies
 msgid "Number of Copies"
-msgstr ""
+msgstr "Numero di copie"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__printer_id
 msgid "Printer"
-msgstr ""
+msgstr "Stampante"
 
 #. module: printing_auto_base
 #: model:ir.model,name:printing_auto_base.model_printing_auto
 msgid "Printing Auto"
-msgstr ""
+msgstr "Stampa automatica"
 
 #. module: printing_auto_base
 #: model:ir.model,name:printing_auto_base.model_printing_auto_mixin
 msgid "Printing Auto Mixin"
-msgstr ""
+msgstr "Mixin stampante automatica"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto_mixin__printing_auto_error
 msgid "Printing error"
-msgstr ""
+msgstr "Errore di stampa"
 
 #. module: printing_auto_base
 #: model:ir.model.fields.selection,name:printing_auto_base.selection__printing_auto__action_on_error__raise
 msgid "Raise an Exception"
-msgstr ""
+msgstr "Genera un'eccezione"
 
 #. module: printing_auto_base
 #: model:ir.model.fields.selection,name:printing_auto_base.selection__printing_auto__action_on_error__log
 msgid "Record an error"
-msgstr ""
+msgstr "Registra un errore"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__record_change
 msgid "Record change"
-msgstr ""
+msgstr "Modifica record"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__model
 msgid "Related Document Model"
-msgstr ""
+msgstr "Modello documento correlato"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__report_id
 #: model:ir.model.fields.selection,name:printing_auto_base.selection__printing_auto__data_source__report
 msgid "Report"
-msgstr ""
+msgstr "Resoconto"
 
 #. module: printing_auto_base
 #: code:addons/printing_auto_base/models/printing_auto.py:0
 #, python-format
 msgid "Report is not set"
-msgstr ""
+msgstr "Il resoconto on è impostato"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,help:printing_auto_base.field_printing_auto__record_change
@@ -185,20 +188,24 @@ msgid ""
 "is a stock.picking, you can access the next picking with "
 "'move_lines.move_dest_ids.picking_id'"
 msgstr ""
+"Selezionare il documento su cui deve essere eseguito il resoconto. Utilizza "
+"un percorso con notazione puntata a partire da qualsiasi campo del record. "
+"Ad esempio, se il record è \"stock.picking\", si può accedere al prelievo "
+"successivo con \"move_lines.move_dest_ids.picking_id\""
 
 #. module: printing_auto_base
 #: code:addons/printing_auto_base/models/printing_auto.py:0
 #, python-format
 msgid "The Record change could not be applied because: %s"
-msgstr ""
+msgstr "La modifica del record non si può applicare perché: %s"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__printer_tray_id
 msgid "Tray"
-msgstr ""
+msgstr "Vassoio"
 
 #. module: printing_auto_base
 #: code:addons/printing_auto_base/models/printing_auto_mixin.py:0
 #, python-format
 msgid "{name}: {count} document(s) sent to printer {printer}"
-msgstr ""
+msgstr "{name}: {count} document(s) invia alla stampante {printer}"
