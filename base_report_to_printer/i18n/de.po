@@ -139,6 +139,11 @@ msgid "Cancelled, but printing already processed pages"
 msgstr "Abgebrochen, drucke aber bereits verarbeitete Seiten noch aus"
 
 #. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__company_ids
+msgid "Company"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__completed
 msgid "Completed"
 msgstr "Abgeschlossen"
