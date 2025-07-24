@@ -24,8 +24,17 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="address" />
-                        <field name="port" />
+                        <group>
+                            <field name="address" />
+                            <field name="port" />
+                        </group>
+                        <group>
+                            <field
+                                name="company_ids"
+                                widget="many2many_tags"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
                     </group>
                     <group>
                         <field name="user" />
