@@ -15,7 +15,7 @@ class PrintingAutoMixin(models.AbstractModel):
     auto_printing_ids = fields.Many2many(
         "printing.auto", string="Auto Printing Configuration"
     )
-    printing_auto_error = fields.Text("Printing error")
+    printing_auto_error = fields.Text("Printing error", readonly=True, copy=False)
 
     def _on_printing_auto_start(self):
         self.write({"printing_auto_error": False})
