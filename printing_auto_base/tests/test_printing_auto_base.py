@@ -99,13 +99,20 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
 
         printing_auto.printer_id = self.printer_1
         for nbr_of_copies in [0, 2, 1]:
+            self.printer_1.print_document.reset_mock()
             expected = (self.printer_1, nbr_of_copies)
             printing_auto.nbr_of_copies = nbr_of_copies
             self.assertEqual(expected, printing_auto.do_print(self.record))
+            # Check mock usage
+            kwargs = {"report": None, "content": self.data, "printer": self.printer_1}
+            expected_calls = [("__call__", (), kwargs)] * nbr_of_copies
+            self.assertEqual(self.printer_1.print_document.mock_calls, expected_calls)
 
         printing_auto.condition = "[('name', '=', 'test_printing_auto')]"
         expected = (self.printer_1, 0)
+        self.printer_1.print_document.reset_mock()
         self.assertEqual(expected, printing_auto.do_print(self.record))
+        self.printer_1.print_document.assert_not_called()
 
     def test_do_not_print_multiple_time_the_same_record(self):
         """Check the same record is not printed multiple times.
