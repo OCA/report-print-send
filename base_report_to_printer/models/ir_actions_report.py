@@ -34,7 +34,7 @@ class IrActionsReport(models.Model):
         comodel_name="printing.report.xml.action",
         inverse_name="report_id",
         string="Actions",
-        help="This field allows configuring action and printer on a per " "user basis",
+        help="This field allows configuring action and printer on a per user basis",
     )
 
     @api.onchange("printing_printer_id")
