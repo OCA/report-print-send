@@ -6,15 +6,14 @@ from unittest import mock
 
 from odoo.tests import common
 
-from odoo.addons.base_report_to_printer.models.printing_printer import PrintingPrinter
+PRINT_DOCUMENT = (
+    "odoo.addons.base_report_to_printer.models.printing_printer."
+    "PrintingPrinter.print_document"
+)
 
 
 def patch_print_document():
-    return mock.patch.object(PrintingPrinter, "print_document", print_document)
-
-
-def print_document(cls, *args, **kwargs):
-    return
+    return mock.patch(PRINT_DOCUMENT, mock.MagicMock())
 
 
 class TestPrintingAutoCommon(common.TransactionCase):
