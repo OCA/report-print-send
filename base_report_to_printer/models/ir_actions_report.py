@@ -35,11 +35,27 @@ class IrActionsReport(models.Model):
         string="Actions",
         help="This field allows configuring action and printer on a per " "user basis",
     )
+    is_report_to_printer_action = fields.Boolean(
+        compute="_compute_is_report_to_printer_action"
+    )
+
+    @api.depends("property_printing_action_id")
+    def _compute_is_report_to_printer_action(self):
+        for record in self:
+            record.is_report_to_printer_action = (
+                record.property_printing_action_id
+                and record.report_type in REPORT_TYPES
+            )
 
     @api.onchange("printing_printer_id")
     def onchange_printing_printer_id(self):
         """Reset the tray when the printer is changed"""
         self.printer_tray_id = False
+
+    def _get_readable_fields(self):
+        fields = super()._get_readable_fields()
+        fields.add("is_report_to_printer_action")
+        return fields
 
     @api.model
     def print_action_for_report_name(self, report_name):
