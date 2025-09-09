@@ -51,7 +51,6 @@ async function cupsReportActionHandler(action, options, env) {
                     title: `${terms.issue_on} ${print_action.printer_name}`,
                     type: "warning",
                     sticky: true,
-                    messageIsHtml: true,
                     buttons: [
                         {
                             name: _t("Print"),
