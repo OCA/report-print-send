@@ -112,6 +112,17 @@ class IrActionsReport(models.Model):
         """
         return {"copies": str(value)} if value else {}
 
+    def _set_print_extra_printer(self, value):
+        """
+        We force the printer that will be used
+        The printer should be a recordset
+        """
+        if isinstance(value, int):
+            printer = self.env["printing.printer"].browse(value)
+        else:
+            printer = value
+        return {"printer": printer} if printer else {}
+
     def behaviour(self, **extras):
         self.ensure_one()
         printing_act_obj = self.env["printing.report.xml.action"]
