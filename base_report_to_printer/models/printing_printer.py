@@ -10,9 +10,10 @@
 import errno
 import logging
 import os
+import threading
 from tempfile import mkstemp
 
-from odoo import api, fields, models
+from odoo import api, fields, models, registry
 
 _logger = logging.getLogger(__name__)
 
@@ -153,7 +154,41 @@ class PrintingPrinter(models.Model):
         finally:
             os.close(fd)
 
-        return self.print_file(file_name, report=report, **print_opts)
+        self.env.cr.postrollback.add(
+            lambda: os.remove(file_name) if os.path.exists(file_name) else None
+        )
+
+        test_mode = getattr(threading.current_thread(), "testing", False)
+        if not test_mode:
+            dbname = self.env.cr.dbname
+            context = self.env.context
+            uid = self.env.uid
+            printer_id = self.id
+            report_id = report.id if report else None
+
+            @self.env.cr.postcommit.add
+            def _launch_print_file():
+                with registry(dbname).cursor() as cr:
+                    env = api.Environment(cr, uid, context)
+                    printer = env["printing.printer"].browse(printer_id)
+                    report = env["ir.actions.report"].browse(report_id)
+                    printer.print_file_and_clean(file_name, report=report, **print_opts)
+
+            return True
+        else:
+            return self.print_file_and_clean(file_name, report=report, **print_opts)
+
+    def print_file_and_clean(self, file_name, report=None, **print_opts):
+        """Print a file and clean up the given file after printing"""
+        try:
+            return self.print_file(file_name, report=report, **print_opts)
+        finally:
+            try:
+                os.remove(file_name)
+            except OSError as exc:
+                _logger.warning(
+                    "Unable to remove temporary file %s: %s", file_name, exc
+                )
 
     @staticmethod
     def _set_option_doc_format(report, value):
@@ -198,10 +233,6 @@ class PrintingPrinter(models.Model):
         _logger.info(
             "Printing job: '{}' on {}".format(file_name, self.server_id.address)
         )
-        try:
-            os.remove(file_name)
-        except OSError as exc:
-            _logger.warning("Unable to remove temporary file %s: %s", file_name, exc)
         return True
 
     def set_default(self):
