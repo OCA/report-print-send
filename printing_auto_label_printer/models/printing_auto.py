@@ -8,7 +8,7 @@ from odoo import fields, models
 class PrintingAuto(models.Model):
     _inherit = "printing.auto"
 
-    is_label = fields.Boolean("Is Label")
+    is_label = fields.Boolean()
 
     def _get_behaviour(self):
         if self.is_label and not self.printer_id:
