@@ -9,114 +9,115 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2017-12-19 03:38+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2025-09-16 14:42+0000\n"
+"Last-Translator: Betül Öğmen <betulo@eska.biz>\n"
 "Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: base_report_to_printer
 #: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
 #, python-format
 msgid "%s (%s copies)"
-msgstr ""
+msgstr "%s (%s kopyalar)"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__aborted
 msgid "Aborted"
-msgstr ""
+msgstr "Durduruldu"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__aborted-by-system
 msgid "Aborted by the system"
-msgstr ""
+msgstr "Sistem tarafından durduruldu"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__action
 msgid "Action"
-msgstr ""
+msgstr "Aksiyon"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_action_ids
 msgid "Actions"
-msgstr ""
+msgstr "Aksiyonlar"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__active
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__active
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__active
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__address
 msgid "Address"
-msgstr ""
+msgstr "Adres"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
 msgid "Archived"
-msgstr ""
+msgstr "Arşivlendi"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Are you sure to want to cancel all jobs of this printer?"
-msgstr ""
+msgstr "Bu yazıcının tüm işlerini iptal etmek istediğinizden emin misiniz?"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Are you sure to want to print a test page?"
-msgstr ""
+msgstr "Bir test sayfası yazdırmak istediğinizden emin misiniz?"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__attachment_id
 msgid "Attachment"
-msgstr ""
+msgstr "Ek"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__attachment_line_ids
 msgid "Attachments to print"
-msgstr ""
+msgstr "Yazdırılacak ekler"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__available
 msgid "Available"
-msgstr ""
+msgstr "Mevcut"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-transforming
 msgid "Being transformed into a different format"
-msgstr ""
+msgstr "Farklı bir formata dönüştürülüyor"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__cups-filter-crashed
 msgid "CUPS filter crashed"
-msgstr ""
+msgstr "CUPS filtresi çöktü"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_id_cups
 msgid "CUPS id for this job."
-msgstr ""
+msgstr "Bu iş için CUPS id si"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-restartable
 msgid "Can be restarted"
-msgstr ""
+msgstr "Yeniden başlatılabilir"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_form
 msgid "Cancel all running jobs"
-msgstr ""
+msgstr "Çalışan tüm işleri iptal et"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__canceled
