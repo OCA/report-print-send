@@ -306,7 +306,12 @@ class TestIrActionsReportXml(TransactionCase):
             report, action, "input", user_tray_in, report_tray_in, action_tray_in
         )
         self._set_trays(
-            report, action, "output", user_tray_out, report_tray_out, action_tray_out
+            report,
+            action,
+            "output",
+            user_tray_out,
+            report_tray_out,
+            action_tray_out,
         )
         self.assertEqual("Action tray", report.behaviour()["input_tray"])
         self.assertEqual("Action tray", report.behaviour()["output_tray"])
