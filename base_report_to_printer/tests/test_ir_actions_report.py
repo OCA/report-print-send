@@ -113,7 +113,7 @@ class TestIrActionsReportXml(TransactionCase):
                     "action": "client",
                     "printer": self.env.user.printing_printer_id,
                     "input_tray": False,
-                "output_tray": False,
+                    "output_tray": False,
                 },
             )
             self.assertEqual(len(logs.records), 1)
@@ -134,7 +134,7 @@ class TestIrActionsReportXml(TransactionCase):
                     "action": report.property_printing_action_id.action_type,
                     "printer": report.printing_printer_id,
                     "input_tray": False,
-                "output_tray": False,
+                    "output_tray": False,
                 },
             )
             self.assertEqual(len(logs.records), 1)
@@ -227,7 +227,7 @@ class TestIrActionsReportXml(TransactionCase):
                     "action": printing_action.action,
                     "printer": printing_action.printer_id,
                     "input_tray": False,
-                "output_tray": False,
+                    "output_tray": False,
                 },
             )
             self.assertEqual(len(logs.records), 1)
@@ -273,15 +273,24 @@ class TestIrActionsReportXml(TransactionCase):
                 "system_name": "Tray",
                 "printer_id": printer.id,
             }
-            user_tray_in = self.new_tray("input", {"system_name": "User tray"}, tray_vals)
-            report_tray_in = self.new_tray("input", {"system_name": "Report tray"}, tray_vals)
-            action_tray_in = self.new_tray("input", {"system_name": "Action tray"}, tray_vals)
-            user_tray_out = self.new_tray("output", {"system_name": "User tray"},
-                                          tray_vals)
-            report_tray_out = self.new_tray("output", {"system_name": "Report tray"},
-                                            tray_vals)
-            action_tray_out = self.new_tray("output", {"system_name": "Action tray"},
-                                            tray_vals)
+            user_tray_in = self.new_tray(
+                "input", {"system_name": "User tray"}, tray_vals
+            )
+            report_tray_in = self.new_tray(
+                "input", {"system_name": "Report tray"}, tray_vals
+            )
+            action_tray_in = self.new_tray(
+                "input", {"system_name": "Action tray"}, tray_vals
+            )
+            user_tray_out = self.new_tray(
+                "output", {"system_name": "User tray"}, tray_vals
+            )
+            report_tray_out = self.new_tray(
+                "output", {"system_name": "Report tray"}, tray_vals
+            )
+            action_tray_out = self.new_tray(
+                "output", {"system_name": "Action tray"}, tray_vals
+            )
 
             # No report passed
             self._set_trays(report, action, "input")
@@ -291,8 +300,7 @@ class TestIrActionsReportXml(TransactionCase):
             self.assertFalse("OutputBin" in options)
 
             # No tray defined
-            self._set_trays(
-            report, action, "input")
+            self._set_trays(report, action, "input")
             self._set_trays(report, action, "output")
             options = report.behaviour()
             self.assertTrue("input_tray" in options)
@@ -300,29 +308,25 @@ class TestIrActionsReportXml(TransactionCase):
 
             # Only user tray is defined
             self._set_trays(report, action, "input", user_tray=user_tray_in)
-            self._set_trays(report,
-            action, "output", user_tray=user_tray_out)
+            self._set_trays(report, action, "output", user_tray=user_tray_out)
             self.assertEqual("User tray", report.behaviour()["input_tray"])
             self.assertEqual("User tray", report.behaviour()["output_tray"])
 
             # Only report tray is defined
-            self._set_trays(
-            report, action, "input", report_tray=report_tray_in)
+            self._set_trays(report, action, "input", report_tray=report_tray_in)
             self._set_trays(report, action, "output", report_tray=report_tray_out)
             self.assertEqual("Report tray", report.behaviour()["input_tray"])
             self.assertEqual("Report tray", report.behaviour()["output_tray"])
 
             # Only action tray is defined
-            self._set_trays(
-            report, action, "input", action_tray=action_tray_in)
+            self._set_trays(report, action, "input", action_tray=action_tray_in)
             self._set_trays(report, action, "output", action_tray=action_tray_out)
             self.assertEqual("Action tray", report.behaviour()["input_tray"])
             self.assertEqual("Action tray", report.behaviour()["output_tray"])
 
             # User and report tray defined
             self._set_trays(report, action, "input", user_tray_in, report_tray_in)
-            self._set_trays(report,
-            action, "output", user_tray_out, report_tray_out)
+            self._set_trays(report, action, "output", user_tray_out, report_tray_out)
             self.assertEqual("Report tray", report.behaviour()["input_tray"])
             self.assertEqual("Report tray", report.behaviour()["output_tray"])
 
@@ -331,7 +335,12 @@ class TestIrActionsReportXml(TransactionCase):
                 report, action, "input", user_tray_in, report_tray_in, action_tray_in
             )
             self._set_trays(
-                report, action, "output", user_tray_out, report_tray_out, action_tray_out
+                report,
+                action,
+                "output",
+                user_tray_out,
+                report_tray_out,
+                action_tray_out,
             )
             self.assertEqual("Action tray", report.behaviour()["input_tray"])
             self.assertEqual("Action tray", report.behaviour()["output_tray"])
@@ -352,7 +361,6 @@ class TestIrActionsReportXml(TransactionCase):
         setattr(self.env.user, attr, user_tray)
         setattr(report, attr, report_tray)
         setattr(action, attr, action_tray)
-        self.assertEqual(len(logs.records), 6)
 
     def test_onchange_printer_tray_id_empty(self):
         action = self.Model.new(
@@ -425,7 +433,7 @@ class TestIrActionsReportXml(TransactionCase):
                     "action": printing_action.action,
                     "printer": printing_action.printer_id,
                     "input_tray": False,
-                "output_tray": False,
+                    "output_tray": False,
                 },
             )
             self.assertEqual(len(logs.records), 1)

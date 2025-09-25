@@ -84,7 +84,9 @@ class IrActionsReport(models.Model):
             if user.printer_input_tray_id
             else False,
             output_tray=(
-                str(user.printer_output_tray_id.system_name) if user.printer_output_tray_id else False
+                str(user.printer_output_tray_id.system_name)
+                if user.printer_output_tray_id
+                else False
             ),
         )
 
