@@ -36,6 +36,7 @@
         <field name="model">printing.auto</field>
         <field name="arch" type="xml">
             <list>
+                <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="data_source" />
                 <field name="record_change" />
