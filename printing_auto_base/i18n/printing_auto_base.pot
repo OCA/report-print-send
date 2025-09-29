@@ -176,6 +176,11 @@ msgid ""
 msgstr ""
 
 #. module: printing_auto_base
+#: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: printing_auto_base
 #. odoo-python
 #: code:addons/printing_auto_base/models/printing_auto.py:0
 msgid "The Record change could not be applied because: %s"
