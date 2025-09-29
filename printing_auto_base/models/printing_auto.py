@@ -17,9 +17,11 @@ class PrintingAuto(models.Model):
 
     _name = "printing.auto"
     _description = "Printing Auto"
+    _order = "sequence ASC, id ASC"
 
     name = fields.Char(required=True)
     model = fields.Char(string="Related Document Model", required=True)
+    sequence = fields.Integer(default=10)
 
     data_source = fields.Selection(
         [
