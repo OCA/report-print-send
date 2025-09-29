@@ -32,8 +32,8 @@ msgid "Attachment domain"
 msgstr "Dominio allegato"
 
 #. module: printing_auto_base
+#. odoo-python
 #: code:addons/printing_auto_base/models/printing_auto.py:0
-#, python-format
 msgid "Attachment domain is not set"
 msgstr "Il dominio allegato non è definito"
 
@@ -75,7 +75,6 @@ msgstr "Origine dati"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__display_name
-#: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto_mixin__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
@@ -86,15 +85,8 @@ msgstr "Fornire un dominio che deve essere valido per stampare questo"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__id
-#: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto_mixin__id
 msgid "ID"
 msgstr "ID"
-
-#. module: printing_auto_base
-#: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto____last_update
-#: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto_mixin____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: printing_auto_base
 #: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__write_uid
@@ -112,14 +104,14 @@ msgid "Name"
 msgstr "Nome"
 
 #. module: printing_auto_base
+#. odoo-python
 #: code:addons/printing_auto_base/models/printing_auto.py:0
-#, python-format
 msgid "No attachment was found."
 msgstr "Nessun allegato trovato."
 
 #. module: printing_auto_base
+#. odoo-python
 #: code:addons/printing_auto_base/models/printing_auto.py:0
-#, python-format
 msgid "No printer configured to print this {}."
 msgstr "Nessuna stampante configurata per stampare questo {}."
 
@@ -175,8 +167,8 @@ msgid "Report"
 msgstr "Resoconto"
 
 #. module: printing_auto_base
+#. odoo-python
 #: code:addons/printing_auto_base/models/printing_auto.py:0
-#, python-format
 msgid "Report is not set"
 msgstr "Il resoconto on è impostato"
 
@@ -185,8 +177,8 @@ msgstr "Il resoconto on è impostato"
 msgid ""
 "Select on which document the report must be executed. Use a path using a "
 "dotted notation starting from any record field. For example, if your record "
-"is a stock.picking, you can access the next picking with "
-"'move_lines.move_dest_ids.picking_id'"
+"is a stock.picking, you can access the next picking with 'move_lines."
+"move_dest_ids.picking_id'"
 msgstr ""
 "Selezionare il documento su cui deve essere eseguito il resoconto. Utilizza "
 "un percorso con notazione puntata a partire da qualsiasi campo del record. "
@@ -194,8 +186,13 @@ msgstr ""
 "successivo con \"move_lines.move_dest_ids.picking_id\""
 
 #. module: printing_auto_base
+#: model:ir.model.fields,field_description:printing_auto_base.field_printing_auto__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: printing_auto_base
+#. odoo-python
 #: code:addons/printing_auto_base/models/printing_auto.py:0
-#, python-format
 msgid "The Record change could not be applied because: %s"
 msgstr "La modifica del record non si può applicare perché: %s"
 
@@ -205,7 +202,10 @@ msgid "Tray"
 msgstr "Vassoio"
 
 #. module: printing_auto_base
+#. odoo-python
 #: code:addons/printing_auto_base/models/printing_auto_mixin.py:0
-#, python-format
 msgid "{name}: {count} document(s) sent to printer {printer}"
 msgstr "{name}: {count} document(s) invia alla stampante {printer}"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
