@@ -165,3 +165,28 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
             generate_data_from.assert_has_calls(
                 [mock.call(child1), mock.call(child2)], any_order=True
             )
+
+    def test_print_on_record_change(self):
+        vals = {
+            "record_change": "child_ids",
+            "printer_id": self.printer_1.id,
+            "condition": [("name", "=", "bob")],
+        }
+        printing_auto = self._create_printing_auto_report(vals=vals)
+        son = self.env["printingauto.tester.child"].create({"name": "bob"})
+        daughter = self.env["printingauto.tester.child"].create({"name": "cindy"})
+        daddy = self.env["printingauto.tester"].create(
+            {
+                "name": "john",
+                "child_ids": [(6, 0, (son | daughter).ids)],
+                "auto_printing_ids": [(4, printing_auto.id, 0)],
+            }
+        )
+        self.assertEqual(printing_auto._check_condition(daddy), son)
+        # Change child name, parent doesn't match anymore
+        son.name = "peter"
+        self.assertFalse(printing_auto._check_condition(daddy))
+        # Restore the name to bob, break the link
+        son.name = "bob"
+        daddy.child_ids = [(6, 0, daughter.ids)]
+        self.assertFalse(printing_auto._check_condition(daddy))
