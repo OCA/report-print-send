@@ -10,7 +10,7 @@
                         name="action_cancel"
                         type="object"
                         string="Cancel"
-                        invisible="job_state in ['canceled','aborted','completed']"
+                        invisible="job_state in ['completed']"
                     />
                     <field name="job_state" widget="statusbar" />
                 </header>
@@ -18,9 +18,6 @@
                     <group>
                         <group>
                             <field name="name" />
-                            <field name="job_id_cups" />
-                            <field name="job_media_progress" widget="progressbar" />
-                            <field name="job_state_reason" />
                         </group>
                         <group>
                             <field name="time_at_creation" />
@@ -38,7 +35,6 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
-                <field name="job_id_cups" />
                 <field name="job_state" />
             </list>
         </field>

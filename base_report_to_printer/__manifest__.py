@@ -18,15 +18,12 @@
     "data": [
         "data/printing_data.xml",
         "security/security.xml",
-        "security/ir.model.access.csv",
         "views/printing_printer.xml",
-        "views/printing_server.xml",
         "views/printing_job.xml",
         "views/printing_report.xml",
-        "views/res_users.xml",
         "views/ir_actions_report.xml",
+        "views/res_users.xml",
         "wizards/print_attachment_report.xml",
-        "wizards/printing_printer_update_wizard_view.xml",
     ],
     "assets": {
         "web.assets_backend": [
@@ -35,5 +32,4 @@
     },
     "installable": True,
     "application": False,
-    "external_dependencies": {"python": ["pycups"]},
 }

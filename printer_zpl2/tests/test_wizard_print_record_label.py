@@ -5,8 +5,6 @@ from unittest.mock import patch
 
 from .common import PrinterZpl2Common
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
-
 
 class TestWizardPrintRecordLabel(PrinterZpl2Common):
     @classmethod
@@ -14,8 +12,7 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         super().setUpClass()
         cls.Wizard = cls.env["wizard.print.record.label"]
 
-    @patch(f"{model}.cups")
-    def test_print_record_label(self, cups):
+    def test_print_record_label(self):
         """Check that printing a label using the generic wizard works"""
         wizard_obj = self.Wizard.with_context(
             active_model="printing.printer",
@@ -26,8 +23,10 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         wizard = wizard_obj.create({})
         self.assertEqual(wizard.printer_id, self.printer)
         self.assertEqual(wizard.label_id, self.label)
-        wizard.print_label()
-        cups.Connection().printFile.assert_called_once()
+        with patch.object(type(self.printer), "print_document") as mock_print:
+            mock_print.return_value = True
+            wizard.print_label()
+            mock_print.assert_called_once()
 
     def test_wizard_multiple_printers_and_labels(self):
         """Check that printer_id and label_id are not automatically filled
@@ -36,7 +35,6 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         self.env["printing.printer"].create(
             {
                 "name": "Other_Printer",
-                "server_id": self.server.id,
                 "system_name": "Sys Name",
                 "default": True,
                 "status": "unknown",

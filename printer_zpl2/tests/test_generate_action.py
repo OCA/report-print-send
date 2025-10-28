@@ -3,8 +3,6 @@
 
 from .common import PrinterZpl2Common
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
-
 
 class TestWizardPrintRecordLabel(PrinterZpl2Common):
     def test_create_action(self):

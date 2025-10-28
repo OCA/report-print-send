@@ -8,8 +8,6 @@ from odoo import exceptions
 from ..models import zpl2
 from .common import PrinterZpl2Common
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
-
 
 class TestPrintingLabelZpl2(PrinterZpl2Common):
     @classmethod
@@ -35,12 +33,12 @@ class TestPrintingLabelZpl2(PrinterZpl2Common):
         with self.assertRaises(exceptions.UserError):
             label.print_label(self.printer, label)
 
-    @patch(f"{model}.cups")
-    def test_print_empty_label(self, cups):
-        """Check that printing an empty label works"""
+    def test_print_empty_label(self):
         label = self.new_label()
-        label.print_label(self.printer, self.printer)
-        cups.Connection().printFile.assert_called_once()
+        with patch.object(type(self.printer), "print_document") as mock_print:
+            mock_print.return_value = True
+            label.print_label(self.printer, self.printer)
+            mock_print.assert_called_once()
 
     def test_empty_label_contents(self):
         """Check contents of an empty label"""

@@ -10,7 +10,6 @@ class TestPrintingReportXmlAction(TransactionCase):
         self.Model = self.env["printing.report.xml.action"]
 
         self.report = self.env["ir.actions.report"].search([], limit=1)
-        self.server = self.env["printing.server"].create({})
 
         self.report_vals = {
             "report_id": self.report.id,
@@ -29,7 +28,6 @@ class TestPrintingReportXmlAction(TransactionCase):
         return self.env["printing.printer"].create(
             {
                 "name": "Printer",
-                "server_id": self.server.id,
                 "system_name": "Sys Name",
                 "default": True,
                 "status": "unknown",
@@ -72,11 +70,9 @@ class TestPrintingReportXmlAction(TransactionCase):
         self.assertFalse(action.printer_tray_id)
 
     def test_onchange_printer_tray_id_not_empty(self):
-        server = self.env["printing.server"].create({})
         printer = self.env["printing.printer"].create(
             {
                 "name": "Printer",
-                "server_id": server.id,
                 "system_name": "Sys Name",
                 "default": True,
                 "status": "unknown",

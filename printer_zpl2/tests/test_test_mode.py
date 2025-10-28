@@ -8,8 +8,6 @@ from odoo.tools import mute_logger
 
 from .common import PrinterZpl2Common
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
-
 
 class TestWizardPrintRecordLabel(PrinterZpl2Common):
     @classmethod
@@ -33,14 +31,15 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
             record = Obj.search([], limit=1, order="id desc")
         self.assertEqual(res, record)
 
-    @patch(f"{model}.cups")
-    def test_print_label_test(self, cups):
+    def test_print_label_test(self):
         """Check if print test"""
         self.label.test_print_mode = True
         self.label.printer_id = self.printer
         self.label.record_id = 10
-        self.label.print_test_label()
-        cups.Connection().printFile.assert_called_once()
+        with patch.object(type(self.printer), "print_document") as mock_print:
+            mock_print.return_value = True
+            self.label.print_test_label()
+            mock_print.assert_called_once()
 
     def test_emulation_without_params(self):
         """Check if not execute next if not in this mode"""
@@ -57,9 +56,15 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"Test"'}
         )
+        # Simulate a 400 response from Labelary (oversized)
+        mock_response = requests.Response()
+        mock_response.status_code = 400
         # do not log expected warning "Error with Labelary API. 400"
         # "ERROR: Label height is larger than 15.0 inches"
-        with mute_logger("odoo.addons.printer_zpl2.models.printing_label_zpl2"):
+        with (
+            patch("requests.post", return_value=mock_response),
+            mute_logger("odoo.addons.printer_zpl2.models.printing_label_zpl2"),
+        ):
             self.assertFalse(self.label.labelary_image)
 
     def test_emulation_with_bad_data_compute(self):
@@ -83,4 +88,15 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"good_data"'}
         )
-        self.assertTrue(self.label.labelary_image)
+        # Mock a successful PNG response from Labelary (minimal 1x1 PNG)
+        mock_response = requests.Response()
+        mock_response.status_code = 200
+        mock_response._content = (
+            b"\x89PNG\r\n\x1a\n"
+            b"\x00\x00\x00\x0dIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00"
+            b"\x1f\x15\xc4\x89"
+            b"\x00\x00\x00\x0aIDAT\x08\x99c\x00\x00\x00\x02\x00\x01\xe5\x27\xde\xfc"
+            b"\x00\x00\x00\x00IEND\xaeB`\x82"
+        )
+        with patch("requests.post", return_value=mock_response):
+            self.assertTrue(self.label.labelary_image)
