@@ -1,8 +1,10 @@
 # Copyright (C) 2018 Florent de Labarre (<https://github.com/fmdl>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from unittest.mock import patch
+import io
+from unittest.mock import Mock, patch
 
 import requests
+from PIL import Image
 
 from odoo.tools import mute_logger
 
@@ -17,10 +19,21 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         cls._super_send = requests.Session.send
         super().setUpClass()
 
-    @classmethod
-    def _request_handler(cls, s, r, /, **kw):
-        """Don't block external requests."""
-        return cls._super_send(s, r, **kw)
+    def fake_post(url, *args, **kwargs):
+        # specific case for too large label in test_emulation_with_bad_header
+        width = round(80 / 25.4, 2)
+        height = round(10000000 / 25.4, 2)
+        if f"8dpmm/labels/{width}x{height}" in url:
+            return Mock(
+                status_code=400,
+                content=b"Error: Label height is larger than 15.0 inches",
+            )
+        # Create a simple 1x1 white image for testing
+        image = Image.new("RGB", (1, 1), color="white")
+        buffer = io.BytesIO()
+        image.save(buffer, format="PNG")
+        buffer.seek(0)
+        return Mock(status_code=200, content=buffer.read())
 
     def test_get_record(self):
         """Check if return a record"""
@@ -47,7 +60,11 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         self.label.test_labelary_mode = False
         self.assertIs(self.label.labelary_image, False)
 
-    def test_emulation_with_bad_header(self):
+    @patch(
+        "odoo.addons.printer_zpl2.models.printing_label_zpl2.requests.post",
+        side_effect=fake_post,
+    )
+    def test_emulation_with_bad_header(self, mock_post):
         """Check if bad header"""
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
@@ -74,7 +91,11 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         component.unlink()
         self.assertIs(self.label.labelary_image, False)
 
-    def test_emulation_with_good_data(self):
+    @patch(
+        "odoo.addons.printer_zpl2.models.printing_label_zpl2.requests.post",
+        side_effect=fake_post,
+    )
+    def test_emulation_with_good_data(self, mock_post):
         """Check if ok"""
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
