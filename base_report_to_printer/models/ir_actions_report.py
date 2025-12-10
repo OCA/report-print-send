@@ -8,7 +8,8 @@
 import threading
 from time import time
 
-from odoo import _, api, exceptions, fields, models, registry
+from odoo import api, exceptions, fields, models
+from odoo.modules.registry import Registry
 from odoo.tools.safe_eval import safe_eval
 
 REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
@@ -148,7 +149,7 @@ class IrActionsReport(models.Model):
                 return
 
     def print_document_threaded(self, report_id, record_ids, data):
-        with registry(self._cr.dbname).cursor() as cr:
+        with Registry(self.env.cr.dbname).cursor() as cr:
             self = self.with_env(self.env(cr=cr))
             report = self.env["ir.actions.report"].browse(report_id)
             report.print_document(record_ids, data)
@@ -158,8 +159,7 @@ class IrActionsReport(models.Model):
         report_type = REPORT_TYPES.get(self.report_type)
         if not report_type:
             raise exceptions.UserError(
-                _("This report type (%s) is not supported by direct printing!")
-                % str(self.report_type)
+                self.env._("This report type (%s) is not supported by direct printing!", str(self.report_type))
             )
         method_name = f"_render_qweb_{report_type}"
         document, doc_format = getattr(
@@ -169,7 +169,7 @@ class IrActionsReport(models.Model):
         printer = behaviour.pop("printer", None)
 
         if not printer:
-            raise exceptions.UserError(_("No printer configured to print this report."))
+            raise exceptions.UserError(self.env._("No printer configured to print this report."))
         if self.print_report_name:
             report_file_names = [
                 safe_eval(self.print_report_name, {"object": obj, "time": time})

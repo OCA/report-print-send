@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 import base64
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class PrintAttachment(models.TransientModel):
@@ -42,14 +42,10 @@ class PrintAttachment(models.TransientModel):
             )
         if errors:
             return {
-                "warning": _("Following attachments could not be printed:\n\n%s")
-                % "\n".join(
-                    [
-                        _("{name} ({copies} copies)").format(
-                            name=err.record_name, copies=err.copies
-                        )
-                        for err in errors
-                    ]
+                "warning": self.env._(
+                    "Following attachments could not be printed:\n\n%s",
+                    "\n".join([self.env._("{name} ({copies} copies)", name=err.record_name, copies=err.copies) for err in errors]
+                    )
                 )
             }
 
