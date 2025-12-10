@@ -159,7 +159,10 @@ class IrActionsReport(models.Model):
         report_type = REPORT_TYPES.get(self.report_type)
         if not report_type:
             raise exceptions.UserError(
-                self.env._("This report type (%s) is not supported by direct printing!", str(self.report_type))
+                self.env._(
+                    "This report type (%s) is not supported by direct printing!",
+                    str(self.report_type),
+                )
             )
         method_name = f"_render_qweb_{report_type}"
         document, doc_format = getattr(
@@ -169,7 +172,9 @@ class IrActionsReport(models.Model):
         printer = behaviour.pop("printer", None)
 
         if not printer:
-            raise exceptions.UserError(self.env._("No printer configured to print this report."))
+            raise exceptions.UserError(
+                self.env._("No printer configured to print this report.")
+            )
         if self.print_report_name:
             report_file_names = [
                 safe_eval(self.print_report_name, {"object": obj, "time": time})

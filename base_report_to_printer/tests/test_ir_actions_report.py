@@ -11,13 +11,23 @@ model = "odoo.addons.base.models.ir_actions_report.IrActionsReport"
 
 
 class TestIrActionsReportXml(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.demo_user = cls.env["res.users"].create(
+            {
+                "name": "Fred",
+                "login": "Fred",
+                "password": "qwerty",
+            }
+        )
+
     def setUp(self):
         super().setUp()
         self.Model = self.env["ir.actions.report"].with_context(
             skip_printer_exception=True
         )
         self.vals = {}
-
         self.report = self.Model.search([], limit=1)
         self.server = self.env["printing.server"].create({})
 
@@ -30,7 +40,7 @@ class TestIrActionsReportXml(TransactionCase):
         return self.env["printing.report.xml.action"].create(
             {
                 "report_id": self.report.id,
-                "user_id": self.env.ref("base.user_demo").id,
+                "user_id": self.demo_user.id,
                 "action": "server",
             }
         )

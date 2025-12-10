@@ -16,7 +16,10 @@ class PrintingPrinterUpdateWizard(models.TransientModel):
     _description = "Printing Printer Update Wizard"
 
     def action_ok(self):
-        self.env["printing.server"].search([]).update_printers(raise_on_error=True)
+        cnt = self.env["printing.server"].search_count([])
+        self.env["printing.server"].search([], limit=cnt).update_printers(
+            raise_on_error=True
+        )
 
         return {
             "name": "Printers",

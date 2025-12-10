@@ -45,7 +45,8 @@
                         bg_color="bg-danger"
                         invisible="active"
                     />
-                    <field name="active" invisible="1" /> <!-- Required for web_ribbon purpose -->
+                    <field name="active" invisible="1" />
+                    <!-- Required for web_ribbon purpose -->
                     <div class="oe_title">
                         <h1>
                             <field name="name" />

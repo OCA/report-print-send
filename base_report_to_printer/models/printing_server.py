@@ -140,7 +140,8 @@ class PrintingServer(models.Model):
 
     def action_update_jobs(self):
         if not self:
-            self = self.search([])
+            cnt = self.search_count([])
+            self = self.search([], limit=cnt)
         return self.update_jobs()
 
     def update_jobs(self, which="all", first_job_id=-1):

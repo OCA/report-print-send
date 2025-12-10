@@ -44,8 +44,16 @@ class PrintAttachment(models.TransientModel):
             return {
                 "warning": self.env._(
                     "Following attachments could not be printed:\n\n%s",
-                    "\n".join([self.env._("{name} ({copies} copies)", name=err.record_name, copies=err.copies) for err in errors]
-                    )
+                    "\n".join(
+                        [
+                            self.env._(
+                                "{name} ({copies} copies)",
+                                name=err.record_name,
+                                copies=err.copies,
+                            )
+                            for err in errors
+                        ]
+                    ),
                 )
             }
 
