@@ -105,13 +105,10 @@ class PrintingJob(models.Model):
         help="Reason for the current job state.",
     )
 
-    _sql_constraints = [
-        (
-            "job_id_cups_unique",
-            "UNIQUE(job_id_cups, server_id)",
-            "The id of the job must be unique per server !",
-        )
-    ]
+    _job_id_cups_unique = models.Constraint(
+        "UNIQUE(job_id_cups, server_id)",
+        "The id of the job must be unique per server !",
+    )
 
     def action_cancel(self):
         self.ensure_one()

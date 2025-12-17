@@ -81,7 +81,7 @@ class TestReport(common.HttpCase):
         )
         self.partners = self.env["res.partner"]
         for n in range(5):
-            self.partners += self.env["res.partner"].create({"name": "Test %d" % n})
+            self.partners += self.env["res.partner"].create({"name": f"Test {n}"})
 
     def new_record(self):
         return self.Model.create(self.report_vals)

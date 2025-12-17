@@ -4,7 +4,7 @@
 import logging
 from datetime import datetime
 
-from odoo import _, exceptions, fields, models
+from odoo import exceptions, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -67,17 +67,15 @@ class PrintingServer(models.Model):
                     cups.setEncryption(int(self.encryption_policy))
                 if self.password:
                     cups.setPasswordCB(pw_callback)
-
             connection = cups.Connection(host=self.address, port=self.port)
         except Exception:
-            message = _(
+            message = self.env._(
                 "Failed to connect to the CUPS server on %(address)s:%(port)s. "
                 "Check that the CUPS server is running and that "
-                "you can reach it from the Odoo server."
-            ) % {
-                "address": self.address,
-                "port": self.port,
-            }
+                "you can reach it from the Odoo server.",
+                address=self.address,
+                port=self.port,
+            )
             _logger.warning(message)
             if raise_on_error:
                 raise exceptions.UserError(message) from Exception
@@ -123,7 +121,7 @@ class PrintingServer(models.Model):
 
                 updated_printers.append(name)
                 # We want to keep any existing customized name over existing printer
-                # We want also to rely in the system name as a fallback to avoid
+                # We want also to rely on the system name as a fallback to avoid
                 # empty names.
                 if not printer_values.get("name") and not printer.name:
                     printer_values["name"] = name
@@ -142,7 +140,8 @@ class PrintingServer(models.Model):
 
     def action_update_jobs(self):
         if not self:
-            self = self.search([])
+            cnt = self.search_count([])
+            self = self.search([], limit=cnt)
         return self.update_jobs()
 
     def update_jobs(self, which="all", first_job_id=-1):
