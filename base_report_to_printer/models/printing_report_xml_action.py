@@ -32,6 +32,7 @@ class PrintingReportXmlAction(models.Model):
         string="Paper Source",
         domain="[('printer_id', '=', printer_id)]",
     )
+    active = fields.Boolean(default=True)
 
     @api.onchange("printer_id")
     def onchange_printer_id(self):
