@@ -1,6 +1,7 @@
 # Copyright (C) 2018 Florent de Labarre (<https://github.com/fmdl>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import io
+import time
 from unittest.mock import Mock, patch
 
 import requests
@@ -101,6 +102,7 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         self.label.labelary_width = 80
         self.label.labelary_height = 30
         self.label.labelary_dpmm = "8dpmm"
+        time.sleep(3)
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"good_data"'}
         )
