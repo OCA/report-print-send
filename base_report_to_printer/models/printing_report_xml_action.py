@@ -33,6 +33,8 @@ class PrintingReportXmlAction(models.Model):
         domain="[('printer_id', '=', printer_id)]",
     )
 
+    active = fields.Boolean(default=True)
+
     @api.onchange("printer_id")
     def onchange_printer_id(self):
         """Reset the tray when the printer is changed"""

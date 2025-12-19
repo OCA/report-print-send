@@ -32,6 +32,6 @@
         action="action_printer_update_wizard"
         sequence="40"
         id="menu_printer_update_wizard"
-        parent="printing_menu"
+        parent="base_report_to_printer.printing_menu"
     />
 </odoo>

@@ -67,6 +67,7 @@ class PrintingServer(models.Model):
                     cups.setEncryption(int(self.encryption_policy))
                 if self.password:
                     cups.setPasswordCB(pw_callback)
+
             connection = cups.Connection(host=self.address, port=self.port)
         except Exception:
             message = self.env._(
@@ -121,7 +122,7 @@ class PrintingServer(models.Model):
 
                 updated_printers.append(name)
                 # We want to keep any existing customized name over existing printer
-                # We want also to rely on the system name as a fallback to avoid
+                # We want also to rely in the system name as a fallback to avoid
                 # empty names.
                 if not printer_values.get("name") and not printer.name:
                     printer_values["name"] = name
@@ -140,8 +141,7 @@ class PrintingServer(models.Model):
 
     def action_update_jobs(self):
         if not self:
-            cnt = self.search_count([])
-            self = self.search([], limit=cnt)
+            self = self.search([("active", "=", True)])
         return self.update_jobs()
 
     def update_jobs(self, which="all", first_job_id=-1):

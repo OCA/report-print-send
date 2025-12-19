@@ -16,3 +16,5 @@
 - Akim Juillerat \<<akim.juillerat@camptocamp.com>\>
 - Jacques-Etienne Baudoux (BCIM) \<<je@bcim.be>\>
 - Tris Doan \<<tridm@trobz.com>\>
+- Sergij Pfaifer \<<s.pfaifer@deinetuer.de>\>
+- Miquel Alzanillas  \<<miquel.alzanillas@nagarro.com>\>

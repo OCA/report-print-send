@@ -10,11 +10,9 @@ class TestPrintingTray(TransactionCase):
     def setUp(self):
         super().setUp()
         self.Model = self.env["printing.tray"]
-        self.server = self.env["printing.server"].create({})
         self.printer = self.env["printing.printer"].create(
             {
                 "name": "Printer",
-                "server_id": self.server.id,
                 "system_name": "Sys Name",
                 "default": True,
                 "status": "unknown",

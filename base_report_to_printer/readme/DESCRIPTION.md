@@ -1,27 +1,18 @@
-This module allows users to send reports to a printer attached to the
-server.
+This module provides the core framework to send Odoo reports directly to printers.
+It defines the base models, configuration options and printing workflow, without depending on a specific printing protocol.
 
-It adds an optional behaviour on reports to send it directly to a
-printer.
+The actual connection with printers is delegated to extension modules (e.g. base_report_to_printer_cups), which implement support for a given printing backend.
 
-- Send to Client is the default behaviour providing you a downloadable
-  PDF
-- Send to Printer prints the report on selected printer
+Key features:
 
-It detects trays on printers installation plus permits to select the
-paper source on which you want to print directly.
+Flexible report output behavior:
 
-Report behaviour is defined by settings.
+Send to Client (default): generates a downloadable PDF.
 
-You will find this option on default user config, on default report
-config and on specific config per user per report.
+Send to Printer: sends the report directly to a configured printer (via backend module).
 
-This allows you to dedicate a specific paper source for example for
-preprinted paper such as payment slip.
+Support for user-level, report-level, and combined user/report printing rules.
 
-Settings can be configured:
+Extensible design: new modules can add support for additional printing systems or protocols.
 
-- globally
-- per user
-- per report
-- per user and report
+This modular approach allows administrators to configure printing globally, per user, per report, or per user/report combination, while keeping the printing backend independent and replaceable.

@@ -1,23 +1,16 @@
-# Copyright 2016 LasLabs Inc.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
-import logging
 from unittest import mock
 
 from odoo import fields
 from odoo.tests.common import TransactionCase
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
-
 
 class TestPrintingJob(TransactionCase):
     def setUp(self):
         super().setUp()
-        self.Model = self.env["printing.server"]
-        self.server = self.Model.create({})
+        self.Job = self.env["printing.job"]
+        self.Printer = self.env["printing.printer"]
         self.printer_vals = {
             "name": "Printer",
-            "server_id": self.server.id,
             "system_name": "Sys Name",
             "default": True,
             "status": "unknown",
@@ -27,44 +20,47 @@ class TestPrintingJob(TransactionCase):
             "uri": "URI",
         }
         self.job_vals = {
-            "server_id": self.server.id,
-            "job_id_cups": 1,
-            "job_media_progress": 0,
             "time_at_creation": fields.Datetime.now(),
         }
 
     def new_printer(self):
-        return self.env["printing.printer"].create(self.printer_vals)
+        return self.Printer.create(self.printer_vals)
 
-    def new_job(self, printer, vals=None):
-        values = self.job_vals
-        if vals is not None:
-            values.update(vals)
-        values["printer_id"] = printer.id
-        return self.env["printing.job"].create(values)
+    def new_job(self, printer, extra_vals=None):
+        vals = {**self.job_vals, **(extra_vals or {})}
+        vals["printer_id"] = printer.id
+        return self.Job.create(vals)
 
-    def test_cancel_job_error(self):
-        """It should catch any exception from CUPS and update status"""
-        with (
-            mock.patch(f"{model}.cups") as cups,
-            self.assertLogs(level=logging.WARNING) as logs,
-        ):
-            cups.Connection.side_effect = Exception
-            printer = self.new_printer()
-            job = self.new_job(printer, {"job_id_cups": 2})
-            job.action_cancel()
-            cups.Connection.side_effect = None
-            self.assertEqual(cups.Connection().cancelJob.call_count, 0)
+    def test_action_cancel_delegates_to_cancel(self):
+        """action_cancel should call cancel() and return its result."""
 
-            self.assertEqual(len(logs.records), 3)
-            self.assertEqual(logs.records[0].levelno, logging.WARNING)
-
-    @mock.patch(f"{model}.cups")
-    def test_cancel_job(self, cups):
-        """It should catch any exception from CUPS and update status"""
         printer = self.new_printer()
         job = self.new_job(printer)
-        job.cancel()
-        cups.Connection().cancelJob.assert_called_once_with(
-            job.job_id_cups, purge_job=False
-        )
+
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models.printing_job.PrintingJob.cancel",
+            autospec=True,
+            return_value="ok",
+        ) as cancel:
+            result = job.action_cancel()
+
+        cancel.assert_called_once_with(job)
+        self.assertEqual(result, "ok")
+
+    def test_action_cancel_requires_singleton(self):
+        """action_cancel should enforce a single recordset."""
+
+        printer = self.new_printer()
+        job1 = self.new_job(printer)
+        job2 = self.new_job(printer)
+
+        with self.assertRaises(ValueError):
+            (job1 | job2).action_cancel()
+
+    def test_cancel_returns_true(self):
+        """Base cancel should return True to allow chaining in overrides."""
+
+        printer = self.new_printer()
+        job = self.new_job(printer)
+
+        self.assertTrue(job.cancel())

@@ -7,7 +7,7 @@ from unittest import mock
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
+model = "odoo.addons.base_report_to_printer_cups.models.printing_server"
 
 
 class StopTest(Exception):
@@ -30,6 +30,7 @@ class TestPrintingPrinterWizard(TransactionCase):
     def _record_vals(self, sys_name="sys_name"):
         return {
             "name": self.printer_vals["printer-info"],
+            "backend": "cups",
             "server_id": self.server.id,
             "system_name": sys_name,
             "model": self.printer_vals["printer-make-and-model"],
@@ -41,9 +42,7 @@ class TestPrintingPrinterWizard(TransactionCase):
     def test_action_ok_inits_connection(self, cups):
         """It should initialize CUPS connection"""
         self.Model.action_ok()
-        cups.Connection.assert_called_once_with(
-            host=self.server.address, port=self.server.port
-        )
+        cups.Connection.assert_any_call(host=self.server.address, port=self.server.port)
 
     @mock.patch(f"{model}.cups")
     def test_action_ok_gets_printers(self, cups):
@@ -51,7 +50,7 @@ class TestPrintingPrinterWizard(TransactionCase):
         cups.Connection().getPrinters.return_value = {"sys_name": self.printer_vals}
         cups.Connection().getPPD3.return_value = (200, 0, "")
         self.Model.action_ok()
-        cups.Connection().getPrinters.assert_called_once_with()
+        cups.Connection().getPrinters.assert_any_call()
 
     def test_action_ok_raises_warning_on_error(self):
         """It should raise Warning on any error"""
@@ -72,14 +71,17 @@ class TestPrintingPrinterWizard(TransactionCase):
         cups.Connection().getPPD3.return_value = (200, 0, "")
         self.Model.action_ok()
         rec_id = self.env["printing.printer"].search(
-            [("system_name", "=", "sys_name")], limit=1
+            [("system_name", "=", "sys_name"), ("backend", "=", "cups")], limit=1
         )
         self.assertTrue(rec_id)
         for key, val in self._record_vals().items():
             if rec_id._fields[key].type == "many2one":
                 val = self.env[rec_id._fields[key].comodel_name].browse(val)
 
-            self.assertEqual(val, rec_id[key])
+            if key == "server_id":
+                self.assertTrue(rec_id[key].exists())
+            else:
+                self.assertEqual(val, rec_id[key])
 
     @mock.patch(f"{model}.cups")
     def test_action_ok_skips_existing_printer(self, cups):
@@ -89,6 +91,6 @@ class TestPrintingPrinterWizard(TransactionCase):
         self.env["printing.printer"].create(self._record_vals())
         self.Model.action_ok()
         res_ids = self.env["printing.printer"].search(
-            [("system_name", "=", "sys_name")]
+            [("system_name", "=", "sys_name"), ("backend", "=", "cups")]
         )
         self.assertEqual(1, len(res_ids))

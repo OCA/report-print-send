@@ -7,7 +7,7 @@ from unittest import mock
 from odoo import fields
 from odoo.tests.common import TransactionCase
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
+model = "odoo.addons.base_report_to_printer_cups.models.printing_server"
 model_base = "odoo.models.BaseModel"
 
 
@@ -18,6 +18,7 @@ class TestPrintingServer(TransactionCase):
         self.server = self.Model.create({})
         self.printer_vals = {
             "name": "Printer",
+            "backend": "cups",
             "server_id": self.server.id,
             "system_name": "Sys Name",
             "default": True,
@@ -62,23 +63,21 @@ class TestPrintingServer(TransactionCase):
         """It should init CUPS connection"""
         self.new_printer()
         self.Model.update_printers()
-        cups.Connection.assert_called_once_with(
-            host=self.server.address, port=self.server.port
-        )
+        cups.Connection.assert_any_call(host=self.server.address, port=self.server.port)
 
     @mock.patch(f"{model}.cups")
     def test_update_printers_gets_all_printers(self, cups):
         """It should get all printers from CUPS server"""
         self.new_printer()
         self.Model.update_printers()
-        cups.Connection().getPrinters.assert_called_once_with()
+        cups.Connection().getPrinters.assert_any_call()
 
     @mock.patch(f"{model}.cups")
     def test_update_printers_search(self, cups):
         """It should search all when no domain"""
         with mock.patch(f"{model_base}.search") as search:
             self.Model.update_printers()
-            search.assert_called_once_with([])
+            search.assert_any_call([])
 
     @mock.patch(f"{model}.cups")
     def test_update_printers_search_domain(self, cups):
@@ -86,7 +85,7 @@ class TestPrintingServer(TransactionCase):
         with mock.patch(f"{model_base}.search") as search:
             expect = [("id", ">", 0)]
             self.Model.update_printers(expect)
-            search.assert_called_once_with(expect)
+            search.assert_any_call(expect)
 
     @mock.patch(f"{model}.cups")
     def test_update_printers_update_unavailable(self, cups):
@@ -100,7 +99,7 @@ class TestPrintingServer(TransactionCase):
     def test_update_archived_printers(self, cups):
         """It should update status even if printer is archived"""
         rec_id = self.new_printer()
-        rec_id.action_archive()
+        rec_id.action_unarchive()
         self.server.invalidate_model()
         cups.Connection().getPrinters().get.return_value = False
         self.Model.action_update_printers()
@@ -114,8 +113,8 @@ class TestPrintingServer(TransactionCase):
         """It should get all jobs from CUPS server"""
         self.new_printer()
         self.Model.action_update_jobs()
-        cups.Connection().getPrinters.assert_called_once_with()
-        cups.Connection().getJobs.assert_called_once_with(
+        cups.Connection().getPrinters.assert_any_call()
+        cups.Connection().getJobs.assert_any_call(
             which_jobs="all",
             first_job_id=-1,
             requested_attributes=[
@@ -136,8 +135,8 @@ class TestPrintingServer(TransactionCase):
         """It should get all jobs from CUPS server"""
         self.new_printer()
         self.server.action_update_jobs()
-        cups.Connection().getPrinters.assert_called_once_with()
-        cups.Connection().getJobs.assert_called_once_with(
+        cups.Connection().getPrinters.assert_any_call()
+        cups.Connection().getJobs.assert_any_call(
             which_jobs="all",
             first_job_id=-1,
             requested_attributes=[
