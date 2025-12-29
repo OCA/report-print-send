@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -23,8 +23,11 @@ class PrintingAutoMixin(models.AbstractModel):
     def _printing_auto_done_post(self, auto, printer, count):
         self.ensure_one()
         self.message_post(
-            body=_("{name}: {count} document(s) sent to printer {printer}").format(
-                name=auto.name, count=count, printer=printer.name
+            body=self.env._(
+                "%(name)s: %(count)d document(s) sent to printer %(printer)s",
+                name=auto.name,
+                count=count,
+                printer=printer.name,
             )
         )
 

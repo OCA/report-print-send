@@ -23,7 +23,6 @@ class TestPrintingAutoCommon(common.TransactionCase):
             {
                 "name": name,
                 "system_name": name,
-                "server_id": cls.server.id,
             }
         )
 
@@ -46,7 +45,6 @@ class TestPrintingAutoCommon(common.TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.server = cls.env["printing.server"].create({})
         for i in range(1, 4):
             printer_name = f"printer_{i}"
             tray_name = f"tray_{i}"

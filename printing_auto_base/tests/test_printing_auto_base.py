@@ -4,9 +4,8 @@
 
 from unittest import mock
 
-from odoo_test_helper import FakeModelLoader
-
 from odoo.exceptions import UserError
+from odoo.orm.model_classes import add_to_registry
 
 from .common import TestPrintingAutoCommon, patch_print_document
 
@@ -16,15 +15,23 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
         from .model_test import PrintingAutoTester, PrintingAutoTesterChild
 
-        cls.loader.update_registry((PrintingAutoTesterChild, PrintingAutoTester))
+        add_to_registry(cls.registry, PrintingAutoTester)
+        add_to_registry(cls.registry, PrintingAutoTesterChild)
+        cls.registry._setup_models__(
+            cls.env.cr, ["printingauto.tester", "printingauto.tester.child"]
+        )
+        cls.registry.init_models(
+            cls.env.cr,
+            ["printingauto.tester", "printingauto.tester.child"],
+            {"models_to_check": True},
+        )
 
     @classmethod
     def tearDownClass(cls):
-        cls.loader.restore_registry()
+        cls.addClassCleanup(cls.registry.__delitem__, "printingauto.tester")
+        cls.addClassCleanup(cls.registry.__delitem__, "printingauto.tester.child")
         return super().tearDownClass()
 
     def test_check_data_source(self):

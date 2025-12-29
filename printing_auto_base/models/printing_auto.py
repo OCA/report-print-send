@@ -4,9 +4,8 @@
 
 import base64
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.osv import expression
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -66,11 +65,11 @@ class PrintingAuto(models.Model):
     def _check_data_source(self):
         for rec in self:
             if rec.data_source == "report" and not rec.report_id:
-                raise ValidationError(_("Report is not set"))
+                raise ValidationError(self.env._("Report is not set"))
             if rec.data_source == "attachment" and (
                 not rec.attachment_domain or rec.attachment_domain == "[]"
             ):
-                raise ValidationError(_("Attachment domain is not set"))
+                raise ValidationError(self.env._("Attachment domain is not set"))
 
     def _get_behaviour(self):
         if self.printer_id:
@@ -88,7 +87,9 @@ class PrintingAuto(models.Model):
                 return safe_eval(f"obj.{self.record_change}", {"obj": record})
             except Exception as e:
                 raise UserError(
-                    _("The Record change could not be applied because: %s") % str(e)
+                    self.env._(
+                        "The Record change could not be applied because: %s", str(e)
+                    )
                 ) from e
         return record
 
@@ -113,13 +114,13 @@ class PrintingAuto(models.Model):
             ("res_id", "=", record.id),
             ("res_model", "=", record._name),
         ]
-        return expression.AND([domain, record_domain])
+        return fields.Domain.AND([domain, record_domain])
 
     def _generate_data_from_attachment(self, record):
         domain = self._prepare_attachment_domain(record)
         attachments = self.env["ir.attachment"].search(domain)
         if not attachments:
-            raise UserError(_("No attachment was found."))
+            raise UserError(self.env._("No attachment was found."))
         return [base64.b64decode(a.datas) for a in attachments]
 
     def _generate_data_from_report(self, record):
@@ -143,7 +144,7 @@ class PrintingAuto(models.Model):
 
         if not printer:
             raise UserError(
-                _("No printer configured to print this {}.").format(self.name)
+                self.env._("No printer configured to print this %s.", self.name)
             )
 
         count = 0
