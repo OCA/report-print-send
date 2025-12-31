@@ -1,0 +1,10 @@
+<odoo>
+    <template id="qz_tray_assets" inherit_id="web.layout">
+        <xpath expr="//head" position="before">
+            <script
+                type="text/javascript"
+                src="/base_report_to_printer_qz/static/src/lib/qz-tray.js"
+            />
+        </xpath>
+    </template>
+</odoo>
