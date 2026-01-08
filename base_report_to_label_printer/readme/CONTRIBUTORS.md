@@ -1,2 +1,4 @@
 - Hughes Damry \<<hughes.damry@acsone.eu>\>
 - Khoi (Kien Kim) khoikk@trobz.com
+- [OERP Canada](https://www.oerp.ca)
+  - Daryl Chen
