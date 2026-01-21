@@ -3,7 +3,7 @@
 
 {
     "name": "Printer ZPL II",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.0.2",
     "category": "Printer",
     "summary": "Add a ZPL II label printing feature",
     "author": "SUBTENO-IT, FLorent de Labarre, "
