@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_printing_job_form_inherit_cups" model="ir.ui.view">
+        <field name="name">printing.job.form.inherit.cups</field>
+        <field name="model">printing.job</field>
+        <field name="inherit_id" ref="base_report_to_printer.printing_job_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button
+                        name="action_cancel"
+                        type="object"
+                        string="Cancel"
+                        invisible="job_state in ['canceled','aborted','completed']"
+                    />
+                    <field name="job_state" widget="statusbar" />
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="job_id_cups" />
+                <field name="job_media_progress" widget="progressbar" />
+                <field name="job_state_reason" />
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="printing_job_view_tree_inherit_cups">
+        <field name="name">printing.job.tree.inherit.cups</field>
+        <field name="inherit_id" ref="base_report_to_printer.printing_job_view_tree" />
+        <field name="model">printing.job</field>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='name']" position="after">
+                <field name="job_id_cups" />
+                <field name="job_state" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

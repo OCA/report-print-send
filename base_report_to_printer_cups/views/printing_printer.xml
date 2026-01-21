@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="printing_printer_view_form_inherit_cups">
+        <field name="name">printing.printer.form (in base_report_to_printer)</field>
+        <field
+            name="inherit_id"
+            ref="base_report_to_printer.printing_printer_view_form"
+        />
+        <field name="model">printing.printer</field>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button
+                        name="enable"
+                        type="object"
+                        string="Enable"
+                        invisible="status in ['available','printing'] or backend != 'cups'"
+                    />
+                    <button
+                        name="disable"
+                        type="object"
+                        string="Disable"
+                        invisible="status == 'unavailable' or backend != 'cups'"
+                    />
+                    <button
+                        name="action_cancel_all_jobs"
+                        type="object"
+                        string="Cancel all running jobs"
+                        confirm="Are you sure to want to cancel all jobs of this printer?"
+                        invisible="backend != 'cups'"
+                    />
+                    <button
+                        name="print_test_page"
+                        type="object"
+                        string="Print Test Page"
+                        confirm="Are you sure to want to print a test page?"
+                        invisible="backend != 'cups'"
+                    />
+                </header>
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="inside">
+                <field name="server_id" invisible="backend != 'cups'" />
+            </xpath>
+            <xpath expr="//group[@name='name']" position="after">
+                <group col="4" colspan="4" name="default" invisible="backend != 'cups'">
+                    <field name="default" />
+                    <button
+                        name="set_default"
+                        string="Set Default"
+                        type="object"
+                        invisible="default"
+                        colspan="2"
+                    />
+                    <button
+                        name="unset_default"
+                        string="Unset Default"
+                        type="object"
+                        invisible="not default"
+                        colspan="2"
+                    />
+                </group>
+                <group name="details" invisible="backend != 'cups'">
+                    <field name="uri" />
+                    <field name="model" />
+                    <field name="location" />
+                    <field name="status" />
+                    <field name="status_message" />
+                    <field name="multi_thread" />
+                </group>
+                <group name="jobs" string="Jobs" invisible="backend != 'cups'">
+                    <field name="job_ids" nolabel="1" colspan="2" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="printing_printer_view_tree_inherit_cups">
+        <field name="name">printing.printer.tree</field>
+        <field
+            name="inherit_id"
+            ref="base_report_to_printer.printing_printer_view_tree"
+        />
+        <field name="model">printing.printer</field>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-success">status=='available'</attribute>
+                <attribute name="decoration-warning">status=='printing'</attribute>
+                <attribute
+                    name="decoration-danger"
+                >status not in ['printing', 'available']</attribute>
+                <attribute name="decoration-primary">status=='unknown'</attribute>
+            </xpath>
+            <field name="system_name" position="after">
+                <field name="default" />
+                <field name="server_id" />
+                <field name="status" />
+            </field>
+        </field>
+    </record>
+</odoo>
