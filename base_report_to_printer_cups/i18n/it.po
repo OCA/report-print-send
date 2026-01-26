@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2025-01-20 16:06+0000\n"
+"PO-Revision-Date: 2026-01-26 18:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields.selection,name:base_report_to_printer_cups.selection__printing_job__job_state__aborted
@@ -53,7 +53,7 @@ msgstr "Sicuri di voler stampare una pagina di prova?"
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields,field_description:base_report_to_printer_cups.field_printing_printer__backend
 msgid "Backend"
-msgstr ""
+msgstr "Backend"
 
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields.selection,name:base_report_to_printer_cups.selection__printing_job__job_state_reason__job-transforming
@@ -63,13 +63,12 @@ msgstr "Trasformazione in un formato diverso"
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields.selection,name:base_report_to_printer_cups.selection__printing_printer__backend__cups
 msgid "CUPS"
-msgstr ""
+msgstr "CUPS"
 
 #. module: base_report_to_printer_cups
 #: model:ir.ui.menu,name:base_report_to_printer_cups.printing_server_menu
-#, fuzzy
 msgid "CUPS Servers"
-msgstr "Server"
+msgstr "Server CUPS"
 
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields.selection,name:base_report_to_printer_cups.selection__printing_job__job_state_reason__cups-filter-crashed
@@ -145,9 +144,8 @@ msgstr "Compressa con un algoritmo sconosciuto"
 #. module: base_report_to_printer_cups
 #. odoo-javascript
 #: code:addons/base_report_to_printer_cups/static/src/js/qweb_action_manager.esm.js:0
-#, fuzzy
 msgid "Could not send to printer!"
-msgstr "Imossibile inviare alla stmpante!"
+msgstr "Impossibile inviare alla stampante!"
 
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields,field_description:base_report_to_printer_cups.field_printing_printer_update_wizard__create_uid
@@ -231,7 +229,7 @@ msgstr "Errore nel documento"
 #. odoo-python
 #: code:addons/base_report_to_printer_cups/models/printing_printer.py:0
 msgid "Failed to cancel jobs on printer %(printer)s: %(error)s"
-msgstr ""
+msgstr "Impossibile annullare il lavoro sulla stampante %(printer)s: %(error)s"
 
 #. module: base_report_to_printer_cups
 #. odoo-python
@@ -248,31 +246,32 @@ msgstr ""
 #. odoo-python
 #: code:addons/base_report_to_printer_cups/models/printing_printer.py:0
 msgid "Failed to disable printer %(printer)s: %(error)s"
-msgstr ""
+msgstr "Impossibile disabilitare la stampante %(printer)s; %(error)s"
 
 #. module: base_report_to_printer_cups
 #. odoo-python
 #: code:addons/base_report_to_printer_cups/models/printing_printer.py:0
 msgid "Failed to enable printer %(printer)s: %(error)s"
-msgstr ""
+msgstr "Impossibile abilitare la stampante %(printer): %(error)s"
 
 #. module: base_report_to_printer_cups
 #. odoo-python
 #: code:addons/base_report_to_printer_cups/models/printing_printer.py:0
 msgid "Failed to get PPD for printer %(printer)s: %(error)s"
-msgstr ""
+msgstr "Impossibile ottenere i PPD per la stampante %(printer)s: %(error)s"
 
 #. module: base_report_to_printer_cups
 #. odoo-python
 #: code:addons/base_report_to_printer_cups/models/printing_printer.py:0
 msgid "Failed to print on printer %(printer)s: %(error)s"
-msgstr ""
+msgstr "Impossibile stampare sulla stampante %(printer)s: %(error)s"
 
 #. module: base_report_to_printer_cups
 #. odoo-python
 #: code:addons/base_report_to_printer_cups/models/printing_printer.py:0
 msgid "Failed to print test page on printer %(printer)s: %(error)s"
 msgstr ""
+"Impossibile stampare la pagina di test sulla stampante %(printer)s: %(error)s"
 
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields.selection,name:base_report_to_printer_cups.selection__printing_job__job_state_reason__job-incoming
@@ -364,9 +363,8 @@ msgstr "Elenco stampanti disponibili su questo server."
 
 #. module: base_report_to_printer_cups
 #: model:ir.model,name:base_report_to_printer_cups.model_printing_printer
-#, fuzzy
 msgid "Logical Printer"
-msgstr "Stampante di default"
+msgstr "Stampante logica"
 
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields,field_description:base_report_to_printer_cups.field_printing_job__job_media_progress
@@ -447,9 +445,8 @@ msgstr "Stampa"
 
 #. module: base_report_to_printer_cups
 #: model:ir.model,name:base_report_to_printer_cups.model_printing_job
-#, fuzzy
 msgid "Print Job"
-msgstr "Lavoro stampaggio"
+msgstr "Lavoro di stampa"
 
 #. module: base_report_to_printer_cups
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer_cups.printing_printer_view_form_inherit_cups
@@ -562,9 +559,8 @@ msgstr "Motivo stato"
 #. module: base_report_to_printer_cups
 #. odoo-javascript
 #: code:addons/base_report_to_printer_cups/static/src/js/qweb_action_manager.esm.js:0
-#, fuzzy
 msgid "Successfully sent to CUPS printer!"
-msgstr "Inviato correttamente alla stampante!"
+msgstr "Inviato correttamente alla stampante CUPS!"
 
 #. module: base_report_to_printer_cups
 #: model:ir.model.fields.selection,name:base_report_to_printer_cups.selection__printing_job__job_state_reason__document-access-error
@@ -607,9 +603,8 @@ msgstr "Formato non supportato"
 
 #. module: base_report_to_printer_cups
 #: model:ir.actions.server,name:base_report_to_printer_cups.ir_cron_update_cups_printers_ir_actions_server
-#, fuzzy
 msgid "Update CUPS Printers Jobs"
-msgstr "Aggiorna lavori stampanti"
+msgstr "Aggiorna lavori stampanti CUPS"
 
 #. module: base_report_to_printer_cups
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer_cups.printing_server_cups_view_form
