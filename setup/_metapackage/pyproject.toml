@@ -1,7 +1,8 @@
 [project]
 name = "odoo-addons-oca-report-print-send"
-version = "19.0.20260121.0"
+version = "19.0.20260209.0"
 dependencies = [
+    "odoo-addon-base_report_to_label_printer==19.0.*",
     "odoo-addon-base_report_to_printer==19.0.*",
     "odoo-addon-base_report_to_printer_cups==19.0.*",
 ]
