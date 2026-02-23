@@ -100,6 +100,20 @@ class TestReport(common.HttpCase):
             }
         )
 
+    def test_print_document_action_exception_warning(self):
+        """Check the exception warning in logs"""
+        self.report.property_printing_action_id.action_type = "server"
+        self.report.printing_printer_id = self.new_printer()
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models."
+            "ir_actions_report.IrActionsReport."
+            "print_document"
+        ) as print_document:
+            print_document.side_effect = Exception("error")
+            with self.assertLogs(level="WARNING"):
+                self.report.print_document_client_action(self.partners.ids)
+            print_document.assert_called_once()
+
     def test_can_print_report_context_skip(self):
         """It should return False based on context"""
         rec_id = self.new_record().with_context(must_skip_send_to_printer=True)

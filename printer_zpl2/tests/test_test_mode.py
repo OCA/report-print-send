@@ -1,5 +1,6 @@
 # Copyright (C) 2018 Florent de Labarre (<https://github.com/fmdl>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import time
 from unittest.mock import patch
 
 from odoo.tests.common import TransactionCase
@@ -88,6 +89,7 @@ class TestWizardPrintRecordLabel(TransactionCase):
         self.label.labelary_width = 80
         self.label.labelary_height = 30
         self.label.labelary_dpmm = "8dpmm"
+        time.sleep(3)  # Avoid too fast execution that can cause issue with labelary api
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"good_data"'}
         )

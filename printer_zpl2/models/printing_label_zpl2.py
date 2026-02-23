@@ -448,7 +448,7 @@ class PrintingLabelZpl2(models.Model):
     def _get_record(self):
         self.ensure_one()
         Obj = self.env[self.model_id.model]
-        record = Obj.search([("id", "=", self.record_id)], limit=1)
+        record = Obj.browse(self.record_id).exists()
         if not record:
             record = Obj.search([], limit=1, order="id desc")
         self.record_id = record.id
