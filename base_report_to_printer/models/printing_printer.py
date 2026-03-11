@@ -46,6 +46,7 @@ class PrintingPrinter(models.Model):
     model = fields.Char(readonly=True)
     location = fields.Char(readonly=True)
     uri = fields.Char(string="URI", readonly=True)
+    multi_thread = fields.Boolean()
 
     @staticmethod
     def _set_option_doc_format(report, value):
