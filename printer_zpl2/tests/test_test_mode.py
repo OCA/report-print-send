@@ -1,27 +1,21 @@
 # Copyright (C) 2018 Florent de Labarre (<https://github.com/fmdl>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from unittest.mock import patch
-
-import requests
+import base64
+from unittest.mock import Mock, patch
 
 from odoo.tools import mute_logger
 
 from .common import PrinterZpl2Common
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
+label_model = "odoo.addons.printer_zpl2.models.printing_label_zpl2"
+PNG_IMAGE = base64.b64decode(
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO2L"
+    "eDkAAAAASUVORK5CYII="
+)
 
 
 class TestWizardPrintRecordLabel(PrinterZpl2Common):
-    @classmethod
-    def setUpClass(cls):
-        cls._super_send = requests.Session.send
-        super().setUpClass()
-
-    @classmethod
-    def _request_handler(cls, s, r, /, **kw):
-        """Don't block external requests."""
-        return cls._super_send(s, r, **kw)
-
     def test_get_record(self):
         """Check if return a record"""
         self.label.record_id = 10
@@ -47,8 +41,10 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         self.label.test_labelary_mode = False
         self.assertIs(self.label.labelary_image, False)
 
-    def test_emulation_with_bad_header(self):
+    @patch("%s.requests.post" % label_model)
+    def test_emulation_with_bad_header(self, post):
         """Check if bad header"""
+        post.return_value = Mock(status_code=400)
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
         self.label.labelary_dpmm = "8dpmm"
@@ -61,6 +57,7 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         # "ERROR: Label height is larger than 15.0 inches"
         with mute_logger("odoo.addons.printer_zpl2.models.printing_label_zpl2"):
             self.assertFalse(self.label.labelary_image)
+        post.assert_called_once()
 
     def test_emulation_with_bad_data_compute(self):
         """Check if bad data compute"""
@@ -74,8 +71,10 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         component.unlink()
         self.assertIs(self.label.labelary_image, False)
 
-    def test_emulation_with_good_data(self):
+    @patch("%s.requests.post" % label_model)
+    def test_emulation_with_good_data(self, post):
         """Check if ok"""
+        post.return_value = Mock(status_code=200, content=PNG_IMAGE)
         self.label.test_labelary_mode = True
         self.label.labelary_width = 80
         self.label.labelary_height = 30
@@ -84,3 +83,4 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"good_data"'}
         )
         self.assertTrue(self.label.labelary_image)
+        post.assert_called_once()
