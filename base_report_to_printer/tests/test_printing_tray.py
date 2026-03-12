@@ -9,7 +9,6 @@ model = "odoo.addons.base_report_to_printer.models.printing_server"
 class TestPrintingTray(TransactionCase):
     def setUp(self):
         super().setUp()
-        self.Model = self.env["printing.tray"]
         self.printer = self.env["printing.printer"].create(
             {
                 "name": "Printer",
