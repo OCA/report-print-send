@@ -46,7 +46,8 @@ class TestIrActionsReport(BaseCommon):
                 {
                     "action": "client",
                     "printer": self.env.user.default_label_printer_id,
-                    "tray": False,
+                    "input_tray": False,
+                    "output_tray": False,
                 },
             )
             self.assertEqual(len(logs.records), 1)

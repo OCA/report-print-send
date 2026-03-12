@@ -344,7 +344,7 @@ class TestIrActionsReportXml(TransactionCase):
             )
             self.assertEqual("Action tray", report.behaviour()["input_tray"])
             self.assertEqual("Action tray", report.behaviour()["output_tray"])
-            self.assertEqual(len(logs.records), 6)
+            self.assertEqual(len(logs.records), 11)
             for record in logs.records:
                 self.assertEqual(record.levelno, logging.WARNING)
 

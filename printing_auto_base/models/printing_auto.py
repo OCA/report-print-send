@@ -53,7 +53,7 @@ class PrintingAuto(models.Model):
     )
 
     printer_id = fields.Many2one("printing.printer", "Printer")
-    printer_tray_id = fields.Many2one("printing.tray", "Tray")
+    printer_tray_id = fields.Many2one("printing.tray.output", "Tray")
     nbr_of_copies = fields.Integer("Number of Copies", default=1)
     action_on_error = fields.Selection(
         [("log", "Record an error"), ("raise", "Raise an Exception")],
@@ -76,7 +76,7 @@ class PrintingAuto(models.Model):
         if self.printer_id:
             result = {"printer": self.printer_id}
             if self.printer_tray_id:
-                result["tray"] = self.printer_tray_id.system_name
+                result["output_tray"] = self.printer_tray_id.system_name
             return result
         if self.data_source == "report":
             return self.report_id.behaviour()
