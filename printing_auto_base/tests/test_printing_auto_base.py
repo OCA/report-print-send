@@ -53,7 +53,7 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
         self.assertEqual(expected, printing_auto._get_behaviour())
 
         printing_auto.printer_tray_id = self.tray_1
-        expected["tray"] = self.tray_1.system_name
+        expected["output_tray"] = self.tray_1.system_name
         self.assertEqual(expected, printing_auto._get_behaviour())
 
         expected = printing_auto.report_id.behaviour()
