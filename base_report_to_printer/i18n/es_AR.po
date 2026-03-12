@@ -184,7 +184,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_uid
 msgid "Created by"
@@ -197,7 +198,8 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
@@ -265,7 +267,12 @@ msgid "Default Printer"
 msgstr "Impresora por defecto"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_output_tray_id
+msgid "Default Printer Output Bin"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_input_tray_id
 msgid "Default Printer Paper Source"
 msgstr "Fuente de papel de la impresora por defecto"
 
@@ -281,7 +288,8 @@ msgstr "Deshabilitado"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__display_name
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__display_name
 msgid "Display Name"
@@ -378,7 +386,8 @@ msgstr "Retenido por que la impresora está desconectada"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__id
 msgid "ID"
@@ -429,7 +438,8 @@ msgstr "Trabajos imprimidos por la impresora."
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_uid
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_uid
 msgid "Last Updated by"
@@ -442,7 +452,8 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer_update_wizard__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_date
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_date
 msgid "Last Updated on"
@@ -480,6 +491,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__name
 msgid "Name"
 msgstr "Nombre"
 
@@ -511,13 +524,24 @@ msgid "Ok"
 msgstr "Ok"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_tray_id
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_output_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_output_tray_id
+msgid "Output Bin"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__output_tray_ids
+msgid "Output trays"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_input_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_input_tray_id
 msgid "Paper Source"
 msgstr "Fuente de papel"
 
 #. module: base_report_to_printer
-#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__tray_ids
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__input_tray_ids
 msgid "Paper Sources"
 msgstr "Fuentes de papel"
 
@@ -596,6 +620,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__printer_id
 msgid "Printer"
 msgstr "Impresora"
@@ -604,6 +630,16 @@ msgstr "Impresora"
 #: model:ir.model,name:base_report_to_printer.model_printing_tray
 msgid "Printer Tray"
 msgstr "Bandeja de impresora"
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_tray_input
+msgid "Printer Tray Input"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_tray_output
+msgid "Printer Tray Output"
+msgstr ""
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__printer-stopped
@@ -812,6 +848,8 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__system_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__system_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__system_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__system_name
 msgid "System Name"
 msgstr "Nombre del Sistema"
 
