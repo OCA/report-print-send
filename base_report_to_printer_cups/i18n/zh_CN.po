@@ -403,7 +403,12 @@ msgid "Ok"
 msgstr "确定"
 
 #. module: base_report_to_printer_cups
-#: model:ir.model.fields,field_description:base_report_to_printer_cups.field_printing_printer__tray_ids
+#: model:ir.model.fields,field_description:base_report_to_printer_cups.field_printing_printer__output_tray_ids
+msgid "Output trays"
+msgstr ""
+
+#. module: base_report_to_printer_cups
+#: model:ir.model.fields,field_description:base_report_to_printer_cups.field_printing_printer__input_tray_ids
 msgid "Paper Sources"
 msgstr "纸张来源"
 
