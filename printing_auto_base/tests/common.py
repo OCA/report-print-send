@@ -29,7 +29,7 @@ class TestPrintingAutoCommon(common.TransactionCase):
 
     @classmethod
     def _create_tray(cls, name, printer):
-        return cls.env["printing.tray"].create(
+        return cls.env["printing.tray.output"].create(
             {"name": name, "system_name": name, "printer_id": printer.id}
         )
 

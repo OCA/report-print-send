@@ -13,19 +13,17 @@ from .common import TestPrintingAutoCommon, patch_print_document
 
 @patch_print_document()
 class TestPrintingAutoBase(TestPrintingAutoCommon):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
+    def setUp(self):
+        super().setUp()
+        self.loader = FakeModelLoader(self.env, self.__module__)
+        self.loader.backup_registry()
         from .model_test import PrintingAutoTester, PrintingAutoTesterChild
 
-        cls.loader.update_registry((PrintingAutoTesterChild, PrintingAutoTester))
+        self.loader.update_registry((PrintingAutoTesterChild, PrintingAutoTester))
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        return super().tearDownClass()
+    def tearDown(self):
+        self.loader.restore_registry()
+        super().tearDown()
 
     def test_check_data_source(self):
         with self.assertRaises(UserError):
@@ -46,7 +44,7 @@ class TestPrintingAutoBase(TestPrintingAutoCommon):
         self.assertEqual(expected, printing_auto._get_behaviour())
 
         printing_auto.printer_tray_id = self.tray_1
-        expected["tray"] = self.tray_1.system_name
+        expected["output_tray"] = self.tray_1.system_name
         self.assertEqual(expected, printing_auto._get_behaviour())
 
         expected = printing_auto.report_id.behaviour()
