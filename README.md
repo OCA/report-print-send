@@ -21,9 +21,9 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_report_to_label_printer](base_report_to_label_printer/) | 19.0.1.0.0 |  | Report to label printer
-[base_report_to_printer](base_report_to_printer/) | 19.0.1.0.1 |  | Report to printer
-[base_report_to_printer_cups](base_report_to_printer_cups/) | 19.0.0.1.0 |  | Report to printer CUPS
+[base_report_to_label_printer](base_report_to_label_printer/) | 19.0.1.1.0 |  | Report to label printer
+[base_report_to_printer](base_report_to_printer/) | 19.0.1.2.0 |  | Report to printer
+[base_report_to_printer_cups](base_report_to_printer_cups/) | 19.0.0.2.0 |  | Report to printer CUPS
 
 [//]: # (end addons)
 
