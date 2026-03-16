@@ -26,11 +26,11 @@ class TestPrintingPrinter(TransactionCase):
             "printer_id": self.printer.id,
         }
 
-    def new_tray(self, vals=None):
+    def new_tray(self, tray_type="input", vals=None):
         values = self.tray_vals.copy()
         if vals:
             values.update(vals)
-        return self.env["printing.tray"].create(values)
+        return self.env["printing.tray." + tray_type].create(values)
 
     def test_tray_creation_and_link(self):
         """Debe crear una bandeja correctamente y vincularla a la impresora."""

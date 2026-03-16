@@ -31,8 +31,15 @@ class PrintingPrinter(models.Model):
         inverse_name="printer_id",
         string="Jobs",
     )
-    tray_ids = fields.One2many(
-        comodel_name="printing.tray", inverse_name="printer_id", string="Paper Sources"
+    input_tray_ids = fields.One2many(
+        comodel_name="printing.tray.input",
+        inverse_name="printer_id",
+        string="Paper Sources",
+    )
+    output_tray_ids = fields.One2many(
+        comodel_name="printing.tray.output",
+        inverse_name="printer_id",
+        string="Output trays",
     )
     multi_thread = fields.Boolean(
         compute="_compute_multi_thread", readonly=False, store=True
@@ -80,35 +87,42 @@ class PrintingPrinter(models.Model):
         if not ppd_path:
             return vals
         ppd = cups.PPD(ppd_path)
-        option = ppd.findOption("InputSlot")
+        input_options = ppd.findOption("InputSlot")
+        output_options = ppd.findOption("OutputBin")
         try:
             os.unlink(ppd_path)
         except OSError as err:
             if err.errno != errno.ENOENT:
                 raise
-        if not option:
-            return vals
-        tray_commands = []
-        cups_trays = {
-            tray_option["choice"]: tray_option["text"] for tray_option in option.choices
-        }
-        tray_commands.extend(
-            [
-                (0, 0, {"name": text, "system_name": choice})
-                for choice, text in cups_trays.items()
-                if choice not in self.tray_ids.mapped("system_name")
+        if input_options:
+            vals["input_tray_ids"] = [
+                (0, 0, {"name": opt["text"], "system_name": opt["choice"]})
+                for opt in input_options.choices
+                if opt["choice"] not in self.input_tray_ids.mapped("system_name")
             ]
-        )
-        tray_commands.extend(
-            [
-                (2, tray.id)
-                for tray in self.tray_ids.filtered(
-                    lambda record: record.system_name not in cups_trays.keys()
-                )
+            trays = [opt["choice"] for opt in input_options.choices]
+            vals["input_tray_ids"].extend(
+                [
+                    (2, tray.id)
+                    for tray in self.input_tray_ids
+                    if tray.system_name not in trays
+                ]
+            )
+
+        if output_options:
+            vals["output_tray_ids"] = [
+                (0, 0, {"name": opt["text"], "system_name": opt["choice"]})
+                for opt in output_options.choices
+                if opt["choice"] not in self.output_tray_ids.mapped("system_name")
             ]
-        )
-        if tray_commands:
-            vals["tray_ids"] = tray_commands
+            trays = [opt["choice"] for opt in output_options.choices]
+            vals["output_tray_ids"].extend(
+                [
+                    (2, tray.id)
+                    for tray in self.output_tray_ids
+                    if tray.system_name not in trays
+                ]
+            )
         return vals
 
     def print_file(self, file_name, report=None, **print_opts):

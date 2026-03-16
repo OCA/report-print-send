@@ -24,9 +24,10 @@ class TestPrintingPrinterBase(TransactionCase):
 
     def test_option_tray(self):
         self.assertEqual(
-            self.Model._set_option_tray(None, "Test Tray"), {"InputSlot": "Test Tray"}
+            self.Model._set_option_input_tray(None, "Test Tray"),
+            {"InputSlot": "Test Tray"},
         )
-        self.assertEqual(self.Model._set_option_tray(None, False), {})
+        self.assertEqual(self.Model._set_option_input_tray(None, False), {})
 
     def test_option_noops(self):
         self.assertEqual(self.Model._set_option_action(None, "printer"), {})
@@ -51,7 +52,7 @@ class TestPrintingPrinterBase(TransactionCase):
             self.Model.print_options(report, doc_format="raw", copies=2),
             {"raw": "True", "copies": "2"},
         )
-        self.assertIn("InputSlot", self.Model.print_options(report, tray="Test"))
+        self.assertIn("InputSlot", self.Model.print_options(report, input_tray="Test"))
 
     def test_set_default_and_unset(self):
         printer = self.new_record()

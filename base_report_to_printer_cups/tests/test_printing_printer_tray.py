@@ -32,6 +32,20 @@ ppd_input_slot_body = """
 ppd_input_slot_footer = """
 *CloseUI: *InputSlot
 """
+ppd_output_slot_header = """
+*OpenUI *OutputBin/Output Tray: PickOne
+*OrderDependency: 40 AnySetup *OutputBin
+*DefaultOutputBin: Default
+*OutputBin Default/Default: "
+    << /OutputType (Default) >> setpagedevice"
+"""
+ppd_output_slot_body = """
+*OutputBin {name}/{text}: "
+    << /OutputType (Bin{nb}) >> setpagedevice"
+"""
+ppd_output_slot_footer = """
+*CloseUI: *OutputBin
+"""
 
 
 class TestPrintingPrinterCups(TestPrintingPrinter):
@@ -98,7 +112,7 @@ class TestPrintingPrinterCups(TestPrintingPrinter):
         connection = cups.Connection()
         cups_printer = connection.getPrinters()[self.printer.system_name]
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertNotIn("tray_ids", vals)
+        self.assertNotIn("input_tray_ids", vals)
 
     @mock.patch(f"{server_model}.cups")
     def test_prepare_update_from_cups_empty_ppd(self, cups):
@@ -109,7 +123,7 @@ class TestPrintingPrinterCups(TestPrintingPrinter):
         connection = cups.Connection()
         cups_printer = connection.getPrinters()[self.printer.system_name]
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
-        self.assertNotIn("tray_ids", vals)
+        self.assertNotIn("input_tray_ids", vals)
 
     @mock.patch(f"{server_model}.cups")
     @mock.patch("os.unlink")
@@ -130,7 +144,7 @@ class TestPrintingPrinterCups(TestPrintingPrinter):
         cups_printer = connection.getPrinters()[self.printer.system_name]
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertEqual(
-            vals["tray_ids"],
+            vals["input_tray_ids"],
             [(0, 0, {"name": "Auto (Default)", "system_name": "Auto"})],
         )
 
@@ -141,7 +155,7 @@ class TestPrintingPrinterCups(TestPrintingPrinter):
         cups_printer = connection.getPrinters()[self.printer.system_name]
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertEqual(
-            vals["tray_ids"],
+            vals["input_tray_ids"],
             [(0, 0, {"name": "Auto (Default)", "system_name": "Auto"})],
         )
 
@@ -152,7 +166,7 @@ class TestPrintingPrinterCups(TestPrintingPrinter):
         cups_printer = connection.getPrinters()[self.printer.system_name]
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertCountEqual(
-            vals["tray_ids"],
+            vals["input_tray_ids"],
             [
                 (0, 0, {"name": "Auto (Default)", "system_name": "Auto"}),
                 (0, 0, {"name": "Tray 1", "system_name": "Tray1"}),
@@ -164,12 +178,12 @@ class TestPrintingPrinterCups(TestPrintingPrinter):
         self.mock_cups_ppd(cups, input_slots=[{"name": "Tray1", "text": "Tray 1"}])
         connection = cups.Connection()
         cups_printer = connection.getPrinters()[self.printer.system_name]
-        self.env["printing.tray"].create(
+        self.env["printing.tray.input"].create(
             {"name": "Tray1", "system_name": "Tray1", "printer_id": self.printer.id}
         )
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertEqual(
-            vals["tray_ids"],
+            vals["input_tray_ids"],
             [(0, 0, {"name": "Auto (Default)", "system_name": "Auto"})],
         )
 
@@ -178,11 +192,11 @@ class TestPrintingPrinterCups(TestPrintingPrinter):
         self.mock_cups_ppd(cups)
         connection = cups.Connection()
         cups_printer = connection.getPrinters()[self.printer.system_name]
-        tray = self.env["printing.tray"].create(
+        tray = self.env["printing.tray.input"].create(
             {"name": "Tray", "system_name": "TrayName", "printer_id": self.printer.id}
         )
         vals = self.printer._prepare_update_from_cups(connection, cups_printer)
         self.assertEqual(
-            vals["tray_ids"],
+            vals["input_tray_ids"],
             [(0, 0, {"name": "Auto (Default)", "system_name": "Auto"}), (2, tray.id)],
         )

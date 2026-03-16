@@ -24,6 +24,12 @@ class TestResUsers(common.TransactionCase):
         self.assertTrue(self.new_record())
 
     def test_onchange_printer_tray_id_empty(self):
-        user = self.env["res.users"].new({"printer_tray_id": False})
+        user = self.env["res.users"].new(
+            {
+                "printer_input_tray_id": False,
+                "printer_output_tray_id": False,
+            }
+        )
         user.onchange_printing_printer_id()
-        self.assertFalse(user.printer_tray_id)
+        self.assertFalse(user.printer_input_tray_id)
+        self.assertFalse(user.printer_output_tray_id)
