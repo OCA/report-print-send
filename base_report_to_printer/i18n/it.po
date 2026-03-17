@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2025-01-20 16:06+0000\n"
+"PO-Revision-Date: 2026-03-17 10:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__aborted
@@ -271,7 +271,7 @@ msgstr "Stampante di default"
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_output_tray_id
 msgid "Default Printer Output Bin"
-msgstr ""
+msgstr "Vassoio uscita stampante predefinito"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_input_tray_id
@@ -533,12 +533,12 @@ msgstr "Ok"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_output_tray_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_output_tray_id
 msgid "Output Bin"
-msgstr ""
+msgstr "Vassoio uscita"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__output_tray_ids
 msgid "Output trays"
-msgstr ""
+msgstr "Cassetto uscita"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_input_tray_id
@@ -639,12 +639,12 @@ msgstr "Cassetto stampante"
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_tray_input
 msgid "Printer Tray Input"
-msgstr ""
+msgstr "Ingresso cassetto stampante"
 
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_printing_tray_output
 msgid "Printer Tray Output"
-msgstr ""
+msgstr "Uscita cassetto stampante"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__printer-stopped
