@@ -94,6 +94,7 @@ class PrintingAuto(models.Model):
 
     def _check_condition(self, record):
         domain = safe_eval(self.condition, {"env": self.env})
+        record = self._get_record(record)
         return record.filtered_domain(domain)
 
     def _get_content(self, records):
@@ -102,7 +103,6 @@ class PrintingAuto(models.Model):
         )
         content = []
         if generate_data_func:
-            records = self._get_record(records)
             for record in records:
                 content += generate_data_func(record)
         return content
