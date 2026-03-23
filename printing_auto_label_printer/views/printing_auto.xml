@@ -1,0 +1,23 @@
+<odoo>
+    <record id="printing_auto_view_form" model="ir.ui.view">
+        <field name="name">printing.auto.label.printer</field>
+        <field name="model">printing.auto</field>
+        <field name="inherit_id" ref="printing_auto_base.printing_auto_view_form" />
+        <field name="arch" type="xml">
+            <field name="printer_id" position="before">
+                <field name="is_label" />
+            </field>
+        </field>
+    </record>
+
+    <record id="printing_auto_view_tree" model="ir.ui.view">
+        <field name="name">printing.auto.label.printer</field>
+        <field name="model">printing.auto</field>
+        <field name="inherit_id" ref="printing_auto_base.printing_auto_view_tree" />
+        <field name="arch" type="xml">
+            <field name="printer_id" position="before">
+                <field name="is_label" />
+            </field>
+        </field>
+    </record>
+</odoo>
