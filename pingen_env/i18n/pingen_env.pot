@@ -19,26 +19,16 @@ msgid "Companies"
 msgstr ""
 
 #. module: pingen_env
-#: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_client_secretid
-msgid "Pingen Client Secretid"
+#: model:ir.model.fields,field_description:pingen_env.field_res_company__server_env_defaults
+msgid "Server Env Defaults"
 msgstr ""
 
 #. module: pingen_env
-#: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_clientid
-msgid "Pingen Clientid"
+#: model:ir.model.fields,field_description:pingen_env.field_res_company__tech_name
+msgid "Tech Name"
 msgstr ""
 
 #. module: pingen_env
-#: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_staging
-msgid "Pingen Staging"
-msgstr ""
-
-#. module: pingen_env
-#: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_webhook_secret
-msgid "Pingen Webhook Secret"
-msgstr ""
-
-#. module: pingen_env
-#: model:ir.model.fields,field_description:pingen_env.field_res_company__pingen_organization
-msgid "Pingen organization ID"
+#: model:ir.model.fields,help:pingen_env.field_res_company__tech_name
+msgid "Unique name for technical purposes. Eg: server env keys."
 msgstr ""
