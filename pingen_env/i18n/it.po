@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-07-08 14:58+0000\n"
+"PO-Revision-Date: 2026-03-25 08:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: pingen_env
 #: model:ir.model,name:pingen_env.model_res_company
@@ -24,17 +24,17 @@ msgstr "Aziende"
 #. module: pingen_env
 #: model:ir.model.fields,field_description:pingen_env.field_res_company__server_env_defaults
 msgid "Server Env Defaults"
-msgstr ""
+msgstr "Predefiniti ambiente server"
 
 #. module: pingen_env
 #: model:ir.model.fields,field_description:pingen_env.field_res_company__tech_name
 msgid "Tech Name"
-msgstr ""
+msgstr "Nome tecnico"
 
 #. module: pingen_env
 #: model:ir.model.fields,help:pingen_env.field_res_company__tech_name
 msgid "Unique name for technical purposes. Eg: server env keys."
-msgstr ""
+msgstr "Nome univoco per motivi tecnici. Es: chiavi server ambiente."
 
 #~ msgid "Pingen Client Secretid"
 #~ msgstr "ID segreto cliente Pingen"
