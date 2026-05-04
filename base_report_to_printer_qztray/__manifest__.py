@@ -17,7 +17,7 @@
     "external_dependencies": {"python": ["pyOpenSSL"]},
     "assets": {
         "web.assets_backend": [
-            "base_report_to_printer_qz/static/src/js/qweb_action_manager.esm.js"
+            "base_report_to_printer_qztray/static/src/js/qweb_action_manager.esm.js"
         ],
     },
 }
