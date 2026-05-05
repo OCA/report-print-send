@@ -2,8 +2,10 @@
 # Copyright 2026 Dixmit
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import contextlib
 from unittest import mock
 
+from odoo.http import _request_stack
 from odoo.tests.common import TransactionCase
 
 
@@ -11,21 +13,44 @@ class TestIrWebsocket(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.ws_user = cls.env.ref("base.user_admin")
+        cls.server = cls.env["printing.server"].create({})
+        cls.ws_user = cls.env["res.users"].create(
+            {
+                "name": "WS Test User",
+                "login": "ws_test_user",
+                "groups_id": [
+                    (4, cls.env.ref("base.group_user").id),
+                ],
+            }
+        )
         cls.printer = cls.env["printing.printer"].create(
             {
                 "name": "WS Printer",
+                "server_id": cls.server.id,
                 "system_name": "ws_printer",
                 "backend": "websocket",
                 "websocket_user_id": cls.ws_user.id,
             }
         )
 
+    @contextlib.contextmanager
+    def _mock_request(self, user):
+        """Push a mock request onto Odoo's request stack so that the full
+        ir.websocket inheritance chain (e.g. mail's add_guest_to_context)
+        finds a usable request object during tests."""
+        fake_req = mock.MagicMock()
+        fake_req.cookies = {}
+        fake_req.env = self.env(user=user)
+        fake_req.session.uid = user.id
+        _request_stack.push(fake_req)
+        try:
+            yield fake_req
+        finally:
+            _request_stack.pop()
+
     def _build_channel_list(self, user, channels):
         """Call _build_bus_channel_list and return the resulting channels."""
-        mock_request = mock.MagicMock()
-        mock_request.session.uid = user.id
-        with mock.patch("odoo.addons.bus.models.ir_websocket.request", mock_request):
+        with self._mock_request(user):
             IrWs = self.env["ir.websocket"].with_user(user)
             return IrWs._build_bus_channel_list(list(channels))
 
@@ -45,7 +70,15 @@ class TestIrWebsocket(TransactionCase):
 
     def test_other_user_does_not_get_printer_channel(self):
         """A user not assigned on any printer should not receive printer channels."""
-        other_user = self.env.ref("base.user_root")
+        other_user = self.env["res.users"].create(
+            {
+                "name": "Other Test User",
+                "login": "other_test_user",
+                "groups_id": [
+                    (4, self.env.ref("base.group_user").id),
+                ],
+            }
+        )
         printer_channels = self._get_printer_channels(other_user)
         self.assertNotIn(self.printer, printer_channels)
 
@@ -54,6 +87,7 @@ class TestIrWebsocket(TransactionCase):
         printer2 = self.env["printing.printer"].create(
             {
                 "name": "WS Printer 2",
+                "server_id": self.server.id,
                 "system_name": "ws_printer_2",
                 "backend": "websocket",
                 "websocket_user_id": self.ws_user.id,
@@ -68,8 +102,9 @@ class TestIrWebsocket(TransactionCase):
         self.env["printing.printer"].create(
             {
                 "name": "CUPS Printer",
+                "server_id": self.server.id,
                 "system_name": "cups_printer",
-                "backend": "base",
+                "backend": "cups",
             }
         )
         printer_channels = self._get_printer_channels(self.ws_user)

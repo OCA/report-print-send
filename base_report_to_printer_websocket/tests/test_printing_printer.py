@@ -5,20 +5,24 @@
 from base64 import b64encode
 from unittest import mock
 
-from odoo.addons.base_report_to_printer.tests.test_printing_printer import (
-    TestPrintingPrinterBase,
-)
+from odoo.tests.common import TransactionCase
 
 
-class TestPrintingPrinterWebSocket(TestPrintingPrinterBase):
+class TestPrintingPrinterWebSocket(TransactionCase):
     def setUp(self):
         super().setUp()
-        self.printer_vals.update(
-            {
-                "backend": "websocket",
-                "websocket_user_id": self.env.user.id,
-            }
-        )
+        self.Model = self.env["printing.printer"]
+        self.server = self.env["printing.server"].create({})
+        self.printer_vals = {
+            "name": "Printer",
+            "server_id": self.server.id,
+            "system_name": "Sys Name",
+            "backend": "websocket",
+            "websocket_user_id": self.env.user.id,
+        }
+
+    def new_record(self):
+        return self.Model.create(self.printer_vals)
 
     def test_print_document_sends_to_bus(self):
         """print_document should encode PDF as base64 and send via bus."""
@@ -55,8 +59,8 @@ class TestPrintingPrinterWebSocket(TestPrintingPrinterBase):
             self.assertEqual(payload["file_data"], expected_b64)
 
     def test_print_document_non_websocket_delegates_to_super(self):
-        """Non-websocket printers should use the base print_document flow."""
-        self.printer_vals["backend"] = "base"
+        """Non-websocket printers should use the cups print_document flow."""
+        self.printer_vals["backend"] = "cups"
         printer = self.new_record()
         report = self.env["ir.actions.report"].search([], limit=1)
         with mock.patch.object(

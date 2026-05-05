@@ -4,7 +4,7 @@
 
 {
     "name": "Report to printer via WebSocket",
-    "version": "19.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Generic Modules/Base",
     "author": "ForgeFlow,Dixmit,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/report-print-send",
