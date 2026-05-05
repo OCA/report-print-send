@@ -2,6 +2,7 @@
 # Copyright 2026 Dixmit
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
 from unittest import mock
 
 from odoo.addons.base_report_to_printer.tests.test_report import TestReport
@@ -12,6 +13,7 @@ class TestReportWebSocket(TestReport):
         return self.env["printing.printer"].create(
             {
                 "name": "WebSocket Printer",
+                "server_id": self.server.id,
                 "system_name": "ws_printer",
                 "backend": "websocket",
                 "websocket_user_id": self.env.user.id,
@@ -22,10 +24,13 @@ class TestReportWebSocket(TestReport):
 
     def test_render_qweb_pdf_printable(self):
         """Override: mock bus._sendone instead of print_document for websocket."""
-        with mock.patch.object(
-            type(self.env["bus.bus"]),
-            "_sendone",
-        ) as mock_sendone:
+        with (
+            mock.patch.object(
+                type(self.env["bus.bus"]),
+                "_sendone",
+            ) as mock_sendone,
+            self.assertLogs(level=logging.WARNING),
+        ):
             self.report.property_printing_action_id.action_type = "server"
             printer = self.new_printer()
             self.report.printing_printer_id = printer
@@ -40,10 +45,13 @@ class TestReportWebSocket(TestReport):
 
     def test_render_qweb_text_printable(self):
         """Override: mock bus._sendone instead of print_document for websocket."""
-        with mock.patch.object(
-            type(self.env["bus.bus"]),
-            "_sendone",
-        ) as mock_sendone:
+        with (
+            mock.patch.object(
+                type(self.env["bus.bus"]),
+                "_sendone",
+            ) as mock_sendone,
+            self.assertLogs(level=logging.WARNING),
+        ):
             self.report_text.property_printing_action_id.action_type = "server"
             printer = self.new_printer()
             self.report_text.printing_printer_id = printer
@@ -57,10 +65,13 @@ class TestReportWebSocket(TestReport):
     def test_print_document_not_printable(self):
         """Override: use websocket printer."""
         self.report.printing_printer_id = self.new_printer()
-        with mock.patch.object(
-            type(self.env["bus.bus"]),
-            "_sendone",
-        ) as mock_sendone:
+        with (
+            mock.patch.object(
+                type(self.env["bus.bus"]),
+                "_sendone",
+            ) as mock_sendone,
+            self.assertLogs(level=logging.WARNING),
+        ):
             self.report.print_document(self.partners.ids)
             mock_sendone.assert_called_once()
 
@@ -68,10 +79,13 @@ class TestReportWebSocket(TestReport):
         """Override: use websocket printer."""
         self.report.property_printing_action_id.action_type = "server"
         self.report.printing_printer_id = self.new_printer()
-        with mock.patch.object(
-            type(self.env["bus.bus"]),
-            "_sendone",
-        ) as mock_sendone:
+        with (
+            mock.patch.object(
+                type(self.env["bus.bus"]),
+                "_sendone",
+            ) as mock_sendone,
+            self.assertLogs(level=logging.WARNING),
+        ):
             self.report.print_document(self.partners.ids)
             mock_sendone.assert_called_once()
 
