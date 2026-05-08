@@ -21,8 +21,8 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_report_to_printer](base_report_to_printer/) | 17.0.1.2.0 |  | Report to printer
-[printer_zpl2](printer_zpl2/) | 17.0.1.1.0 |  | Add a ZPL II label printing feature
+[base_report_to_printer](base_report_to_printer/) | 17.0.1.2.1 |  | Report to printer
+[printer_zpl2](printer_zpl2/) | 17.0.1.1.1 |  | Add a ZPL II label printing feature
 
 [//]: # (end addons)
 
