@@ -20,4 +20,5 @@
             "base_report_to_printer_qztray/static/src/js/qweb_action_manager.esm.js"
         ],
     },
+    "maintainers": ["miquelalzanillas"],
 }
