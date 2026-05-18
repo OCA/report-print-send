@@ -20,9 +20,27 @@
                         />
                     </group>
                     <separator string="Specific actions per user" />
-                    <field name="printing_action_ids" />
+                    <field name="printing_action_ids">
+                        <list editable="bottom" decoration-muted="not active">
+                            <field name="user_id" />
+                            <field name="action" />
+                            <field name="printer_id" />
+                            <field
+                                name="printer_input_tray_id"
+                                invisible="not printer_id"
+                            />
+                            <field
+                                name="printer_output_tray_id"
+                                invisible="not printer_id"
+                            />
+                            <field name="active" optional="hide" />
+                        </list>
+                    </field>
                 </page>
             </page>
         </field>
+    </record>
+    <record model="ir.actions.act_window" id="base.ir_action_report">
+        <field name="context">{'active_test': False}</field>
     </record>
 </odoo>

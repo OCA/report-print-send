@@ -266,6 +266,9 @@ Contributors
 - Tris Doan <tridm@trobz.com>
 - Sergij Pfaifer <s.pfaifer@deinetuer.de>
 - Miquel Alzanillas <miquel.alzanillas@nagarro.com>
+- `Studio73 <https://studio73.es>`__:
+
+  - Eugenio Micó <eugenio@studio73.es>
 
 Other credits
 -------------
