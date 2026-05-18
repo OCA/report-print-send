@@ -3,7 +3,7 @@
         <xpath expr="//head" position="before">
             <script
                 type="text/javascript"
-                src="/base_report_to_printer_qz/static/src/lib/qz-tray.js"
+                src="/base_report_to_printer_qztray/static/src/lib/qz-tray.js"
             />
         </xpath>
     </template>
