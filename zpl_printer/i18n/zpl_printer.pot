@@ -1,0 +1,139 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* zpl_printer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e-20240918\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-02 09:01+0000\n"
+"PO-Revision-Date: 2024-10-02 09:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: zpl_printer
+#: model:ir.model.fields.selection,name:zpl_printer.selection__zpl_printer_zpl_printer__resolution__200
+msgid "200"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields.selection,name:zpl_printer.selection__zpl_printer_zpl_printer__resolution__300
+msgid "300"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__default
+msgid "Default"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__id
+msgid "ID"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model,name:zpl_printer.model_zpl_printer_zpl_printer
+#: model_terms:ir.ui.view,arch_db:zpl_printer.view_zpl_printer_form
+msgid "Label Printer"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.actions.act_window,name:zpl_printer.action_zpl_printer
+#: model_terms:ir.ui.view,arch_db:zpl_printer.res_config_settings_view_form
+msgid "Label-Printers"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__name
+msgid "Name"
+msgstr ""
+
+#. module: zpl_printer
+#. odoo-python
+#: code:addons/zpl_printer/model/zpl_printer.py:0
+#, python-format
+msgid "No default printer specified"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__resolution
+msgid "Printing Resolution (DPI)"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model,name:zpl_printer.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_ir_actions_report__report_type
+msgid "Report Type"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.constraint,message:zpl_printer.constraint_zpl_printer_zpl_printer_name_unique
+msgid "The name must be unique."
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,help:zpl_printer.field_ir_actions_report__report_type
+msgid ""
+"The type of the report that will be rendered, each one having its own "
+"rendering method. HTML means the report will be opened directly in your "
+"browser PDF means the report will be rendered using Wkhtmltopdf and "
+"downloaded by the user."
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.constraint,message:zpl_printer.constraint_zpl_printer_zpl_printer_url_unique
+msgid "The url must be unique."
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields,field_description:zpl_printer.field_zpl_printer_zpl_printer__url
+msgid "Url"
+msgstr ""
+
+#. module: zpl_printer
+#: model_terms:ir.ui.view,arch_db:zpl_printer.view_tree_zpl_printer_tree
+msgid "ZPL-Printer"
+msgstr ""
+
+#. module: zpl_printer
+#: model:ir.model.fields.selection,name:zpl_printer.selection__ir_actions_report__report_type__qweb-zpl
+msgid "qweb-zpl"
+msgstr "ZPL"
