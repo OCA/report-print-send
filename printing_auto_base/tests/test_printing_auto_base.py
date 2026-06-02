@@ -7,10 +7,9 @@ from unittest import mock
 from odoo.exceptions import UserError
 from odoo.orm.model_classes import add_to_registry
 
-from .common import TestPrintingAutoCommon, patch_print_document
+from .common import TestPrintingAutoCommon
 
 
-@patch_print_document()
 class TestPrintingAutoBase(TestPrintingAutoCommon):
     @classmethod
     def setUpClass(cls):

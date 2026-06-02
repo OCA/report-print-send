@@ -6,15 +6,6 @@ from unittest import mock
 
 from odoo.tests import common
 
-PRINT_DOCUMENT = (
-    "odoo.addons.base_report_to_printer.models.printing_printer."
-    "PrintingPrinter.print_document"
-)
-
-
-def patch_print_document():
-    return mock.patch(PRINT_DOCUMENT, mock.MagicMock())
-
 
 class TestPrintingAutoCommon(common.TransactionCase):
     @classmethod
@@ -55,6 +46,18 @@ class TestPrintingAutoCommon(common.TransactionCase):
 
         cls.setUpReportAndRecord()
         cls.data = cls._render_report()
+
+    def setUp(self):
+        super().setUp()
+        # Patch the registry class to consider overrides from other
+        # installed modules (e.g. base_report_to_printer_websocket)
+        patcher = mock.patch.object(
+            type(self.env["printing.printer"]),
+            "print_document",
+            mock.MagicMock(),
+        )
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     @classmethod
     def _create_printing_auto(cls, vals):
