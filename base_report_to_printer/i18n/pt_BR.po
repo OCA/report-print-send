@@ -110,6 +110,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printer_update_wizard
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_user_default_printer_selector_form
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
 msgid "Cancel"
 msgstr ""
@@ -175,6 +176,11 @@ msgid "Compressed using an unknown algorithm"
 msgstr ""
 
 #. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_user_default_printer_selector_form
+msgid "Confirm"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__copies
 msgid "Copies"
 msgstr ""
@@ -194,6 +200,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wiz_user_default_printer_selector__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_uid
 msgid "Created by"
@@ -208,6 +215,7 @@ msgstr "Criado por"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wiz_user_default_printer_selector__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
 msgid "Created on"
@@ -276,6 +284,7 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_printer_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wiz_user_default_printer_selector__printing_printer_id
 msgid "Default Printer"
 msgstr ""
 
@@ -303,6 +312,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wiz_user_default_printer_selector__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__display_name
 msgid "Display Name"
@@ -399,6 +409,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wiz_user_default_printer_selector__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__id
 msgid "ID"
@@ -450,6 +461,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wiz_user_default_printer_selector__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_uid
 msgid "Last Updated by"
@@ -464,6 +476,7 @@ msgstr "Última atualização por"
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_server__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wiz_user_default_printer_selector__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_date
 msgid "Last Updated on"
@@ -784,6 +797,17 @@ msgid "Resources not available to print the job"
 msgstr ""
 
 #. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.action_user_default_printer_selector
+msgid "Select printer"
+msgstr ""
+
+#. module: base_report_to_printer
+#. odoo-javascript
+#: code:addons/base_report_to_printer/static/src/xml/systray_printer_selector.xml:0
+msgid "Select user printer"
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__server_id
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__server_id
 msgid "Server"
@@ -819,6 +843,11 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.printing_printer_action
 msgid "Show Printers"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:res.groups,name:base_report_to_printer.printer_button_group
+msgid "Show printer button on navbar"
 msgstr ""
 
 #. module: base_report_to_printer
@@ -971,6 +1000,11 @@ msgstr ""
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__wizard_id
 msgid "Wizard"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wiz_user_default_printer_selector
+msgid "Wizard to select user printer"
 msgstr ""
 
 #. module: base_report_to_printer
