@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="base_report_to_printer.PrinterSelectorButton" owl="1">
+        <div class="div_printer_selector">
+            <button
+                class="btn btn-link"
+                name="printer_selector"
+                title="Select user printer"
+                href="#"
+                t-on-click="onClickSelectPrinter"
+                t-if="isPrinterUser"
+            >
+                <i
+                    class="fa fa-lg fa-print"
+                    role="img"
+                    aria-label="Select user printer"
+                />
+            </button>
+        </div>
+    </t>
+</templates>

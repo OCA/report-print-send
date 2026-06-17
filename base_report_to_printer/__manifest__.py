@@ -27,10 +27,11 @@
         "views/ir_actions_report.xml",
         "wizards/print_attachment_report.xml",
         "wizards/printing_printer_update_wizard_view.xml",
+        "wizards/user_dafault_printer_selector_views.xml",
     ],
     "assets": {
         "web.assets_backend": [
-            "/base_report_to_printer/static/src/js/qweb_action_manager.esm.js",
+            "/base_report_to_printer/static/src/**/*",
         ],
     },
     "installable": True,

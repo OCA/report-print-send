@@ -1,0 +1,11 @@
+.div_printer_selector {
+    button {
+        height: 100%;
+        color: white;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.075);
+            color: white;
+        }
+    }
+}
