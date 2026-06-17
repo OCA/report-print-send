@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2026-05-14 14:37+0000\n"
+"PO-Revision-Date: 2026-06-17 21:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -178,7 +178,7 @@ msgstr "Compressa con un algoritmo sconosciuto"
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.view_user_default_printer_selector_form
 msgid "Confirm"
-msgstr ""
+msgstr "Conferma"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__copies
@@ -808,13 +808,13 @@ msgstr "Risorsa non disponibile per stampare il lavoro"
 #. module: base_report_to_printer
 #: model:ir.actions.act_window,name:base_report_to_printer.action_user_default_printer_selector
 msgid "Select printer"
-msgstr ""
+msgstr "Seleziona stampante"
 
 #. module: base_report_to_printer
 #. odoo-javascript
 #: code:addons/base_report_to_printer/static/src/xml/systray_printer_selector.xml:0
 msgid "Select user printer"
-msgstr ""
+msgstr "Seleziona stampante utente"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__server_id
@@ -857,7 +857,7 @@ msgstr "Mostra stampanti"
 #. module: base_report_to_printer
 #: model:res.groups,name:base_report_to_printer.printer_button_group
 msgid "Show printer button on navbar"
-msgstr ""
+msgstr "Visualizza pulsante stampa sulla barra di navigazione"
 
 #. module: base_report_to_printer
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
@@ -1018,7 +1018,7 @@ msgstr "Procedura guidata"
 #. module: base_report_to_printer
 #: model:ir.model,name:base_report_to_printer.model_wiz_user_default_printer_selector
 msgid "Wizard to select user printer"
-msgstr ""
+msgstr "Procedura guidata per selezionare la stampante utente"
 
 #. module: base_report_to_printer
 #. odoo-javascript
