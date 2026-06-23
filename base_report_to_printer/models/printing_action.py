@@ -22,5 +22,7 @@ class PrintingAction(models.Model):
 
     name = fields.Char(required=True)
     action_type = fields.Selection(
-        selection=_available_action_types, string="Type", required=True
+        selection=lambda self: self._available_action_types,
+        string="Type",
+        required=True,
     )
