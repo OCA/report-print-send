@@ -205,8 +205,7 @@ class PrintingLabelZpl2Component(models.Model):
         "the background."
     )
     in_block = fields.Boolean(
-        help="If checked, the data will be restrected in a "
-        "defined block on the label."
+        help="If checked, the data will be restrected in a defined block on the label."
     )
     block_width = fields.Integer(help="Width of the block.")
     block_lines = fields.Integer(

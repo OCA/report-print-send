@@ -59,9 +59,7 @@ class TestWizardImportZpl2(PrinterZpl2Common):
                 "sequence": 10,
             }
         )
-        zpl_data = (
-            "^XA\n" "^CI28\n" "^LH0,0\n" "^FO10,10^A0N,30,30^FDTEXT^FS\n" "^JUR\n" "^XZ"
-        )
+        zpl_data = "^XA\n^CI28\n^LH0,0\n^FO10,10^A0N,30,30^FDTEXT^FS\n^JUR\n^XZ"
 
         vals = {"label_id": self.label.id, "delete_component": False, "data": zpl_data}
         wizard = self.env["wizard.import.zpl2"].create(vals)

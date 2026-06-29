@@ -93,8 +93,7 @@ class PrintingLabelZpl2(models.Model):
         cr = self._cr
         self.flush_recordset(["component_ids"])
         query = (
-            'SELECT "{}", "{}" FROM "{}" '
-            'WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
+            'SELECT "{}", "{}" FROM "{}" WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
                 "label_id",
                 "sublabel_id",
                 "printing_label_zpl2_component",
