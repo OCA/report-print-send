@@ -1,6 +1,6 @@
 from odoo.addons.base.tests.common import BaseCommon
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
+model = "odoo.addons.base_report_to_printer_cups.models.printing_server"
 
 
 class PrinterZpl2Common(BaseCommon):

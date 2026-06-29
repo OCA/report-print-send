@@ -3,9 +3,11 @@
 
 from unittest.mock import patch
 
+from odoo.tools import mute_logger
+
 from .common import PrinterZpl2Common
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
+model = "odoo.addons.base_report_to_printer_cups.models.printing_server"
 
 
 class TestWizardPrintRecordLabel(PrinterZpl2Common):
@@ -14,6 +16,7 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         super().setUpClass()
         cls.Wizard = cls.env["wizard.print.record.label"]
 
+    @mute_logger("odoo.addons.base_report_to_printer.models.printing_printer")
     @patch(f"{model}.cups")
     def test_print_record_label(self, cups):
         """Check that printing a label using the generic wizard works"""

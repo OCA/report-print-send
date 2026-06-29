@@ -40,7 +40,7 @@ class PrintRecordLabel(models.TransientModel):
             [("id", "=", self.env.context.get("printer_zpl2_id"))]
         )
         if not printers:
-            printers = self.env["printing.printer"].search([])
+            printers = self.env["printing.printer"].search([], limit=2)
         if len(printers) == 1:
             values["printer_id"] = printers.id
 

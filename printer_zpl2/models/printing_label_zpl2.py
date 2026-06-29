@@ -90,7 +90,7 @@ class PrintingLabelZpl2(models.Model):
 
     @api.constrains("component_ids")
     def check_recursion(self):
-        cr = self._cr
+        cr = self.env.cr
         self.flush_recordset(["component_ids"])
         query = (
             'SELECT "{}", "{}" FROM "{}" WHERE "{}" IN %s AND "{}" IS NOT NULL'.format(
@@ -371,8 +371,9 @@ class PrintingLabelZpl2(models.Model):
         for label in self:
             if record._name != label.model_id.model:
                 raise exceptions.UserError(
-                    self.env._("This label cannot be used on {model}").format(
-                        model=record._name
+                    self.env._(
+                        "This label cannot be used on %(model)s",
+                        model=record._name,
                     )
                 )
             # Send the label to printer
@@ -525,9 +526,9 @@ class PrintingLabelZpl2(models.Model):
                     return base64.b64encode(imgByteArr.getvalue())
                 else:
                     _logger.warning(
-                        self.env._("Error with Labelary API. %s") % response.status_code
+                        self.env._("Error with Labelary API. %s", response.status_code)
                     )
 
             except Exception as e:
-                _logger.warning(self.env._("Error with Labelary API. %s") % e)
+                _logger.warning(self.env._("Error with Labelary API. %s", e))
         return False

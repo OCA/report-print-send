@@ -149,7 +149,7 @@ class Zpl2:
 
     def print_width(self, label_width):
         """Defines the print width setting on the printer"""
-        self._write_command("^PW%d" % label_width)
+        self._write_command(f"^PW{label_width}")
 
     def configuration_update(self, active_configuration):
         """Set the active configuration on the printer"""
@@ -171,13 +171,13 @@ class Zpl2:
 
     def label_home(self, left, top):
         """Define the label top left corner"""
-        self._write_command("^LH%d,%d" % (left, top))
+        self._write_command(f"^LH{left},{top}")
 
     def _field_origin(self, right, down):
         """Define the top left corner of the data, from the top left corner of
         the label
         """
-        return "^FO%d,%d" % (right, down)
+        return f"^FO{right},{down}"
 
     def _font_format(self, font_format):
         """Send the commands which define the font to use for the current data"""

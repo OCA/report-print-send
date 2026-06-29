@@ -11,7 +11,7 @@ from odoo.tools import mute_logger
 
 from .common import PrinterZpl2Common
 
-model = "odoo.addons.base_report_to_printer.models.printing_server"
+model = "odoo.addons.base_report_to_printer_cups.models.printing_server"
 
 
 class TestWizardPrintRecordLabel(PrinterZpl2Common):
@@ -47,6 +47,7 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
             record = Obj.search([], limit=1, order="id desc")
         self.assertEqual(res, record)
 
+    @mute_logger("odoo.addons.base_report_to_printer.models.printing_printer")
     @patch(f"{model}.cups")
     def test_print_label_test(self, cups):
         """Check if print test"""
