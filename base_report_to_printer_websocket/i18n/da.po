@@ -6,59 +6,61 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-07-09 09:46+0000\n"
+"Last-Translator: Laura V <laura.valls@forgeflow.com>\n"
 "Language-Team: none\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: base_report_to_printer_websocket
 #: model:ir.model.fields,field_description:base_report_to_printer_websocket.field_printing_printer__backend
 msgid "Backend"
-msgstr ""
+msgstr "Backend"
 
 #. module: base_report_to_printer_websocket
 #. odoo-javascript
 #: code:addons/base_report_to_printer_websocket/static/src/js/qweb_action_manager.esm.js:0
 msgid "Could not send print job!"
-msgstr ""
+msgstr "Kunne ikke sende udskriftsjob!"
 
 #. module: base_report_to_printer_websocket
 #: model:ir.model.fields,field_description:base_report_to_printer_websocket.field_ir_websocket__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer_websocket.field_printing_printer__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: base_report_to_printer_websocket
 #: model:ir.model.fields,field_description:base_report_to_printer_websocket.field_ir_websocket__id
 #: model:ir.model.fields,field_description:base_report_to_printer_websocket.field_printing_printer__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: base_report_to_printer_websocket
 #: model:ir.model,name:base_report_to_printer_websocket.model_printing_printer
 msgid "Logical Printer"
-msgstr ""
+msgstr "Logisk printer"
 
 #. module: base_report_to_printer_websocket
 #. odoo-javascript
 #: code:addons/base_report_to_printer_websocket/static/src/js/qweb_action_manager.esm.js:0
 msgid "Print job sent via WebSocket!"
-msgstr ""
+msgstr "Udskriftsjob sendt via WebSocket!"
 
 #. module: base_report_to_printer_websocket
 #: model:ir.model.fields.selection,name:base_report_to_printer_websocket.selection__printing_printer__backend__websocket
 msgid "WebSocket"
-msgstr ""
+msgstr "WebSocket"
 
 #. module: base_report_to_printer_websocket
 #: model:ir.model.fields,field_description:base_report_to_printer_websocket.field_printing_printer__websocket_user_id
 msgid "Websocket User"
-msgstr ""
+msgstr "WebSocket-bruger"
 
 #. module: base_report_to_printer_websocket
 #: model:ir.model,name:base_report_to_printer_websocket.model_ir_websocket
 msgid "websocket message handling"
-msgstr ""
+msgstr "håndtering af websocket-beskeder"
