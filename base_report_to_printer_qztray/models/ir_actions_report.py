@@ -3,11 +3,26 @@
 
 import base64
 
-from odoo import models
+from odoo import api, models
 
 
 class IrActionsReport(models.Model):
     _inherit = "ir.actions.report"
+
+    @api.model
+    def print_action_for_report_name(self, report_name):
+        result = super().print_action_for_report_name(report_name)
+        if not result:
+            return result
+
+        report = self._get_report_from_name(report_name)
+        if not report:
+            return result
+
+        printer = report.behaviour().get("printer")
+        if printer:
+            result["backend"] = printer.backend
+        return result
 
     def get_qz_tray_data(self, res_ids, report_type="pdf", report_name="", data=None):
         if report_type == "pdf":

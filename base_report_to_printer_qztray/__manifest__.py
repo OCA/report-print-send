@@ -11,13 +11,15 @@
     "depends": ["base_report_to_printer"],
     "data": [
         "views/assets.xml",
+        "views/printing_printer_qztray.xml",
     ],
     "installable": True,
     "application": False,
     "external_dependencies": {"python": ["pyOpenSSL"]},
     "assets": {
         "web.assets_backend": [
-            "base_report_to_printer_qztray/static/src/js/qweb_action_manager.esm.js"
+            "/base_report_to_printer_qztray/static/src/js/qweb_action_manager.esm.js"
         ],
     },
+    "maintainers": ["miquelalzanillas"],
 }

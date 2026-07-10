@@ -1,9 +1,9 @@
-/* global qz */
+/* global qz fetch */
 import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {rpc} from "@web/core/network/rpc";
 
-async function QZPrintDispatcher(action, env) {
+async function QZPrintDispatcher(action, env, printAction = null) {
     qz.security.setCertificatePromise((resolve, reject) => {
         fetch("/qz-certificate", {
             cache: "no-store",
@@ -32,12 +32,14 @@ async function QZPrintDispatcher(action, env) {
     });
     const orm = env.services.orm;
 
-    const print_action = await orm.call(
-        "ir.actions.report",
-        "print_action_for_report_name",
-        [action.report_name],
-        {context: {force_print_to_client: action.context.force_print_to_client}}
-    );
+    const print_action =
+        printAction ||
+        (await orm.call(
+            "ir.actions.report",
+            "print_action_for_report_name",
+            [action.report_name],
+            {context: {force_print_to_client: action.context?.force_print_to_client}}
+        ));
 
     if (!print_action || print_action.action !== "server") {
         return false;
@@ -55,7 +57,7 @@ async function QZPrintDispatcher(action, env) {
             method: "get_qz_tray_data",
             args: [
                 print_action.id,
-                action.context.active_ids,
+                action.context?.active_ids,
                 "pdf",
                 action.report_name,
             ],
@@ -101,3 +103,25 @@ async function QZPrintDispatcher(action, env) {
 }
 
 registry.category("report.print.backends").add("qztray", QZPrintDispatcher);
+
+async function qztrayReportActionHandler(action, options, env) {
+    if (action.report_type !== "qweb-pdf") {
+        return false;
+    }
+
+    const printAction = await env.services.orm.call(
+        "ir.actions.report",
+        "print_action_for_report_name",
+        [action.report_name],
+        {context: {force_print_to_client: action.context?.force_print_to_client}}
+    );
+    if (!printAction || printAction.backend !== "qztray") {
+        return false;
+    }
+
+    return await QZPrintDispatcher(action, env, printAction);
+}
+
+registry
+    .category("ir.actions.report handlers")
+    .add("qztray_report_action_handler", qztrayReportActionHandler, {sequence: 10});

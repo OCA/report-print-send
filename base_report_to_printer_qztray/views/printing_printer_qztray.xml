@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="printing_printer_qztray_view_form_inherit" model="ir.ui.view">
+        <field name="name">printing.printer.form.inherit.qztray</field>
+        <field name="model">printing.printer</field>
+        <field
+            name="inherit_id"
+            ref="base_report_to_printer.printing_printer_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='enable']" position="attributes">
+                <attribute name="invisible">backend == 'qztray'</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='disable']" position="attributes">
+                <attribute name="invisible">backend == 'qztray'</attribute>
+            </xpath>
+            <xpath
+                expr="//header/button[@name='action_cancel_all_jobs']"
+                position="attributes"
+            >
+                <attribute name="invisible">backend == 'qztray'</attribute>
+            </xpath>
+            <xpath
+                expr="//header/button[@name='print_test_page']"
+                position="attributes"
+            >
+                <attribute name="invisible">backend == 'qztray'</attribute>
+            </xpath>
+            <field name="server_id" position="attributes">
+                <attribute name="invisible">backend == 'qztray'</attribute>
+                <attribute name="required">backend != 'qztray'</attribute>
+            </field>
+            <group name="default" position="attributes">
+                <attribute name="invisible">backend == 'qztray'</attribute>
+            </group>
+            <group name="details" position="attributes">
+                <attribute name="invisible">backend == 'qztray'</attribute>
+            </group>
+            <group name="trays" position="attributes">
+                <attribute name="invisible">backend == 'qztray'</attribute>
+            </group>
+            <group name="jobs" position="attributes">
+                <attribute name="invisible">backend == 'qztray'</attribute>
+            </group>
+        </field>
+    </record>
+    <record id="printing_printer_qztray_view_tree_inherit" model="ir.ui.view">
+        <field name="name">printing.printer.tree.inherit.qztray</field>
+        <field name="model">printing.printer</field>
+        <field
+            name="inherit_id"
+            ref="base_report_to_printer.printing_printer_view_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute
+                    name="decoration-success"
+                >backend != 'qztray' and status=='available'</attribute>
+                <attribute
+                    name="decoration-warning"
+                >backend != 'qztray' and status=='printing'</attribute>
+                <attribute
+                    name="decoration-danger"
+                >backend != 'qztray' and status not in ['printing', 'available']</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
