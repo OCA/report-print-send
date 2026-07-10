@@ -47,6 +47,11 @@ class PrintingPrinter(models.Model):
         help="Jobs printed on this printer.",
     )
     system_name = fields.Char(required=True, index=True)
+    backend = fields.Selection(
+        selection=[("cups", "Cups")],
+        required=True,
+        default="cups",
+    )
     default = fields.Boolean(readonly=True)
     status = fields.Selection(
         selection=[
