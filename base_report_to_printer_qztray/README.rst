@@ -297,6 +297,14 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
+.. |maintainer-miquelalzanillas| image:: https://github.com/miquelalzanillas.png?size=40px
+    :target: https://github.com/miquelalzanillas
+    :alt: miquelalzanillas
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-miquelalzanillas| 
+
 This module is part of the `OCA/report-print-send <https://github.com/OCA/report-print-send/tree/18.0/base_report_to_printer_qztray>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
