@@ -13,7 +13,8 @@ import os
 import threading
 from tempfile import mkstemp
 
-from odoo import api, fields, models, registry
+from odoo import _, api, fields, models, registry
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -37,7 +38,6 @@ class PrintingPrinter(models.Model):
     server_id = fields.Many2one(
         comodel_name="printing.server",
         string="Server",
-        required=True,
         help="Server used to access this printer.",
     )
     job_ids = fields.One2many(
@@ -76,6 +76,14 @@ class PrintingPrinter(models.Model):
     multi_thread = fields.Boolean(
         compute="_compute_multi_thread", readonly=False, store=True
     )
+
+    @api.constrains("server_id", "backend")
+    def _check_server_id(self):
+        for printer in self:
+            if printer.backend == "cups" and not printer.server_id:
+                raise ValidationError(
+                    _("Server is required for printers using the Cups backend.")
+                )
 
     @api.depends("server_id.multi_thread")
     def _compute_multi_thread(self):
