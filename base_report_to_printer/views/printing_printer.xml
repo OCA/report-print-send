@@ -118,7 +118,8 @@
                 <field name="default" />
                 <field name="name" />
                 <field name="system_name" />
-                <field name="server_id" />
+                <field name="backend" invisible="1" />
+                <field name="server_id" required="backend=='cups'" />
                 <field name="status" />
             </tree>
         </field>
