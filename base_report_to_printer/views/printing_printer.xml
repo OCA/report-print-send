@@ -54,7 +54,7 @@
                     <group name="name">
                         <field name="system_name" />
                         <field name="backend" />
-                        <field name="server_id" />
+                        <field name="server_id" required="backend=='cups'" />
                     </group>
                     <group col="4" colspan="4" name="default">
                         <field name="default" />
