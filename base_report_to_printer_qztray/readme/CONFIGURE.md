@@ -9,7 +9,7 @@ The module relies on printers configured in Odoo that use the **QZ Tray backend*
 
 ### Create or Configure a Printer
 
-1. Go to **Settings → Technical → Printing → Printers**.
+1. Go to **Settings → Printing → Printers**.
 2. Click **Create** (or open an existing printer).
 3. Configure the printer with the following values:
 
