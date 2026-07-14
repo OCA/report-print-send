@@ -819,6 +819,12 @@ msgid "Server Error"
 msgstr ""
 
 #. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/models/printing_printer.py:0
+msgid "Server is required for printers using the Cups backend."
+msgstr ""
+
+#. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__server_id
 msgid "Server used to access this printer."
 msgstr ""
