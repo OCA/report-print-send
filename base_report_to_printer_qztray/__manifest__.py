@@ -3,7 +3,7 @@
 
 {
     "name": "Report to QZ Tray",
-    "version": "19.0.1.0.2",
+    "version": "17.0.1.0.1",
     "category": "Generic Modules/Base",
     "author": "PESOL, Nagarro, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/report-print-send",
@@ -11,13 +11,14 @@
     "depends": ["base_report_to_printer"],
     "data": [
         "views/assets.xml",
+        "views/printing_printer_qztray.xml",
     ],
     "installable": True,
     "application": False,
     "external_dependencies": {"python": ["pyOpenSSL"]},
     "assets": {
         "web.assets_backend": [
-            "base_report_to_printer_qztray/static/src/js/qweb_action_manager.esm.js"
+            "/base_report_to_printer_qztray/static/src/js/qweb_action_manager.esm.js"
         ],
     },
     "maintainers": ["miquelalzanillas"],
