@@ -22,7 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_report_to_label_printer](base_report_to_label_printer/) | 19.0.1.1.0 |  | Report to label printer
-[base_report_to_printer](base_report_to_printer/) | 19.0.1.2.1 |  | Report to printer
+[base_report_to_printer](base_report_to_printer/) | 19.0.1.2.2 |  | Report to printer
 [base_report_to_printer_cups](base_report_to_printer_cups/) | 19.0.0.2.0 |  | Report to printer CUPS
 [base_report_to_printer_qztray](base_report_to_printer_qztray/) | 19.0.1.0.2 | <a href='https://github.com/miquelalzanillas'><img src='https://github.com/miquelalzanillas.png' width='32' height='32' style='border-radius:50%;' alt='miquelalzanillas'/></a> | Report to QZ Tray
 [base_report_to_printer_websocket](base_report_to_printer_websocket/) | 19.0.1.0.0 |  | Report to printer via WebSocket
