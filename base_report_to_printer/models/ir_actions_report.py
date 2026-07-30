@@ -118,6 +118,7 @@ class IrActionsReport(models.Model):
                 ("report_id", "=", self.id),
                 ("user_id", "=", self.env.uid),
                 ("action", "!=", "user_default"),
+                ("active", "=", True),
             ],
             limit=1,
         )
