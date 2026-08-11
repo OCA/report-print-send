@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 03:38+0000\n"
-"PO-Revision-Date: 2026-03-13 16:45+0000\n"
+"PO-Revision-Date: 2026-08-11 12:48+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -84,7 +84,7 @@ msgstr "Disponibile"
 #. module: base_report_to_printer
 #: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__backend
 msgid "Backend"
-msgstr ""
+msgstr "Backend"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state_reason__job-transforming
@@ -221,7 +221,7 @@ msgstr "Data creazione"
 #. module: base_report_to_printer
 #: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__backend__cups
 msgid "Cups"
-msgstr ""
+msgstr "Cups"
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
@@ -813,7 +813,7 @@ msgstr "Errore server"
 #: code:addons/base_report_to_printer/models/printing_printer.py:0
 #, python-format
 msgid "Server is required for printers using the Cups backend."
-msgstr ""
+msgstr "Il server è richiesto per le stampanti che usano il backend Cups."
 
 #. module: base_report_to_printer
 #: model:ir.model.fields,help:base_report_to_printer.field_printing_printer__server_id
