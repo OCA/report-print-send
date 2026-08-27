@@ -17,7 +17,7 @@ class PrintingEscpos(models.Model):
     _description = "Print Escpos"
 
     name = fields.Char(required=True)
-    model_id = fields.Many2one("ir.model", required=True)
+    model_id = fields.Many2one("ir.model", required=True, ondelete="cascade")
     mode = fields.Selection(
         [("report", "Report"), ("arch", "Manual")], required=True, default="report"
     )
@@ -33,12 +33,11 @@ class PrintingEscpos(models.Model):
 
     def _render(self, record):
         if self.mode == "report":
-            return self.report_id.render_qweb_text(record.ids)[0]
-        qcontext = self.env["ir.ui.view"]._prepare_qcontext()
-        qcontext.update(
-            {"doc_ids": record.ids, "doc_model": self.model, "docs": record}
-        )
-        return self.env["ir.qweb"].render(etree.fromstring(self.arch), qcontext)
+            return self.env["ir.actions.report"]._render_qweb_text(
+                self.report_id, record.ids
+            )[0]
+        qcontext = {"doc_ids": record.ids, "doc_model": self.model, "docs": record}
+        return self.env["ir.qweb"]._render(etree.fromstring(self.arch), qcontext)
 
     def print_test_escpos(self):
         self.print_escpos(self.printer_id, self.env[self.model].browse(self.record_id))

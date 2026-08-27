@@ -225,7 +225,8 @@ class Printer(Dummy):
             text = strclean(text)
         if text:
             self.dirty = True
-            super().text(text, *args, **kwargs)
+            return super().text(text, *args, **kwargs)
+        return None
 
     def textln(self, text, *args, **kwargs):
         result = super().textln(text, *args, **kwargs)

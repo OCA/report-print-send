@@ -1,7 +1,7 @@
 # Copyright 2022 CreuBlanca
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import mock
+from unittest import mock
 
 from odoo.tests.common import TransactionCase
 
@@ -9,12 +9,13 @@ model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 
 class TestEscpos(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.escpos = self.env["printing.escpos"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.escpos = cls.env["printing.escpos"].create(
             {
                 "name": "Partner ticket",
-                "model_id": self.env.ref("base.model_res_partner").id,
+                "model_id": cls.env.ref("base.model_res_partner").id,
                 "mode": "arch",
                 "arch": """
             <receipt>
@@ -50,11 +51,11 @@ class TestEscpos(TransactionCase):
             """,
             }
         )
-        self.server = self.env["printing.server"].create({})
-        self.printer = self.env["printing.printer"].create(
+        cls.server = cls.env["printing.server"].create({})
+        cls.printer = cls.env["printing.printer"].create(
             {
                 "name": "Printer",
-                "server_id": self.server.id,
+                "server_id": cls.server.id,
                 "system_name": "Sys Name",
                 "default": True,
                 "status": "unknown",
