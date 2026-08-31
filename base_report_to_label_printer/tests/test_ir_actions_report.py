@@ -17,7 +17,7 @@ class TestIrActionsReport(TransactionCase):
         )
         self.report = self.Model.search([], limit=1)
 
-    def new_printer(self):
+    def new_printer(self, **vals):
         return self.env["printing.printer"].create(
             {
                 "name": "Printer",
@@ -28,6 +28,7 @@ class TestIrActionsReport(TransactionCase):
                 "model": "res.users",
                 "location": "Location",
                 "uri": "URI",
+                **vals,
             }
         )
 
@@ -35,7 +36,7 @@ class TestIrActionsReport(TransactionCase):
         """It should return the label printer from user"""
         self.report.label = True
         self.env.user.printing_action = "client"
-        self.env.user.default_label_printer_id = self.new_printer()
+        self.env.user.default_label_printer_id = self.new_printer(default=False)
         result = self.report.behaviour()
         self.assertEqual(
             result,
@@ -46,3 +47,13 @@ class TestIrActionsReport(TransactionCase):
                 "output_tray": False,
             },
         )
+
+    def test_print_behavior_user_printer_for_a_regular_report(self):
+        """It should return the user's own printer when the report is no label"""
+        self.report.label = False
+        self.env.user.printing_printer_id = self.new_printer()
+        self.env.user.default_label_printer_id = self.new_printer(
+            name="Label Printer", system_name="Label Sys Name", default=False
+        )
+        result = self.report.behaviour()
+        self.assertEqual(result["printer"], self.env.user.printing_printer_id)

@@ -76,12 +76,23 @@ class IrActionsReport(models.Model):
             serializable_result["action"] = "client"
         return serializable_result
 
+    def _get_user_default_printer(self, user):
+        """Return the printer ``user`` prints this report on by default.
+
+        Hook for modules that route some reports to another printer, such as
+        ``base_report_to_label_printer`` sending labels to a label printer.
+        Returning an empty recordset leaves the caller to fall back on the
+        default printer.
+        """
+        return user.printing_printer_id
+
     def _get_user_default_print_behaviour(self):
         printer_obj = self.env["printing.printer"]
         user = self.env.user
+        printer = self._get_user_default_printer(user)
         return dict(
             action=user.printing_action or "client",
-            printer=user.printing_printer_id or printer_obj.get_default(),
+            printer=printer or printer_obj.get_default(),
             input_tray=str(user.printer_input_tray_id.system_name)
             if user.printer_input_tray_id
             else False,
