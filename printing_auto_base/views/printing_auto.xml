@@ -1,0 +1,53 @@
+<odoo>
+    <record id="printing_auto_view_form" model="ir.ui.view">
+        <field name="name">printing.auto.view.form</field>
+        <field name="model">printing.auto</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="data_source" />
+                        <field name="record_change" />
+                        <field
+                            name="report_id"
+                            invisible="data_source == 'attachment'"
+                        />
+                        <field
+                            name="attachment_domain"
+                            invisible="data_source == 'report'"
+                        />
+                        <field name="condition" />
+                        <field name="printer_id" />
+                        <field
+                            name="printer_tray_id"
+                            domain="[('printer_id', '=', printer_id)]"
+                        />
+                        <field name="nbr_of_copies" />
+                        <field name="action_on_error" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="printing_auto_view_tree" model="ir.ui.view">
+        <field name="name">printing.auto.view.tree</field>
+        <field name="model">printing.auto</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="data_source" />
+                <field name="record_change" />
+                <field name="report_id" />
+                <field name="attachment_domain" />
+                <field name="condition" />
+                <field name="printer_id" />
+                <field name="printer_tray_id" />
+                <field name="nbr_of_copies" />
+                <field name="action_on_error" />
+            </list>
+        </field>
+    </record>
+</odoo>
