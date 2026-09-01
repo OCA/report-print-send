@@ -180,3 +180,17 @@ class TestPrintingPrinter(TransactionCase):
         printer = self.new_record()
         printer.print_test_page()
         cups.Connection().printTestPage.assert_called_once_with(printer.system_name)
+
+    @mock.patch("%s.cups" % server_model)
+    def test_print_report_quantity(self, cups):
+        """It should print a report through CUPS"""
+        fd, file_name = tempfile.mkstemp()
+        with mock.patch("%s.mkstemp" % model) as mkstemp:
+            mkstemp.return_value = fd, file_name
+            printer = self.new_record()
+            printer.print_document(
+                self.report, b"content to print", doc_format="pdf", **{"copies": 3}
+            )
+            cups.Connection().printFile.assert_called_once_with(
+                printer.system_name, file_name, file_name, options={"copies": "3"}
+            )
