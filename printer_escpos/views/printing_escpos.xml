@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 CreuBlanca
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="printing_escpos_form_view">
+        <field name="name">printing.escpos.form (in printer_escpos)</field>
+        <field name="model">printing.escpos</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <field name="active" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <group>
+                        <field name="name" />
+                        <field name="model_id" />
+                        <field name="model" invisible="1" />
+                        <field name="mode" />
+                        <field
+                            name="report_id"
+                            attrs="{'invisible': [('mode', '!=', 'report')], 'required': [('mode', '=', 'report')]}"
+                            domain="[('model', '=', model), ('report_type', 'in', ['qweb-html'])]"
+                        />
+                    </group>
+                    <group attrs="{'invisible':[('test_print_mode', '=', False)]}">
+                        <button
+                            name="print_test_escpos"
+                            string="Print Test"
+                            type="object"
+                            class="oe_highlight"
+                        />
+                    </group>
+                    <notebook>
+                        <page
+                            name="arch"
+                            string="Architecture"
+                            attrs="{'invisible': [('mode', '!=', 'arch')]}"
+                        >
+                            <field
+                                name="arch"
+                                widget="ace"
+                                options="{'mode': 'xml'}"
+                                attrs="{'required': [('mode', '=', 'arch')]}"
+                            />
+                        </page>
+                        <page string="Test Mode">
+                            <group>
+                                <group>
+                                    <field name="test_print_mode" />
+                                </group>
+                                <group>
+                                    <field
+                                        name="record_id"
+                                        attrs="{'invisible':[('test_print_mode', '=', False)], 'required':[('test_print_mode', '=', True)]}"
+                                    />
+                                    <field
+                                        name="printer_id"
+                                        attrs="{'invisible':[('test_print_mode', '=', False)], 'required':[('test_print_mode', '=', True)]}"
+                                    />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter" />
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="printing_escpos_search_view">
+        <field name="name">printing.escpos.search (in printer_escpos)</field>
+        <field name="model">printing.escpos</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="model_id" />
+                <field name="report_id" />
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="printing_escpos_tree_view">
+        <field name="name">printing.escpos.tree (in printer_escpos)</field>
+        <field name="model">printing.escpos</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="model_id" />
+                <field name="report_id" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="printing_escpos_act_window">
+        <field name="name">Escpos</field>
+        <field name="res_model">printing.escpos</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <record model="ir.ui.menu" id="printing_escpos_menu">
+        <field name="name">Escpos</field>
+        <field name="parent_id" ref="base_report_to_printer.printing_menu" />
+        <field name="action" ref="printing_escpos_act_window" />
+        <field name="sequence" eval="25" />
+    </record>
+</odoo>
