@@ -85,8 +85,22 @@ class PrintingLabelZpl2(models.Model):
         required=True,
         default="8dpmm",
     )
-    labelary_width = fields.Float(string="Width in mm", default=140)
+    labelary_width = fields.Float(
+        string="Width in mm",
+        compute="_compute_labelary_width",
+        store=True,
+        readonly=False,
+    )
     labelary_height = fields.Float(string="Height in mm", default=70)
+
+    @api.depends("width", "labelary_dpmm")
+    def _compute_labelary_width(self):
+        for label in self:
+            if not label.width or not label.labelary_dpmm:
+                label.labelary_width = 140
+                continue
+            dpmm = int(label.labelary_dpmm.removesuffix("dpmm"))
+            label.labelary_width = label.width / dpmm
 
     @api.constrains("component_ids")
     def check_recursion(self):

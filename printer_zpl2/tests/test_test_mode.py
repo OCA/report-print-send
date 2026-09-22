@@ -57,6 +57,24 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         self.label.print_test_label()
         cups.Connection().printFile.assert_called_once()
 
+    def test_labelary_width(self):
+        """The preview width follows the label width and the print density,
+        unless overridden"""
+        self.label.write({"width": 480, "labelary_dpmm": "8dpmm"})
+        self.assertEqual(self.label.labelary_width, 60)
+        self.label.labelary_dpmm = "12dpmm"
+        self.assertEqual(self.label.labelary_width, 40)
+        self.label.labelary_width = 100
+        self.assertEqual(self.label.labelary_width, 100)
+        self.label.width = 960
+        self.assertEqual(self.label.labelary_width, 80)
+        # Default when the width or the density is not set (new records)
+        Label = self.env["printing.label.zpl2"]
+        label = Label.new({"width": 0, "labelary_dpmm": "8dpmm"})
+        self.assertEqual(label.labelary_width, 140)
+        label = Label.new({"width": 480, "labelary_dpmm": False})
+        self.assertEqual(label.labelary_width, 140)
+
     def test_emulation_without_params(self):
         """Check if not execute next if not in this mode"""
         self.label.test_labelary_mode = False
@@ -69,8 +87,8 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
     def test_emulation_with_bad_header(self, mock_post):
         """Check if bad header"""
         self.label.test_labelary_mode = True
-        self.label.labelary_width = 80
         self.label.labelary_dpmm = "8dpmm"
+        self.label.labelary_width = 80
         # Maximum label size of 15 x 15 inches
         self.label.labelary_height = 10000000
         self.env["printing.label.zpl2.component"].create(
@@ -84,9 +102,9 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
     def test_emulation_with_bad_data_compute(self):
         """Check if bad data compute"""
         self.label.test_labelary_mode = True
+        self.label.labelary_dpmm = "8dpmm"
         self.label.labelary_width = 80
         self.label.labelary_height = 30
-        self.label.labelary_dpmm = "8dpmm"
         component = self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": "wrong_data"}
         )
@@ -100,9 +118,9 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
     def test_emulation_with_good_data(self, mock_post):
         """Check if ok"""
         self.label.test_labelary_mode = True
+        self.label.labelary_dpmm = "8dpmm"
         self.label.labelary_width = 80
         self.label.labelary_height = 30
-        self.label.labelary_dpmm = "8dpmm"
         time.sleep(3)
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"good_data"'}
