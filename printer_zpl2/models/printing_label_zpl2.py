@@ -66,11 +66,9 @@ class PrintingLabelZpl2(models.Model):
         string="Action",
         readonly=True,
     )
-    test_print_mode = fields.Boolean(string="Mode Print")
     test_labelary_mode = fields.Boolean(string="Mode Labelary")
     record_id = fields.Integer(string="Record ID", default=1)
     extra = fields.Text(default="{}")
-    printer_id = fields.Many2one(comodel_name="printing.printer", string="Printer")
     labelary_image = fields.Binary(
         string="Image from Labelary", compute="_compute_labelary_image"
     )
@@ -464,6 +462,17 @@ class PrintingLabelZpl2(models.Model):
     def unlink_action(self):
         self.mapped("action_window_id").unlink()
 
+    def action_print_test(self):
+        self.ensure_one()
+        return {
+            "name": self.env._("Print Test"),
+            "view_mode": "form",
+            "res_model": "wizard.zpl2.print_test",
+            "type": "ir.actions.act_window",
+            "target": "new",
+            "context": {"default_label_id": self.id},
+        }
+
     def import_zpl2(self):
         self.ensure_one()
         return {
@@ -483,14 +492,6 @@ class PrintingLabelZpl2(models.Model):
         self.record_id = record.id
 
         return record
-
-    def print_test_label(self):
-        for label in self:
-            if label.test_print_mode and label.record_id and label.printer_id:
-                record = label._get_record()
-                extra = safe_eval(label.extra, {"env": self.env})
-                if record:
-                    label.print_label(label.printer_id, record, **extra)
 
     @api.depends(
         "record_id",

@@ -18,6 +18,12 @@
         <field name="arch" type="xml">
             <form string="ZPL II Label">
                 <header>
+                    <button
+                        name="action_print_test"
+                        string="Print Test"
+                        type="object"
+                        class="btn-primary"
+                    />
                     <button name="import_zpl2" string="Import ZPL2" type="object" />
                 </header>
                 <sheet>
@@ -57,14 +63,6 @@
                         <field name="origin_x" />
                         <field name="origin_y" />
                         <field name="restore_saved_config" />
-                    </group>
-                    <group invisible="not test_print_mode">
-                        <button
-                            name="print_test_label"
-                            string="Print Test"
-                            type="object"
-                            class="oe_highlight"
-                        />
                     </group>
                     <notebook>
                         <page string="Components">
@@ -270,7 +268,6 @@
                         <page string="Test Mode">
                             <group>
                                 <group>
-                                    <field name="test_print_mode" />
                                     <field name="test_labelary_mode" />
                                 </group>
                             </group>
@@ -278,13 +275,8 @@
                                 <group>
                                     <field
                                         name="record_id"
-                                        invisible="not (test_print_mode or test_labelary_mode)"
-                                        required="test_print_mode or test_labelary_mode"
-                                    />
-                                    <field
-                                        name="printer_id"
-                                        invisible="not test_print_mode"
-                                        required="test_print_mode"
+                                        invisible="not test_labelary_mode"
+                                        required="test_labelary_mode"
                                     />
                                     <field
                                         name="labelary_dpmm"
@@ -309,7 +301,7 @@
                                     nolabel="1"
                                     widget="ace"
                                     options="{'mode': 'python'}"
-                                    invisible="not (test_print_mode or test_labelary_mode)"
+                                    invisible="not test_labelary_mode"
                                     colspan="2"
                                 />
                             </group>

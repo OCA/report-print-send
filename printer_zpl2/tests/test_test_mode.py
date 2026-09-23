@@ -47,16 +47,6 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
             record = Obj.search([], limit=1, order="id desc")
         self.assertEqual(res, record)
 
-    @mute_logger("odoo.addons.base_report_to_printer.models.printing_printer")
-    @patch(f"{model}.cups")
-    def test_print_label_test(self, cups):
-        """Check if print test"""
-        self.label.test_print_mode = True
-        self.label.printer_id = self.printer
-        self.label.record_id = 10
-        self.label.print_test_label()
-        cups.Connection().printFile.assert_called_once()
-
     def test_labelary_width(self):
         """The preview width follows the label width and the print density,
         unless overridden"""
