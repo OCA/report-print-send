@@ -491,9 +491,9 @@ class Zpl2:
             ImageOps.invert(pil_image).convert("1").crop((0, 0, rounded_width, height))
         )
         # Convert the image to a two-character hexadecimal values string
-        ascii_data = binascii.hexlify(pil_image.tobytes()).upper()
+        ascii_data = binascii.hexlify(pil_image.tobytes()).upper().decode()
         # Each byte is composed of two characters
-        bytes_per_row = rounded_width / 8
+        bytes_per_row = rounded_width // 8
         total_bytes = bytes_per_row * height
         graphic_image_command = (
             f"^GFA,{total_bytes},{total_bytes},{bytes_per_row},{ascii_data}"

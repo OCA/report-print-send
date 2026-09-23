@@ -1018,13 +1018,7 @@ class TestPrintingLabelZpl2(PrinterZpl2Common):
         contents = label._generate_zpl2_data(self.printer).decode("utf-8")
         self.assertEqual(
             contents,
-            "^XA\n"
-            "^PW480\n"
-            "^CI28\n"
-            "^LH10,10\n"
-            "^FO10,10^GFA,1.0,1.0,1.0,b'00'^FS\n"
-            "^JUR\n"
-            "^XZ",
+            "^XA\n^PW480\n^CI28\n^LH10,10\n^FO10,10^GFA,1,1,1,00^FS\n^JUR\n^XZ",
         )
 
     def test_graphic_label_contents_blank_rotated(self):
@@ -1049,8 +1043,8 @@ class TestPrintingLabelZpl2(PrinterZpl2Common):
             "^PW480\n"
             "^CI28\n"
             "^LH10,10\n"
-            "^FO10,10^GFA,20.0,20.0,2.0,"
-            "b'FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0'^FS\n"
+            "^FO10,10^GFA,20,20,2,"
+            "FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0FFC0^FS\n"
             "^JUR\n"
             "^XZ",
         )
@@ -1070,13 +1064,7 @@ class TestPrintingLabelZpl2(PrinterZpl2Common):
         contents = label._generate_zpl2_data(self.printer).decode("utf-8")
         self.assertEqual(
             contents,
-            "^XA\n"
-            "^PW480\n"
-            "^CI28\n"
-            "^LH10,10\n"
-            "^FO10,10^GFA,1.0,1.0,1.0,b'00'^FS\n"
-            "^JUR\n"
-            "^XZ",
+            "^XA\n^PW480\n^CI28\n^LH10,10\n^FO10,10^GFA,1,1,1,00^FS\n^JUR\n^XZ",
         )
 
     def test_graphic_label_contents_blank_bottom(self):
@@ -1094,13 +1082,7 @@ class TestPrintingLabelZpl2(PrinterZpl2Common):
         contents = label._generate_zpl2_data(self.printer).decode("utf-8")
         self.assertEqual(
             contents,
-            "^XA\n"
-            "^PW480\n"
-            "^CI28\n"
-            "^LH10,10\n"
-            "^FO10,10^GFA,1.0,1.0,1.0,b'00'^FS\n"
-            "^JUR\n"
-            "^XZ",
+            "^XA\n^PW480\n^CI28\n^LH10,10\n^FO10,10^GFA,1,1,1,00^FS\n^JUR\n^XZ",
         )
 
     def test_zpl2_raw_contents_blank(self):
