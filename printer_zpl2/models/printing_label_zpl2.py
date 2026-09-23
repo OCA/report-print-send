@@ -66,7 +66,11 @@ class PrintingLabelZpl2(models.Model):
         string="Action",
         readonly=True,
     )
-    test_labelary_mode = fields.Boolean(string="Mode Labelary")
+    test_labelary_mode = fields.Boolean(
+        string="Mode Labelary",
+        compute="_compute_test_labelary_mode",
+        inverse="_inverse_test_labelary_mode",
+    )
     record_id = fields.Integer(string="Record ID", default=1)
     extra = fields.Text(default="{}")
     labelary_image = fields.Binary(
@@ -90,6 +94,19 @@ class PrintingLabelZpl2(models.Model):
         readonly=False,
     )
     labelary_height = fields.Float(string="Height in mm", default=70)
+
+    def _compute_test_labelary_mode(self):
+        # The mode is shared by all the labels
+        param = self.env["ir.config_parameter"].sudo()
+        mode = param.get_param("printer_zpl2.test_labelary_mode") == "True"
+        self.test_labelary_mode = mode
+
+    def _inverse_test_labelary_mode(self):
+        param = self.env["ir.config_parameter"].sudo()
+        mode = any(self.mapped("test_labelary_mode"))
+        param.set_param("printer_zpl2.test_labelary_mode", str(mode))
+        # The other labels see the new value
+        self.invalidate_model(["test_labelary_mode"])
 
     @api.depends("width", "labelary_dpmm")
     def _compute_labelary_width(self):
