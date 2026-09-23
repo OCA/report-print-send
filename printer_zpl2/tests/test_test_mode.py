@@ -64,6 +64,17 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         label = Label.new({"width": 480, "labelary_dpmm": False})
         self.assertEqual(label.labelary_width, 140)
 
+    def test_labelary_mode_shared(self):
+        """The Labelary mode is shared by all the labels"""
+        other = self.label.copy()
+        self.label.test_labelary_mode = True
+        self.assertTrue(other.test_labelary_mode)
+        param = self.env["ir.config_parameter"].sudo()
+        self.assertEqual(param.get_param("printer_zpl2.test_labelary_mode"), "True")
+        other.test_labelary_mode = False
+        self.assertFalse(self.label.test_labelary_mode)
+        self.assertFalse(self.env["printing.label.zpl2"].new().test_labelary_mode)
+
     def test_emulation_without_params(self):
         """Check if not execute next if not in this mode"""
         self.label.test_labelary_mode = False
