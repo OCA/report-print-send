@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="printing_printer_view_form_inherit_raw">
+        <field name="name">printing.printer.form (in base_report_to_printer_raw)</field>
+        <field
+            name="inherit_id"
+            ref="base_report_to_printer.printing_printer_view_form"
+        />
+        <field name="model">printing.printer</field>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button
+                        name="print_test_page"
+                        type="object"
+                        string="Print Test Page"
+                        confirm="Send a test ZPL label to this printer?"
+                        invisible="backend != 'raw'"
+                    />
+                </header>
+            </xpath>
+            <group name="name" position="inside">
+                <field
+                    name="raw_host"
+                    invisible="backend != 'raw'"
+                    required="backend == 'raw'"
+                />
+                <field name="raw_port" invisible="backend != 'raw'" />
+                <field name="raw_timeout" invisible="backend != 'raw'" />
+            </group>
+        </field>
+    </record>
+</odoo>

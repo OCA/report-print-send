@@ -126,8 +126,10 @@ class PrintingPrinter(models.Model):
         return vals
 
     def print_file(self, file_name, report=None, **print_opts):
-        super().print_file(file_name, report=report, **print_opts)
         self.ensure_one()
+        if self.backend != "cups":
+            return super().print_file(file_name, report=report, **print_opts)
+        super().print_file(file_name, report=report, **print_opts)
         title = print_opts.pop("title", file_name)
         connection = self.server_id._open_connection(raise_on_error=True)
         options = self.print_options(report=report, **print_opts)
@@ -153,7 +155,8 @@ class PrintingPrinter(models.Model):
         return True
 
     def cancel_all_jobs(self, purge_jobs=False):
-        for printer in self:
+        cups_printers = self.filtered(lambda p: p.backend == "cups")
+        for printer in cups_printers:
             connection = printer.server_id._open_connection()
             try:
                 connection.cancelAllJobs(
@@ -167,11 +170,15 @@ class PrintingPrinter(models.Model):
                         error=str(e),
                     )
                 ) from e
-        self.mapped("server_id").update_jobs(which="completed")
+        cups_printers.mapped("server_id").update_jobs(which="completed")
+        others = self - cups_printers
+        if others:
+            return super(PrintingPrinter, others).cancel_all_jobs(purge_jobs=purge_jobs)
         return True
 
     def enable(self):
-        for printer in self:
+        cups_printers = self.filtered(lambda p: p.backend == "cups")
+        for printer in cups_printers:
             connection = printer.server_id._open_connection()
             try:
                 connection.enablePrinter(printer.system_name)
@@ -183,11 +190,15 @@ class PrintingPrinter(models.Model):
                         error=str(e),
                     )
                 ) from e
-        self.mapped("server_id").update_printers()
+        cups_printers.mapped("server_id").update_printers()
+        others = self - cups_printers
+        if others:
+            return super(PrintingPrinter, others).enable()
         return True
 
     def disable(self):
-        for printer in self:
+        cups_printers = self.filtered(lambda p: p.backend == "cups")
+        for printer in cups_printers:
             connection = printer.server_id._open_connection()
             try:
                 connection.disablePrinter(printer.system_name)
@@ -199,11 +210,15 @@ class PrintingPrinter(models.Model):
                         error=str(e),
                     )
                 ) from e
-        self.mapped("server_id").update_printers()
+        cups_printers.mapped("server_id").update_printers()
+        others = self - cups_printers
+        if others:
+            return super(PrintingPrinter, others).disable()
         return True
 
     def print_test_page(self):
-        for printer in self:
+        cups_printers = self.filtered(lambda p: p.backend == "cups")
+        for printer in cups_printers:
             connection = printer.server_id._open_connection()
             try:
                 if printer.model == "Local Raw Printer":
@@ -223,5 +238,8 @@ class PrintingPrinter(models.Model):
                         error=str(e),
                     )
                 ) from e
-        self.mapped("server_id").update_jobs(which="completed")
+        cups_printers.mapped("server_id").update_jobs(which="completed")
+        others = self - cups_printers
+        if others:
+            return super(PrintingPrinter, others).print_test_page()
         return True

@@ -1,6 +1,7 @@
 # Copyright 2016 LasLabs Inc.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
 from unittest import mock
 
 from odoo.addons.base_report_to_printer.tests.test_printing_printer import (
@@ -18,8 +19,6 @@ class TestPrintingPrinterBaseCups(TestPrintingPrinterBase):
     @mock.patch("cups.Connection")
     @mock.patch("os.remove", side_effect=FileNotFoundError)
     def test_print_file(self, mock_remove, cups_conn_mock):
-        import logging
-
         self.printer = self.new_record()
         cups_conn_mock.return_value.printFile.return_value = True
         file_name = "/tmp/file.pdf"
@@ -29,6 +28,13 @@ class TestPrintingPrinterBaseCups(TestPrintingPrinterBase):
         mock_remove.assert_called_once_with(file_name)
         self.assertEqual(len(logs.records), 1)
         self.assertEqual(logs.records[0].levelno, logging.WARNING)
+
+    @mock.patch("cups.Connection")
+    def test_print_file_non_cups_skips_cups(self, cups_conn_mock):
+        self.printer_vals["backend"] = "base"
+        self.printer = self.new_record()
+        self.printer.print_file("/tmp/file.pdf")
+        cups_conn_mock.assert_not_called()
 
     @mock.patch("cups.Connection")
     def test_cancel_all_jobs(self, cups_conn_mock):
