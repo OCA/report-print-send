@@ -260,8 +260,9 @@
                                     widget="image"
                                     nolabel="1"
                                     force_save="1"
+                                    colspan="2"
                                 />
-                                <p class="oe_grey" colspan="4">
+                                <p class="oe_grey" colspan="2">
                                     Note : It is an emulation from http://labelary.com/, the result on printer can be different.
                                 </p>
                             </group>
