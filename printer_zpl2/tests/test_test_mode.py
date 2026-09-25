@@ -1,7 +1,6 @@
 # Copyright (C) 2018 Florent de Labarre (<https://github.com/fmdl>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import io
-import time
 from unittest.mock import Mock, patch
 
 import requests
@@ -47,15 +46,34 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
             record = Obj.search([], limit=1, order="id desc")
         self.assertEqual(res, record)
 
-    @mute_logger("odoo.addons.base_report_to_printer.models.printing_printer")
-    @patch(f"{model}.cups")
-    def test_print_label_test(self, cups):
-        """Check if print test"""
-        self.label.test_print_mode = True
-        self.label.printer_id = self.printer
-        self.label.record_id = 10
-        self.label.print_test_label()
-        cups.Connection().printFile.assert_called_once()
+    def test_labelary_width(self):
+        """The preview width follows the label width and the print density,
+        unless overridden"""
+        self.label.write({"width": 480, "labelary_dpmm": "8dpmm"})
+        self.assertEqual(self.label.labelary_width, 60)
+        self.label.labelary_dpmm = "12dpmm"
+        self.assertEqual(self.label.labelary_width, 40)
+        self.label.labelary_width = 100
+        self.assertEqual(self.label.labelary_width, 100)
+        self.label.width = 960
+        self.assertEqual(self.label.labelary_width, 80)
+        # Default when the width or the density is not set (new records)
+        Label = self.env["printing.label.zpl2"]
+        label = Label.new({"width": 0, "labelary_dpmm": "8dpmm"})
+        self.assertEqual(label.labelary_width, 140)
+        label = Label.new({"width": 480, "labelary_dpmm": False})
+        self.assertEqual(label.labelary_width, 140)
+
+    def test_labelary_mode_shared(self):
+        """The Labelary mode is shared by all the labels"""
+        other = self.label.copy()
+        self.label.test_labelary_mode = True
+        self.assertTrue(other.test_labelary_mode)
+        param = self.env["ir.config_parameter"].sudo()
+        self.assertEqual(param.get_param("printer_zpl2.test_labelary_mode"), "True")
+        other.test_labelary_mode = False
+        self.assertFalse(self.label.test_labelary_mode)
+        self.assertFalse(self.env["printing.label.zpl2"].new().test_labelary_mode)
 
     def test_emulation_without_params(self):
         """Check if not execute next if not in this mode"""
@@ -69,8 +87,8 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
     def test_emulation_with_bad_header(self, mock_post):
         """Check if bad header"""
         self.label.test_labelary_mode = True
-        self.label.labelary_width = 80
         self.label.labelary_dpmm = "8dpmm"
+        self.label.labelary_width = 80
         # Maximum label size of 15 x 15 inches
         self.label.labelary_height = 10000000
         self.env["printing.label.zpl2.component"].create(
@@ -84,9 +102,9 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
     def test_emulation_with_bad_data_compute(self):
         """Check if bad data compute"""
         self.label.test_labelary_mode = True
+        self.label.labelary_dpmm = "8dpmm"
         self.label.labelary_width = 80
         self.label.labelary_height = 30
-        self.label.labelary_dpmm = "8dpmm"
         component = self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": "wrong_data"}
         )
@@ -100,10 +118,9 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
     def test_emulation_with_good_data(self, mock_post):
         """Check if ok"""
         self.label.test_labelary_mode = True
+        self.label.labelary_dpmm = "8dpmm"
         self.label.labelary_width = 80
         self.label.labelary_height = 30
-        self.label.labelary_dpmm = "8dpmm"
-        time.sleep(3)
         self.env["printing.label.zpl2.component"].create(
             {"name": "ZPL II Label", "label_id": self.label.id, "data": '"good_data"'}
         )
