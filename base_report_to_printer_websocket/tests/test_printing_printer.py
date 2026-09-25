@@ -24,6 +24,13 @@ class TestPrintingPrinterWebSocket(TransactionCase):
     def new_record(self):
         return self.Model.create(self.printer_vals)
 
+    def test_create_without_server(self):
+        """A WebSocket printer needs no CUPS server."""
+        self.printer_vals["server_id"] = False
+        printer = self.new_record()
+        self.assertFalse(printer.server_id)
+        self.assertEqual(printer.backend, "websocket")
+
     def test_print_document_sends_to_bus(self):
         """print_document should encode PDF as base64 and send via bus."""
         printer = self.new_record()

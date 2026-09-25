@@ -6,7 +6,7 @@ import logging
 import os
 from base64 import b64encode
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -21,6 +21,11 @@ class PrintingPrinter(models.Model):
     websocket_user_id = fields.Many2one(
         "res.users",
     )
+
+    @api.onchange("backend")
+    def _onchange_backend_websocket(self):
+        if self.backend == "websocket":
+            self.server_id = False
 
     def print_file(self, file_name, report=None, **print_opts):
         if self.backend != "websocket":
