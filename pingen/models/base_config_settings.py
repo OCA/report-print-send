@@ -32,3 +32,7 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.pingen_ssl_verify",
         readonly=False,
     )
+    pingen_address_position = fields.Selection(
+        related="company_id.pingen_address_position",
+        readonly=False,
+    )

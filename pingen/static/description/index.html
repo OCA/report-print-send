@@ -396,11 +396,30 @@ webhook calls.</p>
 </div>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
-<p>The authentication token, client ID, organization ID and webhook secret
-is configured on the company’s view. You can also tick a checkbox if the
-staging environment (<a class="reference external" href="https://stage-api.pingen.com">https://stage-api.pingen.com</a>) should be used.</p>
-<p>Webhooks should be configured on pingen account. Organization ID and
-webhook secret must match.</p>
+<p>In <em>Settings &gt; General Settings &gt; Pingen</em>, set for each company:</p>
+<ul class="simple">
+<li>the <strong>Client ID</strong> and <strong>Client Secret</strong> of a Pingen API client (Pingen
+app, user profile, <em>API Access</em>). The token is requested with the
+<tt class="docutils literal">letter</tt> scope only;</li>
+<li>the <strong>Organization ID</strong> (UUID) the letters are billed to;</li>
+<li>the <strong>Address position</strong>: the envelope window (<tt class="docutils literal">left</tt> or <tt class="docutils literal">right</tt>)
+where the recipient address is printed on the first page of the
+documents;</li>
+<li><strong>Staging</strong>: tick it to use the separate staging environment
+(<a class="reference external" href="https://identity-staging.pingen.com">https://identity-staging.pingen.com</a>, <a class="reference external" href="https://api-staging.pingen.com">https://api-staging.pingen.com</a>)
+with a staging account; nothing is printed there.</li>
+</ul>
+<p>These credentials are only readable by administrators.</p>
+<p>Webhooks are configured in the Pingen app, one per event category, all
+signed with the <strong>Webhook secret</strong> entered on the company:</p>
+<ul class="simple">
+<li>issues: <tt class="docutils literal"><span class="pre">https://&lt;your-odoo&gt;/pingen/letter_issues</span></tt></li>
+<li>sent: <tt class="docutils literal"><span class="pre">https://&lt;your-odoo&gt;/pingen/sent_letters</span></tt></li>
+<li>delivered: <tt class="docutils literal"><span class="pre">https://&lt;your-odoo&gt;/pingen/delivered_letters</span></tt></li>
+<li>undeliverable: <tt class="docutils literal"><span class="pre">https://&lt;your-odoo&gt;/pingen/undeliverable_letters</span></tt></li>
+</ul>
+<p>The routes must be reachable from the Internet. A call whose signature
+does not match the secret of a company is rejected (HTTP 403).</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
@@ -465,6 +484,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Anar Baghirli &lt;<a class="reference external" href="mailto:a.baghirli&#64;mobilunity.com">a.baghirli&#64;mobilunity.com</a>&gt;</li>
 <li>Akim Juillerat &lt;<a class="reference external" href="mailto:akim.juillerat&#64;camptocamp.com">akim.juillerat&#64;camptocamp.com</a>&gt;</li>
 <li>Anna Janiszewska &lt;<a class="reference external" href="mailto:anna.janiszewska&#64;camptocamp.com">anna.janiszewska&#64;camptocamp.com</a>&gt;</li>
+<li>Claude Perrin &lt;<a class="reference external" href="mailto:klodr&#64;users.noreply.github.com">klodr&#64;users.noreply.github.com</a>&gt; (Altixia LLC)</li>
 </ul>
 </div>
 <div class="section" id="maintainers">

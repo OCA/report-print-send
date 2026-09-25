@@ -6,7 +6,7 @@ import base64
 
 import requests
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -49,21 +49,22 @@ class IrAttachment(models.Model):
             if document:
                 if document.state == "pushed":
                     raise UserError(
-                        _(
-                            "Error. The attachment %s is "
-                            "already pushed to pingen.com."
+                        self.env._(
+                            "Error. The attachment %(name)s is already pushed to "
+                            "pingen.com.",
+                            name=self.name,
                         )
-                        % self.name
                     )
                 document.write({"state": "canceled"})
         return
 
-    @api.model
-    def create(self, vals):
-        attachment = super().create(vals)
-        if "send_to_pingen" in vals:
-            attachment._handle_pingen_document()
-        return attachment
+    @api.model_create_multi
+    def create(self, vals_list):
+        attachments = super().create(vals_list)
+        for attachment, vals in zip(attachments, vals_list, strict=True):
+            if "send_to_pingen" in vals:
+                attachment._handle_pingen_document()
+        return attachments
 
     def write(self, vals):
         res = super().write(vals)
@@ -82,7 +83,11 @@ class IrAttachment(models.Model):
         elif self.type == "url":
             response = requests.get(self.url, timeout=30)
             if response.ok:
-                decoded_document = requests.content
+                decoded_document = response.content
         else:
-            raise UserError(_("The type of attachment %s is not handled") % self.type)
+            raise UserError(
+                self.env._(
+                    "The type of attachment %(type)s is not handled", type=self.type
+                )
+            )
         return decoded_document

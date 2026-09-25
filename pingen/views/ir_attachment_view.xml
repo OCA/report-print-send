@@ -3,7 +3,6 @@
     <record id="view_attachment_form" model="ir.ui.view">
         <field name="name">ir.attachment.pingen.view</field>
         <field name="model">ir.attachment</field>
-        <field name="type">form</field>
         <field name="inherit_id" ref="base.view_attachment_form" />
         <field name="arch" type="xml">
             <xpath expr="//group/group[2]" position="after">

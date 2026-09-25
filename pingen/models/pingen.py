@@ -1,10 +1,12 @@
 # Author: Guewen Baconnier
 # Copyright 2012-2023 Camptocamp SA
+# Copyright 2026 Altixia LLC
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
 import logging
-from datetime import datetime
+import uuid
+from datetime import datetime, timedelta
 from urllib.parse import urljoin
 
 import pytz
@@ -15,14 +17,24 @@ from requests_oauthlib import OAuth2Session
 
 _logger = logging.getLogger(__name__)
 
+# Seconds before a request to pingen.com is abandoned. requests has no default
+# timeout: without one a stalled endpoint blocks the worker (and the cron)
+# forever.
+REQUEST_TIMEOUT = 30
+UPLOAD_TIMEOUT = 120
+# Re-fetch the token this long before it expires.
+TOKEN_EXPIRY_MARGIN = timedelta(seconds=60)
+
 
 def pingen_datetime_to_utc(dt):
     """Convert a date/time used by pingen.com to UTC timezone
 
     :param dt: pingen date/time iso string (as received from the API)
                to convert to UTC
-    :return: TZ naive datetime in the UTC timezone
+    :return: TZ naive datetime in the UTC timezone, or None when ``dt`` is empty
     """
+    if not dt:
+        return None
     utc = pytz.utc
     localized_dt = parser.parse(dt)
     return localized_dt.astimezone(utc).replace(tzinfo=None)
@@ -38,16 +50,33 @@ class APIError(PingenException):
 
 
 class Pingen:
-    """Interface to the pingen.com API"""
+    """Interface to the pingen.com API (v2)
 
-    def __init__(self, clientid, secretid, organization, staging=True, verify=True):
+    Letters live under ``/organisations/{organisationId}/deliveries/letters``
+    since Pingen's March 2026 API reorganisation (the official SDKs moved to
+    these endpoints in their 2.21 releases).
+    """
+
+    # Access tokens cached per (environment, client id): two companies with
+    # their own Pingen accounts must never share a token.
+    token_registry = {}
+
+    def __init__(
+        self,
+        clientid,
+        secretid,
+        organization,
+        staging=True,
+        verify=True,
+        address_position="left",
+    ):
         self.clientid = clientid
         self.secretid = secretid
         self.organization = organization
         self.staging = staging
         self.verify = verify
+        self.address_position = address_position or "left"
         self._session = None
-        self._init_token_registry()
         super().__init__()
 
     @property
@@ -71,66 +100,58 @@ class Pingen:
         return "file-upload"
 
     @property
+    def letters_url(self):
+        return "organisations/{organisationId}/deliveries/letters"
+
+    @property
+    def _token_key(self):
+        return ("staging" if self.staging else "prod", self.clientid)
+
+    @property
     def session(self):
         """Build a requests session"""
         if self._session is not None:
             return self._session
-        client = BackendApplicationClient(client_id=self.clientid)
-        self._session = OAuth2Session(client=client)
+        # Only the ``letter`` scope is needed: the organisation id is configured.
+        client = BackendApplicationClient(client_id=self.clientid, scope=["letter"])
+        self._session = OAuth2Session(client=client, scope=["letter"])
         self._set_session_header_token()
         return self._session
 
-    @classmethod
-    def _init_token_registry(cls):
-        if hasattr(cls, "token_registry"):
-            return
-        cls.token_registry = {
-            "staging": {"token": "", "expiry": datetime.now()},
-            "prod": {"token": "", "expiry": datetime.now()},
-        }
-
-    @classmethod
-    def _get_token_infos(cls, staging):
-        if staging:
-            return cls.token_registry.get("staging")
-        else:
-            return cls.token_registry.get("prod")
-
-    @classmethod
-    def _set_token_data(cls, token_data, staging):
-        token_string = " ".join(
-            [token_data.get("token_type"), token_data.get("access_token")]
-        )
-        token_expiry = datetime.fromtimestamp(token_data.get("expires_at"))
-        if staging:
-            cls.token_registry["staging"] = {
-                "token": token_string,
-                "expiry": token_expiry,
-            }
-        else:
-            cls.token_registry["prod"] = {"token": token_string, "expiry": token_expiry}
-
     def _fetch_token(self):
-        # TODO: Handle scope 'letter' only?
         token_url = urljoin(self.identity_url, self.token_url)
-        _logger.debug("Fetching new token from %s" % token_url)
+        _logger.debug("Fetching new token from %s", token_url)
         return self._session.fetch_token(
             token_url=token_url,
             client_id=self.clientid,
             client_secret=self.secretid,
             verify=self.verify,
+            timeout=REQUEST_TIMEOUT,
         )
+
+    def _set_token_data(self, token_data):
+        token_string = " ".join(
+            [token_data.get("token_type"), token_data.get("access_token")]
+        )
+        token_expiry = datetime.fromtimestamp(token_data.get("expires_at"))
+        self.token_registry[self._token_key] = {
+            "token": token_string,
+            "expiry": token_expiry,
+        }
 
     def _set_session_header_token(self):
         if self._is_token_expired():
             token_data = self._fetch_token()
-            self._set_token_data(token_data, self.staging)
-        token_infos = self._get_token_infos(self.staging)
+            self._set_token_data(token_data)
+        token_infos = self.token_registry[self._token_key]
         self._session.headers["Authorization"] = token_infos.get("token")
 
     def _is_token_expired(self):
-        token_infos = self._get_token_infos(self.staging)
-        expired = token_infos.get("expiry") <= datetime.now()
+        token_infos = self.token_registry.get(self._token_key)
+        expired = (
+            not token_infos
+            or token_infos.get("expiry") - TOKEN_EXPIRY_MARGIN <= datetime.now()
+        )
         if expired:
             _logger.debug("Pingen token is expired")
         return expired
@@ -156,33 +177,44 @@ class Pingen:
         :param str endpoint: endpoint to call
         :param kwargs: additional arguments forwarded to the requests method
         """
-
         if self._is_token_expired():
             self._set_session_header_token()
 
         p_url = urljoin(self.api_url, endpoint)
-
-        if endpoint == "document/get":
-            complete_url = "{}{}{}{}{}".format(
-                p_url, "/id/", kwargs["params"]["id"], "/token/", self._token
-            )
-        else:
-            complete_url = p_url.format(
-                organisationId=self.organization, letterId=letter_id
-            )
+        complete_url = p_url.format(
+            organisationId=self.organization, letterId=letter_id
+        )
+        kwargs.setdefault("timeout", REQUEST_TIMEOUT)
         response = method(complete_url, verify=self.verify, **kwargs)
-        errors = response.json().get("errors")
+        try:
+            payload = response.json() if response.content else {}
+        except ValueError:
+            payload = {}
+        errors = payload.get("errors") if isinstance(payload, dict) else None
         if errors:
             raise APIError(
                 "\n".join(
                     [
-                        "%s (%s): %s"
-                        % (err.get("code"), err.get("title"), err.get("detail"))
+                        f"{err.get('code')} ({err.get('title')}): {err.get('detail')}"
                         for err in errors
                     ]
                 )
             )
+        if not response.ok:
+            raise APIError(f"HTTP {response.status_code} on {endpoint}")
         return response
+
+    @staticmethod
+    def _json_api_headers():
+        """JSON:API headers for a mutating call.
+
+        The Idempotency-Key lets pingen.com replay its first answer (for 24 h)
+        instead of acting twice when a request is retried after a timeout.
+        """
+        return {
+            "Content-Type": "application/vnd.api+json",
+            "Idempotency-Key": str(uuid.uuid4()),
+        }
 
     def _get_file_upload(self):
         _logger.debug("Getting new URL for file upload")
@@ -195,8 +227,13 @@ class Pingen:
     def upload_file(self, url, multipart, content_type):
         _logger.debug("Uploading new file")
         response = requests.put(
-            url, data=multipart, headers={"Content-Type": content_type}, timeout=30
+            url,
+            data=multipart,
+            headers={"Content-Type": content_type},
+            timeout=UPLOAD_TIMEOUT,
         )
+        if not response.ok:
+            raise APIError(f"File upload failed: HTTP {response.status_code}")
         return response
 
     def push_document(
@@ -229,8 +266,8 @@ class Pingen:
             "file_original_name": filename,
             "file_url": url,
             "file_url_signature": url_signature,
-            "address_position": "left",
-            "auto_send": send,
+            "address_position": self.address_position,
+            "auto_send": bool(send),
             "delivery_product": delivery_product,
             "print_spectrum": print_spectrum,
             "print_mode": print_mode,
@@ -240,8 +277,8 @@ class Pingen:
 
         response = self._send(
             self.session.post,
-            "organisations/{organisationId}/letters",
-            headers={"Content-Type": "application/vnd.api+json"},
+            self.letters_url,
+            headers=self._json_api_headers(),
             data=json.dumps(data),
         )
         rjson_data = response.json().get("data", {})
@@ -275,9 +312,9 @@ class Pingen:
         }
         response = self._send(
             self.session.patch,
-            "organisations/{organisationId}/letters/{letterId}/send",
+            self.letters_url + "/{letterId}/send",
             letter_id=document_uuid,
-            headers={"Content-Type": "application/vnd.api+json"},
+            headers=self._json_api_headers(),
             data=json.dumps(data),
         )
         return response.json().get("data", {}).get("attributes")
@@ -290,7 +327,7 @@ class Pingen:
         """
         response = self._send(
             self.session.get,
-            "organisations/{organisationId}/letters/{letterId}",
+            self.letters_url + "/{letterId}",
             letter_id=document_uuid,
         )
         return response.json().get("data", {}).get("attributes")

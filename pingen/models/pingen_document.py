@@ -1,5 +1,6 @@
 # Author: Guewen Baconnier
 # Copyright 2012-2023 Camptocamp SA
+# Copyright 2026 Altixia LLC
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
@@ -8,9 +9,9 @@ from itertools import groupby
 
 from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 
-import odoo
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.modules.registry import Registry
 
 from .pingen import APIError, pingen_datetime_to_utc
 
@@ -57,6 +58,8 @@ class PingenDocument(models.Model):
             ("fast", "fast"),
             ("cheap", "cheap"),
             ("bulk", "bulk"),
+            ("premium", "premium"),
+            ("registered", "registered"),
             ("track", "track"),
             ("sign", "sign"),
             ("atpost_economy", "atpost_economy"),
@@ -126,29 +129,33 @@ class PingenDocument(models.Model):
             )
         except OAuth2Error as e:
             _logger.exception(
-                "Connection Error when pushing Pingen Document with ID %s to %s: %s"
-                % (self.id, pingen.api_url, e.description)
+                "Connection Error when pushing Pingen Document with ID %s to %s: %s",
+                self.id,
+                pingen.api_url,
+                e.description,
             )
             raise
         except APIError as e:
             _logger.error(
-                "API Error when pushing Pingen Document %s to %s: %s"
-                % (self.id, pingen.api_url, str(e))
+                "API Error when pushing Pingen Document %s to %s: %s",
+                self.id,
+                pingen.api_url,
+                str(e),
             )
             raise
-        error = False
-        state = "pushed"
-        push_date = pingen_datetime_to_utc(infos.get("created_at"))
+        push_date = (
+            pingen_datetime_to_utc(infos.get("created_at")) or fields.Datetime.now()
+        )
         self.write(
             {
-                "last_error_message": error,
-                "state": state,
+                "last_error_message": False,
+                "state": "pushed",
                 "push_date": fields.Datetime.to_string(push_date),
                 "pingen_uuid": doc_id,
                 "pingen_status": infos.get("status"),
             }
         )
-        _logger.info("Pingen Document %s: pushed to %s" % (self.id, pingen.api_url))
+        _logger.info("Pingen Document %s: pushed to %s", self.id, pingen.api_url)
 
     def push_to_pingen(self):
         """Push a document to pingen.com
@@ -164,31 +171,34 @@ class PingenDocument(models.Model):
             self._push_to_pingen(pingen=session)
         except OAuth2Error:
             state = "error"
-            error_msg = (
-                _("Connection Error when pushing document %s to Pingen") % self.name
+            error_msg = self.env._(
+                "Connection Error when pushing document %(name)s to Pingen",
+                name=self.name,
             )
         except APIError as e:
             state = "pingen_error"
-            error_msg = _(
-                "Error when pushing the document %(name) to Pingen:\n%(exc)"
-            ) % {
-                "name": self.name,
-                "exc": str(e),
-            }
+            error_msg = self.env._(
+                "Error when pushing the document %(name)s to Pingen:\n%(exc)s",
+                name=self.name,
+                exc=str(e),
+            )
         except Exception as e:
-            error_msg = _(
-                "Unexpected Error when pushing the document %(name) to Pingen:\n%(exc)"
-            ) % {"name": self.name, "exc": e}
+            error_msg = self.env._(
+                "Unexpected Error when pushing the document %(name)s to Pingen:\n"
+                "%(exc)s",
+                name=self.name,
+                exc=str(e),
+            )
             _logger.exception(error_msg)
         finally:
             if error_msg:
                 vals = {"last_error_message": error_msg}
                 if state:
                     vals.update({"state": state})
-                with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
-                    new_env = odoo.api.Environment(
-                        new_cr, self.env.uid, self.env.context
-                    )
+                # Persist the error even though the UserError below rolls back
+                # the current transaction.
+                with Registry(self.env.cr.dbname).cursor() as new_cr:
+                    new_env = api.Environment(new_cr, self.env.uid, self.env.context)
                     self.with_env(new_env).write(vals)
 
                 raise UserError(error_msg)
@@ -200,35 +210,35 @@ class PingenDocument(models.Model):
         Commit after each record
         Instead of raising, store the error in the pingen.document
         """
-        with odoo.api.Environment.manage():
-            with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = odoo.api.Environment(new_cr, self.env.uid, self.env.context)
-                # Instead of raising, store the error in the pingen.document
-                self = self.with_env(new_env)
-                not_sent_docs = self.search(
-                    [("state", "!=", "sent")], order="company_id"
-                )
-                for company, documents in groupby(
-                    not_sent_docs, lambda d: d.company_id
-                ):
-                    session = company._get_pingen_client()
-                    for document in documents:
-                        if document.state == "error":
-                            document._resolve_error()
-                            document.invalidate_recordset()
-                        try:
-                            if document.state == "pending":
-                                document._push_to_pingen(pingen=session)
-                            elif document.state == "pushed" and not document.auto_send:
-                                document._ask_pingen_send(pingen=session)
-                        except OAuth2Error as e:
-                            document.write({"last_error_message": e, "state": "error"})
-                        except APIError as e:
-                            document.write(
-                                {"last_error_message": e, "state": "pingen_error"}
-                            )
-                        except BaseException:
-                            _logger.error("Unexpected error in pingen cron")
+        with Registry(self.env.cr.dbname).cursor() as new_cr:
+            new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+            # Instead of raising, store the error in the pingen.document
+            self = self.with_env(new_env)
+            not_sent_docs = self.search(
+                [("state", "in", ("pending", "pushed", "error"))], order="company_id"
+            )
+            for company, documents in groupby(not_sent_docs, lambda d: d.company_id):
+                session = company._get_pingen_client()
+                for document in documents:
+                    if document.state == "error":
+                        document._resolve_error()
+                        document.invalidate_recordset()
+                    try:
+                        if document.state == "pending":
+                            document._push_to_pingen(pingen=session)
+                        elif document.state == "pushed" and not document.auto_send:
+                            document._ask_pingen_send(pingen=session)
+                    except OAuth2Error as e:
+                        document.write({"last_error_message": e, "state": "error"})
+                    except APIError as e:
+                        document.write(
+                            {"last_error_message": e, "state": "pingen_error"}
+                        )
+                    except Exception:
+                        _logger.exception(
+                            "Unexpected error in pingen cron for document %s",
+                            document.id,
+                        )
         return True
 
     def _resolve_error(self):
@@ -260,14 +270,16 @@ class PingenDocument(models.Model):
             )
         except OAuth2Error:
             _logger.exception(
-                "Connection Error when asking for sending Pingen Document %s "
-                "to %s." % (self.id, pingen.api_url)
+                "Connection Error when asking for sending Pingen Document %s to %s.",
+                self.id,
+                pingen.api_url,
             )
             raise
         except APIError:
             _logger.exception(
-                "API Error when asking for sending Pingen Document %s to %s."
-                % (self.id, pingen.api_url)
+                "API Error when asking for sending Pingen Document %s to %s.",
+                self.id,
+                pingen.api_url,
             )
             raise
         self.write(
@@ -278,7 +290,7 @@ class PingenDocument(models.Model):
             }
         )
         _logger.info(
-            "Pingen Document %s: asked for sending to %s" % (self.id, pingen.api_url)
+            "Pingen Document %s: asked for sending to %s", self.id, pingen.api_url
         )
         return True
 
@@ -293,27 +305,32 @@ class PingenDocument(models.Model):
             self._ask_pingen_send(pingen=session)
         except OAuth2Error as e:
             raise UserError(
-                _(
-                    "Connection Error when asking for "
-                    "sending the document %s to Pingen"
+                self.env._(
+                    "Connection Error when asking for sending the document "
+                    "%(name)s to Pingen",
+                    name=self.name,
                 )
-                % self.name
             ) from e
 
         except APIError as e:
             raise UserError(
-                _("Error when asking Pingen to send the document %(name): " "\n%(exc)")
-                % {"name": self.name, "exc": e}
+                self.env._(
+                    "Error when asking Pingen to send the document %(name)s:\n"
+                    "%(exc)s",
+                    name=self.name,
+                    exc=str(e),
+                )
             ) from e
 
-        except BaseException as e:
+        except Exception as e:
             _logger.exception(
-                "Unexpected Error when updating the status "
-                "of pingen.document %s: " % self.id
+                "Unexpected Error when asking to send pingen.document %s", self.id
             )
             raise UserError(
-                _("Unexpected Error when updating the status " "of Document %s")
-                % self.name
+                self.env._(
+                    "Unexpected Error when asking to send the Document %(name)s",
+                    name=self.name,
+                )
             ) from e
         return True
 
@@ -327,47 +344,62 @@ class PingenDocument(models.Model):
 
     def _get_post_infos(self, pingen):
         if not self.pingen_uuid:
-            return
+            return {}
         try:
             post_infos = pingen.post_infos(self.pingen_uuid)
         except OAuth2Error:
             _logger.exception(
-                "Connection Error when asking for "
-                "sending Pingen Document %s to %s." % (self.id, pingen.api_url)
+                "Connection Error when getting infos of Pingen Document %s from %s.",
+                self.id,
+                pingen.api_url,
             )
             raise
         except APIError:
             _logger.exception(
-                "API Error when asking for sending Pingen Document %s to %s."
-                % (self.id, pingen.api_url)
+                "API Error when getting infos of Pingen Document %s from %s.",
+                self.id,
+                pingen.api_url,
             )
             raise
-        return post_infos
+        return post_infos or {}
+
+    # Pingen letter statuses that settle the Odoo state. Pingen does not
+    # publish an exhaustive list; any other status only updates pingen_status.
+    _PINGEN_STATUS_TO_STATE = {
+        "sent": "sent",
+        "delivered": "sent",
+        "undeliverable": "error_undeliverable",
+        "cancelled": "canceled",
+        "canceled": "canceled",
+    }
 
     @api.model
     def _prepare_values_from_post_infos(self, post_infos):
-        country = self.env["res.country"].search(
-            [("code", "=", post_infos.get("country"))]
-        )
-        currency = self.env["res.currency"].search(
-            [("name", "=", post_infos.get("price_currency"))]
-        )
+        post_infos = post_infos or {}
+        country = self.env["res.country"]
+        if post_infos.get("country"):
+            country = country.search([("code", "=", post_infos["country"])], limit=1)
+        currency = self.env["res.currency"]
+        if post_infos.get("price_currency"):
+            currency = currency.with_context(active_test=False).search(
+                [("name", "=", post_infos["price_currency"])], limit=1
+            )
         vals = {
             "pingen_status": post_infos.get("status"),
             "parsed_address": post_infos.get("address"),
             "country_id": country.id,
             "pages": post_infos.get("file_pages"),
             "last_error_message": False,
-            "cost": post_infos.get("price_value"),
+            "cost": post_infos.get("price_value") or 0.0,
             "currency_id": currency.id,
         }
-        is_posted = post_infos.get("status") == "sent"
-        if is_posted:
-            post_date = post_infos.get("submitted_at")
-            send_date = fields.Datetime.to_string(pingen_datetime_to_utc(post_date))
-            vals["state"] = "sent"
-        else:
-            send_date = False
+        state = self._PINGEN_STATUS_TO_STATE.get(post_infos.get("status"))
+        if state:
+            vals["state"] = state
+        send_date = False
+        if state == "sent":
+            post_date = pingen_datetime_to_utc(post_infos.get("submitted_at"))
+            send_date = fields.Datetime.to_string(post_date) if post_date else False
         vals["send_date"] = send_date
         return vals
 
@@ -375,7 +407,7 @@ class PingenDocument(models.Model):
         self.ensure_one()
         values = self._prepare_values_from_post_infos(post_infos)
         self.write(values)
-        _logger.info("Pingen Document %s: status updated" % self.id)
+        _logger.info("Pingen Document %s: status updated", self.id)
 
     def _update_post_infos_cron(self):
         """Update the informations from pingen of a
@@ -383,26 +415,27 @@ class PingenDocument(models.Model):
         Intended to be used in a cron.
         Commit after each record
         Do not raise errors, only skip the update of the record."""
-        with odoo.api.Environment.manage():
-            with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = odoo.api.Environment(new_cr, self.env.uid, self.env.context)
-                # Instead of raising, store the error in the pingen.document
-                self = self.with_env(new_env)
-                pushed_docs = self.search([("state", "!=", "sent")])
-                for document in pushed_docs:
-                    session = document.company_id._get_pingen_client()
-                    try:
-                        document._get_and_update_post_infos(pingen=session)
-                    # pylint: disable=W7938
-                    # pylint: disable=W8138
-                    except (OAuth2Error, APIError):
-                        # will be retried the next time
-                        # In any case, the error has been
-                        # logged by _update_post_infos
-                        pass
-                    except BaseException as e:
-                        _logger.error("Unexcepted error in pingen cron: %", e)
-                        raise
+        with Registry(self.env.cr.dbname).cursor() as new_cr:
+            new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+            self = self.with_env(new_env)
+            # Only letters that reached pingen.com and are not settled yet.
+            pushed_docs = self.search(
+                [
+                    ("pingen_uuid", "!=", False),
+                    ("state", "not in", ("sent", "canceled", "error_undeliverable")),
+                ]
+            )
+            for document in pushed_docs:
+                session = document.company_id._get_pingen_client()
+                try:
+                    document._get_and_update_post_infos(pingen=session)
+                # pylint: disable=W7938
+                # pylint: disable=W8138
+                except (OAuth2Error, APIError):
+                    # will be retried the next time
+                    # In any case, the error has been
+                    # logged by _get_post_infos
+                    pass
         return True
 
     def update_post_infos(self):
@@ -416,27 +449,30 @@ class PingenDocument(models.Model):
             self._get_and_update_post_infos(pingen=session)
         except OAuth2Error as e:
             raise UserError(
-                _(
-                    "Connection Error when updating the status "
-                    "of Document %s from Pingen"
+                self.env._(
+                    "Connection Error when updating the status of Document "
+                    "%(name)s from Pingen",
+                    name=self.name,
                 )
-                % self.name
             ) from e
         except APIError as e:
             raise UserError(
-                _(
-                    "Error when updating the status of Document %(name) from "
-                    "Pingen: \n%(exc)"
+                self.env._(
+                    "Error when updating the status of Document %(name)s from "
+                    "Pingen:\n%(exc)s",
+                    name=self.name,
+                    exc=str(e),
                 )
-                % {"name": self.name, "exc": e}
             ) from e
-        except BaseException as e:
+        except Exception as e:
             _logger.exception(
-                "Unexpected Error when updating the status "
-                "of pingen.document %s: " % self.id
+                "Unexpected Error when updating the status of pingen.document %s",
+                self.id,
             )
             raise UserError(
-                _("Unexpected Error when updating the status " "of Document %s")
-                % self.name
+                self.env._(
+                    "Unexpected Error when updating the status of Document %(name)s",
+                    name=self.name,
+                )
             ) from e
         return True

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_pingen_document_tree" model="ir.ui.view">
-        <field name="name">pingen.document.tree</field>
+        <field name="name">pingen.document.list</field>
         <field name="model">pingen.document</field>
-        <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="push_date" />
                 <field name="name" />
                 <field name="auto_send" />
@@ -13,21 +12,20 @@
                 <field name="print_spectrum" />
                 <field name="state" />
                 <field name="pingen_status" />
-            </tree>
+            </list>
         </field>
     </record>
 
     <record id="view_pingen_document_form" model="ir.ui.view">
         <field name="name">pingen.document.form</field>
         <field name="model">pingen.document</field>
-        <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Pingen Document">
                 <header>
                     <button
                         name="push_to_pingen"
                         type="object"
-                        states="pending"
+                        invisible="state != 'pending'"
                         string="Push to pingen.com"
                         icon="fa-upload"
                     />
@@ -36,19 +34,19 @@
                         type="object"
                         string="Ask pingen.com to send the document"
                         icon="fa-share"
-                        attrs="{'invisible': ['|', ('state', '!=', 'pushed'),('auto_send', '=', True)]}"
+                        invisible="state != 'pushed' or auto_send"
                     />
                     <button
                         name="resolve_error"
                         type="object"
-                        states="error,pingen_error"
+                        invisible="state not in ('error', 'pingen_error')"
                         string="Errors resolved"
                         icon="fa-repeat"
                     />
                     <button
                         name="update_post_infos"
                         type="object"
-                        states="pushed,sendcenter,sent"
+                        invisible="state not in ('pushed', 'sendcenter', 'sent')"
                         string="Update the letter's informations"
                         icon="fa-refresh"
                     />
@@ -56,7 +54,6 @@
                         name="state"
                         widget="statusbar"
                         statusbar_visible="pending,pushed,sent"
-                        statusbar_colors='{"error":"red","pingen_error":"red","canceled":"grey","pushed":"blue","sent":"green"}'
                     />
                 </header>
                 <group>
@@ -83,19 +80,20 @@
                             <group>
                                 <field
                                     name="auto_send"
-                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
+                                    readonly="state in ('sendcenter', 'sent')"
                                 />
                                 <field
                                     name="delivery_product"
-                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])], 'required': [('auto_send', '=', True)]}"
+                                    readonly="state in ('sendcenter', 'sent')"
+                                    required="auto_send"
                                 />
                                 <field
                                     name="print_spectrum"
-                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
+                                    readonly="state in ('sendcenter', 'sent')"
                                 />
                                 <field
                                     name="print_mode"
-                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
+                                    readonly="state in ('sendcenter', 'sent')"
                                 />
                             </group>
                         </group>
@@ -104,9 +102,7 @@
                         <group>
                             <field name="push_date" />
                         </group>
-                        <group
-                            attrs="{'invisible': [('last_error_message', '=', False)]}"
-                        >
+                        <group invisible="not last_error_message">
                             <separator string="Errors" />
                             <newline />
                             <group>
@@ -114,9 +110,7 @@
                             </group>
                         </group>
 
-                        <group
-                            attrs="{'invisible': [('state', 'not in', ['sendcenter', 'sent'])]}"
-                        >
+                        <group invisible="state not in ('sendcenter', 'sent')">
                             <separator string="Sendcenter" colspan="4" />
                             <newline />
                             <group>
@@ -141,19 +135,11 @@
                         <group col="4" colspan="4">
                             <separator string="Data" colspan="4" />
                             <newline />
-                            <group
-                                col="2"
-                                colspan="4"
-                                attrs="{'invisible':[('type','=','url')]}"
-                            >
+                            <group col="2" colspan="4" invisible="type == 'url'">
                                 <field name="datas" filename="name" readonly="True" />
-                                <field name="name" select="1" readonly="True" />
+                                <field name="name" readonly="True" />
                             </group>
-                            <group
-                                col="2"
-                                colspan="4"
-                                attrs="{'invisible':[('type','=','binary')]}"
-                            >
+                            <group col="2" colspan="4" invisible="type == 'binary'">
                                 <field name="url" widget="url" readonly="True" />
                             </group>
                         </group>
@@ -170,7 +156,6 @@
     <record id="view_pingen_document_search" model="ir.ui.view">
         <field name="name">pingen.document.search</field>
         <field name="model">pingen.document</field>
-        <field name="type">search</field>
         <field name="arch" type="xml">
             <search>
                 <filter
@@ -191,7 +176,7 @@
                 <filter name="sent" string="Sent" domain="[('state','=','sent')]" />
                 <filter name="error" string="Error" domain="[('state','=','error')]" />
                 <filter
-                    name="error"
+                    name="pingen_error"
                     string="Pingen Error"
                     domain="[('state','=','pingen_error')]"
                 />
@@ -200,7 +185,7 @@
                     string="Canceled"
                     domain="[('state','=','canceled')]"
                 />
-                <separator orientation="vertical" />
+                <separator />
                 <field name="attachment_id" />
             </search>
         </field>
@@ -210,7 +195,7 @@
         <field name="name">Pingen Documents</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">pingen.document</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_pingen_document_search" />
     </record>
 
