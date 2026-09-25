@@ -58,7 +58,9 @@ Configuration
 =============
 
 1. Create a printer record in **Settings > Printing > Printers** with
-   the backend set to **WebSocket**.
+   the backend set to **WebSocket**. No print server is needed: the
+   *Server* field is hidden for this backend, and the CUPS related
+   buttons (enable, disable, test page, cancel jobs) do not apply to it.
 
 2. Set the **System Name** to the name of the target printer as known by
    the client-side listener (e.g. ``MFC-L3750CDW``). Leave it empty to
@@ -90,9 +92,9 @@ Once configured, printing works transparently. When a user prints a
 report that is set to *Send to Printer* and the assigned printer uses
 the **WebSocket** backend, the module will:
 
-1. Render the report as PDF.
+1. Render the report, as PDF or as text (e.g. ZPL labels).
 
-2. Encode the PDF content in Base64.
+2. Encode the content in Base64.
 
 3. Send a ``print_job`` message through the bus to the printer's
    configured user with the following payload
@@ -103,6 +105,11 @@ the **WebSocket** backend, the module will:
           "printer_name": "<system_name of the printer>",
           "file_data": "<base64-encoded PDF>"
       }
+
+Text reports are handled too: the base module leaves them to the browser
+download, so this module registers its own report handler that sends
+them to the printer instead. The ``file_type`` key of the payload tells
+the agent which kind of content it receives.
 
 The recommended client-side agent is
 ``odoo-print-client <https://pypi.org/project/odoo-print-client/>``\ \_,

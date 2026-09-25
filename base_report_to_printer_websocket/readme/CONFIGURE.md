@@ -1,5 +1,7 @@
 1. Create a printer record in **Settings > Printing > Printers** with the
-   backend set to **WebSocket**.
+   backend set to **WebSocket**. No print server is needed: the *Server*
+   field is hidden for this backend, and the CUPS related buttons (enable,
+   disable, test page, cancel jobs) do not apply to it.
 2. Set the **System Name** to the name of the target printer as known by
    the client-side listener (e.g. ``MFC-L3750CDW``). Leave it empty to
    use the default system printer.

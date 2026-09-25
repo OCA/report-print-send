@@ -407,7 +407,9 @@ as the client-side agent to receive and print jobs.</li>
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
 <ol class="arabic">
 <li><p class="first">Create a printer record in <strong>Settings &gt; Printing &gt; Printers</strong> with
-the backend set to <strong>WebSocket</strong>.</p>
+the backend set to <strong>WebSocket</strong>. No print server is needed: the
+<em>Server</em> field is hidden for this backend, and the CUPS related
+buttons (enable, disable, test page, cancel jobs) do not apply to it.</p>
 </li>
 <li><p class="first">Set the <strong>System Name</strong> to the name of the target printer as known by
 the client-side listener (e.g. <tt class="docutils literal"><span class="pre">MFC-L3750CDW</span></tt>). Leave it empty to
@@ -438,9 +440,9 @@ for full configuration options.</p>
 report that is set to <em>Send to Printer</em> and the assigned printer uses
 the <strong>WebSocket</strong> backend, the module will:</p>
 <ol class="arabic">
-<li><p class="first">Render the report as PDF.</p>
+<li><p class="first">Render the report, as PDF or as text (e.g. ZPL labels).</p>
 </li>
-<li><p class="first">Encode the PDF content in Base64.</p>
+<li><p class="first">Encode the content in Base64.</p>
 </li>
 <li><p class="first">Send a <tt class="docutils literal">print_job</tt> message through the bus to the printer’s
 configured user with the following payload</p>
@@ -452,6 +454,10 @@ configured user with the following payload</p>
 </pre>
 </li>
 </ol>
+<p>Text reports are handled too: the base module leaves them to the browser
+download, so this module registers its own report handler that sends
+them to the printer instead. The <tt class="docutils literal">file_type</tt> key of the payload tells
+the agent which kind of content it receives.</p>
 <p>The recommended client-side agent is
 <tt class="docutils literal"><span class="pre">odoo-print-client</span> <span class="pre">&lt;https://pypi.org/project/odoo-print-client/&gt;</span></tt>_,
 which connects as the configured user and forwards jobs to the local
