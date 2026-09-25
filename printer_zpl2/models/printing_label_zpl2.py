@@ -210,6 +210,7 @@ class PrintingLabelZpl2(models.Model):
         for component, data, offset_x, offset_y in to_print:
             component_offset_x = component.origin_x + offset_x
             component_offset_y = component.origin_y + offset_y
+            typeset = component.position_type == "typeset"
             if component.component_type == "text":
                 barcode_arguments = {
                     field_name: component[field_name]
@@ -228,7 +229,11 @@ class PrintingLabelZpl2(models.Model):
                     ]
                 }
                 label_data.font_data(
-                    component_offset_x, component_offset_y, barcode_arguments, data
+                    component_offset_x,
+                    component_offset_y,
+                    barcode_arguments,
+                    data,
+                    typeset=typeset,
                 )
             elif component.component_type == "zpl2_raw":
                 label_data._write_command(data)
@@ -243,6 +248,7 @@ class PrintingLabelZpl2(models.Model):
                         zpl2.ARG_COLOR: component.color,
                         zpl2.ARG_ROUNDING: component.rounding,
                     },
+                    typeset=typeset,
                 )
             elif component.component_type == "diagonal":
                 label_data.graphic_diagonal_line(
@@ -255,6 +261,7 @@ class PrintingLabelZpl2(models.Model):
                         zpl2.ARG_COLOR: component.color,
                         zpl2.ARG_DIAGONAL_ORIENTATION: component.diagonal_orientation,
                     },
+                    typeset=typeset,
                 )
             elif component.component_type == "graphic":
                 # During the on_change don't take the bin_size
@@ -284,7 +291,7 @@ class PrintingLabelZpl2(models.Model):
                     pil_image = pil_image.transpose(Image.ROTATE_90)
 
                 label_data.graphic_field(
-                    component_offset_x, component_offset_y, pil_image
+                    component_offset_x, component_offset_y, pil_image, typeset=typeset
                 )
             elif component.component_type == "circle":
                 label_data.graphic_circle(
@@ -295,6 +302,7 @@ class PrintingLabelZpl2(models.Model):
                         zpl2.ARG_THICKNESS: component.thickness,
                         zpl2.ARG_COLOR: component.color,
                     },
+                    typeset=typeset,
                 )
             elif component.component_type == "sublabel":
                 component_offset_x += component.sublabel_id.origin_x
@@ -336,6 +344,7 @@ class PrintingLabelZpl2(models.Model):
                     component.component_type,
                     barcode_arguments,
                     data,
+                    typeset=typeset,
                 )
 
     def _generate_zpl2_data(self, record, page_count=1, **extra):
