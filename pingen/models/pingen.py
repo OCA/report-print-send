@@ -37,7 +37,7 @@ class APIError(PingenException):
     """An Error occured with the pingen API"""
 
 
-class Pingen(object):
+class Pingen:
     """Interface to the pingen.com API"""
 
     def __init__(self, clientid, secretid, organization, staging=True, verify=True):
@@ -48,7 +48,7 @@ class Pingen(object):
         self.verify = verify
         self._session = None
         self._init_token_registry()
-        super(Pingen, self).__init__()
+        super().__init__()
 
     @property
     def api_url(self):

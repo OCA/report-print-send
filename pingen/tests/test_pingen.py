@@ -190,9 +190,12 @@ class TestPingen(HttpCase):
         # as the demo invoice report does not meet pingen requirements,
         # pingen will notify us about it on letter_issues webhook
 
-        with patch(
-            "odoo.addons.pingen.controllers.main.PingenController._get_request_content"
-        ) as mocked_function, MockRequest(self.env) as mock_request:
+        with (
+            patch(
+                "odoo.addons.pingen.controllers.main.PingenController._get_request_content"
+            ) as mocked_function,
+            MockRequest(self.env) as mock_request,
+        ):
             mocked_function.return_value = self.get_request_json(
                 pingen_document.pingen_uuid
             )

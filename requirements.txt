@@ -1,2 +1,4 @@
 # generated from manifests external_dependencies
+oauthlib
 pycups
+requests_oauthlib
