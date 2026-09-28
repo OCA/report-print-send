@@ -56,7 +56,6 @@ async function cupsDispatcher(action, env) {
                                 force_print_to_client: true,
                                 must_skip_send_to_printer: true,
                             };
-                            env.services.user.updateContext(context);
                             await env.services.action.doAction(
                                 {type: "ir.actions.report", ...action},
                                 {
