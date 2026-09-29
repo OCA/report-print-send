@@ -124,9 +124,8 @@ class PrintingAuto(models.Model):
 
     def _generate_data_from_report(self, record):
         self.ensure_one()
-        report_ref = self.report_id.get_external_id()[self.report_id.id]
         report_model = self.report_id[:0].with_context(must_skip_send_to_printer=True)
-        [data, __] = report_model._render(report_ref, record.id)
+        [data, __] = report_model._render(self.report_id, record.id)
         return [data]
 
     def do_print(self, records):
