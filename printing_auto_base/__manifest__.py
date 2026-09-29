@@ -14,6 +14,6 @@
         "base_report_to_printer",
     ],
     "license": "AGPL-3",
-    "version": "18.0.1.3.1",
+    "version": "18.0.1.3.2",
     "website": "https://github.com/OCA/report-print-send",
 }
