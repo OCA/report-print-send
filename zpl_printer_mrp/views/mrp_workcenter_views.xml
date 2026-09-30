@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mrp_workcenter_view" model="ir.ui.view">
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view" />
+        <field name="name">mrp.workcenter.form</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[2]">
+                <field name="zpl_printer_id" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

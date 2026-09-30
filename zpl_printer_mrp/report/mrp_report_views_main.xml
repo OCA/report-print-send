@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="label_manufacture_template" model="ir.actions.report">
+        <field name="name">Finished Product Label (Send to ZPL-Printer)</field>
+        <field name="model">mrp.production</field>
+        <field name="report_type">qweb-zpl</field>
+        <field name="report_name">mrp.label_production_view</field>
+        <field name="report_file">mrp.label_production_view</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
