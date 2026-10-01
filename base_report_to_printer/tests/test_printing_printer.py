@@ -54,6 +54,21 @@ class TestPrintingPrinterBase(TransactionCase):
         )
         self.assertIn("InputSlot", self.Model.print_options(report, input_tray="Test"))
 
+    def test_print_document_forwards_doc_format(self):
+        """print_document passes the format on, so raw jobs stay raw."""
+        printer = self.new_record()
+        captured = {}
+
+        def capture(self, file_name, report=None, **print_opts):
+            captured["opts"] = print_opts
+            captured["options"] = self.print_options(report=report, **print_opts)
+            return True
+
+        self.patch(type(printer), "print_file", capture)
+        printer.print_document(None, b"^XA^XZ", doc_format="raw")
+        self.assertEqual(captured["opts"], {"doc_format": "raw"})
+        self.assertEqual(captured["options"], {"raw": "True"})
+
     def test_set_default_and_unset(self):
         printer = self.new_record()
         self.assertTrue(printer.default)
