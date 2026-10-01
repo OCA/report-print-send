@@ -91,7 +91,11 @@ class PrintingPrinter(models.Model):
         finally:
             os.close(fd)
         try:
-            self.print_file(file_name, report=report, **kwargs)
+            # doc_format has to reach the backend: `_set_option_doc_format`
+            # turns "raw" into the CUPS option that sends the file through
+            # unfiltered. Held back in the signature, a ZPL label arrived as a
+            # plain file and the queue driver printed its source as text.
+            self.print_file(file_name, report=report, doc_format=doc_format, **kwargs)
         except Exception as e:
             raise exceptions.UserError(
                 self.env._("Failed to print document: %(error)s", error=e)
