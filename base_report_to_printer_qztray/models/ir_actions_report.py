@@ -41,7 +41,7 @@ class IrActionsReport(models.Model):
             result = self.env["ir.actions.report"]._render_qweb_text(
                 report_name, res_ids, data
             )
-            data = [result[0].replace(b"\n", b"").decode("unicode_escape")]
+            data = [result[0].replace(b"\n", b"").decode("UTF-8")]
         else:
             data = []
         return data
