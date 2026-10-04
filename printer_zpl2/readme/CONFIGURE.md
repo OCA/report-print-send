@@ -3,7 +3,8 @@ To configure this module, you need to:
 1.  Go to *Settings \> Printing \> Labels \> ZPL II*
 2.  Create new labels
 3.  Import ZPL2 code
-4.  Use the Test Mode tab during the creation
+4.  Use the *Print Test* button to print the label for a record of its model
+5.  Use the Test Mode tab to preview the label with Labelary
 
 It's also possible to add a label printing wizard on any model by
 creating a new *ir.actions.act_window* record. For example, to add the
