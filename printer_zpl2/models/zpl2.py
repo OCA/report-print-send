@@ -173,11 +173,13 @@ class Zpl2:
         """Define the label top left corner"""
         self._write_command(f"^LH{left},{top}")
 
-    def _field_origin(self, right, down):
-        """Define the top left corner of the data, from the top left corner of
-        the label
+    def _field_origin(self, right, down, typeset=False):
+        """Define the position of the data, from the top left corner of the
+        label: its top left corner (^FO), or its bottom left corner, the
+        baseline for a text (^FT)
         """
-        return f"^FO{right},{down}"
+        command = "^FT" if typeset else "^FO"
+        return f"{command}{right},{down}"
 
     def _font_format(self, font_format):
         """Send the commands which define the font to use for the current data"""
@@ -361,7 +363,7 @@ class Zpl2:
         command = f"{self._field_data_start()}{data}{self._field_data_stop()}"
         return command
 
-    def font_data(self, right, down, field_format, data):
+    def font_data(self, right, down, field_format, data, typeset=False):
         """Add a full text in the buffer, with needed formatting commands"""
         reverse = ""
         if field_format.get(ARG_REVERSE_PRINT, False):
@@ -369,8 +371,13 @@ class Zpl2:
         block = ""
         if field_format.get(ARG_IN_BLOCK, False):
             block = self._field_block(field_format)
+        if isinstance(data, str):
+            # The printer ignores the line breaks of the field data: in a
+            # block, \& breaks the line; out of a block, there is no line break
+            data = data.replace("\r\n", "\n")
+            data = data.replace("\n", "\\&" if block else " ")
         command = (
-            f"{self._field_origin(right, down)}"
+            f"{self._field_origin(right, down, typeset)}"
             f"{self._font_format(field_format)}"
             f"{reverse}"
             f"{block}"
@@ -378,17 +385,19 @@ class Zpl2:
         )
         self._write_command(command)
 
-    def barcode_data(self, right, down, barcodeType, barcode_format, data):
+    def barcode_data(
+        self, right, down, barcodeType, barcode_format, data, typeset=False
+    ):
         """Add a full barcode in the buffer, with needed formatting commands"""
         command = (
             f"{self._barcode_field_default(barcode_format)}"
-            f"{self._field_origin(right, down)}"
+            f"{self._field_origin(right, down, typeset)}"
             f"{self._barcode_format(barcodeType, barcode_format)}"
             f"{self._field_data(data)}"
         )
         self._write_command(command)
 
-    def graphic_box(self, right, down, graphic_format):
+    def graphic_box(self, right, down, graphic_format, typeset=False):
         """Send the commands to draw a rectangle"""
         arguments = [
             ARG_WIDTH,
@@ -417,13 +426,13 @@ class Zpl2:
             )
         # Generate the ZPL II command
         command = "{origin}{data}{stop}".format(
-            origin=self._field_origin(right, down),
+            origin=self._field_origin(right, down, typeset),
             data="^GB" + self._generate_arguments(arguments, graphic_format),
             stop=self._field_data_stop(),
         )
         self._write_command(command)
 
-    def graphic_diagonal_line(self, right, down, graphic_format):
+    def graphic_diagonal_line(self, right, down, graphic_format, typeset=False):
         """Send the commands to draw a rectangle"""
         arguments = [
             ARG_WIDTH,
@@ -451,13 +460,13 @@ class Zpl2:
         )
         # Generate the ZPL II command
         command = "{origin}{data}{stop}".format(
-            origin=self._field_origin(right, down),
+            origin=self._field_origin(right, down, typeset),
             data="^GD" + self._generate_arguments(arguments, graphic_format),
             stop=self._field_data_stop(),
         )
         self._write_command(command)
 
-    def graphic_circle(self, right, down, graphic_format):
+    def graphic_circle(self, right, down, graphic_format, typeset=False):
         """Send the commands to draw a circle"""
         arguments = [ARG_DIAMETER, ARG_THICKNESS, ARG_COLOR]
         # Check that the diameter value fits in the allowed values
@@ -472,13 +481,13 @@ class Zpl2:
             )
         # Generate the ZPL II command
         command = "{origin}{data}{stop}".format(
-            origin=self._field_origin(right, down),
+            origin=self._field_origin(right, down, typeset),
             data="^GC" + self._generate_arguments(arguments, graphic_format),
             stop=self._field_data_stop(),
         )
         self._write_command(command)
 
-    def graphic_field(self, right, down, pil_image):
+    def graphic_field(self, right, down, pil_image, typeset=False):
         """Encode a PIL image into an ASCII string suitable for ZPL printers"""
         width, height = pil_image.size
         rounded_width = int(math.ceil(width / 8.0) * 8)
@@ -500,7 +509,7 @@ class Zpl2:
         )
         # Generate the ZPL II command
         command = (
-            f"{self._field_origin(right, down)}"
+            f"{self._field_origin(right, down, typeset)}"
             f"{graphic_image_command}"
             f"{self._field_data_stop()}"
         )

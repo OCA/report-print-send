@@ -126,6 +126,11 @@
                                         <group invisible="component_type == 'zpl2_raw'">
                                             <field name="origin_x" />
                                             <field name="origin_y" />
+                                            <field
+                                                name="position_type"
+                                                widget="radio"
+                                                options="{'horizontal': true}"
+                                            />
                                         </group>
                                         <group>
                                             <field
