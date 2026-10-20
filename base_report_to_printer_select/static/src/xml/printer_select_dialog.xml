@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="base_report_to_printer_select.PrinterSelectDialog">
+        <Dialog size="'md'" title="props.title">
+            <div class="d-flex flex-wrap gap-2 o_printer_select" t-ref="root">
+                <t t-foreach="props.printers" t-as="printer" t-key="printer.id">
+                    <button
+                        type="button"
+                        class="btn btn-lg"
+                        t-att-class="buttonClass(printer)"
+                        t-att-title="isUnavailable(printer) ? printer.status : ''"
+                        t-on-click="() => this.select(printer)"
+                    >
+                        <i class="fa fa-print me-2" role="img" aria-label="Printer" />
+                        <t t-esc="printer.name" />
+                        <i
+                            t-if="isUnavailable(printer)"
+                            class="fa fa-exclamation-triangle ms-2 text-warning"
+                            role="img"
+                            aria-label="Unavailable"
+                        />
+                    </button>
+                </t>
+            </div>
+            <t t-set-slot="footer">
+                <button
+                    class="btn btn-secondary"
+                    t-on-click="download"
+                >Download</button>
+                <button
+                    class="btn btn-secondary"
+                    t-on-click="() => this.props.close()"
+                >Cancel</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
