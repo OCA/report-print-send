@@ -123,16 +123,9 @@ class IrActionsReport(models.Model):
             printer = value
         return {"printer": printer} if printer else {}
 
-    def behaviour(self, **extras):
-        self.ensure_one()
-        printing_act_obj = self.env["printing.report.xml.action"]
-
-        result = self._get_user_default_print_behaviour()
-        result.update(self._get_report_default_print_behaviour())
-        result.update(self._set_extra_print_options(extras=extras))
-
-        # Retrieve report-user specific values
-        print_action = printing_act_obj.search(
+    def _get_print_action(self):
+        """Specific printing action applying to the current user"""
+        return self.env["printing.report.xml.action"].search(
             [
                 ("report_id", "=", self.id),
                 ("user_id", "=", self.env.uid),
@@ -140,10 +133,17 @@ class IrActionsReport(models.Model):
             ],
             limit=1,
         )
+
+    def behaviour(self, **extras):
+        self.ensure_one()
+        result = self._get_user_default_print_behaviour()
+        result.update(self._get_report_default_print_behaviour())
+        print_action = self._get_print_action()
         if print_action:
             # For some reason design takes report defaults over
             # False action entries so we must allow for that here
             result.update({k: v for k, v in print_action.behaviour().items() if v})
+        result.update(self._set_extra_print_options(extras=extras))
         printer = result.get("printer")
         if printer:
             # When no printer is available we can fallback to the default behavior
@@ -171,6 +171,7 @@ class IrActionsReport(models.Model):
                 threaded_calculation = threading.Thread(
                     target=self.print_document_threaded,
                     args=(self.id, record_ids, data),
+                    kwargs=extras,
                 )
                 threaded_calculation.start()
 
