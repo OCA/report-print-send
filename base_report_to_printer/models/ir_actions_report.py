@@ -8,7 +8,8 @@
 import logging
 import threading
 
-from odoo import _, api, exceptions, fields, models, registry
+from odoo import _, api, exceptions, fields, models
+from odoo.modules.registry import Registry
 from odoo.tools.safe_eval import safe_eval, time
 
 REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
@@ -184,9 +185,13 @@ class IrActionsReport(models.Model):
                 return
 
     def print_document_threaded(self, report_id, record_ids, data, **extras):
-        with registry(self._cr.dbname).cursor() as cr:
+        with Registry(self._cr.dbname).cursor() as cr:
             self = self.with_env(self.env(cr=cr))
             report = self.env["ir.actions.report"].browse(report_id)
+            # Records given as extras are still bound to the cursor of the request
+            for key, value in extras.items():
+                if isinstance(value, models.BaseModel):
+                    extras[key] = value.with_env(self.env)
             report.print_document(record_ids, data, **extras)
 
     def print_document(self, record_ids, data=None, **extras):

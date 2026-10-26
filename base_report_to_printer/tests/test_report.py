@@ -289,6 +289,45 @@ class TestReport(common.HttpCase):
         )
 
     @mock.patch(f"{server_model}.cups")
+    def test_print_document_client_action_multi_thread_extras(self, cups):
+        """The extras reach the thread that prints"""
+        self.report.property_printing_action_id.action_type = "server"
+        self.report.printing_printer_id = self.new_printer()
+        forced_printer = self.new_printer()
+        forced_printer.multi_thread = True
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models.ir_actions_report.threading"
+        ) as threading:
+            self.assertTrue(
+                self.report.print_document_client_action(
+                    self.partners.ids, printer=forced_printer
+                )
+            )
+            self.env.cr.postcommit.run()
+        thread_kwargs = threading.Thread.call_args.kwargs
+        self.assertEqual(thread_kwargs["args"][0], self.report.id)
+        self.assertEqual(thread_kwargs["kwargs"], {"printer": forced_printer})
+        threading.Thread.return_value.start.assert_called_once()
+
+    def test_print_document_threaded_rebinds_extras(self):
+        """A record given as extra is bound to the cursor of the thread"""
+        forced_printer = self.new_printer()
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models.ir_actions_report."
+            "IrActionsReport.print_document",
+            autospec=True,
+        ) as print_document:
+            self.report.print_document_threaded(
+                self.report.id, self.partners.ids, None, printer=forced_printer
+            )
+        args, kwargs = print_document.call_args
+        report = args[0]
+        self.assertEqual(report.id, self.report.id)
+        self.assertIsNot(report.env.cr, self.env.cr)
+        self.assertEqual(kwargs["printer"].id, forced_printer.id)
+        self.assertIs(kwargs["printer"].env, report.env)
+
+    @mock.patch(f"{server_model}.cups")
     def test_print_document_printer_extra(self, cups):
         """
         It should print the report to the desired printer
