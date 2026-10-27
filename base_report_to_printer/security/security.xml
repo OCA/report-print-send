@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="printing_group_user" model="res.groups">
+        <field name="name">Printing / Print User</field>
+    </record>
+    <record id="printing_group_manager" model="res.groups">
+        <field name="name">Printing / Print Manager</field>
+        <field name="implied_ids" eval="[(4, ref('printing_group_user'))]" />
+    </record>
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('printing_group_user'))]" />
+    </record>
+    <record id="base.group_erp_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('printing_group_manager'))]" />
+    </record>
+</odoo>

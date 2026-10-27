@@ -1,0 +1,508 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * base_report_to_printer
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-19 03:38+0000\n"
+"PO-Revision-Date: 2017-12-19 03:38+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__action
+msgid "Action"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_action_ids
+msgid "Actions"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__active
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__active
+msgid "Active"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
+msgid "Archived"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__attachment_id
+msgid "Attachment"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__attachment_line_ids
+msgid "Attachments to print"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__available
+msgid "Available"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__backend
+msgid "Backend"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__backend__base
+msgid "Base"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_job_view_form
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
+msgid "Cancel"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__completed
+msgid "Completed"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Completion Date"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__copies
+msgid "Copies"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__create_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Creation Date"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__job_state
+msgid "Current state of the job."
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_completed
+msgid "Date and time of completion for this job."
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_creation
+msgid "Date and time of creation of this job."
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Date and time of process for this job."
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__default
+msgid "Default"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__property_printing_action_id
+msgid "Default Behaviour"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printing_printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_printer_id
+msgid "Default Printer"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_output_tray_id
+msgid "Default Printer Output Bin"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printer_input_tray_id
+msgid "Default Printer Paper Source"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__display_name
+msgid "Display Name"
+msgstr "Nome para Mostrar"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__error
+msgid "Error"
+msgstr ""
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/models/printing_printer.py:0
+msgid "Failed to print document: %(error)s"
+msgstr ""
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
+msgid ""
+"Following attachments could not be printed:\n"
+"\n"
+"%s"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__id
+msgid "ID"
+msgstr "Identificação"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__name
+msgid "Job name."
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_uid
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__write_date
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__location
+msgid "Location"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_printer
+msgid "Logical Printer"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__model
+msgid "Model"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__multi_thread
+msgid "Multi Thread"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__name
+msgid "Name"
+msgstr ""
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/models/ir_actions_report.py:0
+msgid "No printer configured to print this report."
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_output_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_output_tray_id
+msgid "Output Bin"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_ir_actions_report__printer_input_tray_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_input_tray_id
+msgid "Paper Source"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__pending
+msgid "Pending"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.wizard_print_attachment_form
+msgid "Print"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment
+msgid "Print Attachment"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_wizard_print_attachment_line
+msgid "Print Attachment line"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.action_wizard_print_attachment
+#: model:ir.ui.menu,name:base_report_to_printer.menu_action_wizard_print_attachment
+msgid "Print Attachments"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_job
+msgid "Print Job"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_action
+msgid "Print Job Action"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__printer_id
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment__printer_id
+msgid "Printer"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_tray
+msgid "Printer Tray"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_tray_input
+msgid "Printer Tray Input"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_tray_output
+msgid "Printer Tray Output"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_printing_job__printer_id
+msgid "Printer used for this job."
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_wizard_print_attachment__printer_id
+msgid "Printer used to print the attachments."
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.printing_printer_menu
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.printing_printer_view_search
+msgid "Printers"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__printing
+#: model:ir.ui.menu,name:base_report_to_printer.printing_menu
+msgid "Printing"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:res.groups,name:base_report_to_printer.printing_group_manager
+msgid "Printing / Print Manager"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:res.groups,name:base_report_to_printer.printing_group_user
+msgid "Printing / Print User"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_res_users__printing_action
+msgid "Printing Action"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_printing_report_xml_action
+msgid "Printing Report Printing Actions"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__time_at_processing
+msgid "Processing Date"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__report_id
+msgid "Report"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.ui.menu,name:base_report_to_printer.printing_report_xml_action_menu
+msgid "Reports"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__record_name
+msgid "Resource Name"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__server-error
+msgid "Server Error"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.actions.act_window,name:base_report_to_printer.printing_printer_action
+msgid "Show Printers"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model_terms:ir.ui.view,arch_db:base_report_to_printer.act_report_xml_view
+msgid "Specific actions per user"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_job__job_state
+msgid "State"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status
+msgid "Status"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__status_message
+msgid "Status Message"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__system_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray__system_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_input__system_name
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_tray_output__system_name
+msgid "System Name"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,help:base_report_to_printer.field_ir_actions_report__printing_action_ids
+msgid "This field allows configuring action and printer on a per user basis"
+msgstr ""
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/models/ir_actions_report.py:0
+msgid "This report type (%s) is not supported by direct printing!"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_action__action_type
+msgid "Type"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_printer__uri
+msgid "URI"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__unavailable
+msgid "Unavailable"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_job__job_state__unknown
+#: model:ir.model.fields.selection,name:base_report_to_printer.selection__printing_printer__status__unknown
+msgid "Unknown"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model,name:base_report_to_printer.model_res_users
+#: model:ir.model.fields,field_description:base_report_to_printer.field_printing_report_xml_action__user_id
+msgid "User"
+msgstr ""
+
+#. module: base_report_to_printer
+#: model:ir.model.fields,field_description:base_report_to_printer.field_wizard_print_attachment_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: base_report_to_printer
+#. odoo-python
+#: code:addons/base_report_to_printer/wizards/print_attachment_report.py:0
+msgid "{name} ({copies} copies)"
+msgstr ""
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última atualização em"

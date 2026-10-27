@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="act_report_xml_view" model="ir.ui.view">
+        <field name="name">ir.actions.report.form (in base_report_to_printer)</field>
+        <field name="model">ir.actions.report</field>
+        <field name="inherit_id" ref="base.act_report_xml_view" />
+        <field name="arch" type="xml">
+            <page name="security" position="before">
+                <page string="Print" name="print">
+                    <group>
+                        <field name="property_printing_action_id" />
+                        <field name="printing_printer_id" />
+                        <field
+                            name="printer_input_tray_id"
+                            invisible="not printing_printer_id"
+                        />
+                        <field
+                            name="printer_output_tray_id"
+                            invisible="not printing_printer_id"
+                        />
+                    </group>
+                    <separator string="Specific actions per user" />
+                    <field name="printing_action_ids">
+                        <list editable="bottom" decoration-muted="not active">
+                            <field name="user_id" />
+                            <field name="action" />
+                            <field name="printer_id" />
+                            <field
+                                name="printer_input_tray_id"
+                                invisible="not printer_id"
+                            />
+                            <field
+                                name="printer_output_tray_id"
+                                invisible="not printer_id"
+                            />
+                            <field name="active" optional="hide" />
+                        </list>
+                    </field>
+                </page>
+            </page>
+        </field>
+    </record>
+    <record id="base.ir_action_report" model="ir.actions.act_window">
+        <field name="context">{'active_test': False}</field>
+    </record>
+</odoo>
