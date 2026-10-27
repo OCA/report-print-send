@@ -1,0 +1,5 @@
+id,name,model_id/id,group_id/id,operation,domain
+access_printing_printer_update_wizard,Update printer wizard for system users,model_printing_printer_update_wizard,base.group_system,crud,
+access_printing_printer_update_wizard_manager,Update printer wizard for print managers,model_printing_printer_update_wizard,base_report_to_printer.printing_group_manager,crud,
+printing_server_group_manager,Printing Server Manager,model_printing_server,base_report_to_printer.printing_group_manager,crud,
+printing_server_group_user,Printing Server User,model_printing_server,base_report_to_printer.printing_group_user,r,
