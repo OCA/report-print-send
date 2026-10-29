@@ -1,0 +1,8 @@
+id,name,model_id,group_id/id,operation,domain
+printing_label_zpl2_user,Printing Label ZPL2 User,printing.label.zpl2,base_report_to_printer.printing_group_user,r,
+printing_label_zpl2_manager,Printing Label ZPL2 Manager,printing.label.zpl2,base_report_to_printer.printing_group_manager,crud,
+printing_label_zpl2_component_user,Printing Label ZPL2 Component User,printing.label.zpl2.component,base_report_to_printer.printing_group_user,r,
+printing_label_zpl2_component_manager,Printing Label ZPL2 Component Manager,printing.label.zpl2.component,base_report_to_printer.printing_group_manager,crud,
+access_wizard_print_record_label_user,Print Record Label user,wizard.print.record.label,base_report_to_printer.printing_group_user,crud,
+access_wizard_print_record_label_line_user,Print Record Label Line user,wizard.print.record.label.line,base_report_to_printer.printing_group_user,crud,
+access_wizard_import_zpl2_user,Import ZPL2 user,wizard.import.zpl2,base_report_to_printer.printing_group_user,crud,
