@@ -131,3 +131,16 @@ class TestPrintingGroup(TransactionCase):
         )
         self.group_office.printer_ids = self.printer_office
         self.assertEqual(self.report._get_candidate_printers(), self.printer_office)
+
+    def test_other_printers_keep_the_paper_format(self):
+        """See more skips the groups, never the paper format"""
+        self.assertEqual(self.report._get_candidate_printers(), self.printer_wh_1)
+        self.assertEqual(self.report._get_other_printers(), self.printer_office)
+        self.report.property_printing_action_id = self.env["printing.action"].create(
+            {"name": "Ask", "action_type": "select"}
+        )
+        result = self.report.print_action_for_report_name(self.report.report_name)
+        self.assertEqual(
+            [printer["id"] for printer in result["other_printers"]],
+            self.printer_office.ids,
+        )
