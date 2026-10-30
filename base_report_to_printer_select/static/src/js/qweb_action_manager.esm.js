@@ -11,6 +11,7 @@ function askPrinter(env, action, printAction) {
                     ? _t("Print %s on...", action.name)
                     : _t("Select printer"),
                 printers: printAction.printers,
+                otherPrinters: printAction.other_printers || [],
                 selectedId: printAction.printer_id,
                 onSelect: resolve,
             },
@@ -34,7 +35,8 @@ async function selectReportActionHandler(action, options, env) {
         return false;
     }
     const printers = printAction.printers || [];
-    if (!printers.length) {
+    const otherPrinters = printAction.other_printers || [];
+    if (!printers.length && !otherPrinters.length) {
         env.services.notification.add(
             _t("No printer is available for this report, it will be downloaded."),
             {type: "warning"}

@@ -11,6 +11,7 @@
     "depends": ["base_report_to_printer"],
     "data": [
         "views/printing_printer.xml",
+        "views/ir_actions_report.xml",
     ],
     "assets": {
         "web.assets_backend": [

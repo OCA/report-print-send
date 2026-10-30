@@ -6,5 +6,6 @@
     the browser instead and **Cancel** does nothing.
 
 The dialog is shown even when a single printer matches, so the user can
-still download the report. When no printer matches, the report is
-downloaded as usual.
+still download the report. **See more** reveals the printers that do not
+support the paper format, for the odd case where one of them is wanted
+anyway. When no printer exists at all, the report is downloaded as usual.

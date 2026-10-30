@@ -7,12 +7,24 @@ from odoo import _, api, exceptions, models
 class IrActionsReport(models.Model):
     _inherit = "ir.actions.report"
 
+    def _get_select_paperformat(self):
+        """Paper format the candidate printers must support. A text report
+        (labels) never falls back to the company format: without one of its
+        own, any printer qualifies."""
+        self.ensure_one()
+        if self.report_type == "qweb-text":
+            return self.paperformat_id
+        return self.get_paperformat()
+
     def _get_candidate_printers_domain(self):
         self.ensure_one()
+        paperformat = self._get_select_paperformat()
+        if not paperformat:
+            return []
         return [
             "|",
             ("paperformat_ids", "=", False),
-            ("paperformat_ids", "in", self.get_paperformat().ids),
+            ("paperformat_ids", "in", paperformat.ids),
         ]
 
     def _get_candidate_printers(self):
@@ -20,6 +32,10 @@ class IrActionsReport(models.Model):
         return self.env["printing.printer"].search(
             self._get_candidate_printers_domain()
         )
+
+    def _get_other_printers(self):
+        """The remaining active printers, offered behind "See more" """
+        return self.env["printing.printer"].search([]) - self._get_candidate_printers()
 
     def behaviour(self, **extras):
         result = super().behaviour(**extras)
@@ -46,6 +62,15 @@ class IrActionsReport(models.Model):
             for printer in printers
         ]
         result["printer_id"] = preselected.id if preselected in printers else False
+        result["other_printers"] = [
+            {
+                "id": printer.id,
+                "name": printer.name,
+                "backend": printer.backend,
+                "status": printer.status,
+            }
+            for printer in report._get_other_printers()
+        ]
         return result
 
     def print_document_select(self, record_ids, printer_id, data=None):
@@ -53,12 +78,9 @@ class IrActionsReport(models.Model):
         self.ensure_one()
         self.env[self.sudo().model].browse(record_ids).check_access("read")
         report = self.sudo()
-        printer = self.env["printing.printer"].browse(printer_id)
-        if printer not in report._get_candidate_printers():
-            raise exceptions.UserError(
-                _("The printer %s cannot be used for this report.")
-                % printer.display_name
-            )
+        printer = self.env["printing.printer"].browse(printer_id).exists()
+        if not printer or not printer.active:
+            raise exceptions.UserError(_("The selected printer is not available."))
         report._remember_selected_printer(printer)
         return report.print_document_client_action(
             record_ids, data=data, printer=printer.id

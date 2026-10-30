@@ -46,19 +46,19 @@ class TestSelectPrinter(TransactionCase):
         return cls.env["printing.printer"].create(values)
 
     @classmethod
-    def _create_report(cls, **kwargs):
+    def _create_report(cls, name="test_text", **kwargs):
         view = cls.env["ir.ui.view"].create(
             {
                 "name": "Select printer test",
                 "type": "qweb",
-                "arch": """<t t-name="base_report_to_printer_select.test_text">
+                "arch": f"""<t t-name="base_report_to_printer_select.{name}">
                 Test
                 </t>""",
             }
         )
         cls.env["ir.model.data"].create(
             {
-                "name": "test_text",
+                "name": name,
                 "module": "base_report_to_printer_select",
                 "model": "ir.ui.view",
                 "res_id": view.id,
@@ -68,7 +68,7 @@ class TestSelectPrinter(TransactionCase):
             "name": "Select printer test",
             "model": "res.partner",
             "report_type": "qweb-text",
-            "report_name": "base_report_to_printer_select.test_text",
+            "report_name": f"base_report_to_printer_select.{name}",
             "paperformat_id": cls.format_a4.id,
             "property_printing_action_id": cls.action_select.id,
         }
@@ -87,13 +87,28 @@ class TestSelectPrinter(TransactionCase):
         self.assertEqual(
             self.report._get_candidate_printers(), self.printer_any | self.printer_a4
         )
+        self.assertEqual(self.report._get_other_printers(), self.printer_letter)
+        # A text report without its own format accepts any printer
         self.report.paperformat_id = False
         self.assertEqual(
             self.report._get_candidate_printers(),
+            self.printer_any | self.printer_a4 | self.printer_letter,
+        )
+        self.assertFalse(self.report._get_other_printers())
+        # A PDF report falls back to the company format
+        pdf_report = self._create_report(
+            name="test_pdf", report_type="qweb-pdf", paperformat_id=False
+        )
+        self.assertEqual(
+            pdf_report._get_candidate_printers(),
             self.printer_any | self.printer_letter,
         )
+        self.assertEqual(pdf_report._get_other_printers(), self.printer_a4)
         self.env.company.paperformat_id = False
-        self.assertEqual(self.report._get_candidate_printers(), self.printer_any)
+        self.assertEqual(
+            pdf_report._get_candidate_printers(),
+            self.printer_any | self.printer_a4 | self.printer_letter,
+        )
 
     def test_behaviour_select_ignores_printer_exception(self):
         self.report.printing_printer_id = self.printer_a4
@@ -209,6 +224,20 @@ class TestSelectPrinter(TransactionCase):
         self.assertEqual(line.action, "client")
         self.assertFalse(line.printer_id)
 
+    def test_print_document_select_other_printer(self):
+        """A printer of another format can be chosen behind "See more" """
+        with (
+            mock.patch(f"{SERVER_MODEL}.cups"),
+            mock.patch(
+                f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
+            ) as print_document,
+        ):
+            self.report.print_document_select(self.partner.ids, self.printer_letter.id)
+        self.assertEqual(print_document.call_args.args[0], self.printer_letter)
+
     def test_print_document_select_wrong_printer(self):
+        self.printer_letter.active = False
         with self.assertRaises(exceptions.UserError):
             self.report.print_document_select(self.partner.ids, self.printer_letter.id)
+        with self.assertRaises(exceptions.UserError):
+            self.report.print_document_select(self.partner.ids, -1)

@@ -2,25 +2,76 @@
 <templates xml:space="preserve">
     <t t-name="base_report_to_printer_select.PrinterSelectDialog">
         <Dialog size="'md'" title="props.title">
-            <div class="d-flex flex-wrap gap-2 o_printer_select" t-ref="root">
-                <t t-foreach="props.printers" t-as="printer" t-key="printer.id">
+            <div class="o_printer_select" t-ref="root">
+                <div class="d-flex flex-wrap gap-2">
+                    <t t-foreach="props.printers" t-as="printer" t-key="printer.id">
+                        <button
+                            type="button"
+                            class="btn btn-lg"
+                            t-att-class="buttonClass(printer)"
+                            t-att-title="isUnavailable(printer) ? printer.status : ''"
+                            t-on-click="() => this.select(printer)"
+                        >
+                            <i
+                                class="fa fa-print me-2"
+                                role="img"
+                                aria-label="Printer"
+                            />
+                            <t t-esc="printer.name" />
+                            <i
+                                t-if="isUnavailable(printer)"
+                                class="fa fa-exclamation-triangle ms-2 text-warning"
+                                role="img"
+                                aria-label="Unavailable"
+                            />
+                        </button>
+                    </t>
+                    <p t-if="!props.printers.length" class="text-muted mb-0">
+                        No printer supports the paper format of this report.
+                    </p>
+                </div>
+                <div t-if="props.otherPrinters.length" class="mt-3">
                     <button
+                        t-if="!state.showAll"
                         type="button"
-                        class="btn btn-lg"
-                        t-att-class="buttonClass(printer)"
-                        t-att-title="isUnavailable(printer) ? printer.status : ''"
-                        t-on-click="() => this.select(printer)"
+                        class="btn btn-link px-0 o_printer_see_more"
+                        t-on-click="showAll"
                     >
-                        <i class="fa fa-print me-2" role="img" aria-label="Printer" />
-                        <t t-esc="printer.name" />
-                        <i
-                            t-if="isUnavailable(printer)"
-                            class="fa fa-exclamation-triangle ms-2 text-warning"
-                            role="img"
-                            aria-label="Unavailable"
-                        />
+                        See more
                     </button>
-                </t>
+                    <t t-else="">
+                        <p
+                            class="text-muted small mb-2"
+                        >Other printers (different paper format)</p>
+                        <div class="d-flex flex-wrap gap-2 o_printer_select_others">
+                            <t
+                                t-foreach="props.otherPrinters"
+                                t-as="printer"
+                                t-key="printer.id"
+                            >
+                                <button
+                                    type="button"
+                                    class="btn btn-lg btn-outline-secondary"
+                                    t-att-title="isUnavailable(printer) ? printer.status : ''"
+                                    t-on-click="() => this.select(printer)"
+                                >
+                                    <i
+                                        class="fa fa-print me-2"
+                                        role="img"
+                                        aria-label="Printer"
+                                    />
+                                    <t t-esc="printer.name" />
+                                    <i
+                                        t-if="isUnavailable(printer)"
+                                        class="fa fa-exclamation-triangle ms-2 text-warning"
+                                        role="img"
+                                        aria-label="Unavailable"
+                                    />
+                                </button>
+                            </t>
+                        </div>
+                    </t>
+                </div>
             </div>
             <t t-set-slot="footer">
                 <button

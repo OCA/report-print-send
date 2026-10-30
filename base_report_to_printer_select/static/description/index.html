@@ -401,10 +401,11 @@ report is proposed first.</p>
 <strong>Paper formats</strong> on each printer with the formats it can print. A
 printer with no paper format accepts any report.</li>
 <li>Make sure the reports that should ask for a printer have the right
-<strong>Paper format</strong> on their <em>Advanced Properties</em> tab. Reports without
-one use the paper format of the company, so for label reports create
-a dedicated paper format (for example a 4x6” one) and set it on both
-the report and the label printers.</li>
+<strong>Paper format</strong> on their <em>Advanced Properties</em> tab. This module
+shows the field on text reports too, so label reports (ZPL) can carry
+a dedicated paper format (for example a 4x6” one) that is also set on
+the label printers. A PDF report without a paper format uses the one
+of the company; a text report without one accepts any printer.</li>
 <li>Go to <em>Settings &gt; Technical &gt; Printing &gt; Reports</em>, open a report and
 set its <strong>Default Behaviour</strong> to a printing action of type <strong>Ask the
 user</strong>. The type is also available on the <em>Specific actions per user</em>
@@ -422,8 +423,10 @@ pressing Enter prints on it again.</li>
 the browser instead and <strong>Cancel</strong> does nothing.</li>
 </ol>
 <p>The dialog is shown even when a single printer matches, so the user can
-still download the report. When no printer matches, the report is
-downloaded as usual.</p>
+still download the report. <strong>See more</strong> reveals the printers that do not
+support the paper format, for the odd case where one of them is wanted
+anyway. When no printer exists at all, the report is downloaded as
+usual.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#toc-entry-3">Known issues / Roadmap</a></h1>
