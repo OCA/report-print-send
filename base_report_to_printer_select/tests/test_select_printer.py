@@ -87,7 +87,7 @@ class TestSelectPrinter(TransactionCase):
         self.assertEqual(
             self.report._get_candidate_printers(), self.printer_any | self.printer_a4
         )
-        self.assertEqual(self.report._get_other_printers(), self.printer_letter)
+        self.assertFalse(self.report._get_other_printers())
         # A text report without its own format accepts any printer
         self.report.paperformat_id = False
         self.assertEqual(
@@ -103,7 +103,7 @@ class TestSelectPrinter(TransactionCase):
             pdf_report._get_candidate_printers(),
             self.printer_any | self.printer_letter,
         )
-        self.assertEqual(pdf_report._get_other_printers(), self.printer_a4)
+        self.assertFalse(pdf_report._get_other_printers())
         self.env.company.paperformat_id = False
         self.assertEqual(
             pdf_report._get_candidate_printers(),
@@ -224,16 +224,10 @@ class TestSelectPrinter(TransactionCase):
         self.assertEqual(line.action, "client")
         self.assertFalse(line.printer_id)
 
-    def test_print_document_select_other_printer(self):
-        """A printer of another format can be chosen behind "See more" """
-        with (
-            mock.patch(f"{SERVER_MODEL}.cups"),
-            mock.patch(
-                f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
-            ) as print_document,
-        ):
+    def test_print_document_select_wrong_format(self):
+        """A printer of another paper format is refused"""
+        with self.assertRaises(exceptions.UserError):
             self.report.print_document_select(self.partner.ids, self.printer_letter.id)
-        self.assertEqual(print_document.call_args.args[0], self.printer_letter)
 
     def test_print_document_select_wrong_printer(self):
         self.printer_letter.active = False

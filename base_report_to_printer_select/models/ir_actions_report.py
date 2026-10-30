@@ -16,7 +16,8 @@ class IrActionsReport(models.Model):
             return self.paperformat_id
         return self.get_paperformat()
 
-    def _get_candidate_printers_domain(self):
+    def _get_paperformat_printers_domain(self):
+        """Printers supporting the paper format of the report"""
         self.ensure_one()
         paperformat = self._get_select_paperformat()
         if not paperformat:
@@ -27,15 +28,25 @@ class IrActionsReport(models.Model):
             ("paperformat_ids", "in", paperformat.ids),
         ]
 
+    def _get_candidate_printers_domain(self):
+        """Printers proposed first; other modules narrow this domain"""
+        return self._get_paperformat_printers_domain()
+
     def _get_candidate_printers(self):
         """Printers the user may choose from when printing this report"""
         return self.env["printing.printer"].search(
             self._get_candidate_printers_domain()
         )
 
+    def _get_paperformat_printers(self):
+        return self.env["printing.printer"].search(
+            self._get_paperformat_printers_domain()
+        )
+
     def _get_other_printers(self):
-        """The remaining active printers, offered behind "See more" """
-        return self.env["printing.printer"].search([]) - self._get_candidate_printers()
+        """Printers of the right paper format left out of the candidates,
+        offered behind "See more" """
+        return self._get_paperformat_printers() - self._get_candidate_printers()
 
     def behaviour(self, **extras):
         result = super().behaviour(**extras)
@@ -79,8 +90,10 @@ class IrActionsReport(models.Model):
         self.env[self.sudo().model].browse(record_ids).check_access("read")
         report = self.sudo()
         printer = self.env["printing.printer"].browse(printer_id).exists()
-        if not printer or not printer.active:
-            raise exceptions.UserError(_("The selected printer is not available."))
+        if not printer or printer not in report._get_paperformat_printers():
+            raise exceptions.UserError(
+                _("The selected printer is not available for this report.")
+            )
         report._remember_selected_printer(printer)
         return report.print_document_client_action(
             record_ids, data=data, printer=printer.id

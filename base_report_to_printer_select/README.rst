@@ -72,10 +72,10 @@ Usage
    the browser instead and **Cancel** does nothing.
 
 The dialog is shown even when a single printer matches, so the user can
-still download the report. **See more** reveals the printers that do not
-support the paper format, for the odd case where one of them is wanted
-anyway. When no printer exists at all, the report is downloaded as
-usual.
+still download the report. **See more** reveals the printers of the
+right paper format that were left out of the proposal, for instance
+those outside the user's printing groups when that module is installed.
+When no printer supports the format, the report is downloaded as usual.
 
 Known issues / Roadmap
 ======================

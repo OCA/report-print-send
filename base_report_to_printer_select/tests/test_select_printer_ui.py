@@ -23,16 +23,6 @@ class TestSelectPrinterUI(HttpCase):
                     "status": "available",
                 }
             )
-        self.env.company.paperformat_id = self.env.ref("base.paperformat_us")
-        printers.create(
-            {
-                "name": "Gamma",
-                "system_name": "Gamma",
-                "server_id": server.id,
-                "status": "available",
-                "paperformat_ids": [(6, 0, self.env.ref("base.paperformat_euro").ids)],
-            }
-        )
         action = self.env["printing.action"].create(
             {"name": "Ask", "action_type": "select"}
         )
@@ -47,31 +37,17 @@ class TestSelectPrinterUI(HttpCase):
             odoo.__WOWL_DEBUG__.root.env.services.action.doAction(
                 {report.id}, {{additionalContext: {{active_ids: [1]}}}}
             );
-            const checkAll = () => {{
-                const buttons = document.querySelectorAll(".o_printer_select .btn-lg");
-                if (buttons.length === 3) {{
-                    console.log("test successful");
-                    return;
-                }}
-                setTimeout(checkAll, 200);
-            }};
             const check = () => {{
                 const buttons = document.querySelectorAll(".o_printer_select .btn-lg");
                 if (buttons.length === 2) {{
                     const selected = document.querySelector(
                         ".o_printer_select .o_printer_selected"
                     );
-                    const more = document.querySelector(".o_printer_see_more");
-                    if (!selected || !selected.textContent.includes("Beta")) {{
-                        console.error("Wrong preselected printer");
+                    if (selected && selected.textContent.includes("Beta")) {{
+                        console.log("test successful");
                         return;
                     }}
-                    if (!more) {{
-                        console.error("No See more button");
-                        return;
-                    }}
-                    more.click();
-                    checkAll();
+                    console.error("Wrong preselected printer");
                     return;
                 }}
                 setTimeout(check, 200);

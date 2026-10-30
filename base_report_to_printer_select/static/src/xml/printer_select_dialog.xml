@@ -40,9 +40,7 @@
                         See more
                     </button>
                     <t t-else="">
-                        <p
-                            class="text-muted small mb-2"
-                        >Other printers (different paper format)</p>
+                        <p class="text-muted small mb-2">Other printers</p>
                         <div class="d-flex flex-wrap gap-2 o_printer_select_others">
                             <t
                                 t-foreach="props.otherPrinters"
