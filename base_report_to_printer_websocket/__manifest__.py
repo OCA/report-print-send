@@ -4,13 +4,14 @@
 
 {
     "name": "Report to printer via WebSocket",
-    "version": "18.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Generic Modules/Base",
     "author": "ForgeFlow,Dixmit,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/report-print-send",
     "license": "AGPL-3",
     "depends": ["base_report_to_printer", "bus"],
     "data": [
+        "security/printing_printer_security.xml",
         "views/printing_printer.xml",
     ],
     "assets": {

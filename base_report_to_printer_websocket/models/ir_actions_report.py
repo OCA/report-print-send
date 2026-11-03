@@ -9,10 +9,10 @@ PRINTER_EXCEPTION_STATUSES = ("error", "server-error", "unavailable")
 class IrActionsReport(models.Model):
     _inherit = "ir.actions.report"
 
-    def behaviour(self):
+    def behaviour(self, **extras):
         """A WebSocket printer has no CUPS server to reach, so the connection
         check of the base module would always flag it: only its status can."""
-        result = super().behaviour()
+        result = super().behaviour(**extras)
         printer = result.get("printer")
         if printer and printer.backend == "websocket":
             result.pop("printer_exception", None)

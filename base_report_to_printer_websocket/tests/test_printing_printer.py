@@ -31,6 +31,21 @@ class TestPrintingPrinterWebSocket(TransactionCase):
         self.assertFalse(printer.server_id)
         self.assertEqual(printer.backend, "websocket")
 
+    def test_printer_without_server_visible_to_printing_user(self):
+        self.printer_vals["server_id"] = False
+        printer = self.new_record()
+        user = self.env["res.users"].create(
+            {
+                "name": "Printing User",
+                "login": "printing_user",
+                "groups_id": [
+                    (4, self.env.ref("base.group_user").id),
+                    (4, self.env.ref("base_report_to_printer.printing_group_user").id),
+                ],
+            }
+        )
+        self.assertEqual(printer.with_user(user).backend, "websocket")
+
     def test_print_document_sends_to_bus(self):
         """print_document should encode PDF as base64 and send via bus."""
         printer = self.new_record()
