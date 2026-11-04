@@ -334,8 +334,13 @@ class TestReport(common.HttpCase):
         """
         self.report.property_printing_action_id.action_type = "server"
         self.report.printing_printer_id = self.new_printer()
-        forced_printer = self.new_printer()
-        forced_printer.system_name = "Forced Printer"
+        forced_printer = self.env["printing.printer"].create(
+            {
+                "name": "Forced Printer",
+                "server_id": self.server.id,
+                "system_name": "Forced Printer",
+            }
+        )
         report_type = REPORT_TYPES.get(self.report.report_type)
         behaviour = self.report.behaviour(**{"printer": forced_printer})
         behaviour.pop("printer")
