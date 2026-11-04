@@ -3,7 +3,7 @@
 
 {
     "name": "Report to printer - Select printer when printing",
-    "version": "18.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Generic Modules/Base",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/report-print-send",

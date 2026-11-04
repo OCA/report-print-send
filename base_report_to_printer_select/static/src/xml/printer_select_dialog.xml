@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
-    <t t-name="base_report_to_printer_select.PrinterSelectDialog">
+    <t t-name="base_report_to_printer_select.PrinterSelectDialog" owl="1">
         <Dialog size="'md'" title="props.title">
             <div class="o_printer_select" t-ref="root">
                 <div class="d-flex flex-wrap gap-2">

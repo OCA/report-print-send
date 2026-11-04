@@ -1,6 +1,8 @@
+/** @odoo-module **/
 import {PrinterSelectDialog} from "./printer_select_dialog.esm";
 import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
+import {sprintf} from "@web/core/utils/strings";
 
 function askPrinter(env, action, printAction) {
     return new Promise((resolve) => {
@@ -8,7 +10,7 @@ function askPrinter(env, action, printAction) {
             PrinterSelectDialog,
             {
                 title: action.name
-                    ? _t("Print %s on...", action.name)
+                    ? sprintf(_t("Print %s on..."), action.name)
                     : _t("Select printer"),
                 printers: printAction.printers,
                 otherPrinters: printAction.other_printers || [],

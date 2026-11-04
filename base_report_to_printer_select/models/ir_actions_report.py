@@ -67,7 +67,6 @@ class IrActionsReport(models.Model):
             {
                 "id": printer.id,
                 "name": printer.name,
-                "backend": printer.backend,
                 "status": printer.status,
             }
             for printer in printers
@@ -77,7 +76,6 @@ class IrActionsReport(models.Model):
             {
                 "id": printer.id,
                 "name": printer.name,
-                "backend": printer.backend,
                 "status": printer.status,
             }
             for printer in report._get_other_printers()
@@ -87,7 +85,9 @@ class IrActionsReport(models.Model):
     def print_document_select(self, record_ids, printer_id, data=None):
         """Print on the printer the user picked and remember the choice"""
         self.ensure_one()
-        self.env[self.sudo().model].browse(record_ids).check_access("read")
+        records = self.env[self.sudo().model].browse(record_ids)
+        records.check_access_rights("read")
+        records.check_access_rule("read")
         report = self.sudo()
         printer = self.env["printing.printer"].browse(printer_id).exists()
         if not printer or printer not in report._get_paperformat_printers():
@@ -106,11 +106,7 @@ class IrActionsReport(models.Model):
         )
         if line and line.action != "select":
             return
-        values = {
-            "printer_id": printer.id,
-            "printer_input_tray_id": False,
-            "printer_output_tray_id": False,
-        }
+        values = {"printer_id": printer.id, "printer_tray_id": False}
         if line:
             line.write(values)
         else:

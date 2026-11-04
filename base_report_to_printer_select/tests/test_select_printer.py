@@ -78,7 +78,7 @@ class TestSelectPrinter(TransactionCase):
     def test_select_action_type(self):
         self.assertIn(
             "select",
-            [code for code, _ in self.env["printing.action"]._available_action_types],
+            [code for code, _ in self.env["printing.action"]._available_action_types()],
         )
         selection = self.XmlAction._fields["action"]._description_selection(self.env)
         self.assertIn("select", dict(selection))
@@ -146,12 +146,9 @@ class TestSelectPrinter(TransactionCase):
         self.assertNotIn("printers", result)
 
     def test_print_document_select(self):
-        with (
-            mock.patch(f"{SERVER_MODEL}.cups"),
-            mock.patch(
-                f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
-            ) as print_document,
-        ):
+        with mock.patch(f"{SERVER_MODEL}.cups"), mock.patch(
+            f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
+        ) as print_document:
             self.assertTrue(
                 self.report.print_document_select(self.partner.ids, self.printer_any.id)
             )
@@ -166,12 +163,9 @@ class TestSelectPrinter(TransactionCase):
         self.assertEqual(line.printer_id, self.printer_any)
         with mock.patch(f"{SERVER_MODEL}.cups"):
             self.assertEqual(self.report.behaviour()["printer"], self.printer_any)
-        with (
-            mock.patch(f"{SERVER_MODEL}.cups"),
-            mock.patch(
-                f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
-            ) as print_document,
-        ):
+        with mock.patch(f"{SERVER_MODEL}.cups"), mock.patch(
+            f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
+        ) as print_document:
             self.report.print_document_select(self.partner.ids, self.printer_a4.id)
         self.assertEqual(print_document.call_args.args[0], self.printer_a4)
         self.assertEqual(
@@ -191,12 +185,9 @@ class TestSelectPrinter(TransactionCase):
             }
         )
         report = self.report.with_user(user)
-        with (
-            mock.patch(f"{SERVER_MODEL}.cups"),
-            mock.patch(
-                f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
-            ) as print_document,
-        ):
+        with mock.patch(f"{SERVER_MODEL}.cups"), mock.patch(
+            f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
+        ) as print_document:
             self.assertTrue(
                 report.print_document_select(self.partner.ids, self.printer_any.id)
             )
@@ -213,12 +204,9 @@ class TestSelectPrinter(TransactionCase):
                 "action": "client",
             }
         )
-        with (
-            mock.patch(f"{SERVER_MODEL}.cups"),
-            mock.patch(
-                f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
-            ) as print_document,
-        ):
+        with mock.patch(f"{SERVER_MODEL}.cups"), mock.patch(
+            f"{PRINTER_MODEL}.PrintingPrinter.print_document", autospec=True
+        ) as print_document:
             self.report.print_document_select(self.partner.ids, self.printer_a4.id)
         self.assertEqual(print_document.call_args.args[0], self.printer_a4)
         self.assertEqual(line.action, "client")

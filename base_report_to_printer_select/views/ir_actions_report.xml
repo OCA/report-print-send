@@ -9,8 +9,8 @@
         <field name="arch" type="xml">
             <field name="paperformat_id" position="attributes">
                 <attribute
-                    name="invisible"
-                >report_type not in ('qweb-pdf', 'qweb-text')</attribute>
+                    name="attrs"
+                >{'invisible': [('report_type', 'not in', ['qweb-pdf', 'qweb-text'])]}</attribute>
             </field>
         </field>
     </record>

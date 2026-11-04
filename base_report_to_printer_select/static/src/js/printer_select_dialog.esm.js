@@ -1,26 +1,10 @@
+/** @odoo-module **/
 import {Component, onMounted, useRef, useState} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
-import {_t} from "@web/core/l10n/translation";
 
 const UNAVAILABLE_STATUSES = ["error", "server-error", "unavailable"];
 
 export class PrinterSelectDialog extends Component {
-    static template = "base_report_to_printer_select.PrinterSelectDialog";
-    static components = {Dialog};
-    static props = {
-        close: Function,
-        title: {type: String, optional: true},
-        printers: Array,
-        otherPrinters: {type: Array, optional: true},
-        selectedId: {type: [Number, Boolean], optional: true},
-        onSelect: Function,
-    };
-    static defaultProps = {
-        title: _t("Select printer"),
-        otherPrinters: [],
-        selectedId: false,
-    };
-
     setup() {
         this.rootRef = useRef("root");
         this.state = useState({showAll: false});
@@ -60,3 +44,18 @@ export class PrinterSelectDialog extends Component {
         this.props.close();
     }
 }
+
+PrinterSelectDialog.template = "base_report_to_printer_select.PrinterSelectDialog";
+PrinterSelectDialog.components = {Dialog};
+PrinterSelectDialog.props = {
+    close: Function,
+    title: String,
+    printers: Array,
+    otherPrinters: {type: Array, optional: true},
+    selectedId: {type: [Number, Boolean], optional: true},
+    onSelect: Function,
+};
+PrinterSelectDialog.defaultProps = {
+    otherPrinters: [],
+    selectedId: false,
+};
