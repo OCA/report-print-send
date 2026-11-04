@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="base_report_to_printer.printer_company_rule" model="ir.rule">
+        <field name="domain_force">
+            ["|", "|", ("server_id", "=", False), ("server_id.company_ids", "=", False), ("server_id.company_ids", "in", company_ids)]
+        </field>
+    </record>
+</odoo>
