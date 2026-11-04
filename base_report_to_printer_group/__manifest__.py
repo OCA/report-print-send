@@ -3,7 +3,7 @@
 
 {
     "name": "Report to printer - Printing groups",
-    "version": "18.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Generic Modules/Base",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/report-print-send",
@@ -12,7 +12,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/printing_group.xml",
-        "views/ir_actions_report.xml",
+        "views/printing_report_xml_action.xml",
         "views/res_users.xml",
     ],
     "installable": True,

@@ -64,4 +64,4 @@ class TestPrintingGroupUI(HttpCase):
             check();
         """
         with mock.patch(f"{SERVER_MODEL}.cups"):
-            self.browser_js("/odoo", code, "odoo.isReady", login="admin")
+            self.browser_js("/web", code, "odoo.isReady", login="admin")
