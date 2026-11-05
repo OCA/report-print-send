@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record model="printing.action" id="printing_action_select">
+        <field name="name">Ask the user</field>
+        <field name="action_type">select</field>
+    </record>
+</odoo>

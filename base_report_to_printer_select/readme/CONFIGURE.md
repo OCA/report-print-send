@@ -10,6 +10,6 @@ To configure this module, you need to:
     the label printers. A PDF report without a paper format uses the one
     of the company; a text report without one accepts any printer.
 3.  Go to *Settings \> Technical \> Printing \> Reports*, open a report
-    and set its **Default Behaviour** to a printing action of type
-    **Ask the user**. The type is also available on the *Specific actions
+    and set its **Default Behaviour** to the **Ask the user** printing
+    action. The type is also available on the *Specific actions
     per user* lines and as the default printing action of a user.

@@ -10,6 +10,7 @@
     "license": "AGPL-3",
     "depends": ["base_report_to_printer"],
     "data": [
+        "data/printing_data.xml",
         "views/printing_printer.xml",
         "views/ir_actions_report.xml",
     ],

@@ -21,14 +21,14 @@ class TestSelectPrinter(TransactionCase):
         cls.format_a4 = cls.env.ref("base.paperformat_euro")
         cls.format_letter = cls.env.ref("base.paperformat_us")
         cls.partner = cls.env.ref("base.main_partner")
+        cls.action_select = cls.env.ref(
+            "base_report_to_printer_select.printing_action_select"
+        )
         # Instances
         cls.server = cls.env["printing.server"].create({})
         cls.printer_any = cls._create_printer("Any format")
         cls.printer_a4 = cls._create_printer("A4 only", cls.format_a4)
         cls.printer_letter = cls._create_printer("Letter only", cls.format_letter)
-        cls.action_select = cls.env["printing.action"].create(
-            {"name": "Ask", "action_type": "select"}
-        )
         cls.report = cls._create_report()
         # Setup
         cls.env.company.paperformat_id = cls.format_letter
