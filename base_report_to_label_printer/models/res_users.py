@@ -7,9 +7,7 @@ from odoo import fields, models
 class ResUsers(models.Model):
     _inherit = "res.users"
 
-    default_label_printer_id = fields.Many2one(
-        comodel_name="printing.printer", string="Default Label Printer"
-    )
+    default_label_printer_id = fields.Many2one(comodel_name="printing.printer")
 
     @property
     def SELF_READABLE_FIELDS(self):

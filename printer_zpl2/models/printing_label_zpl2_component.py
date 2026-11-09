@@ -30,7 +30,6 @@ class PrintingLabelZpl2Component(models.Model):
 
     label_id = fields.Many2one(
         comodel_name="printing.label.zpl2",
-        string="Label",
         required=True,
         ondelete="cascade",
         help="Label using this component.",
@@ -178,7 +177,6 @@ class PrintingLabelZpl2Component(models.Model):
     )
     sublabel_id = fields.Many2one(
         comodel_name="printing.label.zpl2",
-        string="Sublabel",
         help="Another label to include into this one as a component. "
         "This allows to define reusable labels parts.",
     )

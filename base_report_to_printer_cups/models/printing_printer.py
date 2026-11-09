@@ -25,7 +25,7 @@ except ImportError:
 class PrintingPrinter(models.Model):
     _inherit = "printing.printer"
 
-    server_id = fields.Many2one(comodel_name="printing.server", string="Server")
+    server_id = fields.Many2one(comodel_name="printing.server")
     job_ids = fields.One2many(
         comodel_name="printing.job",
         inverse_name="printer_id",
