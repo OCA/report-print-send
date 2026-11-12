@@ -19,7 +19,11 @@ class PrintRecordLabel(models.TransientModel):
         string="Label",
         required=True,
         domain=lambda self: [
-            ("model_id.model", "=", self.env.context.get("active_model"))
+            (
+                "model_id",
+                "=",
+                self.env["ir.model"]._get_id(self.env.context.get("active_model")),
+            )
         ],
         help="Label to print.",
     )
@@ -44,9 +48,8 @@ class PrintRecordLabel(models.TransientModel):
         if len(printers) == 1:
             values["printer_id"] = printers.id
 
-        labels = self.env["printing.label.zpl2"].search(
-            [("model_id.model", "=", self.env.context.get("active_model"))]
-        )
+        model_id = self.env["ir.model"]._get_id(self.env.context.get("active_model"))
+        labels = self.env["printing.label.zpl2"].search([("model_id", "=", model_id)])
         if len(labels) == 1:
             values["label_id"] = labels.id
 

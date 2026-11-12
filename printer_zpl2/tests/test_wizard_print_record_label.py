@@ -3,6 +3,8 @@
 
 from unittest.mock import patch
 
+from odoo.tests.common import new_test_user
+
 from .common import PrinterZpl2Common
 
 model = "odoo.addons.base_report_to_printer.models.printing_server"
@@ -81,3 +83,23 @@ class TestWizardPrintRecordLabel(PrinterZpl2Common):
         )
         wizard = wizard_obj.create({})
         self.assertEqual(wizard.label_id, self.label)
+
+    @patch(f"{model}.cups")
+    def test_print_record_label_internal_user(self, cups):
+        """Check that an internal user without access to ir.model can print"""
+        user = new_test_user(self.env, login="zpl2_user", groups="base.group_user")
+        wizard_obj = self.Wizard.with_user(user).with_context(
+            active_model="printing.printer",
+            active_id=self.printer.id,
+            active_ids=[self.printer.id],
+            printer_zpl2_id=self.printer.id,
+        )
+        label_domain = self.Wizard._fields["label_id"].get_domain_list(wizard_obj)
+        self.assertEqual(
+            self.env["printing.label.zpl2"].with_user(user).search(label_domain),
+            self.label,
+        )
+        wizard = wizard_obj.create({})
+        self.assertEqual(wizard.label_id, self.label)
+        wizard.print_label()
+        cups.Connection().printFile.assert_called_once()
