@@ -10,9 +10,6 @@
                     <field name="user_id" />
                     <field name="action" />
                     <field name="printer_id" select="1" />
-                    <field name="user_id" />
-                    <field name="action" />
-                    <field name="printer_id" select="1" />
                     <field name="printer_input_tray_id" />
                     <field name="printer_output_tray_id" />
                 </group>
@@ -26,9 +23,6 @@
         <field name="model">printing.report.xml.action</field>
         <field name="arch" type="xml">
             <list>
-                <field name="user_id" />
-                <field name="action" />
-                <field name="printer_id" />
                 <field name="user_id" />
                 <field name="action" />
                 <field name="printer_id" />
