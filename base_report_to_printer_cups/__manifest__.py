@@ -7,7 +7,7 @@
 
 {
     "name": "Report to printer CUPS",
-    "version": "19.0.0.2.0",
+    "version": "19.0.0.2.1",
     "category": "Generic Modules/Base",
     "author": "Agile Business Group & Domsense, Pegueroles SCP, NaN,"
     " LasLabs, Camptocamp, Odoo Community Association (OCA),"
