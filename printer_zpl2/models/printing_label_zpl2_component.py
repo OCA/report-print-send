@@ -47,6 +47,17 @@ class PrintingLabelZpl2Component(models.Model):
         default=10,
         help="Origin point of the component in the label, Y coordinate.",
     )
+    position_type = fields.Selection(
+        selection=[("origin", "Origin"), ("typeset", "Typeset")],
+        string="Position",
+        required=True,
+        default="origin",
+        help="Origin (^FO): the coordinates are the top left corner of the "
+        "component.\n"
+        "Typeset (^FT): the coordinates are the bottom left corner of the "
+        "component (the baseline for a text), as positioned by some label "
+        "designers.",
+    )
     component_type = fields.Selection(
         selection=[
             ("text", "Text"),
