@@ -14,7 +14,6 @@ class PrinterTray(models.AbstractModel):
     system_name = fields.Char(required=True, readonly=True)
     printer_id = fields.Many2one(
         comodel_name="printing.printer",
-        string="Printer",
         required=True,
         readonly=True,
         ondelete="cascade",

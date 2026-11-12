@@ -29,7 +29,6 @@ class PrintingLabelZpl2(models.Model):
     description = fields.Char(help="Long description for this label.")
     model_id = fields.Many2one(
         comodel_name="ir.model",
-        string="Model",
         required=True,
         ondelete="cascade",
         help="Model used to print this label.",
@@ -70,7 +69,7 @@ class PrintingLabelZpl2(models.Model):
     test_labelary_mode = fields.Boolean(string="Mode Labelary")
     record_id = fields.Integer(string="Record ID", default=1)
     extra = fields.Text(default="{}")
-    printer_id = fields.Many2one(comodel_name="printing.printer", string="Printer")
+    printer_id = fields.Many2one(comodel_name="printing.printer")
     labelary_image = fields.Binary(
         string="Image from Labelary", compute="_compute_labelary_image"
     )

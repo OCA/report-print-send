@@ -345,7 +345,7 @@ class WizardImportZPl2(models.TransientModel):
     _description = "Import ZPL2"
 
     label_id = fields.Many2one(
-        comodel_name="printing.label.zpl2", string="Label", required=True, readonly=True
+        comodel_name="printing.label.zpl2", required=True, readonly=True
     )
     data = fields.Text(required=True, help="Printer used to print the labels.")
     delete_component = fields.Boolean(

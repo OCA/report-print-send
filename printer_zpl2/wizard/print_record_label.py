@@ -10,13 +10,11 @@ class PrintRecordLabel(models.TransientModel):
 
     printer_id = fields.Many2one(
         comodel_name="printing.printer",
-        string="Printer",
         required=True,
         help="Printer used to print the labels.",
     )
     label_id = fields.Many2one(
         comodel_name="printing.label.zpl2",
-        string="Label",
         required=True,
         # Written against `active_model_id` instead of the context: the return
         # of `get_views` may only depend on the view types, the access rights,
