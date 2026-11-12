@@ -92,12 +92,44 @@ class IrActionsReport(models.Model):
             result["tray"] = self.printer_tray_id.system_name
         return result
 
-    def behaviour(self):
+    def _set_extra_print_options(self, extras):
+        """
+        extra: A dictionary with extra print options
+        """
+        extras_options = {}
+        for extra, value in extras.items():
+            try:
+                extras_options.update(
+                    getattr(self, "_set_print_extra_%s" % extra)(value)
+                )
+            except AttributeError:
+                extras_options[extra] = str(value)
+        return extras_options
+
+    def _set_print_extra_quantity(self, value):
+        """
+        We add the 'copies' attribute
+        """
+        return {"copies": str(value)} if value else {}
+
+    def _set_print_extra_printer(self, value):
+        """
+        We force the printer that will be used
+        The printer should be a recordset
+        """
+        if isinstance(value, int):
+            printer = self.env["printing.printer"].browse(value)
+        else:
+            printer = value
+        return {"printer": printer} if printer else {}
+
+    def behaviour(self, **extras):
         self.ensure_one()
         printing_act_obj = self.env["printing.report.xml.action"]
 
         result = self._get_user_default_print_behaviour()
         result.update(self._get_report_default_print_behaviour())
+        result.update(self._set_extra_print_options(extras=extras))
 
         # Retrieve report-user specific values
         print_action = printing_act_obj.search(
@@ -129,8 +161,8 @@ class IrActionsReport(models.Model):
                 result["printer_exception"] = True
         return result
 
-    def print_document_client_action(self, record_ids, data=None):
-        behaviour = self.behaviour()
+    def print_document_client_action(self, record_ids, data=None, **extras):
+        behaviour = self.behaviour(**extras)
         printer = behaviour.pop("printer", None)
         if printer.multi_thread:
 
@@ -145,18 +177,18 @@ class IrActionsReport(models.Model):
             return True
         else:
             try:
-                return self.print_document(record_ids, data=data)
+                return self.print_document(record_ids, data=data, **extras)
             except Exception as e:
                 _logger.warning("Unable to print document: %s", exc_info=e)
                 return
 
-    def print_document_threaded(self, report_id, record_ids, data):
+    def print_document_threaded(self, report_id, record_ids, data, **extras):
         with registry(self._cr.dbname).cursor() as cr:
             self = self.with_env(self.env(cr=cr))
             report = self.env["ir.actions.report"].browse(report_id)
-            report.print_document(record_ids, data)
+            report.print_document(record_ids, data, **extras)
 
-    def print_document(self, record_ids, data=None):
+    def print_document(self, record_ids, data=None, **extras):
         """Print a document, do not return the document file"""
         report_type = REPORT_TYPES.get(self.report_type)
         if not report_type:
@@ -168,7 +200,7 @@ class IrActionsReport(models.Model):
         document, doc_format = getattr(
             self.with_context(must_skip_send_to_printer=True), method_name
         )(self.report_name, record_ids, data=data)
-        behaviour = self.behaviour()
+        behaviour = self.behaviour(**extras)
         printer = behaviour.pop("printer", None)
 
         if not printer:
