@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_wizard_zpl2_print_test_form" model="ir.ui.view">
+        <field name="model">wizard.zpl2.print_test</field>
+        <field name="arch" type="xml">
+            <form string="Print Test">
+                <group>
+                    <field name="label_id" invisible="1" />
+                    <field name="model_id" invisible="1" />
+                    <field
+                        name="record_ref"
+                        options="{'model_field': 'model_id', 'no_create': True, 'no_open': True}"
+                    />
+                    <field name="printer_id" />
+                </group>
+                <group string="Extra">
+                    <field
+                        name="extra"
+                        nolabel="1"
+                        widget="ace"
+                        options="{'mode': 'python'}"
+                        colspan="2"
+                    />
+                </group>
+                <footer>
+                    <button
+                        string="Print"
+                        type="object"
+                        name="action_print"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
