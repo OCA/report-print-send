@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-12 02:40+0000\n"
-"PO-Revision-Date: 2024-07-16 13:58+0000\n"
+"PO-Revision-Date: 2026-11-13 12:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,24 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: printer_zpl2
 #. odoo-python
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 msgid "  - %(command)s: fields at %(positions)s"
-msgstr ""
+msgstr "  - %(command)s: campi in %(positions)s"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_print_record_label_line__label_no
 msgid "# labels"
-msgstr "# etichette"
+msgstr "N° etichette"
 
 #. module: printer_zpl2
 #. odoo-python
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 msgid "#%s"
-msgstr ""
+msgstr "N° %s"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__font__b
@@ -231,7 +231,7 @@ msgstr "Cerchio"
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_import_zpl2_form
 msgid "Close"
-msgstr ""
+msgstr "Chiudi"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__code_11
@@ -272,7 +272,7 @@ msgstr "Conteggio colonne"
 #. odoo-python
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 msgid "Commands not imported"
-msgstr ""
+msgstr "Comandi non importati"
 
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_printing_label_zpl2_form
@@ -359,18 +359,18 @@ msgstr "Visualizza una opzione nel documenti relativi."
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__wizard_import_zpl2__state__done
 msgid "Done"
-msgstr ""
+msgstr "Completato"
 
 #. module: printer_zpl2
 #. odoo-python
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 msgid "Downloaded object %s ignored: not an image"
-msgstr ""
+msgstr "Oggetto scaricato %s ignorato: non è un'immagine"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__wizard_import_zpl2__state__draft
 msgid "Draft"
-msgstr ""
+msgstr "Bozza"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__ean-13
@@ -412,7 +412,7 @@ msgstr "Errore con l'API Labelary. %s"
 #. odoo-python
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 msgid "Everything was imported."
-msgstr ""
+msgstr "Tutto è stato importato."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__extra
@@ -423,7 +423,7 @@ msgstr "Aggiuntivo"
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__zpl_filename
 msgid "File Name"
-msgstr ""
+msgstr "Nome file"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__font
@@ -449,7 +449,7 @@ msgstr "Grafica"
 #. odoo-python
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 msgid "Graphic %(name)s not found, field at %(position)s not imported"
-msgstr ""
+msgstr "Grafica %(name)s non trovata, campo in %(position)s non importato"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__height
@@ -537,7 +537,7 @@ msgstr "Importa ZPL2"
 #. module: printer_zpl2
 #: model_terms:ir.ui.view,arch_db:printer_zpl2.view_wizard_import_zpl2_form
 msgid "Import report"
-msgstr ""
+msgstr "Importa resoconto"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__in_block
@@ -799,7 +799,7 @@ msgstr "Orientamento della linea diagonale."
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__position_type__origin
 msgid "Origin"
-msgstr ""
+msgstr "Origine"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,help:printer_zpl2.field_printing_label_zpl2_component__position_type
@@ -808,6 +808,11 @@ msgid ""
 "Typeset (^FT): the coordinates are the bottom left corner of the component "
 "(the baseline for a text), as positioned by some label designers."
 msgstr ""
+"Origine (^FO): le coordinate sono l'angolo in alto a sinistra del "
+"componente.\n"
+"Composizione (^FT): le coordinate sono l'angolo in basso a sinistra del "
+"componente (la linea di base per un testo), come posizionato da alcuni "
+"progettisti di etichette."
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__origin_x
@@ -854,7 +859,7 @@ msgstr "PDF417"
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__position_type
 msgid "Position"
-msgstr ""
+msgstr "Posizione"
 
 #. module: printer_zpl2
 #. odoo-python
@@ -973,7 +978,7 @@ msgstr "Ripetibile"
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__report
 msgid "Report"
-msgstr ""
+msgstr "Resoconto"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2__restore_saved_config
@@ -1028,6 +1033,8 @@ msgstr "Conteggio righe"
 msgid ""
 "Scalable font %(font)s replaced by the default font (field at %(position)s)"
 msgstr ""
+"Font scalabile %(font)s sostituito dal font predefinito (campo in %(position)"
+"s)"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__security_level
@@ -1052,7 +1059,7 @@ msgstr "Livello standard"
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__state
 msgid "State"
-msgstr ""
+msgstr "Stato"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__sublabel_id
@@ -1098,7 +1105,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/printer_zpl2/models/printing_label_zpl2.py:0
 msgid "This label cannot be used on %(model)s"
-msgstr ""
+msgstr "Questa etichetta non può essere usata su %(model)s"
 
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_printing_label_zpl2_component__truncate
@@ -1118,7 +1125,7 @@ msgstr "Tipo di contenuto, testo semplice o codice a barre."
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__position_type__typeset
 msgid "Typeset"
-msgstr ""
+msgstr "Composizione"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__component_type__upc-e
@@ -1134,7 +1141,7 @@ msgstr "Livello affidabilità ultra-alto"
 #. odoo-python
 #: code:addons/printer_zpl2/wizard/wizard_import_zpl2.py:0
 msgid "Warnings"
-msgstr ""
+msgstr "Avvisi"
 
 #. module: printer_zpl2
 #: model:ir.model.fields.selection,name:printer_zpl2.selection__printing_label_zpl2_component__color__w
@@ -1218,7 +1225,7 @@ msgstr "ZPL2"
 #. module: printer_zpl2
 #: model:ir.model.fields,field_description:printer_zpl2.field_wizard_import_zpl2__zpl_file
 msgid "ZPL2 File"
-msgstr ""
+msgstr "File ZPL2"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Ultima modifica il"
