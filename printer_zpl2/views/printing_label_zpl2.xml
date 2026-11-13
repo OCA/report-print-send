@@ -158,7 +158,7 @@
                                     <notebook colspan="4">
                                         <page
                                             string="Format"
-                                            invisble="component_type in ('sublabel', 'qr_code', 'zpl2_raw')"
+                                            invisible="component_type in ('sublabel', 'qr_code', 'zpl2_raw')"
                                         >
                                             <group>
                                                 <field name="height" />
@@ -198,7 +198,7 @@
                                         <!-- Barcode specific arguments -->
                                         <page
                                             string="Barcode Format"
-                                            invisble="component_type in ('text', 'rectangle', 'diagonal', 'circle', 'sublabel', 'graphic', 'qr_code', 'zpl2_raw')"
+                                            invisible="component_type not in ('code_11', 'interleaved_2_of_5', 'code_39', 'code_49', 'pdf417', 'ean-8', 'upc-e', 'code_128', 'ean-13')"
                                         >
                                             <group>
                                                 <field name="check_digits" />
@@ -217,7 +217,7 @@
                                         <!-- 2D Barcode arguments -->
                                         <page
                                             string="2D Barcode Arguments"
-                                            invisble="component_type != 'qr_code'"
+                                            invisible="component_type != 'qr_code'"
                                         >
                                             <group>
                                                 <field name="model" />
@@ -229,7 +229,7 @@
                                         <!-- Text block specific arguments -->
                                         <page
                                             string="Text Block Format"
-                                            invisble="component_type != 'text' or not in_block"
+                                            invisible="component_type != 'text' or not in_block"
                                         >
                                             <group>
                                                 <field name="block_width" />
@@ -240,7 +240,7 @@
                                             </group>
                                         </page>
                                         <!-- Repeat specific arguments -->
-                                        <page string="Repeat" invisble="not repeat">
+                                        <page string="Repeat" invisible="not repeat">
                                             <group>
                                                 <field name="repeat_offset" />
                                                 <field name="repeat_count" />
