@@ -24,19 +24,14 @@ async function cupsReportActionHandler(action, options, env) {
                 env.services.notification.add(_t("Successfully sent to printer!"), {
                     type: "success",
                 });
-                const {onClose} = options;
-                if (action.close_on_report_download) {
-                    return env.services.action.doAction(
-                        {type: "ir.actions.act_window_close"},
-                        {onClose}
-                    );
-                } else if (onClose) {
-                    onClose();
-                }
+                // Return a truthy value so the action manager considers the report
+                // handled. The action manager itself takes care of
+                // `close_on_report_download` and the `onClose` callback.
                 return true;
                 // In case of exception during the job, we won't get any response. So we
                 // should flag the exception and notify the user
             }
+
             env.services.notification.add(_t("Could not sent to printer!"), {
                 type: "danger",
             });
