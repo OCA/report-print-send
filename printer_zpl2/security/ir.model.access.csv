@@ -6,3 +6,4 @@ printing_label_zpl2_component_manager,Printing Label ZPL2 Component Manager,mode
 access_wizard_print_record_label_user,Print Record Label user,model_wizard_print_record_label,base_report_to_printer.printing_group_user,1,1,1,1
 access_wizard_print_record_label_line_user,Print Record Label Line user,model_wizard_print_record_label_line,base_report_to_printer.printing_group_user,1,1,1,1
 access_wizard_import_zpl2_user,Import ZPL2 user,model_wizard_import_zpl2,base_report_to_printer.printing_group_user,1,1,1,1
+access_wizard_zpl2_print_test_user,Print Test Label user,model_wizard_zpl2_print_test,base_report_to_printer.printing_group_user,1,1,1,1

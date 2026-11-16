@@ -66,11 +66,13 @@ class PrintingLabelZpl2(models.Model):
         string="Action",
         readonly=True,
     )
-    test_print_mode = fields.Boolean(string="Mode Print")
-    test_labelary_mode = fields.Boolean(string="Mode Labelary")
+    test_labelary_mode = fields.Boolean(
+        string="Mode Labelary",
+        compute="_compute_test_labelary_mode",
+        inverse="_inverse_test_labelary_mode",
+    )
     record_id = fields.Integer(string="Record ID", default=1)
     extra = fields.Text(default="{}")
-    printer_id = fields.Many2one(comodel_name="printing.printer", string="Printer")
     labelary_image = fields.Binary(
         string="Image from Labelary", compute="_compute_labelary_image"
     )
@@ -85,8 +87,35 @@ class PrintingLabelZpl2(models.Model):
         required=True,
         default="8dpmm",
     )
-    labelary_width = fields.Float(string="Width in mm", default=140)
+    labelary_width = fields.Float(
+        string="Width in mm",
+        compute="_compute_labelary_width",
+        store=True,
+        readonly=False,
+    )
     labelary_height = fields.Float(string="Height in mm", default=70)
+
+    def _compute_test_labelary_mode(self):
+        # The mode is shared by all the labels
+        param = self.env["ir.config_parameter"].sudo()
+        mode = param.get_param("printer_zpl2.test_labelary_mode") == "True"
+        self.test_labelary_mode = mode
+
+    def _inverse_test_labelary_mode(self):
+        param = self.env["ir.config_parameter"].sudo()
+        mode = any(self.mapped("test_labelary_mode"))
+        param.set_param("printer_zpl2.test_labelary_mode", str(mode))
+        # The other labels see the new value
+        self.invalidate_model(["test_labelary_mode"])
+
+    @api.depends("width", "labelary_dpmm")
+    def _compute_labelary_width(self):
+        for label in self:
+            if not label.width or not label.labelary_dpmm:
+                label.labelary_width = 140
+                continue
+            dpmm = int(label.labelary_dpmm.removesuffix("dpmm"))
+            label.labelary_width = label.width / dpmm
 
     @api.constrains("component_ids")
     def check_recursion(self):
@@ -450,6 +479,17 @@ class PrintingLabelZpl2(models.Model):
     def unlink_action(self):
         self.mapped("action_window_id").unlink()
 
+    def action_print_test(self):
+        self.ensure_one()
+        return {
+            "name": self.env._("Print Test"),
+            "view_mode": "form",
+            "res_model": "wizard.zpl2.print_test",
+            "type": "ir.actions.act_window",
+            "target": "new",
+            "context": {"default_label_id": self.id},
+        }
+
     def import_zpl2(self):
         self.ensure_one()
         return {
@@ -469,14 +509,6 @@ class PrintingLabelZpl2(models.Model):
         self.record_id = record.id
 
         return record
-
-    def print_test_label(self):
-        for label in self:
-            if label.test_print_mode and label.record_id and label.printer_id:
-                record = label._get_record()
-                extra = safe_eval(label.extra, {"env": self.env})
-                if record:
-                    label.print_label(label.printer_id, record, **extra)
 
     @api.depends(
         "record_id",
