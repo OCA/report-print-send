@@ -11,7 +11,6 @@ class PrintAttachment(models.TransientModel):
 
     printer_id = fields.Many2one(
         comodel_name="printing.printer",
-        string="Printer",
         required=True,
         help="Printer used to print the attachments.",
     )

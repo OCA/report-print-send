@@ -15,7 +15,6 @@ class PrintingJob(models.Model):
     name = fields.Char(help="Job name.")
     printer_id = fields.Many2one(
         comodel_name="printing.printer",
-        string="Printer",
         required=True,
         ondelete="cascade",
         help="Printer used for this job.",

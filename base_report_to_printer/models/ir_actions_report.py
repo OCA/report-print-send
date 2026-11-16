@@ -160,7 +160,7 @@ class IrActionsReport(models.Model):
                 return
 
     def print_document_threaded(self, report_id, record_ids, data):
-        with Registry(self._cr.dbname).cursor() as cr:
+        with Registry(self.env.cr.dbname).cursor() as cr:
             self = self.with_env(self.env(cr=cr))
             report = self.env["ir.actions.report"].browse(report_id)
             report.print_document(record_ids, data)

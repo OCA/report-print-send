@@ -623,7 +623,7 @@ class WizardImportZPl2(models.TransientModel):
     _description = "Import ZPL2"
 
     label_id = fields.Many2one(
-        comodel_name="printing.label.zpl2", string="Label", required=True, readonly=True
+        comodel_name="printing.label.zpl2", required=True, readonly=True
     )
     zpl_file = fields.Binary(string="ZPL2 File", required=True)
     zpl_filename = fields.Char(string="File Name")

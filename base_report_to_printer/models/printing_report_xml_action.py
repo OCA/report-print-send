@@ -14,18 +14,17 @@ class PrintingReportXmlAction(models.Model):
 
     report_id = fields.Many2one(
         comodel_name="ir.actions.report",
-        string="Report",
         required=True,
         ondelete="cascade",
     )
     user_id = fields.Many2one(
-        comodel_name="res.users", string="User", required=True, ondelete="cascade"
+        comodel_name="res.users", required=True, ondelete="cascade"
     )
     action = fields.Selection(
         selection=lambda s: s.env["printing.action"]._available_action_types,
         required=True,
     )
-    printer_id = fields.Many2one(comodel_name="printing.printer", string="Printer")
+    printer_id = fields.Many2one(comodel_name="printing.printer")
 
     printer_input_tray_id = fields.Many2one(
         comodel_name="printing.tray.input",
