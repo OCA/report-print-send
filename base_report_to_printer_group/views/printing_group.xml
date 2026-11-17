@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="printing_group_view_form">
+        <field name="name">printing.group.form (in base_report_to_printer_group)</field>
+        <field name="model">printing.group</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="text-bg-danger"
+                        invisible="active"
+                    />
+                    <field name="active" invisible="1" />
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="e.g. Warehouse" />
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="Users" name="users">
+                            <field
+                                name="user_ids"
+                                nolabel="1"
+                                context="{'search_default_filter_no_share': 1}"
+                            >
+                                <list>
+                                    <field name="name" />
+                                    <field name="login" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Printers" name="printers">
+                            <field name="printer_ids" nolabel="1">
+                                <list>
+                                    <field name="name" />
+                                    <field name="system_name" />
+                                    <field name="backend" />
+                                    <field name="status" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Report actions" name="report_actions">
+                            <field name="printing_action_ids" nolabel="1">
+                                <list
+                                    editable="bottom"
+                                    decoration-muted="active == False"
+                                >
+                                    <field name="report_id" />
+                                    <field name="action" />
+                                    <field name="printer_id" />
+                                    <field
+                                        name="printer_input_tray_id"
+                                        invisible="not printer_id"
+                                    />
+                                    <field
+                                        name="printer_output_tray_id"
+                                        invisible="not printer_id"
+                                    />
+                                    <field name="active" optional="hide" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="printing_group_view_tree">
+        <field name="name">printing.group.list (in base_report_to_printer_group)</field>
+        <field name="model">printing.group</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="user_ids" widget="many2many_tags" />
+                <field name="printer_ids" widget="many2many_tags" />
+            </list>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="printing_group_view_search">
+        <field
+            name="name"
+        >printing.group.search (in base_report_to_printer_group)</field>
+        <field name="model">printing.group</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="user_ids" />
+                <field name="printer_ids" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="printing_group_action">
+        <field name="name">Printing Groups</field>
+        <field name="res_model">printing.group</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem
+        name="Printing Groups"
+        sequence="25"
+        id="printing_group_menu"
+        parent="base_report_to_printer.printing_menu"
+        action="printing_group_action"
+    />
+</odoo>
