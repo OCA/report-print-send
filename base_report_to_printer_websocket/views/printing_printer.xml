@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="printing_printer_view_form_inherit_websocket">
+        <field
+            name="name"
+        >printing.printer.form (in base_report_to_printer_websocket)</field>
+        <field
+            name="inherit_id"
+            ref="base_report_to_printer.printing_printer_view_form"
+        />
+        <field name="model">printing.printer</field>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='enable']" position="attributes">
+                <attribute
+                    name="invisible"
+                >backend == 'websocket' or status in ['available','printing']</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='disable']" position="attributes">
+                <attribute
+                    name="invisible"
+                >backend == 'websocket' or status == 'unavailable'</attribute>
+            </xpath>
+            <xpath
+                expr="//header/button[@name='action_cancel_all_jobs']"
+                position="attributes"
+            >
+                <attribute name="invisible">backend == 'websocket'</attribute>
+            </xpath>
+            <xpath
+                expr="//header/button[@name='print_test_page']"
+                position="attributes"
+            >
+                <attribute name="invisible">backend == 'websocket'</attribute>
+            </xpath>
+            <field name="server_id" position="attributes">
+                <attribute name="invisible">backend == 'websocket'</attribute>
+            </field>
+            <group name="name" position="inside">
+                <field
+                    name="websocket_user_id"
+                    invisible="backend != 'websocket'"
+                    required="backend == 'websocket'"
+                />
+            </group>
+        </field>
+    </record>
+</odoo>
