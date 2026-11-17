@@ -8,7 +8,8 @@
 import threading
 from time import time
 
-from odoo import _, api, exceptions, fields, models, registry
+from odoo import _, api, exceptions, fields, models
+from odoo.modules.registry import Registry
 from odoo.tools.safe_eval import safe_eval
 
 REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
@@ -103,15 +104,38 @@ class IrActionsReport(models.Model):
             result["output_tray"] = self.printer_output_tray_id.system_name
         return result
 
-    def behaviour(self):
-        self.ensure_one()
-        printing_act_obj = self.env["printing.report.xml.action"]
+    def _set_extra_print_options(self, extras):
+        """
+        extra: A dictionary with extra print options
+        """
+        extras_options = {}
+        for extra, value in extras.items():
+            try:
+                extras_options.update(getattr(self, f"_set_print_extra_{extra}")(value))
+            except AttributeError:
+                extras_options[extra] = str(value)
+        return extras_options
 
-        result = self._get_user_default_print_behaviour()
-        result.update(self._get_report_default_print_behaviour())
+    def _set_print_extra_quantity(self, value):
+        """
+        We add the 'copies' attribute
+        """
+        return {"copies": str(value)} if value else {}
 
-        # Retrieve report-user specific values
-        print_action = printing_act_obj.search(
+    def _set_print_extra_printer(self, value):
+        """
+        We force the printer that will be used
+        The printer should be a recordset
+        """
+        if isinstance(value, int):
+            printer = self.env["printing.printer"].browse(value)
+        else:
+            printer = value
+        return {"printer": printer} if printer else {}
+
+    def _get_print_action(self):
+        """Specific printing action applying to the current user"""
+        return self.env["printing.report.xml.action"].search(
             [
                 ("report_id", "=", self.id),
                 ("user_id", "=", self.env.uid),
@@ -119,10 +143,17 @@ class IrActionsReport(models.Model):
             ],
             limit=1,
         )
+
+    def behaviour(self, **extras):
+        self.ensure_one()
+        result = self._get_user_default_print_behaviour()
+        result.update(self._get_report_default_print_behaviour())
+        print_action = self._get_print_action()
         if print_action:
             # For some reason design takes report defaults over
             # False action entries so we must allow for that here
             result.update({k: v for k, v in print_action.behaviour().items() if v})
+        result.update(self._set_extra_print_options(extras=extras))
         printer = result.get("printer")
         if printer:
             # When no printer is available we can fallback to the default behavior
@@ -140,8 +171,8 @@ class IrActionsReport(models.Model):
                 result["printer_exception"] = True
         return result
 
-    def print_document_client_action(self, record_ids, data=None):
-        behaviour = self.behaviour()
+    def print_document_client_action(self, record_ids, data=None, **extras):
+        behaviour = self.behaviour(**extras)
         printer = behaviour.pop("printer", None)
         if printer.multi_thread:
 
@@ -150,23 +181,28 @@ class IrActionsReport(models.Model):
                 threaded_calculation = threading.Thread(
                     target=self.print_document_threaded,
                     args=(self.id, record_ids, data),
+                    kwargs=extras,
                 )
                 threaded_calculation.start()
 
             return True
         else:
             try:
-                return self.print_document(record_ids, data=data)
+                return self.print_document(record_ids, data=data, **extras)
             except Exception:
                 return
 
-    def print_document_threaded(self, report_id, record_ids, data):
-        with registry(self._cr.dbname).cursor() as cr:
+    def print_document_threaded(self, report_id, record_ids, data, **extras):
+        with Registry(self._cr.dbname).cursor() as cr:
             self = self.with_env(self.env(cr=cr))
             report = self.env["ir.actions.report"].browse(report_id)
-            report.print_document(record_ids, data)
+            # Records given as extras are still bound to the cursor of the request
+            for key, value in extras.items():
+                if isinstance(value, models.BaseModel):
+                    extras[key] = value.with_env(self.env)
+            report.print_document(record_ids, data, **extras)
 
-    def print_document(self, record_ids, data=None):
+    def print_document(self, record_ids, data=None, **extras):
         """Print a document, do not return the document file"""
         report_type = REPORT_TYPES.get(self.report_type)
         if not report_type:
@@ -178,7 +214,7 @@ class IrActionsReport(models.Model):
         document, doc_format = getattr(
             self.with_context(must_skip_send_to_printer=True), method_name
         )(self.report_name, record_ids, data=data)
-        behaviour = self.behaviour()
+        behaviour = self.behaviour(**extras)
         printer = behaviour.pop("printer", None)
 
         if not printer:
