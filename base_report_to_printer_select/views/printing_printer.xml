@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="printing_printer_view_form">
+        <field
+            name="name"
+        >printing.printer.form (in base_report_to_printer_select)</field>
+        <field name="model">printing.printer</field>
+        <field
+            name="inherit_id"
+            ref="base_report_to_printer.printing_printer_view_form"
+        />
+        <field name="arch" type="xml">
+            <field name="server_id" position="after">
+                <field
+                    name="paperformat_ids"
+                    widget="many2many_tags"
+                    options="{'no_create': True}"
+                />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="printing_printer_view_tree">
+        <field
+            name="name"
+        >printing.printer.list (in base_report_to_printer_select)</field>
+        <field name="model">printing.printer</field>
+        <field
+            name="inherit_id"
+            ref="base_report_to_printer.printing_printer_view_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="status" position="before">
+                <field name="paperformat_ids" widget="many2many_tags" optional="show" />
+            </field>
+        </field>
+    </record>
+</odoo>

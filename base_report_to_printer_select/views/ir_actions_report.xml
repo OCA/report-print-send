@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="act_report_xml_view">
+        <field
+            name="name"
+        >ir.actions.report.form (in base_report_to_printer_select)</field>
+        <field name="model">ir.actions.report</field>
+        <field name="inherit_id" ref="base.act_report_xml_view" />
+        <field name="arch" type="xml">
+            <field name="paperformat_id" position="attributes">
+                <attribute
+                    name="invisible"
+                >report_type not in ('qweb-pdf', 'qweb-text')</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
