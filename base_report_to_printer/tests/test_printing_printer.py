@@ -98,7 +98,7 @@ class TestPrintingPrinter(TransactionCase):
     def test_print_report_error(self):
         """It should print a report through CUPS"""
         with (
-            mock.patch(f"{model}.cups") as cups,
+            mock.patch(f"{server_model}.cups") as cups,
             self.assertLogs(level=logging.WARNING) as logs,
         ):
             cups.Connection.side_effect = Exception
