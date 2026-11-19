@@ -14,8 +14,13 @@ from odoo.exceptions import UserError
 from odoo.modules.registry import Registry
 
 from .pingen import APIError, pingen_datetime_to_utc
+from .pingen_layout import find_restricted_content
 
 _logger = logging.getLogger(__name__)
+
+
+class PingenLayoutError(UserError):
+    """The PDF contains ink in a restricted printing area."""
 
 
 class PingenDocument(models.Model):
@@ -30,6 +35,9 @@ class PingenDocument(models.Model):
     _description = "pingen.document"
     _inherits = {"ir.attachment": "attachment_id"}
     _order = "push_date desc, id desc"
+
+    LAYOUT_BORDER_MM = 5.0
+    LAYOUT_CORNER_MM = 15.0
 
     attachment_id = fields.Many2one(
         "ir.attachment", "Document", required=True, readonly=True, ondelete="cascade"
@@ -115,6 +123,43 @@ class PingenDocument(models.Model):
         :param Pingen pingen: optional pingen object to reuse session
         """
         decoded_document = self.attachment_id._decoded_content()
+        violations = find_restricted_content(
+            decoded_document,
+            border_mm=self.LAYOUT_BORDER_MM,
+            corner_mm=self.LAYOUT_CORNER_MM,
+        )
+        if violations:
+            labels = {
+                "top": self.env._("top margin"),
+                "bottom": self.env._("bottom margin"),
+                "left": self.env._("left margin"),
+                "right": self.env._("right margin"),
+                "bottom_left_corner": self.env._("lower-left corner"),
+            }
+            pages = {}
+            for page, zone in violations:
+                pages.setdefault(page, []).append(labels[zone])
+            details = [
+                self.env._(
+                    "page %(page)s: %(zones)s", page=page, zones=", ".join(zones)
+                )
+                for page, zones in list(pages.items())[:10]
+            ]
+            if len(pages) > 10:
+                details.append(
+                    self.env._("… and %(count)s more", count=len(pages) - 10)
+                )
+            raise PingenLayoutError(
+                self.env._(
+                    "The PDF has content in areas Pingen does not print (%(areas)s). "
+                    "Keep every page at least %(border)s mm from all edges and "
+                    "%(corner)s mm from the lower-left corner, "
+                    "then create a new document.",
+                    areas="; ".join(details),
+                    border=self.LAYOUT_BORDER_MM,
+                    corner=self.LAYOUT_CORNER_MM,
+                )
+            )
         if pingen is None:
             pingen = self.company_id._get_pingen_client()
         try:
@@ -182,6 +227,9 @@ class PingenDocument(models.Model):
                 name=self.name,
                 exc=str(e),
             )
+        except PingenLayoutError as e:
+            state = "pingen_error"
+            error_msg = str(e)
         except Exception as e:
             error_msg = self.env._(
                 "Unexpected Error when pushing the document %(name)s to Pingen:\n"
@@ -233,6 +281,10 @@ class PingenDocument(models.Model):
                     except APIError as e:
                         document.write(
                             {"last_error_message": e, "state": "pingen_error"}
+                        )
+                    except PingenLayoutError as e:
+                        document.write(
+                            {"last_error_message": str(e), "state": "pingen_error"}
                         )
                     except Exception:
                         _logger.exception(

@@ -32,3 +32,11 @@ scheduler run.
 >   [requests_oauthlib](https://github.com/requests/requests-oauthlib)
 > - The address must be in a format accepted by pingen.com: the last
 >   line is the country in English or German.
+
+## Layout check
+
+Before uploading to Pingen, every PDF page is checked for content within 5 mm
+of any edge and in the lower-left 15 mm × 15 mm square. Detected content blocks
+the upload and sets the document to "Pingen Error". Correct the layout and
+create a new document. The postage area and address window are not checked.
+If the PDF cannot be inspected, the upload proceeds for Pingen to validate it.

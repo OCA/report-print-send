@@ -12,7 +12,7 @@
     "maturity": "Production/Stable",
     "depends": ["base_setup"],
     "external_dependencies": {
-        "python": ["requests_oauthlib", "oauthlib"],
+        "python": ["requests_oauthlib", "oauthlib", "pymupdf"],
     },
     "website": "https://github.com/OCA/report-print-send",
     "data": [

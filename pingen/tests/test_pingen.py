@@ -12,9 +12,11 @@ from os.path import dirname, join
 from unittest.mock import MagicMock, patch
 from urllib.parse import urlparse
 
+import pymupdf
 from freezegun import freeze_time
 from vcr import VCR
 
+from odoo.exceptions import UserError
 from odoo.tests import HttpCase, tagged
 from odoo.tests.common import _super_send
 
@@ -148,6 +150,62 @@ class TestPingen(HttpCase):
         document = attachment.pingen_document_ids
         document.write({"state": "pushed", "pingen_uuid": uuid})
         return document
+
+    def _layout_document(self, restricted=False):
+        with pymupdf.open() as pdf:
+            page = pdf.new_page(width=595, height=842)
+            if restricted:
+                page.draw_rect((5, 100, 10, 120), color=None, fill=(0, 0, 0))
+            attachment = self.env["ir.attachment"].create(
+                {
+                    "name": "layout.pdf",
+                    "datas": base64.b64encode(pdf.tobytes()),
+                    "type": "binary",
+                    "company_id": self.company.id,
+                }
+            )
+        attachment.write({"send_to_pingen": True})
+        return attachment.pingen_document_ids
+
+    def test_layout_error_prevents_upload(self):
+        document = self._layout_document(restricted=True)
+        client = MagicMock()
+        with (
+            patch.object(type(self.company), "_get_pingen_client", return_value=client),
+            patch("odoo.addons.pingen.models.pingen_document.Registry") as registry,
+        ):
+            # Exercise the error-write path in the test transaction: a separate
+            # cursor cannot see this uncommitted test document.
+            registry.return_value.cursor.return_value.__enter__.return_value = (
+                self.env.cr
+            )
+            with self.assertRaisesRegex(UserError, "page 1: left margin"):
+                document.push_to_pingen()
+        document.invalidate_recordset()
+        self.assertEqual(document.state, "pingen_error")
+        self.assertIn("page 1: left margin", document.last_error_message)
+        client.push_document.assert_not_called()
+
+    def test_clean_layout_preserves_upload(self):
+        document = self._layout_document()
+        client = MagicMock()
+        client.push_document.return_value = (
+            "letter-id",
+            "post-id",
+            {"status": "valid"},
+        )
+        with patch.object(
+            type(self.company), "_get_pingen_client", return_value=client
+        ):
+            self.assertTrue(document.push_to_pingen())
+        client.push_document.assert_called_once()
+        args = client.push_document.call_args.args
+        self.assertEqual(args[0], "layout.pdf")
+        self.assertTrue(args[1].getvalue().startswith(b"%PDF"))
+        self.assertEqual(args[2], "application/pdf")
+        self.assertEqual(document.state, "pushed")
+        self.assertEqual(document.pingen_uuid, "letter-id")
+        self.assertFalse(document.last_error_message)
 
     def test_pingen_push_document(self):
         with (
