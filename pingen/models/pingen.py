@@ -5,6 +5,7 @@
 
 import json
 import logging
+import math
 import uuid
 from datetime import datetime, timedelta
 from urllib.parse import urljoin
@@ -331,3 +332,36 @@ class Pingen:
             letter_id=document_uuid,
         )
         return response.json().get("data", {}).get("attributes")
+
+    def price_quote(
+        self, country, delivery_product, print_mode, print_spectrum, paper_types
+    ):
+        """Return a non-binding price and currency for the selected options."""
+        data = {
+            "data": {
+                "type": "letter_price_calculator",
+                "attributes": {
+                    "country": country,
+                    "delivery_product": delivery_product,
+                    "print_mode": print_mode,
+                    "print_spectrum": print_spectrum,
+                    "paper_types": paper_types,
+                },
+            }
+        }
+        response = self._send(
+            self.session.post,
+            self.letters_url + "/price-calculator",
+            headers=self._json_api_headers(),
+            data=json.dumps(data),
+        )
+        attributes = response.json().get("data", {}).get("attributes") or {}
+        price = attributes.get("price")
+        if (
+            isinstance(price, (int, float))
+            and not isinstance(price, bool)
+            and math.isfinite(price)
+            and price > 0
+        ):
+            return price, attributes.get("currency")
+        return None, None

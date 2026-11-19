@@ -40,3 +40,15 @@ of any edge and in the lower-left 15 mm × 15 mm square. Detected content blocks
 the upload and sets the document to "Pingen Error". Correct the layout and
 create a new document. The postage area and address window are not checked.
 If the PDF cannot be inspected, the upload proceeds for Pingen to validate it.
+
+## Letter information before sending
+
+After upload, the document shows the address read by Pingen, destination country,
+page count and estimated cost in the indicated currency. The estimate uses the
+selected delivery and printing options; refresh the letter information after
+changing them. Uploaded letters that have not been sent yet are refreshed every
+15 minutes. The actual cost appears after sending.
+
+A document uploaded with Send disabled is still sent by the scheduled action
+*Run Pingen Document Push* (hourly) unless that action is disabled. Use the
+*Ask pingen.com to send the document* button to send it earlier.

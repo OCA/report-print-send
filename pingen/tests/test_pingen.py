@@ -387,3 +387,184 @@ class TestPingen(HttpCase):
                 self.env["res.company"]._fields[name].groups, "base.group_system"
             )
         self.assertIn("pingen_organization", fields)
+
+    def test_refresh_letter_quote(self):
+        document = self._pushed_document()
+        document.write(
+            {
+                "delivery_product": "registered",
+                "print_mode": "duplex",
+                "print_spectrum": "color",
+            }
+        )
+        client = MagicMock()
+        client.post_infos.return_value = {
+            "status": "valid",
+            "country": "CH",
+            "address": "Test address",
+            "file_pages": 2,
+            "paper_types": ["normal", "payment_slip"],
+        }
+        client.price_quote.return_value = (4.25, "USD")
+        document._get_and_update_post_infos(client)
+        client.post_infos.assert_called_once_with(document.pingen_uuid)
+        client.price_quote.assert_called_once_with(
+            country="CH",
+            delivery_product="registered",
+            print_mode="duplex",
+            print_spectrum="color",
+            paper_types=["normal", "payment_slip"],
+        )
+        self.assertEqual(document.estimated_cost, 4.25)
+        self.assertEqual(document.currency_id.name, "USD")
+        self.assertEqual(document.country_id.code, "CH")
+        self.assertEqual(document.pages, 2)
+        self.assertEqual(document.parsed_address, "Test address")
+        self.assertFalse(document.cost)
+
+    def test_refresh_letter_without_quote(self):
+        document = self._pushed_document()
+        client = MagicMock()
+        for infos, state in (
+            ({"price_value": 3.5, "price_currency": "USD"}, "pushed"),
+            ({"status": "validating"}, "pushed"),
+            ({"country": "CH", "file_pages": 1}, "sendcenter"),
+            ({"country": "CH", "file_pages": 1, "status": "delivered"}, "pushed"),
+        ):
+            with self.subTest(infos=infos, state=state):
+                document.write({"state": state})
+                client.post_infos.return_value = infos
+                document._refresh_letter_infos(client)
+                client.price_quote.assert_not_called()
+
+    def test_refresh_clears_stale_estimate_when_quote_fails(self):
+        document = self._pushed_document()
+        client = MagicMock()
+        client.post_infos.return_value = {"country": "CH", "file_pages": 1}
+        client.price_quote.return_value = (3.0, "USD")
+        document._refresh_letter_infos(client)
+        self.assertEqual(document.estimated_cost, 3.0)
+        self.assertEqual(document.currency_id.name, "USD")
+        client.price_quote.side_effect = RuntimeError("calculator unavailable")
+        document._refresh_letter_infos(client)
+        self.assertFalse(document.estimated_cost)
+        self.assertFalse(document.currency_id)
+
+    def test_refresh_cron_action_calls_its_method(self):
+        cron = self.env.ref("pingen.ir_cron_refresh_pingen_pushed")
+        with patch.object(
+            type(self.env["pingen.document"]), "_refresh_pushed_documents_cron"
+        ) as refresh:
+            cron.ir_actions_server_id.run()
+        refresh.assert_called_once_with()
+
+    def test_refresh_letter_paper_types_fallback(self):
+        document = self._pushed_document()
+        client = MagicMock()
+        client.price_quote.return_value = (2, "USD")
+        for paper_types in (None, [], ["normal"]):
+            with self.subTest(paper_types=paper_types):
+                client.post_infos.return_value = {
+                    "country": "CH",
+                    "file_pages": 2,
+                    "paper_types": paper_types,
+                }
+                document._refresh_letter_infos(client)
+                self.assertEqual(
+                    client.price_quote.call_args.kwargs["paper_types"],
+                    ["normal", "normal"],
+                )
+
+    def test_refresh_letter_quote_failure(self):
+        document = self._pushed_document()
+        client = MagicMock()
+        client.post_infos.return_value = {"country": "CH", "file_pages": 1}
+        client.price_quote.side_effect = RuntimeError("calculator unavailable")
+        document._refresh_letter_infos(client)
+        self.assertFalse(document.estimated_cost)
+        self.assertEqual(document.pages, 1)
+
+    def test_push_refresh_is_best_effort(self):
+        for error in (None, RuntimeError("read unavailable")):
+            with self.subTest(error=error):
+                document = self._layout_document()
+                client = MagicMock()
+                client.push_document.return_value = ("L1", False, {"status": "valid"})
+                with patch.object(
+                    type(document), "_refresh_letter_infos", side_effect=error
+                ) as refresh:
+                    document._push_to_pingen(client)
+                refresh.assert_called_once_with(client)
+                self.assertEqual(document.state, "pushed")
+                self.assertEqual(document.pingen_uuid, "L1")
+
+    def test_refresh_pushed_cron_filters_and_continues(self):
+        first = self._pushed_document("L1")
+        second = self._pushed_document("L2")
+        excluded = self._pushed_document("L3")
+        excluded.write({"state": "sent"})
+        pending = self._pushed_document("L4")
+        pending.write({"state": "pending"})
+        processed = []
+
+        def refresh(document, client):
+            processed.append(document.id)
+            if len(processed) == 1:
+                raise RuntimeError("read unavailable")
+
+        with (
+            patch("odoo.addons.pingen.models.pingen_document.Registry") as registry,
+            patch.object(type(first), "_refresh_letter_infos", refresh),
+            patch.object(
+                type(self.company), "_get_pingen_client", return_value=MagicMock()
+            ),
+        ):
+            # Let the new environment see this transaction's uncommitted records.
+            registry.return_value.cursor.return_value.__enter__.return_value = (
+                self.env.cr
+            )
+            self.env["pingen.document"]._refresh_pushed_documents_cron()
+        self.assertCountEqual(processed, [first.id, second.id])
+
+    def test_price_quote_payload_and_response(self):
+        client = Pingen("client", "secret", ORGANISATION)
+        client._session = MagicMock()
+        response = MagicMock()
+        with patch.object(client, "_send", return_value=response) as send:
+            response.json.return_value = {
+                "data": {"attributes": {"price": 3.25, "currency": "USD"}}
+            }
+            self.assertEqual(
+                client.price_quote("CH", "registered", "simplex", "color", ["normal"]),
+                (3.25, "USD"),
+            )
+            self.assertEqual(send.call_args.args[0], client._session.post)
+            self.assertEqual(
+                send.call_args.args[1], client.letters_url + "/price-calculator"
+            )
+            self.assertEqual(
+                json.loads(send.call_args.kwargs["data"]),
+                {
+                    "data": {
+                        "type": "letter_price_calculator",
+                        "attributes": {
+                            "country": "CH",
+                            "delivery_product": "registered",
+                            "print_mode": "simplex",
+                            "print_spectrum": "color",
+                            "paper_types": ["normal"],
+                        },
+                    }
+                },
+            )
+            self.assertIn("Content-Type", send.call_args.kwargs["headers"])
+            for price in (None, 0, -1, "3.25", True, float("inf"), float("nan")):
+                with self.subTest(price=price):
+                    attributes = {} if price is None else {"price": price}
+                    response.json.return_value = {"data": {"attributes": attributes}}
+                    self.assertEqual(
+                        client.price_quote(
+                            "CH", "cheap", "simplex", "color", ["normal"]
+                        ),
+                        (None, None),
+                    )

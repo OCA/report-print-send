@@ -104,6 +104,10 @@ class PingenDocument(models.Model):
     # sendcenter infos
     parsed_address = fields.Text(readonly=True)
     cost = fields.Float(readonly=True)
+    estimated_cost = fields.Float(
+        readonly=True,
+        help="Estimated price before sending, in the document currency.",
+    )
     currency_id = fields.Many2one("res.currency", "Currency", readonly=True)
     country_id = fields.Many2one("res.country", "Country", readonly=True)
     send_date = fields.Datetime("Date of sending", readonly=True)
@@ -200,6 +204,13 @@ class PingenDocument(models.Model):
                 "pingen_status": infos.get("status"),
             }
         )
+        try:
+            with self.env.cr.savepoint():
+                self._refresh_letter_infos(pingen)
+        except Exception:
+            _logger.warning(
+                "Could not refresh pushed Pingen Document %s", self.id, exc_info=True
+            )
         _logger.info("Pingen Document %s: pushed to %s", self.id, pingen.api_url)
 
     def push_to_pingen(self):
@@ -391,8 +402,49 @@ class PingenDocument(models.Model):
         pingen of a document in the Sendcenter
         :param Pingen pingen: pingen object to reuse
         """
+        self._refresh_letter_infos(pingen)
+
+    def _refresh_letter_infos(self, pingen):
+        """Read the letter and estimate its price until it has been submitted."""
+        self.ensure_one()
         post_infos = self._get_post_infos(pingen)
         self._update_post_infos(post_infos)
+        if (
+            (post_infos.get("price_value") or 0) > 0
+            or self.state in ("sendcenter", "sent", "canceled", "error_undeliverable")
+            or post_infos.get("submitted_at")
+        ):
+            return
+        # A previous estimate may no longer match the options or the letter:
+        # keep amount and currency together, or clear both.
+        self.write({"estimated_cost": 0.0, "currency_id": False})
+        country = post_infos.get("country")
+        pages = post_infos.get("file_pages")
+        if not country or not isinstance(pages, int) or pages <= 0:
+            return
+        try:
+            paper_types = post_infos.get("paper_types")
+            if not isinstance(paper_types, list) or len(paper_types) != pages:
+                paper_types = ["normal"] * pages
+            price, currency_code = pingen.price_quote(
+                country=country,
+                delivery_product=self.delivery_product,
+                print_mode=self.print_mode,
+                print_spectrum=self.print_spectrum,
+                paper_types=paper_types,
+            )
+            if price is not None:
+                with self.env.cr.savepoint():
+                    currency = (
+                        self.env["res.currency"]
+                        .with_context(active_test=False)
+                        .search([("name", "=", currency_code)], limit=1)
+                    )
+                    self.write({"estimated_cost": price, "currency_id": currency.id})
+        except Exception:
+            _logger.warning(
+                "Could not estimate Pingen Document %s", self.id, exc_info=True
+            )
 
     def _get_post_infos(self, pingen):
         if not self.pingen_uuid:
@@ -488,6 +540,27 @@ class PingenDocument(models.Model):
                     # In any case, the error has been
                     # logged by _get_post_infos
                     pass
+        return True
+
+    def _refresh_pushed_documents_cron(self):
+        """Refresh uploaded letters independently; retry failures on the next run."""
+        try:
+            with Registry(self.env.cr.dbname).cursor() as new_cr:
+                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                documents = self.with_env(new_env).search([("state", "=", "pushed")])
+                for document in documents:
+                    try:
+                        with new_cr.savepoint():
+                            session = document.company_id._get_pingen_client()
+                            document._refresh_letter_infos(session)
+                    except Exception:
+                        _logger.warning(
+                            "Could not refresh Pingen Document %s in cron",
+                            document.id,
+                            exc_info=True,
+                        )
+        except Exception:
+            _logger.warning("Could not refresh pushed Pingen letters", exc_info=True)
         return True
 
     def update_post_infos(self):

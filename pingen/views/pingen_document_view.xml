@@ -12,6 +12,10 @@
                 <field name="print_spectrum" />
                 <field name="state" />
                 <field name="pingen_status" />
+                <field name="country_id" optional="show" />
+                <field name="pages" optional="show" />
+                <field name="estimated_cost" optional="show" />
+                <field name="cost" optional="show" />
             </list>
         </field>
     </record>
@@ -110,6 +114,24 @@
                             </group>
                         </group>
 
+                        <group invisible="state not in ('pushed', 'sendcenter', 'sent')">
+                            <separator string="Letter read from Pingen" colspan="4" />
+                            <newline />
+                            <group>
+                                <field name="parsed_address" />
+                                <field name="country_id" />
+                                <field name="pages" />
+                                <label
+                                    for="estimated_cost"
+                                    string="Estimated cost (before sending)"
+                                    invisible="cost &gt; 0"
+                                />
+                                <div invisible="cost &gt; 0">
+                                    <field name="estimated_cost" class="oe_inline" />
+                                    <field name="currency_id" class="oe_inline" />
+                                </div>
+                            </group>
+                        </group>
                         <group invisible="state not in ('sendcenter', 'sent')">
                             <separator string="Sendcenter" colspan="4" />
                             <newline />
@@ -124,10 +146,7 @@
                                     />
                                 </div>
                                 <newline />
-                                <field name="parsed_address" />
-                                <field name="country_id" />
                                 <field name="send_date" />
-                                <field name="pages" />
                             </group>
                         </group>
                     </page>
