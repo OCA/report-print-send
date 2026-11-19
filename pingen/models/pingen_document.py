@@ -122,6 +122,40 @@ class PingenDocument(models.Model):
         ),
     ]
 
+    def unlink(self):
+        attachments = self.attachment_id
+        result = super().unlink()
+        self._unlink_unused_attachments(attachments)
+        return result
+
+    @api.model
+    def _unlink_unused_attachments(self, attachments):
+        """Keep attachments with an owner or any stored relational reference."""
+        attachments = attachments.sudo().exists()
+        reference_fields = (
+            self.env["ir.model.fields"]
+            .sudo()
+            .search(
+                [
+                    ("relation", "=", "ir.attachment"),
+                    ("store", "=", True),
+                    ("ttype", "in", ("many2one", "many2many")),
+                    ("model", "!=", self._name),
+                ]
+            )
+        )
+        for attachment in attachments:
+            if attachment.res_model:
+                continue
+            for field in reference_fields:
+                if field.model not in self.env.registry:
+                    continue
+                model = self.env[field.model].sudo().with_context(active_test=False)
+                if model.search_count([(field.name, "in", attachment.ids)]):
+                    break
+            else:
+                attachment.exists().unlink()
+
     def _push_to_pingen(self, pingen=None):
         """Push a document to pingen.com
         :param Pingen pingen: optional pingen object to reuse session

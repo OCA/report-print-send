@@ -7,7 +7,7 @@
         <field name="interval_number">1</field>
         <field name="interval_type">hours</field>
         <field name="model_id" ref="model_pingen_document" />
-        <field name="code">model._push_and_send_to_pingen_cron</field>
+        <field name="code">model._push_and_send_to_pingen_cron()</field>
     </record>
 
     <record forcecreate="True" id="ir_cron_update_pingen" model="ir.cron">
@@ -17,7 +17,7 @@
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <field name="model_id" ref="model_pingen_document" />
-        <field name="code">model._update_post_infos_cron</field>
+        <field name="code">model._update_post_infos_cron()</field>
     </record>
     <record forcecreate="True" id="ir_cron_refresh_pingen_pushed" model="ir.cron">
         <field name="name">Refresh Pushed Pingen Documents</field>

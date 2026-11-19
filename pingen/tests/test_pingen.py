@@ -5,6 +5,7 @@
 import base64
 import hashlib
 import hmac
+import importlib.util
 import json
 import logging
 from datetime import datetime, timedelta
@@ -450,13 +451,127 @@ class TestPingen(HttpCase):
         self.assertFalse(document.estimated_cost)
         self.assertFalse(document.currency_id)
 
-    def test_refresh_cron_action_calls_its_method(self):
-        cron = self.env.ref("pingen.ir_cron_refresh_pingen_pushed")
-        with patch.object(
-            type(self.env["pingen.document"]), "_refresh_pushed_documents_cron"
-        ) as refresh:
-            cron.ir_actions_server_id.run()
-        refresh.assert_called_once_with()
+    def test_cron_actions_call_their_methods(self):
+        for xmlid, method in (
+            ("ir_cron_push_pingen", "_push_and_send_to_pingen_cron"),
+            ("ir_cron_update_pingen", "_update_post_infos_cron"),
+            ("ir_cron_refresh_pingen_pushed", "_refresh_pushed_documents_cron"),
+        ):
+            with self.subTest(xmlid=xmlid):
+                cron = self.env.ref(f"pingen.{xmlid}")
+                with patch.object(type(self.env["pingen.document"]), method) as run:
+                    cron.ir_actions_server_id.run()
+                run.assert_called_once_with()
+
+    def test_cron_code_migration_is_idempotent(self):
+        path = join(
+            dirname(__file__), "..", "migrations", "18.0.1.0.1", "post-migration.py"
+        )
+        spec = importlib.util.spec_from_file_location("pingen_post_migration", path)
+        migration = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(migration)
+        crons = self.env["ir.cron"]
+        expected = {}
+        for xmlid in (
+            "pingen.ir_cron_push_pingen",
+            "pingen.ir_cron_update_pingen",
+            "pingen.ir_cron_refresh_pingen_pushed",
+        ):
+            cron = self.env.ref(xmlid)
+            expected[cron.id] = cron.code
+            cron.code = cron.code.removesuffix("()")
+            crons |= cron
+        for _ in range(2):
+            migration.migrate(self.env.cr, "18.0.1.0.0")
+            crons.invalidate_recordset(["code"])
+            for cron in crons:
+                self.assertEqual(cron.code, expected[cron.id])
+
+    def test_cron_code_migration_keeps_customized_code(self):
+        path = join(
+            dirname(__file__), "..", "migrations", "18.0.1.0.1", "post-migration.py"
+        )
+        spec = importlib.util.spec_from_file_location("pingen_post_migration", path)
+        migration = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(migration)
+        cron = self.env.ref("pingen.ir_cron_push_pingen")
+        custom = "model._push_and_send_to_pingen_cron(); log('done')"
+        cron.code = custom
+        migration.migrate(self.env.cr, "18.0.1.0.0")
+        cron.invalidate_recordset(["code"])
+        self.assertEqual(cron.code, custom)
+
+    def _attachment_reference_field(self, ttype="many2one"):
+        # Exercise real ORM metadata and searches without depending on mail.
+        field = self.env["ir.model.fields"].create(
+            {
+                "name": f"x_pingen_test_{ttype}",
+                "field_description": "Pingen test attachment",
+                "model_id": self.env["ir.model"]._get_id("res.partner"),
+                "ttype": ttype,
+                "relation": "ir.attachment",
+                "store": True,
+                "state": "manual",
+            }
+        )
+        self.addCleanup(field.unlink)
+        return field.name
+
+    def test_unlink_document_deletes_unused_attachment(self):
+        document = self._pushed_document()
+        attachment = document.attachment_id
+        document.unlink()
+        self.assertFalse(document.exists())
+        self.assertFalse(attachment.exists())
+
+    def test_unlink_document_keeps_owned_attachment(self):
+        document = self._pushed_document()
+        attachment = document.attachment_id
+        partner = self.env["res.partner"].create({"name": "Attachment owner"})
+        attachment.write({"res_model": "res.partner", "res_id": partner.id})
+        document.unlink()
+        self.assertFalse(document.exists())
+        self.assertTrue(attachment.exists())
+
+    def test_unlink_document_keeps_referenced_attachment(self):
+        for ttype in ("many2one", "many2many"):
+            with self.subTest(ttype=ttype):
+                field_name = self._attachment_reference_field(ttype)
+                document = self._pushed_document()
+                attachment = document.attachment_id
+                value = (
+                    attachment.id if ttype == "many2one" else [(6, 0, attachment.ids)]
+                )
+                partner = self.env["res.partner"].create(
+                    {"name": "Attachment reference", "active": False, field_name: value}
+                )
+                document.unlink()
+                self.assertFalse(document.exists())
+                self.assertTrue(attachment.exists())
+                self.assertEqual(partner[field_name], attachment)
+
+    def test_unlink_documents_checks_each_attachment(self):
+        field_name = self._attachment_reference_field()
+        shared = self._pushed_document()
+        free = self._pushed_document()
+        shared_attachment = shared.attachment_id
+        free_attachment = free.attachment_id
+        self.env["res.partner"].create(
+            {"name": "Attachment reference", field_name: shared_attachment.id}
+        )
+        documents = shared | free
+        documents.unlink()
+        self.assertFalse(documents.exists())
+        self.assertTrue(shared_attachment.exists())
+        self.assertFalse(free_attachment.exists())
+
+    def test_unlink_attachment_cascades_to_document(self):
+        document = self._pushed_document()
+        attachment = document.attachment_id
+        attachment.unlink()
+        self.assertFalse(attachment.exists())
+        self.assertFalse(document.exists())
+        self.env["pingen.document"]._unlink_unused_attachments(attachment)
 
     def test_refresh_letter_paper_types_fallback(self):
         document = self._pushed_document()

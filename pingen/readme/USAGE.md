@@ -15,6 +15,9 @@ on the right on the attachment view.
 You can find them in Pingen Documents App or in the more convenient
 Documents menu if you have installed the document module.
 
+Deleting a Pingen document also deletes its attachment unless it is linked to
+another record.
+
 ## Errors
 
 Sometimes, pingen.com will refuse to send a document because it does not
