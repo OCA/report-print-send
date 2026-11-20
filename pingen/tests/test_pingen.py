@@ -41,6 +41,7 @@ class TestPingen(HttpCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.company = cls.env.user.company_id
         cls.company.write(
             {
