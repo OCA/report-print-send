@@ -47,7 +47,7 @@ After upload, the document shows the address read by Pingen, destination country
 page count and estimated cost in the indicated currency. The estimate uses the
 selected delivery and printing options; refresh the letter information after
 changing them. Uploaded letters that have not been sent yet are refreshed every
-15 minutes. The actual cost appears after sending.
+hour. The actual cost appears after sending.
 
 A document uploaded with Send disabled is still sent by the scheduled action
 *Run Pingen Document Push* (hourly) unless that action is disabled. Use the

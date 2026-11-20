@@ -23,8 +23,8 @@
         <field name="name">Refresh Pushed Pingen Documents</field>
         <field eval="True" name="active" />
         <field name="user_id" ref="base.user_root" />
-        <field name="interval_number">15</field>
-        <field name="interval_type">minutes</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
         <field name="model_id" ref="model_pingen_document" />
         <field name="code">model._refresh_pushed_documents_cron()</field>
     </record>
