@@ -11,8 +11,6 @@ import threading
 from odoo import _, api, exceptions, fields, models, registry
 from odoo.tools.safe_eval import safe_eval, time
 
-REPORT_TYPES = {"qweb-pdf": "pdf", "qweb-text": "text"}
-
 _logger = logging.getLogger(__name__)
 
 
@@ -156,15 +154,26 @@ class IrActionsReport(models.Model):
             report = self.env["ir.actions.report"].browse(report_id)
             report.print_document(record_ids, data)
 
+    @api.model
+    def _get_print_render_methods(self):
+        """Return the method rendering each report type direct printing
+        supports: {report type: method name}. A module adding a report type
+        extends it with the method that renders such a report; the method is
+        called with the report name, the record ids and the data, and returns
+        the document and its format."""
+        return {
+            "qweb-pdf": "_render_qweb_pdf",
+            "qweb-text": "_render_qweb_text",
+        }
+
     def print_document(self, record_ids, data=None):
         """Print a document, do not return the document file"""
-        report_type = REPORT_TYPES.get(self.report_type)
-        if not report_type:
+        method_name = self._get_print_render_methods().get(self.report_type)
+        if not method_name:
             raise exceptions.UserError(
                 _("This report type (%s) is not supported by direct printing!")
                 % str(self.report_type)
             )
-        method_name = "_render_qweb_%s" % (report_type)
         document, doc_format = getattr(
             self.with_context(must_skip_send_to_printer=True), method_name
         )(self.report_name, record_ids, data=data)
