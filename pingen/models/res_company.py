@@ -8,7 +8,6 @@ from .pingen import Pingen
 
 
 class ResCompany(models.Model):
-
     _inherit = "res.company"
 
     pingen_clientid = fields.Char(size=20)

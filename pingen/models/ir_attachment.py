@@ -11,7 +11,6 @@ from odoo.exceptions import UserError
 
 
 class IrAttachment(models.Model):
-
     _inherit = "ir.attachment"
 
     send_to_pingen = fields.Boolean("Send to Pingen.com")
@@ -61,13 +60,13 @@ class IrAttachment(models.Model):
 
     @api.model
     def create(self, vals):
-        attachment = super(IrAttachment, self).create(vals)
+        attachment = super().create(vals)
         if "send_to_pingen" in vals:
             attachment._handle_pingen_document()
         return attachment
 
     def write(self, vals):
-        res = super(IrAttachment, self).write(vals)
+        res = super().write(vals)
         if "send_to_pingen" in vals:
             for attachment in self:
                 attachment._handle_pingen_document()
