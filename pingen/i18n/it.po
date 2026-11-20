@@ -1,0 +1,694 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pingen
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-06-30 10:25+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__access_token
+msgid "Access Token"
+msgstr "Token di accesso"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Ask pingen.com to send the document"
+msgstr "Richiesta a pingen.com per inviare il documento"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Attached To"
+msgstr "Allegato a"
+
+#. module: pingen
+#: model:ir.model,name:pingen.model_ir_attachment
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Attachment"
+msgstr "Allegato"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__local_url
+msgid "Attachment URL"
+msgstr "URL allegato"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__auto_send
+msgid "Auto Send"
+msgstr "Auto invio"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__state__canceled
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_search
+msgid "Canceled"
+msgstr "Annullato"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__checksum
+msgid "Checksum/SHA1"
+msgstr "Checksum/SHA1"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__print_spectrum__color
+msgid "Color"
+msgstr "Colore"
+
+#. module: pingen
+#: model:ir.model,name:pingen.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: pingen
+#: model:ir.model,name:pingen.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni configurazione"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__state__error
+msgid "Connection Error"
+msgstr "Errore di connessione"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/pingen_document.py:0
+#, python-format
+msgid "Connection Error when asking for sending the document %s to Pingen"
+msgstr ""
+"Errore di connessione quando si richiede l'invio del documento %s a Pingen"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/pingen_document.py:0
+#, python-format
+msgid "Connection Error when pushing document %s to Pingen"
+msgstr "Errore di connessione quando si inva il documento %s a Pingen"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/pingen_document.py:0
+#, python-format
+msgid "Connection Error when updating the status of Document %s from Pingen"
+msgstr ""
+"Errore di connessione quando si aggiorna lo stato del documento %s per Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__cost
+msgid "Cost"
+msgstr "Costo"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__country_id
+msgid "Country"
+msgstr "Nazione"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__currency_id
+msgid "Currency"
+msgstr "Valuta"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Data"
+msgstr "Dati"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__db_datas
+msgid "Database Data"
+msgstr "Dati database"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__send_date
+msgid "Date of sending"
+msgstr "Data di spedizione"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Dates"
+msgstr "Date"
+
+#. module: pingen
+#: model:ir.model.fields,help:pingen.field_pingen_document__auto_send
+msgid "Defines if a document is merely uploaded or also sent"
+msgstr "Definisce se un documento è semplicemente aggiornato o anche spedito"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__delivery_product
+msgid "Delivery product"
+msgstr "Prodotto consegna"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__description
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__attachment_id
+msgid "Document"
+msgstr "Documento"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__print_mode__duplex
+msgid "Duplex"
+msgstr "Duplex"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_search
+msgid "Error"
+msgstr "Errore"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__last_error_message
+msgid "Error Message"
+msgstr "Messaggio di errore"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/pingen_document.py:0
+#, python-format
+msgid ""
+"Error when asking Pingen to send the document %(name): \n"
+"%(exc)"
+msgstr ""
+"Errore nella richiesta a Pingen di inviare il documento %(name): \n"
+"%(exc)"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/pingen_document.py:0
+#, python-format
+msgid ""
+"Error when pushing the document %(name) to Pingen:\n"
+"%(exc)"
+msgstr ""
+"Errore nell'invio del documento %(name) a Pingen:\n"
+"%(exc)"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/pingen_document.py:0
+#, python-format
+msgid ""
+"Error when updating the status of Document %(name) from Pingen: \n"
+"%(exc)"
+msgstr ""
+"Errore nell'aggiornamento lo stato del documento %(name) da Pingen: \n"
+"%(exc)"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/ir_attachment.py:0
+#, python-format
+msgid "Error. The attachment %s is already pushed to pingen.com."
+msgstr "Errore. L'allegato %s è già stato inviato a pingen.com."
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Errors"
+msgstr "Errori"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Errors resolved"
+msgstr "Errori risolti"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__datas
+msgid "File Content (base64)"
+msgstr "Contenuto file (base64)"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__raw
+msgid "File Content (raw)"
+msgstr "Contenuto file (raw)"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__file_size
+msgid "File Size"
+msgstr "Dimensione file"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__print_spectrum__grayscale
+msgid "Grayscale"
+msgstr "Scala di grigi"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__id
+msgid "ID"
+msgstr "ID"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__image_height
+msgid "Image Height"
+msgstr "Altezza immagine"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__image_src
+msgid "Image Src"
+msgstr "Sorgente immagine"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__image_width
+msgid "Image Width"
+msgstr "Larghezza immagine"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__state__sendcenter
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_search
+msgid "In Sendcenter"
+msgstr "Nel centro invii"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__index_content
+msgid "Indexed Content"
+msgstr "Contenuto indicizzato"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__public
+msgid "Is public document"
+msgstr "È un documento pubblico"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__mimetype
+msgid "Mime Type"
+msgstr "Tipo MIME"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: pingen
+#: model:ir.model.constraint,message:pingen.constraint_pingen_document_pingen_document_attachment_uniq
+msgid "Only one Pingen document is allowed per attachment."
+msgstr "È consentito un solo documento Pingen per allegato."
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Options"
+msgstr "Opzioni"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__original_id
+msgid "Original (unoptimized, unresized) attachment"
+msgstr "Allegato originale (non ottimizzato, non ridimensionato)"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__pages
+msgid "Pages"
+msgstr "Pagine"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__parsed_address
+msgid "Parsed Address"
+msgstr "Indirizzo analizzato"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__state__pending
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_search
+msgid "Pending"
+msgstr "In attesa"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.res_config_settings_view_form
+msgid "Pingen"
+msgstr "Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_clientid
+msgid "Pingen Client ID"
+msgstr "ID cliente Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_client_secretid
+msgid "Pingen Client Secret ID"
+msgstr "ID segreto cliente Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_company__pingen_client_secretid
+msgid "Pingen Client Secretid"
+msgstr "ID segreto cliente Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_company__pingen_clientid
+msgid "Pingen Clientid"
+msgstr "ID cliente Pingen"
+
+#. module: pingen
+#: model:ir.actions.act_window,name:pingen.act_attachment_to_pingen_document
+#: model:ir.model.fields,field_description:pingen.field_ir_attachment__pingen_document_ids
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__pingen_document_ids
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Pingen Document"
+msgstr "Documento Pingen"
+
+#. module: pingen
+#: model:ir.actions.act_window,name:pingen.action_pingen_document
+#: model:ir.ui.menu,name:pingen.menu_pingen_document
+msgid "Pingen Documents"
+msgstr "Documenti Pingen"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__state__pingen_error
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_search
+msgid "Pingen Error"
+msgstr "Errore Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_ssl_verify
+msgid "Pingen SSL Verification"
+msgstr "Verifica SSL Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_company__pingen_ssl_verify
+msgid "Pingen Ssl Verify"
+msgstr "Verifica SSL Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_company__pingen_staging
+#: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_staging
+msgid "Pingen Staging"
+msgstr "Fase Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__pingen_status
+msgid "Pingen Status"
+msgstr "Stato Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__pingen_uuid
+msgid "Pingen Uuid"
+msgstr "UUID Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_company__pingen_webhook_secret
+msgid "Pingen Webhook Secret"
+msgstr "Webhook segreto Pingen"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_attachment_form
+msgid "Pingen info"
+msgstr "Informazioni Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_organization
+msgid "Pingen organization"
+msgstr "Organizzazione Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_company__pingen_organization
+msgid "Pingen organization ID"
+msgstr "ID organizzazione Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_res_config_settings__pingen_webhook_secret
+msgid "Pingen webhook secret"
+msgstr "Webhook segreto Pingen"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Pingen.com"
+msgstr "Pingen.com"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__print_spectrum
+msgid "Print Spectrum"
+msgstr "Spettro Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__print_mode
+msgid "Print mode"
+msgstr "Modalità stampa"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__push_date
+msgid "Push Date"
+msgstr "Invia dati"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Push to pingen.com"
+msgstr "Invia a pingen.com"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__state__pushed
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_search
+msgid "Pushed"
+msgstr "Inviato"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__res_field
+msgid "Resource Field"
+msgstr "Campo risorsa"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__res_id
+msgid "Resource ID"
+msgstr "ID risorsa"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__res_model
+msgid "Resource Model"
+msgstr "Modello risorsa"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__res_name
+msgid "Resource Name"
+msgstr "Nome risorsa"
+
+#. module: pingen
+#: model:ir.actions.server,name:pingen.ir_cron_push_pingen_ir_actions_server
+#: model:ir.cron,cron_name:pingen.ir_cron_push_pingen
+msgid "Run Pingen Document Push"
+msgstr "Esegui invio documento Pingen"
+
+#. module: pingen
+#: model:ir.actions.server,name:pingen.ir_cron_update_pingen_ir_actions_server
+#: model:ir.cron,cron_name:pingen.ir_cron_update_pingen
+msgid "Run Pingen Document Update"
+msgstr "Esegui aggiornamento documento Pingen"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_ir_attachment__send_to_pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__send_to_pingen
+msgid "Send to Pingen.com"
+msgstr "Inviato a Pingen.com"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Sendcenter"
+msgstr "Centro invii"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__state__sent
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_search
+msgid "Sent"
+msgstr "Inviato"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__print_mode__simplex
+msgid "Simplex"
+msgstr "Simplex"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__state
+msgid "State"
+msgstr "Stato"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__store_fname
+msgid "Stored Filename"
+msgstr "Nome file memorizzato"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/ir_attachment.py:0
+#, python-format
+msgid "The type of attachment %s is not handled"
+msgstr "Il tipo di allegato %s non è gestito"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__state__error_undeliverable
+msgid "Undeliverable"
+msgstr "Non consegnabile"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/pingen_document.py:0
+#, python-format
+msgid ""
+"Unexpected Error when pushing the document %(name) to Pingen:\n"
+"%(exc)"
+msgstr ""
+"Errore inaspettato nell'invio del documento %(name) a Pingen:\n"
+"%(exc)"
+
+#. module: pingen
+#. odoo-python
+#: code:addons/pingen/models/pingen_document.py:0
+#, python-format
+msgid "Unexpected Error when updating the status of Document %s"
+msgstr "Errore inaspettato nell'aggiornamento dello stato documento %s"
+
+#. module: pingen
+#: model_terms:ir.ui.view,arch_db:pingen.view_pingen_document_form
+msgid "Update the letter's informations"
+msgstr "Aggiorna le informazioni della lettera"
+
+#. module: pingen
+#: model:ir.model.fields,field_description:pingen.field_pingen_document__url
+msgid "Url"
+msgstr "URL"
+
+#. module: pingen
+#: model:ir.model.fields,help:pingen.field_pingen_document__type
+msgid ""
+"You can either upload a file from your computer or copy/paste an internet "
+"link to your file."
+msgstr ""
+"È possibile caricare un file dal computer oppure fare copia/incolla di un "
+"collegamento Internet al file."
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__atpost_economy
+msgid "atpost_economy"
+msgstr "atpost_economy"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__atpost_priority
+msgid "atpost_priority"
+msgstr "atpost_priority"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__bulk
+msgid "bulk"
+msgstr "sfusi"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__cheap
+msgid "cheap"
+msgstr "economico"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__dhl_priority
+msgid "dhl_priority"
+msgstr "dhl_priority"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__dpag_economy
+msgid "dpag_economy"
+msgstr "dpag_economy"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__dpag_standard
+msgid "dpag_standard"
+msgstr "dpag_standard"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__fast
+msgid "fast"
+msgstr "rapido"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__indpost_mail
+msgid "indpost_mail"
+msgstr "indpost_mail"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__indpost_speedmail
+msgid "indpost_speedmail"
+msgstr "indpost_speedmail"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__nlpost_priority
+msgid "nlpost_priority"
+msgstr "nlpost_priority"
+
+#. module: pingen
+#: model:ir.model,name:pingen.model_pingen_document
+msgid "pingen.document"
+msgstr "pingen.document"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__postag_a
+msgid "postag_a"
+msgstr "postag_a"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__postag_aplus
+msgid "postag_aplus"
+msgstr "postag_aplus"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__postag_b
+msgid "postag_b"
+msgstr "postag_b"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__postag_b2
+msgid "postag_b2"
+msgstr "postag_b2"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__postag_registered
+msgid "postag_registered"
+msgstr "postag_registered"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__sign
+msgid "sign"
+msgstr "firma"
+
+#. module: pingen
+#: model:ir.model.fields.selection,name:pingen.selection__pingen_document__delivery_product__track
+msgid "track"
+msgstr "traccia"
