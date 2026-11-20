@@ -203,6 +203,30 @@ class TestReport(common.HttpCase):
             self.report.print_document(self.partners.ids)
             print_document.assert_called_once()
 
+    def test_print_document_unsupported_report_type(self):
+        """It should refuse a report type no module can print"""
+        self.report.report_type = "qweb-html"
+        self.report.printing_printer_id = self.new_printer()
+        with self.assertRaisesRegex(exceptions.UserError, "qweb-html"):
+            self.report.print_document(self.partners.ids)
+
+    def test_print_document_added_report_type(self):
+        """It should print a report type a module adds with its render method"""
+        self.report.report_type = "qweb-html"
+        self.report.printing_printer_id = self.new_printer()
+        with mock.patch(
+            "odoo.addons.base_report_to_printer.models."
+            "ir_actions_report.IrActionsReport."
+            "_get_print_render_methods",
+            return_value={"qweb-html": "_render_qweb_html"},
+        ), mock.patch(
+            "odoo.addons.base_report_to_printer.models."
+            "printing_printer.PrintingPrinter."
+            "print_document"
+        ) as print_document:
+            self.report.print_document(self.partners.ids)
+            print_document.assert_called_once()
+
     def test_print_document_no_printer(self):
         """It should raise an error"""
         with self.assertRaises(exceptions.UserError):
