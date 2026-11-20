@@ -53,7 +53,9 @@ class IrActionsReport(models.Model):
         report = self._get_report_from_name(report_name)
         if not report:
             return {}
-        result = report.behaviour()
+        # _get_report_from_name() replaces the context: give behaviour() the
+        # context of the caller
+        result = report.with_context(**self.env.context).behaviour()
         serializable_result = {
             "action": result["action"],
             "printer_name": result["printer"].name,
