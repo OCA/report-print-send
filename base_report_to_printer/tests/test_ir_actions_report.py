@@ -74,12 +74,21 @@ class TestIrActionsReportXml(TransactionCase):
         """It should return correct serializable result for behaviour"""
         with mock.patch("%s._get_report_from_name" % model) as mk:
             res = self.Model.print_action_for_report_name("test")
-            behaviour = mk().behaviour()
+            behaviour = mk().with_context().behaviour()
             expect = {
                 "action": behaviour["action"],
                 "printer_name": behaviour["printer"].name,
             }
             self.assertDictEqual(expect, res, "Expect {}, Got {}".format(expect, res))
+
+    def test_print_action_for_report_name_keeps_context(self):
+        """It should compute the behaviour in the context of the caller"""
+        with mock.patch("%s._get_report_from_name" % model) as mk:
+            self.Model.with_context(test_key="test").print_action_for_report_name(
+                "test"
+            )
+            mk().with_context.assert_called_once()
+            self.assertEqual(mk().with_context.call_args.kwargs["test_key"], "test")
 
     def test_behaviour_default_values(self):
         """It should return the default action and printer"""
