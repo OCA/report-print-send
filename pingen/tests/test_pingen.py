@@ -6,12 +6,13 @@ import json
 import logging
 from os.path import dirname, join
 from unittest.mock import patch
+from urllib.parse import urlparse
 
 from freezegun import freeze_time
 from vcr import VCR
 
 from odoo.tests import tagged
-from odoo.tests.common import HttpCase
+from odoo.tests.common import HttpCase, _super_send
 
 from odoo.addons.website.tools import MockRequest
 
@@ -42,6 +43,15 @@ class TestPingen(HttpCase):
         cls.company.pingen_staging = True
 
         cls.pc = PingenController()
+
+    @classmethod
+    def _request_handler(cls, s, r, /, **kw):
+        # Odoo blocks external HTTP in tests before VCR (which patches below
+        # requests) can answer: let the Pingen hosts through to the cassette.
+        host = urlparse(r.url).hostname or ""
+        if host.endswith(".pingen.com") or host.endswith(".cloudscale.ch"):
+            return _super_send(s, r, **kw)
+        return super()._request_handler(s, r, **kw)
 
     # flake8: noqa: B950
     def get_request_json(self, uuid):

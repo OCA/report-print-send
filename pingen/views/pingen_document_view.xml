@@ -28,7 +28,7 @@
         <button
                         name="push_to_pingen"
                         type="object"
-                        states="pending"
+                        invisible="state != 'pending'"
                         string="Push to pingen.com"
                         icon="fa-upload"
                     />
@@ -37,19 +37,19 @@
                         type="object"
                         string="Ask pingen.com to send the document"
                         icon="fa-share"
-                        attrs="{'invisible': ['|', ('state', '!=', 'pushed'),('auto_send', '=', True)]}"
+                        invisible="state != 'pushed' or auto_send"
                     />
         <button
                         name="resolve_error"
                         type="object"
-                        states="error,pingen_error"
+                        invisible="state not in ('error', 'pingen_error')"
                         string="Errors resolved"
                         icon="fa-repeat"
                     />
         <button
                         name="update_post_infos"
                         type="object"
-                        states="pushed,sendcenter,sent"
+                        invisible="state not in ('pushed', 'sendcenter', 'sent')"
                         string="Update the letter's informations"
                         icon="fa-refresh"
                     />
@@ -82,22 +82,17 @@
             <newline />
             <group>
               <group>
-                <field
-                                    name="auto_send"
-                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
-                                />
+                <field name="auto_send" readonly="state in ('sendcenter', 'sent')" />
                 <field
                                     name="delivery_product"
-                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])], 'required': [('auto_send', '=', True)]}"
+                                    readonly="state in ('sendcenter', 'sent')"
+                                    required="auto_send"
                                 />
                 <field
                                     name="print_spectrum"
-                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
+                                    readonly="state in ('sendcenter', 'sent')"
                                 />
-                <field
-                                    name="print_mode"
-                                    attrs="{'readonly': [('state', 'in', ['sendcenter', 'sent'])]}"
-                                />
+                <field name="print_mode" readonly="state in ('sendcenter', 'sent')" />
               </group>
             </group>
             <separator string="Dates" />
@@ -105,7 +100,7 @@
             <group>
               <field name="push_date" />
             </group>
-            <group attrs="{'invisible': [('last_error_message', '=', False)]}">
+            <group invisible="not last_error_message">
               <separator string="Errors" />
               <newline />
               <group>
@@ -113,7 +108,7 @@
               </group>
             </group>
 
-            <group attrs="{'invisible': [('state', 'not in', ['sendcenter', 'sent'])]}">
+            <group invisible="state not in ('sendcenter', 'sent')">
               <separator string="Sendcenter" colspan="4" />
               <newline />
               <group>
@@ -138,11 +133,11 @@
             <group col="4" colspan="4">
               <separator string="Data" colspan="4" />
               <newline />
-              <group col="2" colspan="4" attrs="{'invisible':[('type','=','url')]}">
+              <group col="2" colspan="4" invisible="type == 'url'">
                 <field name="datas" filename="name" readonly="True" />
                 <field name="name" select="1" readonly="True" />
               </group>
-              <group col="2" colspan="4" attrs="{'invisible':[('type','=','binary')]}">
+              <group col="2" colspan="4" invisible="type == 'binary'">
                 <field name="url" widget="url" readonly="True" />
               </group>
             </group>

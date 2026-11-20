@@ -200,35 +200,30 @@ class PingenDocument(models.Model):
         Commit after each record
         Instead of raising, store the error in the pingen.document
         """
-        with odoo.api.Environment.manage():
-            with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = odoo.api.Environment(new_cr, self.env.uid, self.env.context)
-                # Instead of raising, store the error in the pingen.document
-                self = self.with_env(new_env)
-                not_sent_docs = self.search(
-                    [("state", "!=", "sent")], order="company_id"
-                )
-                for company, documents in groupby(
-                    not_sent_docs, lambda d: d.company_id
-                ):
-                    session = company._get_pingen_client()
-                    for document in documents:
-                        if document.state == "error":
-                            document._resolve_error()
-                            document.invalidate_recordset()
-                        try:
-                            if document.state == "pending":
-                                document._push_to_pingen(pingen=session)
-                            elif document.state == "pushed" and not document.auto_send:
-                                document._ask_pingen_send(pingen=session)
-                        except OAuth2Error as e:
-                            document.write({"last_error_message": e, "state": "error"})
-                        except APIError as e:
-                            document.write(
-                                {"last_error_message": e, "state": "pingen_error"}
-                            )
-                        except BaseException:
-                            _logger.error("Unexpected error in pingen cron")
+        with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
+            new_env = odoo.api.Environment(new_cr, self.env.uid, self.env.context)
+            # Instead of raising, store the error in the pingen.document
+            self = self.with_env(new_env)
+            not_sent_docs = self.search([("state", "!=", "sent")], order="company_id")
+            for company, documents in groupby(not_sent_docs, lambda d: d.company_id):
+                session = company._get_pingen_client()
+                for document in documents:
+                    if document.state == "error":
+                        document._resolve_error()
+                        document.invalidate_recordset()
+                    try:
+                        if document.state == "pending":
+                            document._push_to_pingen(pingen=session)
+                        elif document.state == "pushed" and not document.auto_send:
+                            document._ask_pingen_send(pingen=session)
+                    except OAuth2Error as e:
+                        document.write({"last_error_message": e, "state": "error"})
+                    except APIError as e:
+                        document.write(
+                            {"last_error_message": e, "state": "pingen_error"}
+                        )
+                    except BaseException:
+                        _logger.error("Unexpected error in pingen cron")
         return True
 
     def _resolve_error(self):
@@ -383,26 +378,25 @@ class PingenDocument(models.Model):
         Intended to be used in a cron.
         Commit after each record
         Do not raise errors, only skip the update of the record."""
-        with odoo.api.Environment.manage():
-            with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = odoo.api.Environment(new_cr, self.env.uid, self.env.context)
-                # Instead of raising, store the error in the pingen.document
-                self = self.with_env(new_env)
-                pushed_docs = self.search([("state", "!=", "sent")])
-                for document in pushed_docs:
-                    session = document.company_id._get_pingen_client()
-                    try:
-                        document._get_and_update_post_infos(pingen=session)
-                    # pylint: disable=W7938
-                    # pylint: disable=W8138
-                    except (OAuth2Error, APIError):
-                        # will be retried the next time
-                        # In any case, the error has been
-                        # logged by _update_post_infos
-                        pass
-                    except BaseException as e:
-                        _logger.error("Unexcepted error in pingen cron: %", e)
-                        raise
+        with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
+            new_env = odoo.api.Environment(new_cr, self.env.uid, self.env.context)
+            # Instead of raising, store the error in the pingen.document
+            self = self.with_env(new_env)
+            pushed_docs = self.search([("state", "!=", "sent")])
+            for document in pushed_docs:
+                session = document.company_id._get_pingen_client()
+                try:
+                    document._get_and_update_post_infos(pingen=session)
+                # pylint: disable=W7938
+                # pylint: disable=W8138
+                except (OAuth2Error, APIError):
+                    # will be retried the next time
+                    # In any case, the error has been
+                    # logged by _update_post_infos
+                    pass
+                except BaseException as e:
+                    _logger.error("Unexcepted error in pingen cron: %", e)
+                    raise
         return True
 
     def update_post_infos(self):
