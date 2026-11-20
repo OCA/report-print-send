@@ -454,11 +454,22 @@ configured user with the following payload</p>
 <pre class="literal-block">
 {
     &quot;printer_name&quot;: &quot;&lt;system_name of the printer&gt;&quot;,
-    &quot;file_data&quot;: &quot;&lt;base64-encoded PDF&gt;&quot;
+    &quot;file_data&quot;: &quot;&lt;base64-encoded PDF&gt;&quot;,
+    &quot;file_type&quot;: &quot;qweb-pdf&quot;,
+    &quot;job_uuid&quot;: &quot;&lt;id of the printing job&gt;&quot;
 }
 </pre>
 </li>
 </ol>
+<p>Each message creates a <em>Printing Job</em> in state Pending. The agent
+reports back when the job leaves its CUPS queue by posting, as the
+printer’s user, a JSON-RPC call to <tt class="docutils literal">/printing/websocket/job/state</tt>
+with <tt class="docutils literal">job_uuid</tt>, <tt class="docutils literal">state</tt> (<tt class="docutils literal">processing</tt>, <tt class="docutils literal">completed</tt>,
+<tt class="docutils literal">canceled</tt> or <tt class="docutils literal">aborted</tt>), and optionally <tt class="docutils literal">cups_job_id</tt> and
+<tt class="docutils literal">reason</tt> (a CUPS <tt class="docutils literal"><span class="pre">job-state-reasons</span></tt> keyword). When the job reaches
+a final state, the method <tt class="docutils literal">_websocket_finished</tt> of the job is called,
+for other modules to act on it. A completed job means CUPS handed the
+whole document to the printer, not that the paper came out.</p>
 <p>Text reports are handled too: the base module leaves them to the browser
 download, so this module registers its own report handler that sends
 them to the printer instead. The <tt class="docutils literal">file_type</tt> key of the payload tells

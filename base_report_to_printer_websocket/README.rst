@@ -107,8 +107,20 @@ the **WebSocket** backend, the module will:
 
       {
           "printer_name": "<system_name of the printer>",
-          "file_data": "<base64-encoded PDF>"
+          "file_data": "<base64-encoded PDF>",
+          "file_type": "qweb-pdf",
+          "job_uuid": "<id of the printing job>"
       }
+
+Each message creates a *Printing Job* in state Pending. The agent
+reports back when the job leaves its CUPS queue by posting, as the
+printer's user, a JSON-RPC call to ``/printing/websocket/job/state``
+with ``job_uuid``, ``state`` (``processing``, ``completed``,
+``canceled`` or ``aborted``), and optionally ``cups_job_id`` and
+``reason`` (a CUPS ``job-state-reasons`` keyword). When the job reaches
+a final state, the method ``_websocket_finished`` of the job is called,
+for other modules to act on it. A completed job means CUPS handed the
+whole document to the printer, not that the paper came out.
 
 Text reports are handled too: the base module leaves them to the browser
 download, so this module registers its own report handler that sends

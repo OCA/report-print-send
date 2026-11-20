@@ -5,3 +5,4 @@
 from . import test_ir_websocket
 from . import test_printing_printer
 from . import test_report
+from . import test_job_state
