@@ -15,13 +15,14 @@ from urllib.parse import urlparse
 
 import pymupdf
 from freezegun import freeze_time
+from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 from vcr import VCR
 
 from odoo.exceptions import UserError
 from odoo.tests import HttpCase, tagged
 from odoo.tests.common import _super_send
 
-from ..models.pingen import Pingen
+from ..models.pingen import APIError, NotFoundError, Pingen
 
 vcr_pingen = VCR(
     record_mode="once",
@@ -143,6 +144,7 @@ class TestPingen(HttpCase):
         attachment = self.env["ir.attachment"].create(
             {
                 "name": "letter.pdf",
+                "company_id": self.company.id,
                 "datas": base64.b64encode(b"%PDF-1.4"),
                 "type": "binary",
             }
@@ -481,9 +483,13 @@ class TestPingen(HttpCase):
             expected[cron.id] = cron.code
             cron.code = cron.code.removesuffix("()")
             crons |= cron
+        update_cron = self.env.ref("pingen.ir_cron_update_pingen")
+        update_cron.write({"active": False, "interval_number": 3})
         for _ in range(2):
             migration.migrate(self.env.cr, "18.0.1.0.0")
-            crons.invalidate_recordset(["code"])
+            crons.invalidate_recordset(["code", "active", "interval_number"])
+            self.assertTrue(update_cron.active)
+            self.assertEqual(update_cron.interval_number, 3)
             for cron in crons:
                 self.assertEqual(cron.code, expected[cron.id])
 
@@ -683,3 +689,210 @@ class TestPingen(HttpCase):
                         ),
                         (None, None),
                     )
+
+    def test_send_classifies_missing_entities(self):
+        client = Pingen("client", "secret", ORGANISATION)
+        missing = {
+            "errors": [
+                {
+                    "code": "entity_not_found",
+                    "title": "Entity not found",
+                    "detail": None,
+                }
+            ]
+        }
+        other = {
+            "errors": [{"code": "forbidden", "title": "Forbidden", "detail": "Denied"}]
+        }
+        cases = (
+            (404, missing, NotFoundError, "entity_not_found (Entity not found): None"),
+            (404, {}, NotFoundError, "HTTP 404 on letters"),
+            (404, None, NotFoundError, "HTTP 404 on letters"),
+            (404, "invalid-json", NotFoundError, "HTTP 404 on letters"),
+            (400, missing, NotFoundError, "entity_not_found (Entity not found): None"),
+            (403, other, APIError, "forbidden (Forbidden): Denied"),
+            (500, {}, APIError, "HTTP 500 on letters"),
+        )
+        with patch.object(client, "_is_token_expired", return_value=False):
+            for status, payload, error_type, message in cases:
+                with self.subTest(status=status, payload=payload):
+                    response = MagicMock(
+                        status_code=status,
+                        ok=False,
+                        content=b"body" if payload is not None else b"",
+                    )
+                    if payload == "invalid-json":
+                        response.json.side_effect = ValueError("Invalid JSON")
+                    else:
+                        response.json.return_value = payload
+                    with self.assertRaises(error_type) as raised:
+                        client._send(MagicMock(return_value=response), "letters")
+                    self.assertIs(type(raised.exception), error_type)
+                    self.assertEqual(str(raised.exception), message)
+
+    def test_organisation_reachable(self):
+        client = Pingen("client", "secret", ORGANISATION)
+        client._session = MagicMock()
+        for error in (
+            None,
+            APIError("Unavailable"),
+            NotFoundError("Missing"),
+            OAuth2Error(),
+        ):
+            with self.subTest(error=error):
+                with patch.object(client, "_send", side_effect=error) as send:
+                    self.assertEqual(client.organisation_reachable(), error is None)
+                send.assert_called_once_with(
+                    client._session.get, "organisations/{organisationId}"
+                )
+        # Authentication may fail while constructing the session, before _send.
+        client._session = None
+        with patch.object(client, "_fetch_token", side_effect=OAuth2Error()):
+            self.assertFalse(client.organisation_reachable())
+
+    def _run_daily_update(self, client):
+        with (
+            patch("odoo.addons.pingen.models.pingen_document.Registry") as registry,
+            patch.object(type(self.company), "_get_pingen_client", return_value=client),
+        ):
+            # Reuse the test transaction so the cron can see uncommitted records.
+            registry.return_value.cursor.return_value.__enter__.return_value = (
+                self.env.cr
+            )
+            self.env["pingen.document"]._update_post_infos_cron()
+        self.env.invalidate_all()
+
+    def test_daily_update_removes_missing_letter_and_attachment(self):
+        document = self._pushed_document()
+        attachment = document.attachment_id
+        uuid = document.pingen_uuid
+        client = MagicMock()
+        client.post_infos.side_effect = NotFoundError("Missing letter")
+        client.organisation_reachable.return_value = True
+        self._run_daily_update(client)
+        client.post_infos.assert_called_once_with(uuid)
+        client.organisation_reachable.assert_called_once_with()
+        self.assertFalse(document.exists())
+        self.assertFalse(attachment.exists())
+
+    def test_daily_update_keeps_attachment_linked_elsewhere(self):
+        document = self._pushed_document()
+        attachment = document.attachment_id
+        attachment.write({"res_model": "res.company", "res_id": self.company.id})
+        client = MagicMock()
+        client.post_infos.side_effect = NotFoundError("Missing letter")
+        client.organisation_reachable.return_value = True
+        self._run_daily_update(client)
+        self.assertFalse(document.exists())
+        self.assertTrue(attachment.exists())
+
+    def test_daily_update_keeps_letters_if_organisation_unreachable(self):
+        documents = self._pushed_document("L1") | self._pushed_document("L2")
+        attachments = documents.attachment_id
+        client = MagicMock()
+        client.post_infos.side_effect = NotFoundError("Missing letter")
+        client.organisation_reachable.return_value = False
+        for _ in range(2):
+            client.reset_mock()
+            self._run_daily_update(client)
+            self.assertEqual(client.post_infos.call_count, 2)
+            client.organisation_reachable.assert_called_once_with()
+            self.assertEqual(documents.exists(), documents)
+            self.assertEqual(attachments.exists(), attachments)
+
+    def test_daily_update_filters_and_continues_after_api_errors(self):
+        missing = self._pushed_document("missing")
+        failed = self._pushed_document("failed")
+        valid = self._pushed_document("valid")
+        settled = self.env["pingen.document"]
+        for state in ("sent", "canceled", "error_undeliverable"):
+            document = self._pushed_document(state)
+            document.state = state
+            settled |= document
+        pending = self._pushed_document("no-uuid")
+        pending.write({"state": "pending", "pingen_uuid": False})
+        seen = []
+
+        def post_infos(uuid):
+            seen.append(uuid)
+            if uuid == "missing":
+                raise NotFoundError("Missing letter")
+            if uuid == "failed":
+                raise APIError("Temporary error")
+            return {"status": "delivered"}
+
+        # The model sorts newest first: fail, delete, then update successfully.
+        failed.push_date = "2026-11-20 03:00:00"
+        missing.push_date = "2026-11-20 02:00:00"
+        valid.push_date = "2026-11-20 01:00:00"
+        client = MagicMock()
+        client.post_infos.side_effect = post_infos
+        client.organisation_reachable.return_value = True
+        self._run_daily_update(client)
+        self.assertEqual(seen, ["failed", "missing", "valid"])
+        self.assertFalse(missing.exists())
+        self.assertTrue(failed.exists())
+        self.assertEqual(valid.state, "sent")
+        self.assertEqual(settled.exists(), settled)
+        self.assertTrue(pending.exists())
+
+    def test_daily_update_caches_organisation_per_company(self):
+        first = self._pushed_document("L1")
+        second = self._pushed_document("L2")
+        third = self._pushed_document("L3")
+        company = self.env["res.company"].create({"name": "Other Pingen company"})
+        third.attachment_id.company_id = company
+        clients = {self.company.id: MagicMock(), company.id: MagicMock()}
+        for company_id, client in clients.items():
+            client.post_infos.side_effect = NotFoundError("Missing letter")
+            client.organisation_reachable.return_value = company_id == self.company.id
+
+        def get_client(record):
+            return clients[record.id]
+
+        with (
+            patch("odoo.addons.pingen.models.pingen_document.Registry") as registry,
+            patch.object(type(self.company), "_get_pingen_client", get_client),
+        ):
+            registry.return_value.cursor.return_value.__enter__.return_value = (
+                self.env.cr
+            )
+            self.env["pingen.document"]._update_post_infos_cron()
+        self.assertFalse((first | second).exists())
+        self.assertTrue(third.exists())
+        for client in clients.values():
+            client.organisation_reachable.assert_called_once_with()
+
+    def test_manual_update_missing_letter_does_not_delete(self):
+        document = self._pushed_document()
+        attachment = document.attachment_id
+        client = MagicMock()
+        client.post_infos.side_effect = NotFoundError("Missing letter")
+        with (
+            patch.object(type(self.company), "_get_pingen_client", return_value=client),
+            self.assertRaisesRegex(
+                UserError,
+                "This letter no longer exists on Pingen. "
+                "It will be removed by the daily update.",
+            ),
+        ):
+            document.update_post_infos()
+        self.assertTrue(document.exists())
+        self.assertTrue(attachment.exists())
+        client.organisation_reachable.assert_not_called()
+
+    def test_daily_update_cron_active_after_install(self):
+        cron = self.env.ref("pingen.ir_cron_update_pingen")
+        self.assertTrue(cron.active)
+        self.assertEqual(cron.interval_number, 1)
+        self.assertEqual(cron.interval_type, "days")
+
+    def test_daily_update_keeps_letter_after_oauth_error(self):
+        document = self._pushed_document()
+        attachment = document.attachment_id
+        client = MagicMock()
+        client.post_infos.side_effect = OAuth2Error()
+        self._run_daily_update(client)
+        self.assertTrue(document.exists())
+        self.assertTrue(attachment.exists())
+        client.organisation_reachable.assert_not_called()

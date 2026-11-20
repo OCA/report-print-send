@@ -13,7 +13,7 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.modules.registry import Registry
 
-from .pingen import APIError, pingen_datetime_to_utc
+from .pingen import APIError, NotFoundError, pingen_datetime_to_utc
 from .pingen_layout import find_restricted_content
 
 _logger = logging.getLogger(__name__)
@@ -492,6 +492,9 @@ class PingenDocument(models.Model):
                 pingen.api_url,
             )
             raise
+        except NotFoundError:
+            _logger.info("Pingen letter for Document %s no longer exists", self.id)
+            raise
         except APIError:
             _logger.exception(
                 "API Error when getting infos of Pingen Document %s from %s.",
@@ -548,11 +551,10 @@ class PingenDocument(models.Model):
         _logger.info("Pingen Document %s: status updated", self.id)
 
     def _update_post_infos_cron(self):
-        """Update the informations from pingen of a
-        document in the Sendcenter
-        Intended to be used in a cron.
-        Commit after each record
-        Do not raise errors, only skip the update of the record."""
+        """Refresh unsettled letters and remove confirmed missing letters.
+
+        API and authentication failures are retried on the next daily run.
+        """
         with Registry(self.env.cr.dbname).cursor() as new_cr:
             new_env = api.Environment(new_cr, self.env.uid, self.env.context)
             self = self.with_env(new_env)
@@ -563,10 +565,28 @@ class PingenDocument(models.Model):
                     ("state", "not in", ("sent", "canceled", "error_undeliverable")),
                 ]
             )
+            reachable_by_company = {}
             for document in pushed_docs:
                 session = document.company_id._get_pingen_client()
                 try:
                     document._get_and_update_post_infos(pingen=session)
+                except NotFoundError:
+                    company_id = document.company_id.id
+                    if company_id not in reachable_by_company:
+                        reachable_by_company[company_id] = (
+                            session.organisation_reachable()
+                        )
+                    if reachable_by_company[company_id]:
+                        _logger.info(
+                            "Removing Pingen Document %s: letter deleted on Pingen",
+                            document.id,
+                        )
+                        document.unlink()
+                    else:
+                        _logger.warning(
+                            "Keeping Pingen Document %s: organisation unreachable",
+                            document.id,
+                        )
                 # pylint: disable=W7938
                 # pylint: disable=W8138
                 except (OAuth2Error, APIError):
@@ -612,6 +632,13 @@ class PingenDocument(models.Model):
                     "Connection Error when updating the status of Document "
                     "%(name)s from Pingen",
                     name=self.name,
+                )
+            ) from e
+        except NotFoundError as e:
+            raise UserError(
+                self.env._(
+                    "This letter no longer exists on Pingen. "
+                    "It will be removed by the daily update."
                 )
             ) from e
         except APIError as e:

@@ -18,3 +18,6 @@ def migrate(cr, version):
         cron = env.ref(xmlid, raise_if_not_found=False)
         if cron and (cron.code or "").strip() == broken:
             cron.code = broken + "()"
+    update_cron = env.ref("pingen.ir_cron_update_pingen", raise_if_not_found=False)
+    if update_cron:
+        update_cron.active = True

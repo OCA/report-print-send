@@ -14,6 +14,7 @@ import pytz
 import requests
 from dateutil import parser
 from oauthlib.oauth2 import BackendApplicationClient
+from oauthlib.oauth2.rfc6749.errors import OAuth2Error
 from requests_oauthlib import OAuth2Session
 
 _logger = logging.getLogger(__name__)
@@ -48,6 +49,10 @@ class PingenException(RuntimeError):
 
 class APIError(PingenException):
     """An Error occured with the pingen API"""
+
+
+class NotFoundError(APIError):
+    """The requested entity no longer exists on Pingen."""
 
 
 class Pingen:
@@ -192,8 +197,12 @@ class Pingen:
         except ValueError:
             payload = {}
         errors = payload.get("errors") if isinstance(payload, dict) else None
+        not_found = response.status_code == 404 or any(
+            err.get("code") == "entity_not_found" for err in (errors or [])
+        )
+        error_class = NotFoundError if not_found else APIError
         if errors:
-            raise APIError(
+            raise error_class(
                 "\n".join(
                     [
                         f"{err.get('code')} ({err.get('title')}): {err.get('detail')}"
@@ -201,9 +210,17 @@ class Pingen:
                     ]
                 )
             )
-        if not response.ok:
-            raise APIError(f"HTTP {response.status_code} on {endpoint}")
+        if not_found or not response.ok:
+            raise error_class(f"HTTP {response.status_code} on {endpoint}")
         return response
+
+    def organisation_reachable(self):
+        """Check the organisation before treating missing letters as deleted."""
+        try:
+            self._send(self.session.get, "organisations/{organisationId}")
+        except (APIError, OAuth2Error):
+            return False
+        return True
 
     @staticmethod
     def _json_api_headers():
