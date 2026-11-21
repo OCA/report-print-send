@@ -8,11 +8,15 @@ from unittest import mock
 from odoo.tests.common import TransactionCase
 
 model = "odoo.addons.base.models.ir_actions_report.IrActionsReport"
+server_model = "odoo.addons.base_report_to_printer.models.printing_server"
 
 
 class TestIrActionsReportXml(TransactionCase):
     def setUp(self):
         super().setUp()
+        # Simulate an unreachable CUPS server, regardless of the test host
+        cups = self.startPatcher(mock.patch(f"{server_model}.cups"))
+        cups.Connection.side_effect = Exception
         self.Model = self.env["ir.actions.report"].with_context(
             skip_printer_exception=True
         )
