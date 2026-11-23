@@ -14,6 +14,16 @@ from ..models.pingen import pingen_datetime_to_utc
 
 _logger = logging.getLogger(__name__)
 
+# ``data.type`` of the webhooks this module receives (Pingen OpenAPI schemas).
+WEBHOOK_TYPES = frozenset(
+    ("webhook_issues", "webhook_sent", "webhook_undeliverable", "webhook_delivered")
+)
+
+
+def _as_dict(value):
+    """``value`` if it is a JSON object, else an empty one."""
+    return value if isinstance(value, dict) else {}
+
 
 class PingenController(http.Controller):
     # The webhooks write on pingen.document. Since 18.0 an ``auth="none"``
@@ -52,14 +62,24 @@ class PingenController(http.Controller):
         except ValueError as e:
             raise werkzeug.exceptions.BadRequest() from e
 
+    def _get_relationship_data(self, json_content, name):
+        data = _as_dict(_as_dict(json_content).get("data"))
+        relationships = _as_dict(data.get("relationships"))
+        return _as_dict(_as_dict(relationships.get(name)).get("data"))
+
+    def _get_deliverable_type(self, json_content):
+        """Type of the deliverable named by the webhook (letters, emails...)."""
+        return self._get_relationship_data(json_content, "deliverable").get("type")
+
     def _get_document_uuid(self, json_content):
-        return (
-            json_content.get("data", {})
-            .get("relationships", {})
-            .get("letter", {})
-            .get("data", {})
-            .get("id", "")
-        )
+        # Pingen names the letter ``deliverable`` (``letter`` in older payloads).
+        deliverable = self._get_relationship_data(json_content, "deliverable")
+        if deliverable:
+            if deliverable.get("type", "letters") != "letters":
+                return ""
+            if deliverable.get("id"):
+                return deliverable["id"]
+        return self._get_relationship_data(json_content, "letter").get("id") or ""
 
     def _find_pingen_document(self, document_uuid, company=None):
         # The route is public (auth="none"): search as superuser, but only
@@ -73,19 +93,26 @@ class PingenController(http.Controller):
         return documents.search(domain, limit=1)
 
     def _get_error_reason(self, json_content):
-        return json_content.get("data", {}).get("attributes", {}).get("reason", "")
+        data = _as_dict(_as_dict(json_content).get("data"))
+        return _as_dict(data.get("attributes")).get("reason") or ""
+
+    def _get_included(self, json_content):
+        included = _as_dict(json_content).get("included")
+        if not isinstance(included, list):
+            return []
+        return [node for node in included if isinstance(node, dict)]
 
     def _get_letter_infos(self, json_content, document_uuid):
-        for node in json_content.get("included", {}):
+        for node in self._get_included(json_content):
             if node.get("type") == "letters" and node.get("id") == document_uuid:
-                return node.get("attributes", {})
+                return _as_dict(node.get("attributes"))
         return {}
 
     def _get_emitted_date(self, json_content):
         emitted_at = ""
-        for node in json_content.get("included", {}):
-            if node.get("type") == "letters_events":
-                attributes = node.get("attributes", {})
+        for node in self._get_included(json_content):
+            if node.get("type") in ("deliverables_events", "letters_events"):
+                attributes = _as_dict(node.get("attributes"))
                 if attributes.get("code") == "transferred_to_distributor":
                     emitted_at = attributes.get("emitted_at", "")
                     break
@@ -114,6 +141,23 @@ class PingenController(http.Controller):
         request_content = self._get_request_content()
         company = self._verify_signature(request_content)
         json_content = self._get_json_content(request_content)
+        document_uuid = self._get_document_uuid(json_content)
+        if not document_uuid:
+            deliverable_type = self._get_deliverable_type(json_content)
+            if deliverable_type and deliverable_type != "letters":
+                msg = "Webhook deliverable is not a letter, ignored"
+                _logger.info("%s on %s", msg, route)
+                return msg
+            # A 4xx makes Pingen retry the call and show it as failed, instead
+            # of a silent success when its payload format changes.
+            # Only a known webhook type reaches the log, never payload data.
+            webhook_type = _as_dict(_as_dict(json_content).get("data")).get("type")
+            if not isinstance(webhook_type, str) or webhook_type not in WEBHOOK_TYPES:
+                webhook_type = "unexpected"
+            _logger.error(
+                "Webhook on %s names no letter (data.type %s)", route, webhook_type
+            )
+            raise werkzeug.exceptions.BadRequest()
         values = values_getter(json_content)
         return self._update_pingen_document(request_content, values, company=company)
 

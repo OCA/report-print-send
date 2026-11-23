@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 import base64
+import copy
 import hashlib
 import hmac
 import importlib.util
@@ -22,6 +23,7 @@ from odoo.exceptions import UserError
 from odoo.tests import HttpCase, tagged
 from odoo.tests.common import _super_send
 
+from ..controllers.main import PingenController
 from ..models.pingen import APIError, NotFoundError, Pingen
 
 vcr_pingen = VCR(
@@ -128,6 +130,233 @@ class TestPingen(HttpCase):
                 ],
             }
         )
+
+    def get_deliverable_request_json(
+        self,
+        uuid,
+        webhook_type="webhook_sent",
+        status="sent",
+        deliverable_type="letters",
+        events=None,
+        reason=None,
+    ):
+        events = events or []
+        attributes = {
+            "url": "https://example.com/pingen/sent_letters",
+            "created_at": "2026-11-20T17:02:20+0100",
+        }
+        if reason is not None:
+            attributes["reason"] = reason
+        return json.dumps(
+            {
+                "data": {
+                    "type": webhook_type,
+                    "id": "00000000-0000-4000-8000-000000000001",
+                    "attributes": attributes,
+                    "relationships": {
+                        "organisation": {
+                            "data": {"type": "organisations", "id": ORGANISATION},
+                        },
+                        "deliverable": {
+                            "links": {
+                                "related": f"https://example.com/letters/{uuid}",
+                            },
+                            "data": {"type": deliverable_type, "id": uuid},
+                        },
+                        "event": {
+                            "data": {
+                                "type": "deliverables_events",
+                                "id": events[0]["id"] if events else "no-event",
+                            },
+                        },
+                    },
+                },
+                "included": [
+                    {
+                        "type": "organisations",
+                        "id": ORGANISATION,
+                        "attributes": {
+                            "name": "Example organisation",
+                            "billing_currency": "USD",
+                        },
+                    },
+                    {
+                        "type": deliverable_type,
+                        "id": uuid,
+                        "attributes": {
+                            "status": status,
+                            "file_pages": 9,
+                            "address": "Example Recipient\n1 Test Street\nSWITZERLAND",
+                            "country": "CH",
+                            "delivery_product": "postag_registered",
+                            "print_mode": "simplex",
+                            "print_spectrum": "color",
+                            "price_currency": "USD",
+                            "price_value": 11.27,
+                            "tracking_number": "98.00.000000.00000000",
+                            "submitted_at": "2026-11-19T14:46:05+0100",
+                            "created_at": "2026-11-19T14:45:45+0100",
+                            "updated_at": "2026-11-20T17:00:11+0100",
+                        },
+                    },
+                    *events,
+                ],
+            }
+        )
+
+    def test_deliverable_sent_with_distributor_event(self):
+        document = self._pushed_document()
+        event = {
+            "type": "deliverables_events",
+            "id": "00000000-0000-4000-8000-000000000002",
+            "attributes": {
+                "code": "transferred_to_distributor",
+                "name": "Handed to distributor",
+                "producer": "Printcenter",
+                "location": "Example location, CH",
+                "emitted_at": "2026-11-20T17:00:11+0100",
+            },
+        }
+        response = self._post_webhook(
+            "/pingen/sent_letters",
+            self.get_deliverable_request_json(document.pingen_uuid, events=[event]),
+        )
+        self.assertEqual(response.status_code, 200)
+        document.invalidate_recordset()
+        self.assertEqual(document.state, "sent")
+        self.assertEqual(document.pingen_status, "sent")
+        self.assertEqual(document.send_date, datetime(2026, 11, 20, 16, 0, 11))
+        self.assertEqual(document.cost, 11.27)
+        self.assertEqual(document.pages, 9)
+        self.assertEqual(document.currency_id.name, "USD")
+        self.assertEqual(document.country_id.code, "CH")
+
+    def test_deliverable_webhook_routes(self):
+        cases = (
+            ("sent_letters", "webhook_sent", "sent", "sent", None),
+            ("delivered_letters", "webhook_delivered", "delivered", "sent", None),
+            (
+                "letter_issues",
+                "webhook_issues",
+                "action_required",
+                "pingen_error",
+                "Content failed inspection",
+            ),
+            (
+                "undeliverable_letters",
+                "webhook_undeliverable",
+                "undeliverable",
+                "error_undeliverable",
+                None,
+            ),
+        )
+        for route, webhook_type, status, state, reason in cases:
+            with self.subTest(route=route):
+                document = self._pushed_document()
+                response = self._post_webhook(
+                    f"/pingen/{route}",
+                    self.get_deliverable_request_json(
+                        document.pingen_uuid,
+                        webhook_type=webhook_type,
+                        status=status,
+                        reason=reason,
+                    ),
+                )
+                self.assertEqual(response.status_code, 200)
+                document.invalidate_recordset()
+                self.assertEqual(document.state, state)
+                if reason:
+                    self.assertEqual(document.last_error_message, reason)
+                document.unlink()
+
+    def test_deliverable_missing_letter_is_bad_request(self):
+        document = self._pushed_document()
+        body = json.loads(self.get_deliverable_request_json(document.pingen_uuid))
+        del body["data"]["relationships"]["deliverable"]
+        response = self._post_webhook("/pingen/sent_letters", json.dumps(body))
+        self.assertEqual(response.status_code, 400)
+        document.invalidate_recordset()
+        self.assertEqual(document.state, "pushed")
+
+    def test_deliverable_email_is_ignored(self):
+        document = self._pushed_document()
+        response = self._post_webhook(
+            "/pingen/sent_letters",
+            self.get_deliverable_request_json(
+                document.pingen_uuid, deliverable_type="emails"
+            ),
+        )
+        self.assertEqual(response.status_code, 200)
+        document.invalidate_recordset()
+        self.assertEqual(document.state, "pushed")
+
+    def test_deliverable_unknown_letter_is_ignored(self):
+        response = self._post_webhook(
+            "/pingen/sent_letters",
+            self.get_deliverable_request_json("00000000-0000-4000-8000-000000000099"),
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_deliverable_null_included(self):
+        document = self._pushed_document()
+        body = json.loads(self.get_deliverable_request_json(document.pingen_uuid))
+        body["included"] = None
+        response = self._post_webhook("/pingen/sent_letters", json.dumps(body))
+        self.assertEqual(response.status_code, 200)
+        document.invalidate_recordset()
+        self.assertEqual(document.state, "sent")
+        unknown = json.loads(
+            self.get_deliverable_request_json("00000000-0000-4000-8000-000000000098")
+        )
+        unknown["included"] = None
+        response = self._post_webhook("/pingen/sent_letters", json.dumps(unknown))
+        self.assertEqual(response.status_code, 200)
+
+    def test_webhook_not_a_json_object_is_bad_request(self):
+        response = self._post_webhook("/pingen/sent_letters", json.dumps([]))
+        self.assertEqual(response.status_code, 400)
+        # Payload data never reaches the log, whatever its shape.
+        for webhook_type in ({"secret": "s3cr3t"}, "s3cr3t\nforged line"):
+            body = json.dumps({"data": {"type": webhook_type}})
+            with self.assertLogs("odoo.addons.pingen.controllers.main") as logs:
+                response = self._post_webhook("/pingen/sent_letters", body)
+            self.assertEqual(response.status_code, 400)
+            self.assertIn("data.type unexpected", "\n".join(logs.output))
+            self.assertNotIn("s3cr3t", "\n".join(logs.output))
+
+    def test_get_document_uuid(self):
+        controller = PingenController()
+        uuid = "00000000-0000-4000-8000-000000000003"
+        current = json.loads(self.get_deliverable_request_json(uuid))
+        legacy = json.loads(self.get_request_json(uuid))
+        cases = [
+            (current, uuid),
+            (legacy, uuid),
+            ({"data": {"relationships": {"deliverable": None}}}, ""),
+            ({"data": {}}, ""),
+            ({"data": {"relationships": None}}, ""),
+            ({"data": {"relationships": {"deliverable": {"data": None}}}}, ""),
+        ]
+        without_type = json.loads(self.get_deliverable_request_json(uuid))
+        del without_type["data"]["relationships"]["deliverable"]["data"]["type"]
+        cases.append((without_type, uuid))
+        email = json.loads(
+            self.get_deliverable_request_json(uuid, deliverable_type="emails")
+        )
+        cases.append((email, ""))
+        email_with_letter = copy.deepcopy(email)
+        email_with_letter["data"]["relationships"]["letter"] = {
+            "data": {"type": "letters", "id": uuid},
+        }
+        # A deliverable of another type never falls back to ``letter``.
+        cases.append((email_with_letter, ""))
+        cases.append(([], ""))
+        legacy_without_deliverable = copy.deepcopy(legacy)
+        legacy_without_deliverable["data"]["relationships"]["deliverable"] = None
+        cases.append((legacy_without_deliverable, uuid))
+        for payload, expected in cases:
+            with self.subTest(payload=payload):
+                self.assertEqual(controller._get_document_uuid(payload), expected)
 
     def _post_webhook(self, route, body, secret=WEBHOOK_SECRET):
         signature = hmac.new(
