@@ -89,7 +89,9 @@ class PingenController(http.Controller):
             return documents.browse()
         domain = [("pingen_uuid", "=", document_uuid)]
         if company:
-            domain.append(("company_id", "=", company.id))
+            return documents.search(domain).filtered(
+                lambda document: document.company_id == company
+            )[:1]
         return documents.search(domain, limit=1)
 
     def _get_error_reason(self, json_content):
@@ -108,14 +110,21 @@ class PingenController(http.Controller):
                 return _as_dict(node.get("attributes"))
         return {}
 
+    def _get_events(self, json_content):
+        # ``letters_events`` in older payloads.
+        return [
+            node
+            for node in self._get_included(json_content)
+            if node.get("type") in ("deliverables_events", "letters_events")
+        ]
+
     def _get_emitted_date(self, json_content):
         emitted_at = ""
-        for node in self._get_included(json_content):
-            if node.get("type") in ("deliverables_events", "letters_events"):
-                attributes = _as_dict(node.get("attributes"))
-                if attributes.get("code") == "transferred_to_distributor":
-                    emitted_at = attributes.get("emitted_at", "")
-                    break
+        for node in self._get_events(json_content):
+            attributes = _as_dict(node.get("attributes"))
+            if attributes.get("code") == "transferred_to_distributor":
+                emitted_at = attributes.get("emitted_at", "")
+                break
         return pingen_datetime_to_utc(emitted_at)
 
     def _update_pingen_document(self, request_content, values, company=None):
@@ -123,11 +132,15 @@ class PingenController(http.Controller):
         document_uuid = self._get_document_uuid(json_content)
         pingen_doc = self._find_pingen_document(document_uuid, company=company)
         if pingen_doc:
-            info_values = pingen_doc._prepare_values_from_post_infos(
-                self._get_letter_infos(json_content, document_uuid)
-            )
+            info_values = {}
+            # Without the letter in the payload, keep what is known of it.
+            letter_infos = self._get_letter_infos(json_content, document_uuid)
+            if letter_infos:
+                info_values = pingen_doc._prepare_values_from_post_infos(letter_infos)
             info_values.update(values)
             pingen_doc.write(info_values)
+            pingen_doc._store_events(self._get_events(json_content))
+            pingen_doc._refresh_tracking_best_effort()
             msg = f"Pingen document with UUID {document_uuid} updated successfully"
             _logger.info(msg)
             return msg

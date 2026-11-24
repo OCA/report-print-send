@@ -60,3 +60,12 @@ A document uploaded with Send disabled is still sent by the scheduled action
 
 The daily update also removes the documents whose letter was deleted on
 Pingen, with their attachment unless it is linked to another record.
+
+## Tracking number and events
+
+The letter's tracking number and events (validation, printing, handover to the
+carrier and carrier steps) are stored on the document and shown in the *Tracking*
+tab, newest first. They are read from Pingen at every webhook, by the daily
+*Run Pingen Document Update* action (for sent letters for 45 days after upload, with or
+without a tracking number), and by the *Update the letter's informations* button.
+Pingen sends no webhook for carrier steps and provides no tracking link.

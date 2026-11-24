@@ -383,13 +383,17 @@ webhook calls.</p>
 <li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a><ul>
 <li><a class="reference internal" href="#errors" id="toc-entry-3">Errors</a></li>
 <li><a class="reference internal" href="#dependencies" id="toc-entry-4">Dependencies</a></li>
+<li><a class="reference internal" href="#layout-check" id="toc-entry-5">Layout check</a></li>
+<li><a class="reference internal" href="#letter-information-before-sending" id="toc-entry-6">Letter information before sending</a></li>
+<li><a class="reference internal" href="#daily-update" id="toc-entry-7">Daily update</a></li>
+<li><a class="reference internal" href="#tracking-number-and-events" id="toc-entry-8">Tracking number and events</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-5">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-6">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-7">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-8">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-9">Maintainers</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-9">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-10">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-11">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-12">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-13">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -439,6 +443,8 @@ Document is created. You can directly access to the latter on the Link
 on the right on the attachment view.</p>
 <p>You can find them in Pingen Documents App or in the more convenient
 Documents menu if you have installed the document module.</p>
+<p>Deleting a Pingen document also deletes its attachment unless it is
+linked to another record.</p>
 <div class="section" id="errors">
 <h2><a class="toc-backref" href="#toc-entry-3">Errors</a></h2>
 <p>Sometimes, pingen.com will refuse to send a document because it does not
@@ -460,9 +466,46 @@ line is the country in English or German.</li>
 </ul>
 </blockquote>
 </div>
+<div class="section" id="layout-check">
+<h2><a class="toc-backref" href="#toc-entry-5">Layout check</a></h2>
+<p>Before uploading to Pingen, every PDF page is checked for content within
+5 mm of any edge and in the lower-left 15 mm × 15 mm square. Detected
+content blocks the upload and sets the document to “Pingen Error”.
+Correct the layout and create a new document. The postage area and
+address window are not checked. If the PDF cannot be inspected, the
+upload proceeds for Pingen to validate it.</p>
+</div>
+<div class="section" id="letter-information-before-sending">
+<h2><a class="toc-backref" href="#toc-entry-6">Letter information before sending</a></h2>
+<p>After upload, the document shows the address read by Pingen, destination
+country, page count and estimated cost in the indicated currency. The
+estimate uses the selected delivery and printing options; refresh the
+letter information after changing them. Uploaded letters that have not
+been sent yet are refreshed every hour. The actual cost appears after
+sending.</p>
+<p>A document uploaded with Send disabled is still sent by the scheduled
+action <em>Run Pingen Document Push</em> (hourly) unless that action is
+disabled. Use the <em>Ask pingen.com to send the document</em> button to send
+it earlier.</p>
+</div>
+<div class="section" id="daily-update">
+<h2><a class="toc-backref" href="#toc-entry-7">Daily update</a></h2>
+<p>The daily update also removes the documents whose letter was deleted on
+Pingen, with their attachment unless it is linked to another record.</p>
+</div>
+<div class="section" id="tracking-number-and-events">
+<h2><a class="toc-backref" href="#toc-entry-8">Tracking number and events</a></h2>
+<p>The letter’s tracking number and events (validation, printing, handover
+to the carrier and carrier steps) are stored on the document and shown
+in the <em>Tracking</em> tab, newest first. They are read from Pingen at every
+webhook, by the daily <em>Run Pingen Document Update</em> action (for sent
+letters for 45 days after upload, with or without a tracking number),
+and by the <em>Update the letter’s informations</em> button. Pingen sends no
+webhook for carrier steps and provides no tracking link.</p>
+</div>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-5">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-9">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/report-print-send/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -470,15 +513,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-6">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-10">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-7">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-11">Authors</a></h2>
 <ul class="simple">
 <li>Camptocamp</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-8">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-12">Contributors</a></h2>
 <ul class="simple">
 <li>Guewen Baconnier &lt;<a class="reference external" href="mailto:guewen.baconnier&#64;camptocamp.com">guewen.baconnier&#64;camptocamp.com</a>&gt;</li>
 <li>Anar Baghirli &lt;<a class="reference external" href="mailto:a.baghirli&#64;mobilunity.com">a.baghirli&#64;mobilunity.com</a>&gt;</li>
@@ -488,7 +531,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-9">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-13">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />

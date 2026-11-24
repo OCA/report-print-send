@@ -4,6 +4,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
+import re
+from datetime import timedelta
 from io import BytesIO
 from itertools import groupby
 
@@ -17,6 +19,9 @@ from .pingen import APIError, NotFoundError, pingen_datetime_to_utc
 from .pingen_layout import find_restricted_content
 
 _logger = logging.getLogger(__name__)
+_EVENT_UUID_RE = re.compile(
+    r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.IGNORECASE
+)
 
 
 class PingenLayoutError(UserError):
@@ -35,6 +40,8 @@ class PingenDocument(models.Model):
     _description = "pingen.document"
     _inherits = {"ir.attachment": "attachment_id"}
     _order = "push_date desc, id desc"
+
+    TRACKING_REFRESH_DAYS = 45
 
     LAYOUT_BORDER_MM = 5.0
     LAYOUT_CORNER_MM = 15.0
@@ -101,6 +108,10 @@ class PingenDocument(models.Model):
     # pingen API v2 fields
     pingen_uuid = fields.Char(readonly=True)
     pingen_status = fields.Char(readonly=True)
+    tracking_number = fields.Char(readonly=True)
+    event_ids = fields.One2many(
+        "pingen.document.event", "document_id", string="Events", readonly=True
+    )
     # sendcenter infos
     parsed_address = fields.Text(readonly=True)
     cost = fields.Float(readonly=True)
@@ -437,6 +448,87 @@ class PingenDocument(models.Model):
         :param Pingen pingen: pingen object to reuse
         """
         self._refresh_letter_infos(pingen)
+        try:
+            self._refresh_events(pingen)
+        except NotFoundError as error:
+            # A missing event endpoint does not mean the letter was deleted.
+            raise APIError(str(error)) from error
+
+    def _store_events(self, nodes):
+        self.ensure_one()
+        events = self.env["pingen.document.event"].sudo()
+        existing = {
+            event.pingen_uuid: event
+            for event in events.search([("document_id", "=", self.id)])
+        }
+        seen = set()
+        to_create = []
+        for node in nodes:
+            if (
+                not isinstance(node, dict)
+                or not isinstance(node.get("attributes"), dict)
+                or not node["attributes"]
+            ):
+                continue
+            uuid = node.get("id")
+            if not isinstance(uuid, str) or not _EVENT_UUID_RE.fullmatch(uuid):
+                continue
+            # One event, whatever the case of its id.
+            uuid = uuid.lower()
+            if uuid in seen:
+                continue
+            seen.add(uuid)
+            values = events._prepare_values_from_node(node)
+            event = existing.get(uuid)
+            if event:
+                changed = {
+                    key: value
+                    for key, value in values.items()
+                    if value and event[key] != value
+                }
+                if changed:
+                    event.write(changed)
+            else:
+                to_create.append(dict(values, document_id=self.id, pingen_uuid=uuid))
+        if to_create:
+            events.create(to_create)
+
+    def _refresh_events(self, pingen):
+        if self.pingen_uuid:
+            self._store_events(pingen.letter_events(self.pingen_uuid))
+
+    def _refresh_events_best_effort(self, pingen):
+        try:
+            with self.env.cr.savepoint():
+                self._refresh_events(pingen)
+        except Exception:
+            _logger.warning(
+                "Could not refresh events for Pingen Document %s",
+                self.id,
+                exc_info=True,
+            )
+
+    def _refresh_tracking(self, pingen):
+        self.ensure_one()
+        infos = self._get_post_infos(pingen)
+        number = infos.get("tracking_number")
+        if isinstance(number, str) and number and number != self.tracking_number:
+            self.write({"tracking_number": number})
+        self._refresh_events(pingen)
+
+    def _refresh_tracking_best_effort(self):
+        self.ensure_one()
+        if not self.pingen_uuid:
+            return
+        try:
+            with self.env.cr.savepoint():
+                self._refresh_tracking(self.company_id._get_pingen_client())
+        except Exception:
+            _logger.warning(
+                "Could not refresh tracking for Pingen Document %s",
+                self.id,
+                exc_info=True,
+            )
 
     def _refresh_letter_infos(self, pingen):
         """Read the letter and estimate its price until it has been submitted."""
@@ -534,6 +626,9 @@ class PingenDocument(models.Model):
             "cost": post_infos.get("price_value") or 0.0,
             "currency_id": currency.id,
         }
+        number = post_infos.get("tracking_number")
+        if isinstance(number, str) and number:
+            vals["tracking_number"] = number
         state = self._PINGEN_STATUS_TO_STATE.get(post_infos.get("status"))
         if state:
             vals["state"] = state
@@ -551,8 +646,10 @@ class PingenDocument(models.Model):
         _logger.info("Pingen Document %s: status updated", self.id)
 
     def _update_post_infos_cron(self):
-        """Refresh unsettled letters and remove confirmed missing letters.
+        """Refresh unsettled and recently sent letters; remove missing letters.
 
+        Sent letters are refreshed for TRACKING_REFRESH_DAYS after upload,
+        with or without a tracking number or events.
         API and authentication failures are retried on the next daily run.
         """
         with Registry(self.env.cr.dbname).cursor() as new_cr:
@@ -569,7 +666,8 @@ class PingenDocument(models.Model):
             for document in pushed_docs:
                 session = document.company_id._get_pingen_client()
                 try:
-                    document._get_and_update_post_infos(pingen=session)
+                    document._refresh_letter_infos(session)
+                    document._refresh_events_best_effort(session)
                 except NotFoundError:
                     company_id = document.company_id.id
                     if company_id not in reachable_by_company:
@@ -594,6 +692,21 @@ class PingenDocument(models.Model):
                     # In any case, the error has been
                     # logged by _get_post_infos
                     pass
+            tracking_docs = self.search(
+                [
+                    ("id", "not in", pushed_docs.ids),
+                    ("pingen_uuid", "!=", False),
+                    ("state", "in", ("sent", "error_undeliverable")),
+                    (
+                        "push_date",
+                        ">=",
+                        fields.Datetime.now()
+                        - timedelta(days=self.TRACKING_REFRESH_DAYS),
+                    ),
+                ]
+            )
+            for document in tracking_docs:
+                document._refresh_tracking_best_effort()
         return True
 
     def _refresh_pushed_documents_cron(self):

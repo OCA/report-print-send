@@ -4,7 +4,7 @@
 
 {
     "name": "pingen.com integration",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.1.0",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "maintainers": ["ajaniszewska-dev", "grindtildeath"],
     "license": "AGPL-3",
@@ -20,6 +20,7 @@
         "views/pingen_document_view.xml",
         "data/pingen_data.xml",
         "views/base_config_settings.xml",
+        "security/pingen_security.xml",
         "security/ir.model.access.csv",
     ],
     "installable": True,

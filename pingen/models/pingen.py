@@ -350,6 +350,37 @@ class Pingen:
         )
         return response.json().get("data", {}).get("attributes")
 
+    def letter_events(self, document_uuid):
+        """Read the event history, preserving Pingen's chronological order."""
+        nodes = []
+        for page in range(1, 51):
+            response = self._send(
+                self.session.get,
+                self.letters_url + "/{letterId}/events",
+                letter_id=document_uuid,
+                params={"page[number]": page, "page[limit]": 100},
+            )
+            payload = response.json()
+            data = payload.get("data", [])
+            if isinstance(data, list):
+                nodes.extend(node for node in data if isinstance(node, dict))
+            meta = payload.get("meta")
+            last_page = meta.get("last_page") if isinstance(meta, dict) else None
+            if (
+                not isinstance(last_page, int)
+                or isinstance(last_page, bool)
+                or page >= last_page
+            ):
+                break
+        if isinstance(last_page, int) and last_page > 50:
+            _logger.warning(
+                "Pingen letter %s has more than %s pages of events, "
+                "the newest ones are not read",
+                document_uuid,
+                50,
+            )
+        return nodes
+
     def price_quote(
         self, country, delivery_product, print_mode, print_spectrum, paper_types
     ):
@@ -375,7 +406,7 @@ class Pingen:
         attributes = response.json().get("data", {}).get("attributes") or {}
         price = attributes.get("price")
         if (
-            isinstance(price, (int, float))
+            isinstance(price, int | float)
             and not isinstance(price, bool)
             and math.isfinite(price)
             and price > 0

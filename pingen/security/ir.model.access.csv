@@ -1,2 +1,3 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 "access_pingen_document_group_user","pingen_document group_user","model_pingen_document","base.group_user",1,1,1,1
+"access_pingen_document_event_group_user","pingen_document_event group_user","model_pingen_document_event","base.group_user",1,0,0,0

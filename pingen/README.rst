@@ -91,6 +91,9 @@ on the right on the attachment view.
 You can find them in Pingen Documents App or in the more convenient
 Documents menu if you have installed the document module.
 
+Deleting a Pingen document also deletes its attachment unless it is
+linked to another record.
+
 Errors
 ------
 
@@ -110,6 +113,48 @@ Dependencies
      `requests_oauthlib <https://github.com/requests/requests-oauthlib>`__
    - The address must be in a format accepted by pingen.com: the last
      line is the country in English or German.
+
+Layout check
+------------
+
+Before uploading to Pingen, every PDF page is checked for content within
+5 mm of any edge and in the lower-left 15 mm × 15 mm square. Detected
+content blocks the upload and sets the document to "Pingen Error".
+Correct the layout and create a new document. The postage area and
+address window are not checked. If the PDF cannot be inspected, the
+upload proceeds for Pingen to validate it.
+
+Letter information before sending
+---------------------------------
+
+After upload, the document shows the address read by Pingen, destination
+country, page count and estimated cost in the indicated currency. The
+estimate uses the selected delivery and printing options; refresh the
+letter information after changing them. Uploaded letters that have not
+been sent yet are refreshed every hour. The actual cost appears after
+sending.
+
+A document uploaded with Send disabled is still sent by the scheduled
+action *Run Pingen Document Push* (hourly) unless that action is
+disabled. Use the *Ask pingen.com to send the document* button to send
+it earlier.
+
+Daily update
+------------
+
+The daily update also removes the documents whose letter was deleted on
+Pingen, with their attachment unless it is linked to another record.
+
+Tracking number and events
+--------------------------
+
+The letter's tracking number and events (validation, printing, handover
+to the carrier and carrier steps) are stored on the document and shown
+in the *Tracking* tab, newest first. They are read from Pingen at every
+webhook, by the daily *Run Pingen Document Update* action (for sent
+letters for 45 days after upload, with or without a tracking number),
+and by the *Update the letter's informations* button. Pingen sends no
+webhook for carrier steps and provides no tracking link.
 
 Bug Tracker
 ===========

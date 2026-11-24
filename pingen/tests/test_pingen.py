@@ -17,11 +17,13 @@ from urllib.parse import urlparse
 import pymupdf
 from freezegun import freeze_time
 from oauthlib.oauth2.rfc6749.errors import OAuth2Error
+from requests.exceptions import Timeout
 from vcr import VCR
 
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 from odoo.tests import HttpCase, tagged
-from odoo.tests.common import _super_send
+from odoo.tests.common import _super_send, new_test_user
+from odoo.tools import mute_logger
 
 from ..controllers.main import PingenController
 from ..models.pingen import APIError, NotFoundError, Pingen
@@ -74,6 +76,15 @@ class TestPingen(HttpCase):
         # Tokens are cached on the class: never leak one between tests.
         Pingen.token_registry.clear()
         self.addCleanup(Pingen.token_registry.clear)
+        self.tracking_patch = patch.object(
+            type(self.env["pingen.document"]), "_refresh_tracking_best_effort"
+        )
+        self.tracking_refresh = self.tracking_patch.start()
+        self.addCleanup(self.tracking_patch.stop)
+        events_patch = patch.object(Pingen, "letter_events", return_value=[])
+        self.original_letter_events = Pingen.letter_events
+        events_patch.start()
+        self.addCleanup(events_patch.stop)
 
     # flake8: noqa: B950
     def get_request_json(self, uuid, events=None):
@@ -494,7 +505,7 @@ class TestPingen(HttpCase):
         document = self._pushed_document()
         event = {
             "type": "letters_events",
-            "id": "e1",
+            "id": "00000000-0000-4000-8000-000000000003",
             "attributes": {
                 "code": "transferred_to_distributor",
                 "emitted_at": "2023-05-20T10:00:00+0200",
@@ -1125,3 +1136,508 @@ class TestPingen(HttpCase):
         self.assertTrue(document.exists())
         self.assertTrue(attachment.exists())
         client.organisation_reachable.assert_not_called()
+
+    def _tracking_document(self, number=1):
+        return self._pushed_document(f"00000000-0000-4000-8000-{number:012d}")
+
+    def _event_node(self, number=11, **attributes):
+        values = {
+            "code": "created",
+            "name": "Created",
+            "emitted_at": "2026-11-20T17:00:11+0100",
+            "data": ["Example carrier step"],
+        }
+        values.update(attributes)
+        return {
+            "type": "deliverables_events",
+            "id": f"00000000-0000-4000-8000-{number:012d}",
+            "attributes": values,
+        }
+
+    def test_letter_events_pagination(self):
+        client = Pingen("example", "secret", "00000000-0000-4000-8000-000000000001")
+        client._session = MagicMock()
+        nodes = [self._event_node(number) for number in range(11, 14)]
+        for meta, expected_pages in (
+            ({"last_page": 3}, 3),
+            (None, 1),
+            ({"last_page": "bad"}, 1),
+            ([], 1),
+            ({"last_page": 1000}, 50),
+        ):
+            with self.subTest(meta=meta):
+                responses = []
+                for page in range(expected_pages):
+                    response = MagicMock()
+                    response.json.return_value = {
+                        "data": [nodes[page % 3], None],
+                        "meta": meta,
+                    }
+                    if meta is None:
+                        del response.json.return_value["meta"]
+                    responses.append(response)
+                with patch.object(client, "_send", side_effect=responses) as send:
+                    result = self.original_letter_events(client, "example-letter")
+                self.assertEqual(result, [nodes[p % 3] for p in range(expected_pages)])
+                self.assertEqual(send.call_count, expected_pages)
+                for page, call in enumerate(send.call_args_list, 1):
+                    self.assertEqual(
+                        call.kwargs["params"],
+                        {"page[number]": page, "page[limit]": 100},
+                    )
+                    self.assertTrue(call.args[1].endswith("/{letterId}/events"))
+
+    def test_store_events_idempotence_order_and_malformed(self):
+        document = self._tracking_document()
+        first = self._event_node()
+        second = self._event_node(12, emitted_at="2026-11-23T09:01:11+0100")
+        nodes = [first, second, first, None, {}, {"id": 42}]
+        document._store_events(nodes)
+        # Read the events back from the database, in the order of the model.
+        document.invalidate_recordset()
+        events = document.event_ids
+        self.assertEqual(events.mapped("pingen_uuid"), [second["id"], first["id"]])
+        self.assertEqual(events[-1].emitted_at, datetime(2026, 11, 20, 16, 0, 11))
+        with patch.object(type(events), "write") as write:
+            document._store_events(nodes)
+        write.assert_not_called()
+        self.assertEqual(document.event_ids.ids, events.ids)
+        document._store_events(
+            [self._event_node() | {"id": value} for value in ("x" * 5000, "not-a-uuid")]
+        )
+        self.assertEqual(document.event_ids.ids, events.ids)
+        second["attributes"]["location"] = "Example post office"
+        document._store_events([second])
+        self.assertEqual(events[0].location, "Example post office")
+        malformed = self._event_node(
+            13,
+            emitted_at="invalid",
+            data=[1, "Text"],
+            name=42,
+            producer=[],
+            location={},
+        )
+        document._store_events([malformed, self._event_node(14) | {"attributes": []}])
+        event = document.event_ids.filtered(lambda e: e.pingen_uuid == malformed["id"])
+        self.assertFalse(event.emitted_at)
+        self.assertFalse(event.name)
+        self.assertEqual(event.details, "Text")
+        self.assertEqual(len(document.event_ids), 3)
+        # Read back from the database: the event without a date comes last.
+        document.invalidate_recordset()
+        self.assertEqual(document.event_ids[-1], event)
+        self.assertEqual(
+            document.event_ids[:2].mapped("pingen_uuid"), [second["id"], first["id"]]
+        )
+        blank = self._event_node(15, name="", producer="", location="", data={})
+        document._store_events([blank])
+        with patch.object(type(events), "write") as write:
+            document._store_events([blank])
+        write.assert_not_called()
+
+    def test_store_events_uuid_case(self):
+        document = self._tracking_document()
+        node = self._event_node() | {"id": "abcdef00-0000-4000-8000-0000000000aa"}
+        upper = node | {"id": node["id"].upper()}
+        document._store_events([upper, node])
+        document._store_events([node])
+        document._store_events([upper])
+        self.assertEqual(document.event_ids.mapped("pingen_uuid"), [node["id"]])
+
+    def test_store_events_preserves_nonempty_values(self):
+        document = self._tracking_document()
+        node = self._event_node(producer="Example carrier", location="Example depot")
+        document._store_events([node])
+        event = document.event_ids
+        keys = ["code", "name", "producer", "location", "details", "emitted_at"]
+        before = event.read(keys)
+        for attributes in (None, {}, {"code": "created"}):
+            with self.subTest(attributes=attributes):
+                document._store_events([node | {"attributes": attributes}])
+                self.assertEqual(event.read(keys), before)
+        document._store_events(
+            [
+                self._event_node(12 + i) | {"attributes": a}
+                for i, a in enumerate((None, {}, {"code": "created"}))
+            ]
+        )
+        self.assertEqual(len(document.event_ids), 2)
+        self.assertEqual(
+            document.event_ids.filtered(lambda e: e != event).code, "created"
+        )
+
+    def test_letter_events_pagination_cap_warning(self):
+        client = Pingen("example", "secret", "00000000-0000-4000-8000-000000000001")
+        client._session = MagicMock()
+        logger = "odoo.addons.pingen.models.pingen"
+        for last_page in (50, 51):
+            with self.subTest(last_page=last_page):
+                response = MagicMock()
+                response.json.return_value = {
+                    "data": [],
+                    "meta": {"last_page": last_page},
+                }
+                capture = (
+                    self.assertLogs(logger, level="WARNING")
+                    if last_page > 50
+                    else self.assertNoLogs(logger, level="WARNING")
+                )
+                with (
+                    capture as logs,
+                    patch.object(client, "_send", return_value=response) as send,
+                ):
+                    self.original_letter_events(client, "example-letter")
+                self.assertEqual(send.call_count, 50)
+                if last_page > 50:
+                    self.assertEqual(len(logs.output), 1)
+                    self.assertIn(
+                        "Pingen letter example-letter has more than 50 pages "
+                        "of events, "
+                        "the newest ones are not read",
+                        logs.output[0],
+                    )
+
+    def test_daily_events_failures_preserve_letter_updates(self):
+        self.tracking_patch.stop()
+        documents = [self._tracking_document(i) for i in (1, 2, 3)]
+        first, second, settled = documents
+        first.push_date = datetime.now()
+        second.push_date = datetime.now() - timedelta(minutes=1)
+        settled.write({"state": "sent", "push_date": datetime.now()})
+        original_store = type(first)._store_events
+        for failure in (Timeout, ValueError, "database"):
+            with self.subTest(failure=failure):
+                for document in (first, second):
+                    document.write({"state": "pushed", "tracking_number": False})
+                client = MagicMock()
+                client.post_infos.return_value = {
+                    "status": "sent",
+                    "tracking_number": "EXAMPLE-123",
+                }
+                client.letter_events.return_value = [self._event_node()]
+
+                def store(record, nodes, failure=failure):
+                    if record.id != first.id:
+                        return original_store(record, nodes)
+                    if failure != "database":
+                        raise failure("Example events failure")
+                    values = {
+                        "document_id": record.id,
+                        "pingen_uuid": self._event_node(99)["id"],
+                    }
+                    self.env["pingen.document.event"].create([values, values])
+
+                with (
+                    patch.object(type(first), "_store_events", store),
+                    mute_logger("odoo.sql_db"),
+                ):
+                    self._run_daily_update(client)
+                for document in (first, second):
+                    self.assertEqual(document.state, "sent")
+                    self.assertEqual(document.tracking_number, "EXAMPLE-123")
+                self.assertEqual(len(second.event_ids), 1)
+                self.assertEqual(len(settled.event_ids), 1)
+                self.assertIn(
+                    settled.pingen_uuid,
+                    [call.args[0] for call in client.letter_events.call_args_list],
+                )
+                self.env.cr.execute("SELECT 1")
+                self.assertEqual(self.env.cr.fetchone(), (1,))
+
+    def test_tracking_button_preserves_number(self):
+        document = self._tracking_document()
+        client = MagicMock()
+        client.post_infos.return_value = {
+            "status": "sent",
+            "tracking_number": "98.00.000000.00000000",
+        }
+        client.letter_events.return_value = [self._event_node()]
+        with patch.object(
+            type(self.company), "_get_pingen_client", return_value=client
+        ):
+            document.update_post_infos()
+            self.assertEqual(document.tracking_number, "98.00.000000.00000000")
+            self.assertEqual(len(document.event_ids), 1)
+            client.post_infos.return_value["tracking_number"] = None
+            document.update_post_infos()
+        self.assertEqual(document.tracking_number, "98.00.000000.00000000")
+
+    def test_tracking_daily_selection_and_settled_fields(self):
+        self.tracking_patch.stop()
+        documents = [self._tracking_document(i) for i in range(1, 7)]
+        recent, old, with_events, empty, unsettled, undeliverable = documents
+        now = datetime.now()
+        for document in documents:
+            document.write(
+                {
+                    "state": "sent",
+                    "pingen_status": "delivered",
+                    "push_date": now - timedelta(days=2),
+                    "send_date": "2026-11-20 12:00:00",
+                    "cost": 4.5,
+                }
+            )
+        recent.tracking_number = old.tracking_number = "98.00.000000.00000000"
+        old.push_date = now - timedelta(days=46)
+        with_events._store_events([self._event_node()])
+        unsettled.state = "sendcenter"
+        undeliverable.state = "error_undeliverable"
+        client = MagicMock()
+        client.post_infos.return_value = {"status": "processing"}
+        client.letter_events.return_value = [self._event_node()]
+        self._run_daily_update(client)
+        self.assertEqual(
+            {call.args[0] for call in client.post_infos.call_args_list},
+            {d.pingen_uuid for d in documents if d != old},
+        )
+        for document in (recent, with_events, empty, undeliverable):
+            self.assertEqual(document.pingen_status, "delivered")
+            self.assertEqual(document.send_date, datetime(2026, 11, 20, 12))
+            self.assertEqual(document.cost, 4.5)
+            self.assertEqual(len(document.event_ids), 1)
+        self.assertEqual(recent.state, "sent")
+        self.assertEqual(undeliverable.state, "error_undeliverable")
+        self.assertEqual(len(unsettled.event_ids), 1)
+        client.reset_mock()
+        self._run_daily_update(client)
+        self.assertEqual(
+            {call.args[0] for call in client.post_infos.call_args_list},
+            {d.pingen_uuid for d in documents if d != old},
+        )
+        for document in documents:
+            self.assertEqual(
+                sum(
+                    call.args[0] == document.pingen_uuid
+                    for call in client.post_infos.call_args_list
+                ),
+                0 if document == old else 1,
+            )
+
+    def test_tracking_daily_errors_keep_documents_and_continue(self):
+        self.tracking_patch.stop()
+        documents = [self._tracking_document(i) for i in range(1, 5)]
+        for document in documents:
+            document.write({"state": "sent", "push_date": datetime.now()})
+        documents[-1].state = "sendcenter"
+        client = MagicMock()
+
+        def post_infos(uuid):
+            if uuid == documents[0].pingen_uuid:
+                raise APIError("Example failure")
+            if uuid == documents[1].pingen_uuid:
+                raise NotFoundError("Example missing letter")
+            return {"status": "processing"}
+
+        def letter_events(uuid):
+            if uuid == documents[-1].pingen_uuid:
+                raise NotFoundError("Example missing events")
+            return [self._event_node()]
+
+        client.post_infos.side_effect = post_infos
+        client.letter_events.side_effect = letter_events
+        self._run_daily_update(client)
+        self.assertTrue(all(document.exists() for document in documents))
+        self.assertEqual(len(documents[2].event_ids), 1)
+        client.organisation_reachable.assert_not_called()
+
+    def test_tracking_webhook_events_and_missing_letter(self):
+        document = self._tracking_document()
+        for legacy in (False, True):
+            event = self._event_node(11 + legacy)
+            if legacy:
+                event["type"] = "letters_events"
+            body = json.loads(
+                self.get_request_json(document.pingen_uuid, [event])
+                if legacy
+                else self.get_deliverable_request_json(
+                    document.pingen_uuid, events=[event]
+                )
+            )
+            letter = next(n for n in body["included"] if n["type"] == "letters")
+            letter["attributes"]["tracking_number"] = "98.00.000000.00000000"
+            for _ in range(2):
+                self.assertEqual(
+                    self._post_webhook(
+                        "/pingen/sent_letters", json.dumps(body)
+                    ).status_code,
+                    200,
+                )
+            document.invalidate_recordset()
+            self.assertEqual(len(document.event_ids), 1 + legacy)
+            self.assertEqual(document.tracking_number, "98.00.000000.00000000")
+        self.tracking_refresh.assert_called()
+        document.write(
+            {
+                "parsed_address": "1 Example Street",
+                "pages": 3,
+                "cost": 5,
+                "country_id": self.env.ref("base.ch").id,
+            }
+        )
+        keys = ["parsed_address", "pages", "cost", "country_id", "tracking_number"]
+        before = document.read(keys)[0]
+        body["included"] = []
+        self.assertEqual(
+            self._post_webhook(
+                "/pingen/undeliverable_letters", json.dumps(body)
+            ).status_code,
+            200,
+        )
+        document.invalidate_recordset()
+        self.assertEqual(document.read(keys)[0], before)
+        self.assertEqual(document.state, "error_undeliverable")
+
+    def test_tracking_best_effort_rolls_back_and_transaction_usable(self):
+        self.tracking_patch.stop()
+        document = self._tracking_document()
+        client = MagicMock()
+        client.post_infos.return_value = {"tracking_number": "98.00.000000.00000000"}
+        client.letter_events.side_effect = APIError("Example failure")
+        with patch.object(
+            type(self.company), "_get_pingen_client", return_value=client
+        ):
+            document._refresh_tracking_best_effort()
+        self.assertFalse(document.tracking_number)
+        document.write({"pages": 2})
+        self.assertEqual(document.pages, 2)
+
+    def test_tracking_access_rights_and_cascade(self):
+        document = self._tracking_document()
+        user = new_test_user(self.env, login="tracking_user", groups="base.group_user")
+        client = MagicMock()
+        client.post_infos.return_value = {"status": "sent"}
+        client.letter_events.return_value = [self._event_node()]
+        with patch.object(
+            type(self.company), "_get_pingen_client", return_value=client
+        ):
+            document.with_user(user).update_post_infos()
+        event = document.event_ids.with_user(user)
+        self.assertEqual(event.read(["name"])[0]["name"], "Created")
+        for operation in (
+            lambda: event.create(
+                {"document_id": document.id, "pingen_uuid": self._event_node()["id"]}
+            ),
+            lambda: event.write({"name": "Changed"}),
+            event.unlink,
+        ):
+            with self.assertRaises(AccessError), self.env.cr.savepoint():
+                operation()
+        events = document.event_ids
+        document.unlink()
+        self.assertFalse(events.exists())
+
+    def test_tracking_events_multi_company(self):
+        second_company = self.env["res.company"].create({"name": "Example Company"})
+        users = [
+            new_test_user(
+                self.env,
+                login=f"tracking_company_{company.id}",
+                groups="base.group_user",
+                company_id=company.id,
+                company_ids=[(6, 0, company.ids)],
+            )
+            for company in (self.company, second_company)
+        ]
+        document = self._tracking_document()
+        document.attachment_id.company_id = self.company
+        document._store_events([self._event_node()])
+        shared = self._tracking_document(2)
+        shared.attachment_id.company_id = False
+        shared._store_events([self._event_node()])
+        event = document.event_ids
+        shared_event = shared.event_ids
+        for user in users:
+            model = self.env["pingen.document.event"].with_user(user)
+            visible = model.search([("id", "in", (event | shared_event).ids)])
+            self.assertIn(shared_event.id, visible.ids)
+            self.assertEqual(
+                shared_event.with_user(user).read(["name"])[0]["name"], "Created"
+            )
+            if user.company_id == self.company:
+                self.assertIn(event.id, visible.ids)
+                self.assertEqual(
+                    event.with_user(user).read(["name"])[0]["name"], "Created"
+                )
+            else:
+                self.assertNotIn(event.id, visible.ids)
+                with self.assertRaises(AccessError), self.env.cr.savepoint():
+                    event.with_user(user).read(["name"])
+
+    def test_tracking_events_binary_attachment_company(self):
+        second = self.env["res.company"].create({"name": "Example Second Company"})
+        companies = (self.company, second)
+        users = [
+            new_test_user(
+                self.env,
+                login=f"binary_events_{company.id}",
+                groups="base.group_user",
+                company_id=company.id,
+                company_ids=[(6, 0, company.ids)],
+            )
+            for company in companies
+        ]
+        document = self._tracking_document()
+        document._store_events([self._event_node()])
+        event = document.event_ids
+        partner = self.env["res.partner"].create({"name": "Example Partner"})
+        document.attachment_id.sudo().write(
+            {"res_model": "res.partner", "res_id": partner.id, "res_field": "x_example"}
+        )
+        for company in companies:
+            document.attachment_id.sudo().company_id = company
+            self.assertEqual(event.company_id, company)
+            for user in users:
+                model = event.with_user(user).with_context(
+                    allowed_company_ids=user.company_ids.ids
+                )
+                visible = model.search([("id", "=", event.id)])
+                if user.company_id == company:
+                    self.assertEqual(visible, model)
+                    self.assertEqual(model.read(["name"])[0]["name"], "Created")
+                else:
+                    self.assertFalse(visible)
+                    with self.assertRaises(AccessError), self.env.cr.savepoint():
+                        model.read(["name"])
+
+    def test_tracking_webhook_binary_attachment_company(self):
+        document = self._tracking_document()
+        partner = self.env["res.partner"].create({"name": "Example Partner"})
+        document.attachment_id.sudo().write(
+            {"res_model": "res.partner", "res_id": partner.id, "res_field": "x_example"}
+        )
+        other_secret = "example-second-company-secret"
+        self.env["res.company"].create(
+            {
+                "name": "Example Second Company",
+                "pingen_webhook_secret": other_secret,
+            }
+        )
+        body = self.get_request_json(document.pingen_uuid)
+        response = self._post_webhook("/pingen/sent_letters", body, other_secret)
+        self.assertIn("Could not find related Pingen document", response.text)
+        document.invalidate_recordset()
+        self.assertEqual(document.state, "pushed")
+        self.assertEqual(
+            self._post_webhook("/pingen/sent_letters", body).status_code, 200
+        )
+        document.invalidate_recordset()
+        self.assertEqual(document.state, "sent")
+
+    def test_event_labels(self):
+        document = self._tracking_document()
+        document._store_events(
+            [
+                self._event_node(),
+                self._event_node(12, code="unknown", name="Example"),
+                self._event_node(13, code="other", name=False),
+            ]
+        )
+        events = document.event_ids.with_context(lang="en_US")
+        self.assertEqual(
+            {event.code: event.label for event in events},
+            {
+                "created": "PDF received",
+                "unknown": "Example",
+                "other": "other",
+            },
+        )

@@ -12,6 +12,7 @@
                 <field name="print_spectrum" />
                 <field name="state" />
                 <field name="pingen_status" />
+                <field name="tracking_number" optional="show" />
                 <field name="country_id" optional="show" />
                 <field name="pages" optional="show" />
                 <field name="estimated_cost" optional="show" />
@@ -114,7 +115,9 @@
                             </group>
                         </group>
 
-                        <group invisible="state not in ('pushed', 'sendcenter', 'sent')">
+                        <group
+                            invisible="state not in ('pushed', 'sendcenter', 'sent')"
+                        >
                             <separator string="Letter read from Pingen" colspan="4" />
                             <newline />
                             <group>
@@ -149,6 +152,20 @@
                                 <field name="send_date" />
                             </group>
                         </group>
+                    </page>
+                    <page name="tracking" string="Tracking" invisible="not pingen_uuid">
+                        <group>
+                            <field name="tracking_number" />
+                        </group>
+                        <field name="event_ids">
+                            <list create="0" edit="0" delete="0">
+                                <field name="emitted_at" />
+                                <field name="label" />
+                                <field name="producer" />
+                                <field name="location" />
+                                <field name="details" />
+                            </list>
+                        </field>
                     </page>
                     <page string="Attachment">
                         <group col="4" colspan="4">
@@ -206,6 +223,7 @@
                 />
                 <separator />
                 <field name="attachment_id" />
+                <field name="tracking_number" />
             </search>
         </field>
     </record>
