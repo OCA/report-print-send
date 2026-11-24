@@ -159,7 +159,12 @@ class PingenDocument(models.Model):
             if attachment.res_model:
                 continue
             for field in reference_fields:
-                if field.model not in self.env.registry:
+                # An abstract model (e.g. mail.thread.main.attachment) has no
+                # table; the models inheriting it list their own fields here.
+                if (
+                    field.model not in self.env.registry
+                    or self.env[field.model]._abstract
+                ):
                     continue
                 model = self.env[field.model].sudo().with_context(active_test=False)
                 if model.search_count([(field.name, "in", attachment.ids)]):
