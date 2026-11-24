@@ -1,1 +1,3 @@
 odoo-test-helper
+vcrpy
+freezegun
