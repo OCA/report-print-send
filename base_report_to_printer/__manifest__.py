@@ -35,5 +35,5 @@
     },
     "installable": True,
     "application": False,
-    "external_dependencies": {"python": ["pycups"]},
+    "external_dependencies": {"python": ["pycups", "openupgradelib"]},
 }
