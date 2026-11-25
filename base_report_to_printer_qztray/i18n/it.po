@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_report_to_printer_qztray
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-05-05 14:45+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: base_report_to_printer_qztray
+#: model:ir.model.fields,field_description:base_report_to_printer_qztray.field_printing_printer__backend
+msgid "Backend"
+msgstr "Backend"
+
+#. module: base_report_to_printer_qztray
+#: model:ir.model.fields,field_description:base_report_to_printer_qztray.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:base_report_to_printer_qztray.field_printing_printer__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: base_report_to_printer_qztray
+#. odoo-javascript
+#: code:addons/base_report_to_printer_qztray/static/src/js/qweb_action_manager.esm.js:0
+msgid "Document sent to QZ Tray printer: %s"
+msgstr "Documento inviato alla stampante QZ Tray : %s"
+
+#. module: base_report_to_printer_qztray
+#. odoo-javascript
+#: code:addons/base_report_to_printer_qztray/static/src/js/qweb_action_manager.esm.js:0
+msgid "Error printing document via QZ Tray: %s"
+msgstr "Errore nella stampa del documento con QZ tray: %s"
+
+#. module: base_report_to_printer_qztray
+#: model:ir.model.fields,field_description:base_report_to_printer_qztray.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:base_report_to_printer_qztray.field_printing_printer__id
+msgid "ID"
+msgstr "ID"
+
+#. module: base_report_to_printer_qztray
+#: model:ir.model,name:base_report_to_printer_qztray.model_printing_printer
+msgid "Logical Printer"
+msgstr "Stampante logica"
+
+#. module: base_report_to_printer_qztray
+#: model:ir.model.fields.selection,name:base_report_to_printer_qztray.selection__printing_printer__backend__qztray
+msgid "QZTray"
+msgstr "QZTray"
+
+#. module: base_report_to_printer_qztray
+#: model:ir.model,name:base_report_to_printer_qztray.model_ir_actions_report
+msgid "Report Action"
+msgstr "Azione resoconto"
